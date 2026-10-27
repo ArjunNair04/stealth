@@ -7,10 +7,15 @@ extension will be another caller of the same implementation.
 C++ command-line program ----> stealth::core <---- future Python extension
 ```
 
-The core currently exposes build metadata only. The next layer should establish
-owned contiguous FP32 storage, explicit shapes and predictable error handling.
-Only after native primitives and correctness tests exist should we add a trained
-model, weight export and incremental inference. No experimental results exist yet.
+The core exposes build metadata and the [native numeric layer](native-v1.md).
+Owned FP32 buffers and immutable model parameters are prepared during construction.
+Each inference caller owns its output and reusable workspace. Dense projections
+can use either the scalar or packed layout through the same public interface.
+
+The first composed layer is a pre-norm feed-forward residual block. Attention,
+position encoding, model serialization, training and incremental caching are still
+pending. Synthetic correctness and local latency results exist; there is no
+forecast-quality or financial result. The CLI remains a build-information utility.
 
 ## Portability
 

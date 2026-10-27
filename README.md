@@ -1,9 +1,16 @@
 # Stealth
 
-Portable C++20 development foundation for a CPU forecasting research project.
-Stealth is a working name. The current release provides a native library, a CLI,
-a reproducible build, tests and an installable CMake package. Forecasting and a
-Python wrapper are future milestones; no performance or trading claim is made.
+Portable C++20 numeric foundation for a CPU forecasting research project.
+Stealth is a working name. The native library now provides aligned FP32 storage,
+checked dense projections, softmax, layer normalization, GELU, residual addition
+and a composed feed-forward block. It includes a scalar reference, packed weight
+layout, component/integration tests and an installable CMake package.
+
+See [the first native milestone](docs/native-v1.md) for behavior and test evidence,
+and [the performance walkthrough](docs/performance.md) for measured results and
+how the optimizations work. This is an early numeric library; a full transformer,
+trained forecast, streaming engine and Python wrapper remain future milestones.
+The CLI currently reports build metadata.
 
 ## Start locally
 
@@ -23,7 +30,7 @@ Open the repository folder in VS Code to use the checked-in CMake tasks and debu
 ## Build modes
 
 - `dev`: debugging, warnings and tests.
-- `release`: optimised build for later measurement, with tests.
+- `release`: optimised build for measurement, with tests.
 - `sanitize`: address/undefined-behavior checks on GCC or Clang, macOS/Linux.
 
 For any mode, configure, build and test with its preset name. Compilation outputs
@@ -60,12 +67,14 @@ include/stealth/  Public C++ API
 src/             Native implementation
 app/             Command-line program
 cmake/           Version and package configuration
-tests/          Native build and installation tests
-tools/          Optional developer diagnostics
-docs/           Setup, architecture and work queue
+tests/           Component, integration, allocation and installation tests
+bench/           Optional native latency benchmark
+tools/           Optional fixture, benchmark and diagnostic tools
+docs/            Contracts, measured evidence, setup and work queue
 ```
 
-[Development guide](docs/development.md) · [Architecture and Python plan](docs/architecture.md)
+[Numeric contract](docs/numeric-contract.md) · [Performance](docs/performance.md)
+· [Development guide](docs/development.md) · [Architecture and Python plan](docs/architecture.md)
 · [Tasks](docs/tasks.md) · [Test-first plan](docs/testing.md)
 
 The repository is public for review. No redistribution licence has been selected.

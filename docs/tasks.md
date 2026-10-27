@@ -19,16 +19,26 @@ test, implement it, then refactor. Independently checked expected answers and
 failure cases are required. Infrastructure is verified; model correctness and
 trading readiness remain unestablished.
 
-## 2. Native numeric primitives
+## 2. Native numeric primitives (implemented on codex/native-primitives)
 
-Define contiguous FP32 buffers, shapes and errors; implement only the operations
-needed by the agreed small model. Check mathematical fixtures, malformed shapes,
-non-finite input policy and allocation behavior. Keep a clear scalar reference.
-Freeze the buffer/operation contract first, then use hand-calculated fixtures,
-independent higher-precision results and mathematical properties. See objectives
-1-2 of the testing plan; this is the immediate next implementation.
+- [x] Freeze bounded FP32 storage, shapes, errors and output-preservation rules.
+- [x] Implement dense, softmax, layer normalization, GELU and residual components.
+- [x] Retain scalar dense and add an output-packed layout with tail-lane checks.
+- [x] Compose a feed-forward block with an independent Python math fixture.
+- [x] Verify component failures, integration failures, moves, repeated calls and allocations.
+- [x] Run Debug, Release, sanitizers, relocation and all five platform CI jobs.
+- [x] Record three local latency trials and explain the speed/memory tradeoffs.
 
-## 3. Small reference model and native parity
+See [implementation evidence](native-v1.md) and [performance](performance.md).
+The task remains open until the implementation PR is merged. This establishes
+primitive and feed-forward correctness on tested inputs, not full-model parity.
+
+## 3. Small reference model and native parity (next)
+
+The feed-forward sublayer is implemented. Next, freeze a tiny causal-attention
+layout and its independent fixtures before extending the native model. Add
+attention component tests, then block/model parity and future-input invariance.
+Only after ordinary forward parity passes should caching enter the implementation.
 
 Freeze model layout and weight serialization, train/export a deterministic
 reference, and verify native forward outputs before adding caching. Specify
@@ -46,7 +56,10 @@ inputs and explicitly documented copy behavior. Native builds remain independent
 The wrapper can start once the early native API is stable; it need not wait for
 all streaming work. See objective 5 of the testing plan.
 
-## 5. CPU performance study and QTS adapter
+## 5. CPU performance study and QTS adapter (partial measurement only)
+
+The first scalar-versus-packed microbenchmark is recorded. Established-runtime,
+streaming, cold-start, sustained-load and end-to-end comparisons remain pending.
 
 Measure the same workload across native and established runtimes. Record CPU,
 compiler, threads, warm-up, memory and latency distributions. Then define a
@@ -62,4 +75,4 @@ thresholds, and require new operational/financial gates before deployment.
 - [Add an optional Python wrapper after the native layers](https://github.com/ArjunNair04/stealth/issues/4)
 - [Measure the CPU performance frontier and define the QTS boundary](https://github.com/ArjunNair04/stealth/issues/5)
 
-See [verification](verification.md) for the completed infrastructure checks.
+See [verification](verification.md) for infrastructure and [native v1](native-v1.md) for the first numerical layers.

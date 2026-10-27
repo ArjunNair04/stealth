@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "tested_code_commit": "cb8bb3108b4dcd9d5a6ccdfb32115f11787f76db",
+  "local": {
+    "debug": {
+      "passed": 20,
+      "total": 20
+    },
+    "release": {
+      "passed": 20,
+      "total": 20
+    },
+    "address_undefined_sanitizers": {
+      "passed": 19,
+      "total": 19
+    },
+    "fixture_regeneration": "byte-identical",
+    "relocated_install_consumer": "passed in Debug and Release"
+  },
+  "ci": {
+    "url": "https://github.com/ArjunNair04/stealth/actions/runs/40601121512",
+    "conclusion": "success",
+    "jobs": [
+      "Linux GCC",
+      "Linux Clang",
+      "macOS Intel",
+      "macOS ARM",
+      "Windows MSVC"
+    ]
+  },
+  "negative_tests": [
+    {
+      "name": "numeric_stub_replay",
+      "groups_failed": 9,
+      "note": "Tests preceded implementation, but the initial stub failed compilation on an unused-private-field warning. After implementation, the corrected stub was replayed and all nine groups failed for missing behavior. This is a replay receipt, not a claim of a successful initial red run."
+    },
+    {
+      "name": "feed_forward_stub",
+      "groups_failed": 4,
+      "note": "Observed before feed-forward implementation."
+    },
+    {
+      "name": "fast_math_policy_stub",
+      "groups_failed": 1,
+      "note": "Expected unsafe-flag rejection test failed before policy implementation."
+    }
+  ],
+  "deliberate_mutations": [
+    {
+      "mutation": "dense_bias_fault",
+      "test": "numeric.dense",
+      "detected": true,
+      "original_source_sha256": "c5b06c537f602c08431719fdcda987642a975219c984d03f5c73de2ab661b4d0"
+    },
+    {
+      "mutation": "masked_suffix_fault",
+      "test": "numeric.softmax",
+      "detected": true,
+      "original_source_sha256": "c5b06c537f602c08431719fdcda987642a975219c984d03f5c73de2ab661b4d0"
+    },
+    {
+      "mutation": "missing_residual",
+      "test": "feed_forward.parity",
+      "detected": true,
+      "original_source_sha256": "0969a26b748ce04c2d37fbdc96ad466de91f3736fbf35fcb6be9d54a2a709264"
+    }
+  ],
+  "allocation_test": {
+    "cycles": 20000,
+    "kernels": [
+      "reference",
+      "packed"
+    ],
+    "scope": "block, softmax, non-finite and bad-shape error paths",
+    "observed_cpp_heap_allocations": 0,
+    "positive_control_allocations": 2,
+    "limitation": "Interposes C++ new/new[] entry points; does not instrument every OS or library allocator."
+  },
+  "repeat_test": {
+    "block_calls": 20000,
+    "workspaces": 2,
+    "execution": "interleaved sequential calls; this is not a parallel thread stress test"
+  },
+  "limits": [
+    "Not exhaustive verification or a zero-defect guarantee",
+    "No coverage percentage or production-readiness claim",
+    "No concurrent inference stress test, weight loader, attention, KV cache, market data, trained forecast or trading test"
+  ]
+}
