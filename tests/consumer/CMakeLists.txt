@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.25...4.0)
+project(stealth_consumer LANGUAGES CXX)
+enable_testing()
+find_package(stealth 0.1 CONFIG REQUIRED)
+add_executable(consumer main.cpp)
+target_link_libraries(consumer PRIVATE stealth::core)
+add_test(NAME consumer.runs COMMAND consumer)

@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Stealth native (macOS/Linux)",
+      "type": "lldb",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/dev/stealth",
+      "args": [
+        "--build-info"
+      ],
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "Stealth: build"
+    },
+    {
+      "name": "Stealth native (Windows)",
+      "type": "cppvsdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/dev/stealth.exe",
+      "args": [
+        "--build-info"
+      ],
+      "cwd": "${workspaceFolder}",
+      "preLaunchTask": "Stealth: build"
+    }
+  ]
+}

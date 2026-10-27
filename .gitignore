@@ -1,0 +1,11 @@
+/build/
+/install/
+/local/
+/CMakeUserPresets.json
+/compile_commands.json
+/.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+.env.*
