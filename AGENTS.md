@@ -24,3 +24,10 @@ with a nonzero status, including Release builds; do not rely on disabled assert.
 Preserve existing user changes. Keep this repository separate from QTS, and do not
 modify QTS's canonical research records for infrastructure work here. No strategy,
 performance or cross-platform support claim without corresponding evidence.
+
+Use test-driven development for new native behavior: define the contract, write a
+test that fails for the intended reason, implement the smallest passing change,
+then refactor. Follow docs/testing.md. Expected results must be independent of
+the code under test. Fixes begin with regression cases. Preserve fixture provenance
+and justify numerical tolerances; do not weaken tests to hide discrepancies.
+Distinguish implemented/passing tests from planned acceptance criteria.

@@ -66,6 +66,6 @@ docs/           Setup, architecture and work queue
 ```
 
 [Development guide](docs/development.md) · [Architecture and Python plan](docs/architecture.md)
-· [Tasks](docs/tasks.md)
+· [Tasks](docs/tasks.md) · [Test-first plan](docs/testing.md)
 
 The repository is public for review. No redistribution licence has been selected.
