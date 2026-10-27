@@ -7,6 +7,7 @@ include(CTest)
 
 option(STEALTH_WARNINGS_AS_ERRORS "Treat project warnings as errors" OFF)
 option(STEALTH_ENABLE_SANITIZERS "Enable address and undefined-behavior checks" OFF)
+option(STEALTH_BUILD_BENCHMARKS "Build the optional native microbenchmark" OFF)
 option(STEALTH_BUILD_CLI "Build the native command-line program" ON)
 
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -72,7 +73,21 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/stealthConfig.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/stealthConfigVersion.cmake
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/stealth)
 
+if(STEALTH_BUILD_BENCHMARKS)
+    add_executable(stealth_bench bench/native_benchmark.cpp)
+    target_link_libraries(stealth_bench PRIVATE stealth::core)
+    stealth_development_options(stealth_bench)
+endif()
+
 if(BUILD_TESTING)
+    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU" AND NOT MSVC)
+        add_test(NAME build.reject_fast_math COMMAND ${CMAKE_COMMAND}
+            -DSTEALTH_COMPILER=${CMAKE_CXX_COMPILER}
+            -DSTEALTH_SOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}
+            -DSTEALTH_BINARY_DIR=${CMAKE_CURRENT_BINARY_DIR}
+            -P ${CMAKE_CURRENT_SOURCE_DIR}/tests/reject_fast_math.cmake)
+        set_tests_properties(build.reject_fast_math PROPERTIES LABELS "component;build")
+    endif()
     add_executable(stealth_allocation_tests tests/allocation_tests.cpp)
     target_link_libraries(stealth_allocation_tests PRIVATE stealth::core)
     stealth_development_options(stealth_allocation_tests)

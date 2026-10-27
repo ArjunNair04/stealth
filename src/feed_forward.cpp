@@ -1,4 +1,5 @@
 #include "stealth/feed_forward.hpp"
+#include "fp_policy.hpp"
 
 #include <algorithm>
 #include <cmath>

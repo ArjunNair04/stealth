@@ -48,11 +48,13 @@ jobs:
       - name: Test debug and package relocation
         run: ctest --preset dev
       - name: Configure release
-        run: cmake --preset release -DSTEALTH_WARNINGS_AS_ERRORS=ON
+        run: cmake --preset release -DSTEALTH_WARNINGS_AS_ERRORS=ON -DSTEALTH_BUILD_BENCHMARKS=ON
       - name: Build release
         run: cmake --build --preset release
       - name: Test release and package relocation
         run: ctest --preset release
+      - name: Benchmark smoke (no latency gate)
+        run: ./build/release/stealth_bench --samples 100
       - name: Sanitizer configure
         if: matrix.name == 'Linux Clang'
         run: cmake --preset sanitize

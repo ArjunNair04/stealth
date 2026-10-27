@@ -1,4 +1,5 @@
 #include "stealth/numeric.hpp"
+#include "fp_policy.hpp"
 
 #include <algorithm>
 #include <array>

@@ -28,7 +28,9 @@ Validate shapes and limits before reading elements. Reject NaN/infinity inputs.
 Finite-input arithmetic that overflows FP32 returns numerical_error. Do not
 silently clamp inputs. Use standard IEEE floats without fast-math; disable FMA
 contraction for the native reference/packed kernels to retain operation order.
-Bitwise portability across compilers is not promised.
+GCC/Clang fast-math and finite-math-only builds are rejected by a compile-time
+policy with a positive/negative compile test. MSVC uses /fp:precise. Bitwise
+portability across compilers is not promised.
 
 ## Operations
 
