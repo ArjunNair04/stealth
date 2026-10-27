@@ -1,13 +1,13 @@
 # Work queue
 
-## 1. Local C++ infrastructure (current)
+## 1. Local C++ infrastructure (complete)
 
 - [x] Choose a permanent standalone checkout and private repository identity.
 - [x] Inspect the installed compiler, SDK, editor and GitHub account.
 - [x] Install CMake and Ninja through the existing local package manager.
 - [x] Create a C++20 library, CLI, CMake presets and editor configuration.
 - [x] Verify debug, release, sanitizer and relocated-install builds locally.
-- [ ] Push the initial repository and verify the cross-platform CI matrix.
+- [x] Push the initial repository and verify the cross-platform CI matrix.
 
 Done means another clean checkout can configure, build, test and install using
 only a documented compiler, CMake and Ninja. Record actual passed configurations.
@@ -35,3 +35,13 @@ inputs and explicitly documented copy behavior. Native builds remain independent
 Measure the same workload across native and established runtimes. Record CPU,
 compiler, threads, warm-up, memory and latency distributions. Then define a
 separate, preregistered QTS pilot. Do not infer alpha from synthetic correctness.
+
+## GitHub tasks
+
+- [Set up and verify portable local C++ development](https://github.com/ArjunNair04/stealth/issues/1)
+- [Implement the first native numeric primitives](https://github.com/ArjunNair04/stealth/issues/2)
+- [Establish a small reference model and native forward parity](https://github.com/ArjunNair04/stealth/issues/3)
+- [Add an optional Python wrapper after the native layers](https://github.com/ArjunNair04/stealth/issues/4)
+- [Measure the CPU performance frontier and define the QTS boundary](https://github.com/ArjunNair04/stealth/issues/5)
+
+See [verification](verification.md) for the completed infrastructure checks.
