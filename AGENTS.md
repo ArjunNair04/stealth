@@ -1,6 +1,6 @@
 # Stealth project instructions
 
-This is a standalone private C++20 CPU forecasting project. Stealth is a working
+This is a standalone public C++20 CPU forecasting project. Stealth is a working
 name. Work in this checkout and keep generated outputs under ignored build/,
 install/ or local/ directories. Do not use a temporary checkout as the main project.
 

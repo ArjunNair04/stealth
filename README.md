@@ -68,4 +68,4 @@ docs/           Setup, architecture and work queue
 [Development guide](docs/development.md) · [Architecture and Python plan](docs/architecture.md)
 · [Tasks](docs/tasks.md)
 
-The repository is private. No redistribution licence has been selected.
+The repository is public for review. No redistribution licence has been selected.
