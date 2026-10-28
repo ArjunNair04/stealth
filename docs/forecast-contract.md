@@ -122,3 +122,7 @@ hash to the task id, feature order, cadence, scaler fit, data snapshot, code and
 training protocol. These research/export checks are implemented in the optional
 [Torch training workflow](training-v1.md); the [first frozen results](training-results-v1.md)
 include all seeds, baseline comparisons, trained parity and restart evidence.
+
+The optional correction output has a distinct version-2 file contract; see
+[the correction model](correction-model-v1.md). Version-1 equations and exports
+remain unchanged.

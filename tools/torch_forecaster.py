@@ -25,8 +25,10 @@ class Config:
     horizon: int
     target: int
     epsilon: float = 1e-5
+    output: str = "level"
 
     def __post_init__(self):
+        if self.output not in ("level","correction"): raise ValueError("Invalid output mode")
         for name,maximum in (('features',64),('width',512),('heads',512),('hidden',2048),('context',1024),('horizon',1024)):
             value=getattr(self,name)
             if type(value) is not int or not 1<=value<=maximum:
@@ -89,6 +91,8 @@ class Forecaster(nn.Module):
             elif name.endswith('scale'): nn.init.ones_(p)
             else: nn.init.zeros_(p)
             self.register_parameter(name,p)
+        if config.output=='correction':
+            nn.init.zeros_(self.head_weight);nn.init.zeros_(self.head_bias)
         positions=[[ (math.sin if c%2==0 else math.cos)(t/10000**(2*(c//2)/config.width))
                     for c in range(config.width)] for t in range(config.context)]
         self.register_buffer('positions',torch.tensor(positions,dtype=torch.float32),persistent=False)
@@ -108,7 +112,14 @@ class Forecaster(nn.Module):
         hidden=F.linear(layer_norm(x,self.ff_scale,self.ff_shift,c.epsilon),self.up_weights,self.up_bias)
         x=x+F.linear(exact_gelu(hidden),self.down_weights,self.down_bias)
         y=F.linear(layer_norm(x,self.final_scale,self.final_shift,c.epsilon),self.head_weight,self.head_bias).squeeze(-1)
-        if not standardized: y=(y.double()*self.scale[c.target].double()+self.mean[c.target].double()).float()
+        if c.output=='correction':
+            anchor=raw[:,:,c.target].double()
+            if standardized:
+                y=(y.double()+(anchor-self.mean[c.target].double())/self.scale[c.target].double()).float()
+            else:
+                y=(y.double()*self.scale[c.target].double()+anchor).float()
+        elif not standardized:
+            y=(y.double()*self.scale[c.target].double()+self.mean[c.target].double()).float()
         if not bool(torch.isfinite(y).all()): raise FloatingPointError('Non-finite model output')
         return y
 
@@ -142,8 +153,10 @@ class Forecaster(nn.Module):
 
     def export_bytes(self):
         flat=self.flat_parameters(); c=self.config
-        header=b'STLFC01\0'+struct.pack('<10IfIII',1,0x01020304,64,c.features,c.width,c.heads,c.hidden,
-                                       c.context,c.horizon,c.target,c.epsilon,flat.size,0,0)
+        correction=c.output=='correction'
+        header=(b'STLFC02\0' if correction else b'STLFC01\0')+struct.pack('<10IfIII',
+                2 if correction else 1,0x01020304,64,c.features,c.width,c.heads,c.hidden,
+                c.context,c.horizon,c.target,c.epsilon,flat.size,1 if correction else 0,0)
         payload=header+flat.astype('<f4',copy=False).tobytes()
         if len(payload)+32>16*1024*1024: raise ValueError('Artifact exceeds native byte limit')
         return payload+hashlib.sha256(payload).digest()

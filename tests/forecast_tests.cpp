@@ -32,6 +32,46 @@ void parity() {
         CHECK(ws.bytes() > 0);
     }
 }
+void correction() {
+    auto c = config();
+    c.output = ForecastOutput::correction;
+    for (auto kernel : {DenseKernel::reference, DenseKernel::packed}) {
+        auto p = f::parameters;
+        std::fill(p.end() - static_cast<std::ptrdiff_t>(c.width + 1), p.end(), 0.0F);
+        ForecastWorkspace ws(c);
+        std::array<float, f::tokens> out{};
+        ForecastModel zero(c, p, kernel);
+        CHECK(zero.forward(f::input, f::tokens, out, ws) == Error::ok);
+        for (std::size_t i = 0; i < out.size(); ++i)
+            test::near(out[i], f::input[i * c.features + c.target], 0, 0);
+        p.back() = 0.5F;
+        ForecastModel shifted(c, p, kernel);
+        CHECK(shifted.forward(f::input, f::tokens, out, ws) == Error::ok);
+        for (std::size_t i = 0; i < out.size(); ++i)
+            test::near(out[i],
+                       static_cast<float>(static_cast<double>(f::input[i * c.features + c.target]) +
+                                          0.5 * p[c.features + c.target]),
+                       0, 0);
+        ForecastWorkspace wrong(config());
+        out.fill(123);
+        CHECK(shifted.forward(f::input, f::tokens, out, wrong) == Error::shape_mismatch);
+        test::unchanged(out);
+    }
+    ForecastConfig late{1, 2, 1, 1, 2, 1, 0, 1e-5F, ForecastOutput::correction};
+    std::vector<float> p(forecast_parameter_count(late), 0);
+    p[1] = std::numeric_limits<float>::max();
+    p.back() = 1;
+    ForecastModel model(late, p);
+    ForecastWorkspace ws(late);
+    std::array<float, 2> input{0, p[1]}, out{123, 123};
+    CHECK(model.forward(std::span(input).first(1), 1, std::span(out).first(1), ws) == Error::ok);
+    test::near(out[0], p[1], 0, 0);
+    out.fill(123);
+    CHECK(model.forward(input, 2, out, ws) == Error::numerical_error);
+    test::unchanged(out);
+    c.output = static_cast<ForecastOutput>(99);
+    test::throws<std::invalid_argument>([&] { ForecastWorkspace bad(c); });
+}
 void causality() {
     ForecastModel model(config(), f::parameters);
     ForecastWorkspace ws(config()), other(config());
@@ -252,6 +292,8 @@ int main(int argc, char **argv) {
         const std::string_view group = argv[1];
         if (group == "parity")
             parity();
+        else if (group == "correction")
+            correction();
         else if (group == "causality")
             causality();
         else if (group == "failures")

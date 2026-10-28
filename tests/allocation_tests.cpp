@@ -204,9 +204,10 @@ int main() {
             std::cout << "Preserved active model across " << cold_allocations
                       << " injected load allocation failures\n";
         }
-        {
-            auto shared = std::shared_ptr<const ForecastModel>(
-                load_forecaster(std::as_bytes(std::span(ff::artifact))));
+        for (auto mode : {ForecastOutput::level, ForecastOutput::correction}) {
+            ForecastConfig config{ff::features, ff::width,  ff::heads, ff::hidden, ff::tokens,
+                                  ff::horizon,  ff::target, 1e-5F,     mode};
+            auto shared = std::make_shared<const ForecastModel>(config, ff::parameters);
             WindowStream stream(shared);
             std::array<float, 1> out{123};
             std::array<float, ff::features> bad{};

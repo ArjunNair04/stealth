@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "task_id": "ettm1_one_hour_correction_v1",
+  "dataset_id": "ettm1_1d16c8f4",
+  "decision_date": "2026-10-28",
+  "user_choices": {
+    "target": "One temperature, one hour ahead",
+    "depth": "One block first; compare two later",
+    "output": "Start with the latest temperature and learn a correction"
+  },
+  "input_columns": [
+    "HUFL",
+    "HULL",
+    "MUFL",
+    "MULL",
+    "LUFL",
+    "LULL",
+    "OT"
+  ],
+  "context": 96,
+  "interval_seconds": 900,
+  "horizon_steps": 4,
+  "target_column": "OT",
+  "target_mode": "point",
+  "model": {
+    "blocks": 1,
+    "width": 64,
+    "heads": 4,
+    "hidden": 256,
+    "epsilon": 1e-05,
+    "positions": "fixed_sinusoidal_window_relative",
+    "activation": "exact_gelu",
+    "dropout": 0,
+    "final_normalization": true,
+    "output": "latest_target_plus_scaled_linear_correction",
+    "head_initialization": "zeros"
+  },
+  "training_status": "workflow_implemented; results_recorded_separately",
+  "experiment_status": "task_native_model_and_training_protocol_frozen"
+}

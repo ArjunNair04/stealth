@@ -32,16 +32,25 @@ std::unique_ptr<ForecastModel> load_forecaster(std::span<const std::byte> bytes,
     const auto digest = stealth::detail::sha256(bytes.first(bytes.size() - 32));
     if (!std::equal(digest.begin(), digest.end(), bytes.end() - 32))
         throw std::invalid_argument("Model integrity digest mismatch");
-    constexpr std::array<unsigned char, 8> magic{'S', 'T', 'L', 'F', 'C', '0', '1', 0};
-    for (std::size_t i = 0; i < magic.size(); ++i)
-        if (std::to_integer<unsigned char>(bytes[i]) != magic[i])
+    constexpr std::array<unsigned char, 6> prefix{'S', 'T', 'L', 'F', 'C', '0'};
+    for (std::size_t i = 0; i < prefix.size(); ++i)
+        if (std::to_integer<unsigned char>(bytes[i]) != prefix[i])
             throw std::invalid_argument("Model magic mismatch");
-    if (read32(bytes, 8) != 1 || read32(bytes, 12) != 0x01020304U || read32(bytes, 16) != 64 ||
-        read32(bytes, 56) != 0 || read32(bytes, 60) != 0)
+    const auto version = read32(bytes, 8), mode = read32(bytes, 56);
+    const bool legacy = version == 1 && bytes[6] == std::byte{'1'} && mode == 0;
+    const bool correction = version == 2 && bytes[6] == std::byte{'2'} && mode == 1;
+    if ((!legacy && !correction) || bytes[7] != std::byte{0} || read32(bytes, 12) != 0x01020304U ||
+        read32(bytes, 16) != 64 || read32(bytes, 60) != 0)
         throw std::invalid_argument("Unsupported model version, byte order or fields");
-    const ForecastConfig config{read32(bytes, 20), read32(bytes, 24),    read32(bytes, 28),
-                                read32(bytes, 32), read32(bytes, 36),    read32(bytes, 40),
-                                read32(bytes, 44), read_float(bytes, 48)};
+    const ForecastConfig config{read32(bytes, 20),
+                                read32(bytes, 24),
+                                read32(bytes, 28),
+                                read32(bytes, 32),
+                                read32(bytes, 36),
+                                read32(bytes, 40),
+                                read32(bytes, 44),
+                                read_float(bytes, 48),
+                                correction ? ForecastOutput::correction : ForecastOutput::level};
     const auto count = forecast_parameter_count(config); // validates before dimension products
     if (read32(bytes, 52) != count || bytes.size() != 96 + count * 4)
         throw std::invalid_argument("Model payload size/count mismatch");

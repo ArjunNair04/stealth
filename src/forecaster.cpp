@@ -8,7 +8,8 @@ namespace {
 ForecastConfig checked(ForecastConfig c) {
     sequence_detail::dimensions(c.context, c.width, c.heads);
     if (c.features == 0 || c.hidden == 0 || c.horizon == 0 || c.target >= c.features ||
-        !std::isfinite(c.epsilon) || c.epsilon <= 0)
+        !std::isfinite(c.epsilon) || c.epsilon <= 0 ||
+        (c.output != ForecastOutput::level && c.output != ForecastOutput::correction))
         throw std::invalid_argument("Invalid forecast configuration");
     if (c.features > max_features || c.hidden > max_hidden || c.horizon > max_context)
         throw std::length_error("Forecast capacity exceeded");
@@ -134,8 +135,11 @@ Error ForecastModel::forward(std::span<const float> input, std::size_t tokens,
         status = head_.forward(row, readout, scratch);
         if (status != Error::ok)
             return status;
+        const auto anchor = c.output == ForecastOutput::correction
+                                ? input[t * c.features + c.target]
+                                : means[c.target];
         if (!sequence_detail::checked_float(
-                static_cast<double>(readout[0]) * scales[c.target] + means[c.target], candidate[t]))
+                static_cast<double>(readout[0]) * scales[c.target] + anchor, candidate[t]))
             return Error::numerical_error;
     }
     std::copy(candidate.begin(), candidate.end(), output.begin());

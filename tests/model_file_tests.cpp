@@ -58,6 +58,42 @@ void valid() {
         CHECK(model->config().horizon == 4);
     }
 }
+void correction() {
+    auto bytes = artifact();
+    bytes[6] = std::byte{'2'};
+    set32(bytes, 8, 2);
+    set32(bytes, 56, 1);
+    rehash(bytes);
+    for (auto kernel : {DenseKernel::reference, DenseKernel::packed}) {
+        auto active = load_forecaster(bytes, kernel);
+        auto *before = active.get();
+        CHECK(active->config().output == ForecastOutput::correction);
+        ForecastWorkspace ws(active->config());
+        std::array<float, f::tokens> out{};
+        CHECK(active->forward(f::input, f::tokens, out, ws) == Error::ok);
+        for (std::size_t i = 0; i < out.size(); ++i)
+            test::near(out[i],
+                       f::expected[i] - f::parameters[f::target] +
+                           f::input[i * f::features + f::target],
+                       5e-5, 2e-4);
+        for (auto [offset, value] : std::array<std::pair<std::size_t, std::uint32_t>, 4>{
+                 {{8, 1}, {56, 0}, {56, 2}, {60, 1}}}) {
+            auto bad = bytes;
+            set32(bad, offset, value);
+            rehash(bad);
+            test::throws<std::invalid_argument>([&] { active = load_forecaster(bad, kernel); });
+            CHECK(active.get() == before);
+        }
+        for (std::size_t i = 0; i < bytes.size(); ++i) {
+            auto bad = bytes;
+            bad[i] ^= std::byte{1};
+            test::throws<std::invalid_argument>([&] { active = load_forecaster(bad, kernel); });
+            test::throws<std::invalid_argument>(
+                [&] { active = load_forecaster(std::span(bytes).first(i), kernel); });
+            CHECK(active.get() == before);
+        }
+    }
+}
 void corruption() {
     auto bytes = artifact();
     auto active = load_forecaster(bytes);
@@ -206,6 +242,8 @@ int main(int argc, char **argv) {
             hash();
         else if (group == "valid")
             valid();
+        else if (group == "correction")
+            correction();
         else if (group == "corruption")
             corruption();
         else if (group == "semantics")

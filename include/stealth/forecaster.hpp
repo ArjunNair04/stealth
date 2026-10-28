@@ -3,9 +3,11 @@
 
 namespace stealth::numeric {
 inline constexpr std::size_t max_features = 64;
+enum class ForecastOutput { level, correction };
 struct ForecastConfig {
     std::size_t features, width, heads, hidden, context, horizon, target;
     float epsilon = 1e-5F;
+    ForecastOutput output = ForecastOutput::level;
     bool operator==(const ForecastConfig &) const = default;
 };
 // Validates config before computing any dimension product.

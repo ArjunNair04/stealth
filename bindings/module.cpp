@@ -249,14 +249,25 @@ PYBIND11_MODULE(_core, m) {
     py::class_<ForecastConfig>(m, "ForecastConfig")
         .def(py::init([](std::size_t features, std::size_t width, std::size_t heads,
                          std::size_t hidden, std::size_t context, std::size_t horizon,
-                         std::size_t target, float epsilon) {
-                 ForecastConfig c{features, width,   heads,  hidden,
-                                  context,  horizon, target, epsilon};
+                         std::size_t target, float epsilon, const std::string &output) {
+                 if (output != "level" && output != "correction")
+                     throw py::value_error("Unknown forecast output mode");
+                 ForecastConfig c{
+                     features,
+                     width,
+                     heads,
+                     hidden,
+                     context,
+                     horizon,
+                     target,
+                     epsilon,
+                     output == "correction" ? ForecastOutput::correction : ForecastOutput::level};
                  (void)forecast_parameter_count(c);
                  return c;
              }),
              py::arg("features"), py::arg("width"), py::arg("heads"), py::arg("hidden"),
-             py::arg("context"), py::arg("horizon"), py::arg("target"), py::arg("epsilon") = 1e-5F)
+             py::arg("context"), py::arg("horizon"), py::arg("target"), py::arg("epsilon") = 1e-5F,
+             py::arg("output") = "level")
         .def_readonly("features", &ForecastConfig::features)
         .def_readonly("width", &ForecastConfig::width)
         .def_readonly("heads", &ForecastConfig::heads)
@@ -264,7 +275,10 @@ PYBIND11_MODULE(_core, m) {
         .def_readonly("context", &ForecastConfig::context)
         .def_readonly("horizon", &ForecastConfig::horizon)
         .def_readonly("target", &ForecastConfig::target)
-        .def_readonly("epsilon", &ForecastConfig::epsilon);
+        .def_readonly("epsilon", &ForecastConfig::epsilon)
+        .def_property_readonly("output", [](ForecastConfig c) {
+            return c.output == ForecastOutput::correction ? "correction" : "level";
+        });
     m.def("parameter_count", &forecast_parameter_count);
     py::class_<Model>(m, "ForecastModel")
         .def(py::init([](ForecastConfig c, const py::object &p, const std::string &k) {

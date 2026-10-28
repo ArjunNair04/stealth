@@ -61,8 +61,9 @@ quiet-window errors and seed-dependent bias explain where the transformers lose.
 All original scores reproduce exactly and two full runs are byte-identical.
 The old test is exploratory; the remaining source tail stays unused. See
 [the findings](forecast-diagnostics-results-v1.md) and
-[the diagnostic contract](forecast-diagnostics-v1.md). A correction-from-latest
-transformer is proposed for discussion, not implemented or approved yet.
+[the diagnostic contract](forecast-diagnostics-v1.md). The user approved the correction-from-latest transformer. Its implementation
+and frozen matched comparison are described in [the new contract](correction-model-v1.md);
+learning outcomes are recorded separately after training.
 
 Gate cached streaming separately after ordinary forward parity; test reset,
 capacity and stream isolation. A shifted 96-row window resets its positions and
