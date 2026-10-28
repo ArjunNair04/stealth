@@ -97,7 +97,11 @@ selected a one-hour point target and one block first. The native implementation
 is checked against independent equations and the Torch reference. The frozen
 training recipe is in `benchmarks/ettm1/training_v1.json`. See the
 [plain-language guide](docs/public-benchmark.md) and
-[data contract](docs/benchmark-contract.md).
+[data contract](docs/benchmark-contract.md). The
+[first training result](docs/training-results-v1.md) and
+[follow-up diagnosis](docs/forecast-diagnostics-results-v1.md) retain the negative
+results: persistence still wins on test MAE. No forecast or runtime advantage is
+claimed from the completed correctness work.
 
 ## Optional Python and raw-window interface
 

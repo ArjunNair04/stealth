@@ -1,0 +1,34 @@
+{
+  "ci": {
+    "commit": "96c0469e353fc753709207356f00060035458148",
+    "native_matrix_jobs_passed": 5,
+    "native_run": "https://github.com/ArjunNair04/stealth/actions/runs/40736859625",
+    "reference_run": "https://github.com/ArjunNair04/stealth/actions/runs/40736859385",
+    "torch_reference_jobs_passed": 2
+  },
+  "independent_replay_byte_identical": true,
+  "local_log_sha256": {
+    "forecast-diagnostics-all-tests.log": "a0c5fc0a2bafd1a6b8f38642f5ffe07efac25ae4b1f7557d4fcb3b8e9361c518",
+    "forecast-diagnostics-data-tests.log": "c84705eb8de50cce3cd91f1825d1604b31c7100d909ca22bf703f12a20c0aa7a",
+    "forecast-diagnostics-red.log": "8178fd11beb0a54a0d7911f1d634783259b03e17125d1df98c02e9147e67d9a3",
+    "forecast-diagnostics-replay.log": "a2cdff7bcbaea8aa13c86baa8727d3497301749a1ddcae5b78599d079ec5d5ba",
+    "forecast-diagnostics-run.log": "a2cdff7bcbaea8aa13c86baa8727d3497301749a1ddcae5b78599d079ec5d5ba",
+    "forecast-final-red.log": "b5c7303e6f96798a67c2b7765a373fdf7c1f950225248b92ec020106e07f13ee",
+    "forecast-study-red.log": "14f85402a9d1a4e2c4a1acc840669549538f0604cc37c36681299dd518ed07c8"
+  },
+  "original_test_scores_reproduced_exactly": true,
+  "passed_tests": {
+    "of_which_new_diagnostics": 13,
+    "public_data": 23,
+    "training_reference_and_experiment": 31
+  },
+  "schema_version": 1,
+  "scope": "No native code, architecture, training recipe or original result artifact changed; existing CI exercises all native platforms and both pinned Torch versions.",
+  "source_sha256": {
+    "benchmarks/ettm1/diagnostics_v1.json": "3e6ce3369778e5038b6291e17a321f617159ed384302cb03423fd5eeff3e7d58",
+    "tests/training/test_diagnostics.py": "00b4dbcf8854ca88f7a4b6438412cb0bd701a5d660f279df2d2b9ffac9cdaa73",
+    "tools/diagnose_ettm1.py": "005c5457d18037ffea6faade389097eca7ab5d1334f50f898c6b9fd8509523bd",
+    "tools/forecast_diagnostics.py": "e1d0282cf76634f75322eebeb4652b37cfbfc34f761a5a59539fed0eec403367"
+  },
+  "study_code_commit": "96c0469e353fc753709207356f00060035458148"
+}

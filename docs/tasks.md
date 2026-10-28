@@ -55,9 +55,14 @@ persistence on test MAE; [all results](training-results-v1.md) are retained.
 Issue #3 stays open through review and merge.
 Synthetic learning fixtures remain software diagnostics.
 
-The next study freezes four small linear comparisons and diagnoses the unchanged
-trained models. It uses the original, already inspected test period for exploration;
-the remaining source tail stays unused. See [the diagnostic contract](forecast-diagnostics-v1.md).
+The diagnostic study is complete: all four validation-selected linear baselines
+also miss persistence on old-test MAE. Temperature-only fits nearly match it;
+quiet-window errors and seed-dependent bias explain where the transformers lose.
+All original scores reproduce exactly and two full runs are byte-identical.
+The old test is exploratory; the remaining source tail stays unused. See
+[the findings](forecast-diagnostics-results-v1.md) and
+[the diagnostic contract](forecast-diagnostics-v1.md). A correction-from-latest
+transformer is proposed for discussion, not implemented or approved yet.
 
 Gate cached streaming separately after ordinary forward parity; test reset,
 capacity and stream isolation. A shifted 96-row window resets its positions and
