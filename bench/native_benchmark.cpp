@@ -1,5 +1,6 @@
 #include "stealth/feed_forward.hpp"
 #include "stealth/runtime.hpp"
+#include "stealth/transformer_block.hpp"
 
 #include <algorithm>
 #include <charconv>
@@ -128,6 +129,41 @@ void feed_forward(std::size_t width, std::size_t hidden, std::size_t samples) {
         samples, [&] { return reference.forward(x.span(), a.span(), ra); },
         [&] { return packed.forward(x.span(), b.span(), pa); }, a.span(), b.span());
 }
+void transformer(std::size_t tokens, std::size_t samples) {
+    constexpr std::size_t width = 64, heads = 4, hidden = 256;
+    AlignedBuffer scale(width), shift(width), qkv(3 * width * width), qb(3 * width),
+        pw(width * width), pb(width), up(width * hidden), ub(hidden), down(hidden * width),
+        db(width), input(tokens * width), a(tokens * width), b(tokens * width);
+    std::fill(scale.span().begin(), scale.span().end(), 1.0F);
+    fill(qkv.span(), 7);
+    fill(qb.span(), 13);
+    fill(pw.span(), 19);
+    fill(pb.span(), 3);
+    fill(up.span(), 7);
+    fill(ub.span(), 13);
+    fill(down.span(), 19);
+    fill(db.span(), 3);
+    fill(input.span(), 11);
+    TransformerParameters p{
+        scale.span(),
+        shift.span(),
+        qkv.span(),
+        qb.span(),
+        pw.span(),
+        pb.span(),
+        {scale.span(), shift.span(), up.span(), ub.span(), down.span(), db.span()}};
+    TransformerBlock reference(width, heads, hidden, p, 1e-5F, DenseKernel::reference),
+        packed(width, heads, hidden, p);
+    TransformerWorkspace ra(tokens, width, heads, hidden), pa(tokens, width, heads, hidden);
+    std::cout << "{\"kind\":\"transformer_block\",\"tokens\":" << tokens << ",\"width\":" << width
+              << ",\"heads\":" << heads << ",\"hidden\":" << hidden
+              << ",\"reference_parameter_bytes\":" << reference.parameter_bytes()
+              << ",\"packed_parameter_bytes\":" << packed.parameter_bytes()
+              << ",\"workspace_bytes\":" << pa.bytes();
+    pair(
+        samples, [&] { return reference.forward(input.span(), tokens, a.span(), ra); },
+        [&] { return packed.forward(input.span(), tokens, b.span(), pa); }, a.span(), b.span());
+}
 template <typename Function>
 void component(std::string_view name, std::size_t size, std::size_t samples, Function &&function,
                std::span<const float> output) {
@@ -219,6 +255,10 @@ int main(int argc, char *argv[]) {
         dense(256, 64, samples);
         std::cout << ',';
         feed_forward(64, 256, samples);
+        std::cout << ',';
+        transformer(16, samples);
+        std::cout << ',';
+        transformer(64, samples);
         std::cout << "],\"components\":[";
         components(samples);
         std::cout << "]}\n";

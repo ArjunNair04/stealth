@@ -1,5 +1,7 @@
+#include "fixtures/attention.hpp"
 #include "fixtures/feed_forward.hpp"
 #include "stealth/feed_forward.hpp"
+#include "stealth/transformer_block.hpp"
 #include "test_support.hpp"
 
 #include <array>
@@ -103,6 +105,44 @@ int main() {
             for (std::size_t i = 0; i < output.size(); ++i)
                 test::near(output[i], fixture::expected[i], 2e-5, 5e-5);
         }
+        namespace f = attention_fixture;
+        for (auto kernel : {DenseKernel::reference, DenseKernel::packed}) {
+            TransformerBlock model(f::width, f::heads, f::hidden,
+                                   {f::attn_scale,
+                                    f::attn_shift,
+                                    f::qkv_weights,
+                                    f::qkv_bias,
+                                    f::projection_weights,
+                                    f::projection_bias,
+                                    {f::ff_scale, f::ff_shift, f::up_weights, f::up_bias,
+                                     f::down_weights, f::down_bias}},
+                                   f::epsilon, kernel);
+            TransformerWorkspace workspace(f::tokens, f::width, f::heads, f::hidden);
+            AttentionWorkspace attention(f::tokens, f::width, f::heads);
+            std::array<float, f::tokens * f::width> output{}, context{}, bad = f::input;
+            bad.back() = std::numeric_limits<float>::infinity();
+            CHECK(model.forward(f::input, f::tokens, output, workspace) == Error::ok);
+            allocations = 0;
+            bool failed = false;
+            tracking = true;
+            for (int i = 0; i < 2000; ++i) {
+                if (model.forward(f::input, f::tokens, output, workspace) != Error::ok ||
+                    causal_attention(f::query, f::key, f::value, f::tokens, context, attention) !=
+                        Error::ok ||
+                    model.forward(bad, f::tokens, output, workspace) != Error::non_finite ||
+                    model.forward(f::input, 0, output, workspace) != Error::shape_mismatch) {
+                    failed = true;
+                    break;
+                }
+            }
+            tracking = false;
+            CHECK(!failed);
+            CHECK(allocations == 0);
+            for (std::size_t i = 0; i < output.size(); ++i)
+                test::near(output[i], f::expected[i], 3e-5, 1e-4);
+        }
+        std::cout << "No intercepted C++ heap allocations in 4,000 "
+                     "transformer/attention/error-path cycles\n";
         std::cout
             << "No intercepted C++ heap allocations in 20,000 block/softmax/error-path cycles\n";
         return 0;
