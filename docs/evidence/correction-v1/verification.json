@@ -1,0 +1,73 @@
+{
+  "ci": {
+    "arm_retry": "Initial ARM job was not acquired by a hosted runner due to capacity; the retry passed.",
+    "commit": "34ca3ed152862d1d548b47ca058e52a218cbf84e",
+    "native_matrix_jobs_passed": 5,
+    "native_run": "https://github.com/ArjunNair04/stealth/actions/runs/40764513578",
+    "reference_run": "https://github.com/ArjunNair04/stealth/actions/runs/40764513979",
+    "torch_reference_jobs_passed": 2
+  },
+  "evaluation_replay": {
+    "all_evaluation_files_byte_identical": true,
+    "files": [
+      "complete.json",
+      "scores.json",
+      "started.json"
+    ]
+  },
+  "experiment_code_commit": "34ca3ed152862d1d548b47ca058e52a218cbf84e",
+  "full_epoch_replay": {
+    "model_parameters_exact": true,
+    "optimizer_exact": true,
+    "rng_exact": true,
+    "training_metric_exact": true,
+    "validation_metrics_exact": true
+  },
+  "local_log_sha256": {
+    "correction-data-tests.log": "e350d1611dc8190adcd831c04855a63e49545dc3ec510609282cfb6b307af3f4",
+    "correction-dev.log": "8f8092917bebeacabc06bbf07fcbadc0c7ced9637ee02f871474294a46e4c803",
+    "correction-evaluation-progress.log": "38b45c4228a063ac0626813da3d22e29fdc4e95b80d619b5a1a18699c2f9285d",
+    "correction-full-epoch-replay.log": "9f04212282252df799ef8e8780847dda68a0ab872018469b95a5e1816df6e66e",
+    "correction-native-red.log": "7c97434ae5586cccb28c879b4b1ed2a6028e32d2ac5f4d0cdb6fcec71c9e8cdc",
+    "correction-package.log": "2515752a06aff7b1392f348712018d89632dab3a7bbd1cce4ddcbdf2562f6477",
+    "correction-protocol-red.log": "15853132eb9c6db961d74ba24a5e61e46ff66a75da76d82c1d8a95f631a4098d",
+    "correction-release.log": "48ec01c1ce30b8e4ed1306bc5a652533dd94b32edd998d2776b7804a3762d62e",
+    "correction-sanitize.log": "cc340c1a69da759eb45f7233aada53b1b421f5be2016a631b0c3e9fb2ab87acc",
+    "correction-torch-red.log": "b1548d6bbd556c3bf4befaeae28807cb38cd4fd430cf98d740910a85f76a297a",
+    "correction-training-tests.log": "afa1caec05e0c38add5d6e87d73fba1b7dc6a8cfe4c71569fcd3d1b6763e52e9",
+    "correction-wrapper-tests.log": "c8ca44c664b51701484e8bc2e0fcc7f73e01098b3a7f2aea9b50c0c09c07d703",
+    "ettm1-correction-v1/seed19.log": "dc1cda8c036b4348a895997278a85d0ec0ce69d55c81e7c3981be03084e06cb5",
+    "ettm1-correction-v1/seed43.log": "4f62069a4dcf28b56a18a8c3fc48181e3bdf4205928b7435803bfba0218cc122",
+    "ettm1-correction-v1/seed7.log": "9abc844bf078e5c2c79c3d1caed0523631e777e4736c15db7d85dd79ad161d90"
+  },
+  "native_package_sha256": {
+    "stealth_cpu-0.1.0-cp310-cp310-macosx_14_0_x86_64.whl": "f5d62a5e92cc857bb37520f218a1fce67af40fb100bc54b6c1f1bc36ddaa4674",
+    "stealth_cpu-0.1.0.tar.gz": "e3291303b90bea99528ae20f5818314de99fcbba782bea3e5a6f3694e22a0992"
+  },
+  "passed_tests": {
+    "native_debug": 52,
+    "native_release": 52,
+    "native_sanitizer": 51,
+    "public_data": 23,
+    "training_reference_and_experiment": 40,
+    "wrapper": 22
+  },
+  "schema_version": 1,
+  "source_sha256": {
+    "benchmarks/ettm1/one_hour_correction_v1.json": "05fc3e766108353e815086d1d385cd2677382c042d7d71e8b230fca151204c2f",
+    "benchmarks/ettm1/training_correction_v1.json": "1c34fc66a1907c39affeb085f6f2c7e8adb1ba63257a4d96c932b686ebe70d7a",
+    "bindings/module.cpp": "61d020f3e919168bd68dc33b6ac83b72cc827e9ea6f0bb8d6eff496cd253dc15",
+    "include/stealth/forecaster.hpp": "437322b89e654637c55b63d1dbad848a346bdf718f96409dd4cd6847fb0b4374",
+    "src/forecaster.cpp": "e56c89210bbc100c6f54294bccb66f9a28222c4d41e26286b13f3622c2615f3b",
+    "src/model_file.cpp": "8bc201e35bc789e0676d9b3237efd255fd3f924ee18cc3a7bdbf7b1bc9921ce7",
+    "tests/allocation_tests.cpp": "72d3280acf4ec26bfa41ac82d4ace1a646cb2d660169f9fda6d4efef497d2a87",
+    "tests/forecast_tests.cpp": "362bc832f91afe12fb73ececfae139c6564f3c4dbb7eaee2069acb2ca6e187d3",
+    "tests/model_file_tests.cpp": "e92595611f6755bc5eccb3d65cc185038fe72c6ee958e567bc85c9f742a02010",
+    "tests/training/test_correction.py": "954eff32a40d65b5e2429698e36c6c918cf7f845bda42e8abbcfd8dd2bd76a1a",
+    "tests/training/test_correction_protocol.py": "3f47cf8fc75176f3f05505919185a7714bb1669fc2556d6809f7705a6292a527",
+    "tools/torch_forecaster.py": "7abab73eddd1f70a0a1c0789df5cf8d9c02a106d7f47aa6a5981f1ebf3b01564",
+    "tools/train_correction_ettm1.py": "90ab97285c366dc005c37e95f8a62d8b2ee567c970f322dd679e9be7f5b1bb2f",
+    "tools/train_ettm1.py": "4652d3dc0f8a6d71f1a3c427062940c2264ae3337ec7c68bb5383d4889820ec2",
+    "tools/training_state.py": "d1ebbd87e782bdf244e4eaa174a064e1bfbdf69dad1e08bd580ab57169e0bdb8"
+  }
+}

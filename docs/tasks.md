@@ -61,9 +61,12 @@ quiet-window errors and seed-dependent bias explain where the transformers lose.
 All original scores reproduce exactly and two full runs are byte-identical.
 The old test is exploratory; the remaining source tail stays unused. See
 [the findings](forecast-diagnostics-results-v1.md) and
-[the diagnostic contract](forecast-diagnostics-v1.md). The user approved the correction-from-latest transformer. Its implementation
-and frozen matched comparison are described in [the new contract](correction-model-v1.md);
-learning outcomes are recorded separately after training.
+[the diagnostic contract](forecast-diagnostics-v1.md). The user-approved correction-from-latest transformer is implemented in Torch,
+native inference, Python sessions and rolling streams. The matched three-seed,
+six-round run improves all paired original models but still loses to persistence
+on old-test MAE (0.448029, 0.424493 and 0.498065 versus 0.417916). Exact full-size
+restart and byte-identical scoring replay pass. See [the new contract](correction-model-v1.md)
+and [all correction results](correction-results-v1.md). The reserved tail remains unused.
 
 Gate cached streaming separately after ordinary forward parity; test reset,
 capacity and stream isolation. A shifted 96-row window resets its positions and
