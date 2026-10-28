@@ -79,7 +79,7 @@
   "schema_version": 1,
   "scope": "Optional Python inference package and bounded raw-window streams; no training or comparative performance claims",
   "source_sha256": {
-    ".github/workflows/ci.yml": "21ce1c0cf11512cdc53fe30ef0a6c6c32017ea2cc644f5edfe9952d64d78cfc6",
+    ".github/workflows/ci.yml": "09f3ed988b4f19fba57f46ef4bb420ab5642cc36b38ca1ab25bb11ae6dacf81b",
     "CMakeLists.txt": "15dd32ff1a0b1449d82d8d29a4ff641172da21d211293a100ea2c88be24eaa28",
     "bindings/module.cpp": "03b117d2bab23cb7a22a3179601d28a3c4e885a4b13dac1fbd9206feff97753e",
     "examples/python_components.py": "7cea47a36ce7b1cc6d69126439af71cc2d9c4a5502852c9d4b6d9d98fdc4015d",
@@ -120,5 +120,6 @@
     "changed": false,
     "full_model_absolute": 5e-05,
     "full_model_relative": 0.0002
-  }
+  },
+  "workflow_syntax_repair": "Changed the wheel-download command to a YAML block scalar after reproducing the colon parsing error; executable sources unchanged."
 }

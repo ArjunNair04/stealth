@@ -83,7 +83,8 @@ jobs:
       - name: Install declared Python build dependencies
         run: python -m pip install -r requirements-python-dev.txt
       - name: Download the declared runtime wheel
-        run: python -m pip download --only-binary=:all: --no-deps --dest local/python-wheelhouse numpy==2.2.6
+        run: |
+          python -m pip download --only-binary=:all: --no-deps --dest local/python-wheelhouse numpy==2.2.6
       - name: Build and verify isolated Python package from source distribution
         shell: python
         run: |
