@@ -11,7 +11,8 @@ Start with the [complete model walkthrough and runnable example](docs/forecast-v
 The [attention walkthrough](docs/attention-v1.md) and
 [performance guide](docs/performance.md) explain the underlying components.
 Independent diagnostic correctness evidence exists. Trained forecast quality,
-streaming and the optional Python wrapper remain separate milestones.
+cached streaming and trained reference parity remain separate milestones. The optional
+Python wrapper and bounded raw-window baseline are implemented.
 The CLI reports build metadata and inspects model files.
 
 ## Start locally
@@ -79,7 +80,7 @@ docs/            Contracts, measured evidence, setup and work queue
 ```
 
 [Numeric contract](docs/numeric-contract.md) · [Performance](docs/performance.md)
-· [Development guide](docs/development.md) · [Architecture and Python plan](docs/architecture.md)
+· [Development guide](docs/development.md) · [Architecture and Python interface](docs/architecture.md)
 · [Tasks](docs/tasks.md) · [Test-first plan](docs/testing.md)
 
 The repository is public for review. No redistribution licence has been selected.
@@ -93,3 +94,13 @@ selected a one-hour point target and one block first. The native implementation
 is checked on diagnostic fixtures; training has not started. See the
 [plain-language guide](docs/public-benchmark.md) and
 [data contract](docs/benchmark-contract.md).
+
+## Optional Python and raw-window interface
+
+The `stealth_cpu` package now calls the same native components and forecaster.
+It includes owned prediction sessions, a bounded sequential batch interface and
+a raw-window stream with reset and failure preservation. See the
+[installation and component guide](docs/python-stream-v1.md) and
+[runnable Python example](examples/python_components.py). The native CMake build
+remains independent of Python. Training, cached streaming and comparative runtime
+benchmarks remain upcoming work.

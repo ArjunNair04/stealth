@@ -56,13 +56,20 @@ capacity and stream isolation. A shifted 96-row window resets its positions and
 must not silently reuse an incompatible cache. Two-block variants need their own
 recorded comparison, not an untracked change to this first architecture.
 
-## 4. Optional Python wrapper
+## 4. Optional Python wrapper and bounded raw streams (implemented)
 
-After native primitives are stable, add pybind11/scikit-build-core packaging and
-isolated-install tests. Verify Python/native parity, buffer lifetime, invalid
-inputs and explicitly documented copy behavior. Native builds remain independent.
-The wrapper can start once the early native API is stable; it need not wait for
-all streaming work. See objective 5 of the testing plan.
+The `stealth_cpu` package calls the same native core. It exposes reusable numeric
+components, full-model sessions, bounded sequential batching and raw-window
+streams. Strict NumPy buffer rules, explicit copies, lifetime, output ownership,
+failures and separate-session concurrency are tested. Native builds retain no
+Python dependency. Source archive -> wheel -> isolated runtime installation is
+checked across the platform matrix. See [implementation evidence](python-stream-v1.md).
+
+`WindowStream` stages each complete ordered row before accepting it, preserves
+history on failure, waits for full context before publishing, and recomputes the
+latest window with positions reset to zero. Reset, rolling/reference agreement,
+bounds, allocations and concurrent independent streams are tested. This completes
+the raw-window baseline; KV caching and market-feed clock alignment remain separate.
 
 ## 5. CPU performance study and QTS adapter (partial measurement only)
 

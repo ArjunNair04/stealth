@@ -1,0 +1,124 @@
+{
+  "base_commit": "a74ac81aa74e9264b7c84b1ab0333f50c758f36f",
+  "fault_injection": [
+    {
+      "detected_by": "window_stream.rolling",
+      "exit_code": 8,
+      "fault": "retain wrong old rows when sliding"
+    },
+    {
+      "detected_by": "Components.test_strict_buffers",
+      "exit_code": 1,
+      "fault": "accept wrong dtype without conversion"
+    }
+  ],
+  "local_log_sha256": {
+    "local/python-bindings-red.log": "09019b07f75f91d3a4725ec56ac4487f97d6082df6f539a4be8a00c647aa8199",
+    "local/python-mutation-dtype.log": "ea5bb6178c81ade5b78a37bafabfbe061d6ea1bf71216430d91a25309c066b20",
+    "local/python-package-final/build.log": "ed03d3388bdb5dd8c16dd8eceb4b9c65b5e67e7c4cc0b63bbb62b6118071f389",
+    "local/python-package-final/isolation.log": "6e05cb618ad5683c2a6354100390dedda49936528546504aa152f589dee7a71c",
+    "local/python-package-final/tests.log": "f2c2c32780c88dc80c801d0659d45ac6c231d7ee5e91c15d2669ac328aef7dd0",
+    "local/python-stream-data-tests.log": "6e8ef26c7d8efd82fd0ee2874798bd90dcc8fa727971505db0c8433c898ff704",
+    "local/python-stream-dev.log": "3e5d712beeec97db946bbf9be9055efa7c7fccc40ef8893acfb22b3518f6b806",
+    "local/python-stream-fixture.log": "89d63cfbf5fe6189d3fec0cbe2226ca4f5de35f63c1da1cc3d3ab6e71671564b",
+    "local/python-stream-red.log": "7171f912acb07f9132f263d4196e62e7f998b35a6ae3d30df9624ace06e57280",
+    "local/python-stream-release.log": "a7621237ed978a5f7ddce4ae1098e0affba7fb24492be6caca3ab33e6b32e0e5",
+    "local/python-stream-sanitize.log": "49e6e171ee8d4efc999d59c5365fc3e40be9171a9d80367a9296156241c307c4",
+    "local/python-stream-thread-sanitize.log": "1716ecab4586aa33674660f4e8e2e8ddb81d316a6477f5ca0b84920d59d8ad6b",
+    "local/stream-mutation-rolling.log": "6e12f4ac506ef4d22d6ad7f53b7ec3309d69922ed03de0713e60b3a36804af04",
+    "local/stream-restored-tests.log": "25a797058418318acf30950b098f6a81f5e1ed0cfc504b22e4c560e249a0bd00"
+  },
+  "local_verification": {
+    "fixture_regeneration": "numeric, attention and full-model exact checks passed",
+    "native_asan_ubsan_groups": 49,
+    "native_debug_groups": 50,
+    "native_release_groups": 50,
+    "native_relocated_consumer": "passed Debug and Release",
+    "native_thread_sanitizer": "independent streams sharing immutable model passed",
+    "public_data_tests": 23,
+    "python_installed_tests": 22
+  },
+  "memory": {
+    "native_limit": "Interception covers ordinary/aligned C++ new/new[], not every possible OS/C allocator",
+    "native_stream_cycles_without_intercepted_cpp_heap_allocations": 5000,
+    "python_wrapper": "Explicit input snapshots and fresh outputs; Python calls may allocate",
+    "stream_constructor_bad_alloc_points_tested": 6
+  },
+  "package": {
+    "artifacts": {
+      "numpy-2.2.6-cp310-cp310-macosx_14_0_x86_64.whl": "5a6429d4be8ca66d889b7cf70f536a397dc45ba6faeb5f8c5427935d9592e9cf",
+      "stealth_cpu-0.1.0-cp310-cp310-macosx_14_0_x86_64.whl": "e15e0894375813a88e5e965e322dfd5df244263df9802bfd63ffd5dd844f8bd6",
+      "stealth_cpu-0.1.0.tar.gz": "1d0b729cb8bd8e5b489081f40b2dcb147220c3fe56a713092058de7812eb1e64"
+    },
+    "built_wheel_from_sdist": true,
+    "python": "3.10.6",
+    "runtime_dependencies": [
+      "numpy==2.2.6"
+    ],
+    "runtime_install_network": false,
+    "schema_version": 1,
+    "status": "passed",
+    "wheel_members": [
+      "stealth_cpu/__init__.py",
+      "stealth_cpu/_core.cpython-310-darwin.so",
+      "stealth_cpu-0.1.0.dist-info/METADATA",
+      "stealth_cpu-0.1.0.dist-info/WHEEL",
+      "stealth_cpu-0.1.0.dist-info/RECORD"
+    ]
+  },
+  "pending": [
+    "Pinned PyTorch reference parity",
+    "Training protocol and checkpoint/RNG tooling",
+    "Trained model export and provenance",
+    "Comparative runtime benchmarks",
+    "KV-cache semantics and specialized kernels",
+    "Model replacement orchestration",
+    "Market-feed alignment and operational/trading gates"
+  ],
+  "recorded_at_utc": "2026-10-28T13:27:58.264910+00:00",
+  "schema_version": 1,
+  "scope": "Optional Python inference package and bounded raw-window streams; no training or comparative performance claims",
+  "source_sha256": {
+    ".github/workflows/ci.yml": "21ce1c0cf11512cdc53fe30ef0a6c6c32017ea2cc644f5edfe9952d64d78cfc6",
+    "CMakeLists.txt": "15dd32ff1a0b1449d82d8d29a4ff641172da21d211293a100ea2c88be24eaa28",
+    "bindings/module.cpp": "03b117d2bab23cb7a22a3179601d28a3c4e885a4b13dac1fbd9206feff97753e",
+    "examples/python_components.py": "7cea47a36ce7b1cc6d69126439af71cc2d9c4a5502852c9d4b6d9d98fdc4015d",
+    "include/stealth/attention.hpp": "18827349e4a880c898158fee8b36655e6438a8da792653c424cd14063b2eb3ba",
+    "include/stealth/feed_forward.hpp": "cfd79b2a5175962f4362ffaf1c6e0969e456b58aca2ff72d8d0a4a141cd1cc5f",
+    "include/stealth/forecaster.hpp": "5a38ed5639067f92309e07497272783176de9aeb9a7192c1c2df42b0736c3a15",
+    "include/stealth/model_file.hpp": "469416186dbb7a7d508d828f1b55e6bbbea3c3cf4dc594af8aeec7ec6ceb014e",
+    "include/stealth/numeric.hpp": "7c579f13c0bc486717a8be2881c5132d6debe595bd4ee7c448f70f186b3c2527",
+    "include/stealth/runtime.hpp": "6edce2ec9b3cc4f22c5c0f5e2b4641498d05136b74577f186f987993379020eb",
+    "include/stealth/transformer_block.hpp": "f3b13466d4e50dc212748e1561a943f30a7cc52c00751213a469de70323872b0",
+    "include/stealth/window_stream.hpp": "dffe3e0b5160a75f9ffb75de57134563d3211c26da950b677f03b22309614b82",
+    "pyproject.toml": "f8c11fd5d08fb812890c2c2ae7c695fd9389fe5a1c64f6856d5fb97312b4c53e",
+    "python/stealth_cpu/__init__.py": "c578a07e179798d5c52fd7eae1364dc89c82d0812e8d17a0b19f33154b5d8192",
+    "requirements-python-dev.txt": "cca7c4611d4fca6c2a8a54b0f7df800ffd0f89f80eca8363487013d3ec0b4846",
+    "src/attention.cpp": "8943bd0a61dcd87467fa8a1590db89a9525204dc96a63af6cbf807230d79f50f",
+    "src/feed_forward.cpp": "4adfe3d8ab56f626a40aa83ae511b22598222c2acfeda57cc48d8e5714d73260",
+    "src/forecaster.cpp": "87f809cf7d54aa73b5b9d208f77e8698e134b2cb577d1755a7b9b37334468c1f",
+    "src/fp_policy.hpp": "4f50bb5a319fd01a7e1c22260926c24b7c8af795c747c7b5b29a49d37145ddd3",
+    "src/model_file.cpp": "89dba279c0e8fa2fb556aff15b0d10e7be4158cb33845b8f5093be73a0d5289a",
+    "src/numeric.cpp": "c789252f4d7366a4671f1cd4be1b3749441f6230f52a0ebd695a0cf3809883b6",
+    "src/runtime.cpp": "428999fbf0d2e86993a4d24d3a04622aa752dd5e86bab40fea5399ebf7e79e58",
+    "src/sequence_detail.hpp": "fe884029a4fd012b4bcf2645f0b3b6691e0cb181924b59a41dd3a3e21d3a9acc",
+    "src/sha256.cpp": "044ba616809c069b23965b8290c9ee242f810afa64aaf799a47f836f8ad7153b",
+    "src/sha256.hpp": "da7e0e9ae779085b790e50af5b6e2eac8954539cd7acdeb833309825499dc224",
+    "src/transformer_block.cpp": "f2a56cda255da7090753c97b93137e84a8daf3e2ea985d7429021543c34d0604",
+    "src/window_stream.cpp": "bff607535378066395e9210098eb412d2a7bc8a808fc7cf81f74013862a216d9",
+    "tests/allocation_tests.cpp": "e3110dd6afd05b109746d4bfd9d7c4de10cfde34b4b6fdc30b8186008b94032c",
+    "tests/consumer/main.cpp": "9e0b61d6d1cf2151cd078d56c343572efb78d6e7a537bda07fbfb59786798558",
+    "tests/python/test_bindings.py": "2b5613562472c4e3e6a1e6b5e2d10171564301585e6ab6b87cf14f2b31bf06f7",
+    "tests/window_stream_tests.cpp": "77cbe2b8d9077535315d7a357acb7c7d1eff228343444fcb0a0e3ee666e1829c",
+    "tools/check_python_package.py": "a1098c0b47addd010a61752f6e84848baf1594e75742e57d2663e18b92fc1319"
+  },
+  "test_first": {
+    "native_stream": "Six test groups failed against explicit push stub",
+    "python_boundary": "Pre-implementation test import failed because native extension was absent; installed behavioral tests subsequently passed"
+  },
+  "tolerance": {
+    "changed": false,
+    "full_model_absolute": 5e-05,
+    "full_model_relative": 0.0002
+  }
+}

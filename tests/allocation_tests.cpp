@@ -4,6 +4,7 @@
 #include "stealth/feed_forward.hpp"
 #include "stealth/model_file.hpp"
 #include "stealth/transformer_block.hpp"
+#include "stealth/window_stream.hpp"
 #include "test_support.hpp"
 
 #include <array>
@@ -202,6 +203,55 @@ int main() {
             }
             std::cout << "Preserved active model across " << cold_allocations
                       << " injected load allocation failures\n";
+        }
+        {
+            auto shared = std::shared_ptr<const ForecastModel>(
+                load_forecaster(std::as_bytes(std::span(ff::artifact))));
+            WindowStream stream(shared);
+            std::array<float, 1> out{123};
+            std::array<float, ff::features> bad{};
+            bad[0] = std::numeric_limits<float>::infinity();
+            allocations = 0;
+            bool failed = false;
+            tracking = true;
+            for (std::size_t i = 0; i < 5000; ++i) {
+                if (i % 13 == 0)
+                    stream.reset();
+                if (stream.push(
+                        std::span(ff::input).subspan((i % ff::tokens) * ff::features, ff::features),
+                        out) != Error::ok ||
+                    stream.push(bad, out) != Error::non_finite) {
+                    failed = true;
+                    break;
+                }
+            }
+            tracking = false;
+            CHECK(!failed);
+            CHECK(allocations == 0);
+            allocations = 0;
+            tracking = true;
+            auto candidate = std::make_unique<WindowStream>(shared);
+            tracking = false;
+            const auto cold = allocations;
+            candidate.reset();
+            CHECK(cold > 1);
+            for (std::size_t i = 0; i < cold; ++i) {
+                fail_index = i;
+                attempt = 0;
+                inject_failure = true;
+                bool caught = false;
+                try {
+                    candidate = std::make_unique<WindowStream>(shared);
+                } catch (const std::bad_alloc &) {
+                    caught = true;
+                }
+                inject_failure = false;
+                CHECK(caught);
+                CHECK(!candidate);
+                CHECK(stream.push(std::span(ff::input).first(ff::features), out) == Error::ok);
+            }
+            std::cout << "Zero allocations in 5,000 stream/error/reset cycles; " << cold
+                      << " stream construction allocation failures preserved the existing stream\n";
         }
         std::cout << "No intercepted C++ heap allocations in 4,000 forecaster/error-path cycles\n";
         std::cout << "No intercepted C++ heap allocations in 4,000 "

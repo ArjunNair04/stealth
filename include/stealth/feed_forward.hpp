@@ -30,6 +30,8 @@ class FeedForward {
     [[nodiscard]] Error forward(std::span<const float> input, std::span<float> output,
                                 FeedForwardWorkspace &workspace) const noexcept;
     [[nodiscard]] std::size_t parameter_bytes() const noexcept;
+    [[nodiscard]] std::size_t width() const noexcept { return width_; }
+    [[nodiscard]] std::size_t hidden() const noexcept { return hidden_; }
 
   private:
     std::size_t width_;

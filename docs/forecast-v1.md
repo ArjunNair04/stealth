@@ -146,7 +146,9 @@ latency claim; previous timings measured smaller components/blocks.
 3. Bind trained exports to a manifest containing feature order, cadence, task id,
    data/scaler/code hashes and training provenance. The numerical file alone does
    not carry those research records or authenticate its creator.
-4. Add the thin Python wrapper and bounded streaming tests. Resetting positions
-   for a new 96-row window is not assumed equivalent to retaining an old KV cache.
+4. The thin Python wrapper and bounded raw-window tests are now implemented in
+   [the next infrastructure milestone](python-stream-v1.md). Cached streaming remains
+   separate: resetting positions for a new 96-row window is not assumed equivalent
+   to retaining an old KV cache.
 5. Compare a second block and later optimizations on forecast error, median/tail
    latency and memory. Keep future QTS returns evaluation a separate experiment.

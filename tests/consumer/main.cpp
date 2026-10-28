@@ -5,6 +5,7 @@
 #include <stealth/numeric.hpp>
 #include <stealth/runtime.hpp>
 #include <stealth/transformer_block.hpp>
+#include <stealth/window_stream.hpp>
 #include <vector>
 
 int main() {
@@ -36,6 +37,13 @@ int main() {
     ForecastModel forecaster(config, parameters);
     ForecastWorkspace forecast_workspace(config);
     if (forecaster.forward(x, 1, y, forecast_workspace) != Error::ok || y[0] != 20)
+        return 1;
+    auto shared = std::make_shared<const ForecastModel>(config, parameters);
+    WindowStream stream(shared);
+    if (stream.push(x, y) != Error::ok || !stream.ready() || y[0] != 20)
+        return 1;
+    stream.reset();
+    if (stream.size() != 0 || stream.ready())
         return 1;
     bool rejected = false;
     try {

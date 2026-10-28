@@ -161,3 +161,16 @@ The first complete forecaster exposes per-origin outputs for causal diagnostics.
 A future final-only readout can avoid normalization/head work for unused earlier
 origins while retaining the trace path as a reference. Measure that change after
 trained parity; it does not require changing the agreed forecasting objective.
+
+## Python and raw-window follow-ups
+
+The first wrapper copies input explicitly; batch calls snapshot their bounded
+input and evaluate sequences sequentially. Primitive convenience calls allocate
+workspaces and retain the GIL. Measure these interface costs separately from
+native arithmetic. Later candidates include caller-owned output/workspace APIs
+and fused batches, only if measured workloads justify them.
+
+Raw-window streams currently recalculate each accepted prefix/window. Position
+markers restart at zero. A future cache must prove equivalence for its stated
+semantics; simply retaining prior keys/values is not an equivalent optimization.
+No wrapper, full-stream or training speed claim is recorded in this milestone.

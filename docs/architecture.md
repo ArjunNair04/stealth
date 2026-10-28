@@ -1,10 +1,10 @@
 # Native boundary and later Python wrapper
 
-The native library is the shared core. The CLI is one caller. A later Python
-extension will be another caller of the same implementation.
+The native library is the shared core. The CLI and optional Python extension
+call the same implementation.
 
 ```text
-C++ command-line program ----> stealth::core <---- future Python extension
+C++ command-line program ----> stealth::core <---- Python extension
 ```
 
 The core exposes build metadata and the [native numeric layer](native-v1.md).
@@ -33,20 +33,19 @@ into a Python extension. Public includes are separated from generated/private
 headers; consumers link the exported `stealth::core` target. API/ABI compatibility
 is not promised during the initial 0.x research phase.
 
-## Python milestone (planned)
+## Python and raw-window milestone
 
-Use pybind11 with scikit-build-core unless requirements reveal a better fit.
-Keep Python optional: the C++ build and native CLI must remain usable without it.
-Bindings should call native functions, preserve exception meanings and validate
-array dtype, shape, strides and ownership. Release the GIL only while native code
-runs without touching Python objects. Avoid implicit copies in measured paths;
-explicitly document when a copy is required.
+The optional pybind11/scikit-build-core package `stealth_cpu` is implemented.
+Its native-only CMake default remains OFF. It exposes components, owned forecast
+sessions, bounded sequential batching and raw-window streams. Strict float32
+buffer validation, explicit copies and result ownership keep Python lifetimes
+separate from native workspaces. Separate sessions share immutable models and
+release the GIL during inference; concurrent reuse of one session is rejected.
 
-Deliver an isolated development install first. Later wheel builds must target
-specific operating systems, architectures and supported Python versions. No
-package has been installed or published for this milestone.
-
-Reference: https://pybind11.readthedocs.io/en/stable/compiling.html
+The raw stream recomputes a bounded latest window and does not assume cache
+compatibility when positions restart. See [the contract](python-stream-contract.md)
+and [installation/evidence](python-stream-v1.md). No training/autograd or public
+wheel publication is included. API/ABI compatibility remains provisional in 0.x.
 
 ## Research boundary
 

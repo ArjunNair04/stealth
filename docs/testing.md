@@ -3,8 +3,9 @@
 Updated: 2026-10-28. These are acceptance requirements for future work; they are
 not a claim that the model or these tests already exist. Completed evidence is in verification.md, native-v1.md and attention-v1.md.
 Primitive, attention/block, complete-model diagnostic and loading checks have
-passed; see forecast-v1.md. PyTorch/trained reference, streaming and wrapper gates
-remain open.
+passed; see forecast-v1.md. The optional wrapper and bounded raw-window stream
+are now implemented; see python-stream-v1.md. PyTorch/trained reference, cache
+equivalence and market-feed integration gates remain open.
 
 ## First milestone
 

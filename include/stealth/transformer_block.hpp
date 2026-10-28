@@ -24,7 +24,7 @@ class TransformerWorkspace {
     AttentionWorkspace attention_;
     FeedForwardWorkspace feed_forward_;
 };
-// A pre-norm block on embedded rows. Position encoding belongs to the future input stage.
+// A pre-norm block on embedded rows. The caller supplies position encoding.
 class TransformerBlock {
   public:
     TransformerBlock(std::size_t width, std::size_t heads, std::size_t hidden,
