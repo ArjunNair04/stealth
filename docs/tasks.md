@@ -33,7 +33,7 @@ See [implementation evidence](native-v1.md) and [performance](performance.md).
 The task remains open until the implementation PR is merged. This establishes
 primitive and feed-forward correctness on tested inputs, not full-model parity.
 
-## 3. Small reference model and native parity (native diagnostic gates implemented)
+## 3. Small reference model and native parity (training workflow implemented)
 
 The user selected one temperature one hour ahead and one block first. The frozen
 configuration is seven inputs, 96 context rows, width 64, four heads and hidden
@@ -46,10 +46,12 @@ versioned weight loader preserves the previous model on failure. Independent
 double-equation fixtures cover reduced and full task shapes; malformed files,
 causality, output isolation, allocation failure and installed consumers are tested.
 
-Next: pin the PyTorch CPU reference environment, establish framework parity, then
-freeze the training/evaluation protocol and train/export the public-data example.
-Bind trained artifacts to data/scaler/feature-order/protocol provenance. These
-remaining gates keep issue #3 open. Synthetic fixtures remain diagnostic tests.
+The optional Torch CPU reference, framework/native parity, numerical gradient
+checks, AdamW training, accumulation, exact epoch restart, bounded pickle-free
+checkpoints and provenance-bound native export are implemented. See the
+[training guide](training-v1.md). The first fixed ETTm1 run and its aggregate
+results are recorded separately; issue #3 stays open through review and merge.
+Synthetic learning fixtures remain software diagnostics.
 
 Gate cached streaming separately after ordinary forward parity; test reset,
 capacity and stream isolation. A shifted 96-row window resets its positions and
@@ -99,4 +101,4 @@ ETTm1 source pinning, strict parsing, training-only scaling, chronological windo
 indices and immutable preparation/replay are implemented on
 `codex/public-benchmark`. See [the data contract](benchmark-contract.md) and
 [the benchmark guide](public-benchmark.md). The user has now selected the one-hour point target and one-block architecture.
-Native model/loading work is recorded above; training remains pending.
+Native model/loading and the frozen training workflow are recorded above.

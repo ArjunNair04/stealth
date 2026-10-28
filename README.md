@@ -5,13 +5,14 @@ The native library provides checked numeric components, causal attention and a
 complete one-block point forecaster with a versioned weight-file loader. It has
 scalar and packed layouts, component/integration tests and an installable CMake
 package. The first task uses 96 ETTm1 readings to predict one temperature an hour
-ahead; training and pinned framework parity remain pending.
+ahead. The optional Torch reference, tested training/checkpoint workflow and native
+export are implemented; see [the training guide](docs/training-v1.md).
 
 Start with the [complete model walkthrough and runnable example](docs/forecast-v1.md).
 The [attention walkthrough](docs/attention-v1.md) and
 [performance guide](docs/performance.md) explain the underlying components.
-Independent diagnostic correctness evidence exists. Trained forecast quality,
-cached streaming and trained reference parity remain separate milestones. The optional
+Independent diagnostic and framework parity tests are in place. Public-data
+learning results and comparative latency require separately recorded runs. The optional
 Python wrapper and bounded raw-window baseline are implemented.
 The CLI reports build metadata and inspects model files.
 
@@ -91,7 +92,8 @@ The first learning dataset is ETTm1: electricity loads and equipment temperature
 at 15-minute intervals. A pinned-source downloader, strict data checks,
 training-only scaling and chronological window tests are implemented. The user
 selected a one-hour point target and one block first. The native implementation
-is checked on diagnostic fixtures; training has not started. See the
+is checked against independent equations and the Torch reference. The frozen
+training recipe is in `benchmarks/ettm1/training_v1.json`. See the
 [plain-language guide](docs/public-benchmark.md) and
 [data contract](docs/benchmark-contract.md).
 
@@ -102,5 +104,6 @@ It includes owned prediction sessions, a bounded sequential batch interface and
 a raw-window stream with reset and failure preservation. See the
 [installation and component guide](docs/python-stream-v1.md) and
 [runnable Python example](examples/python_components.py). The native CMake build
-remains independent of Python. Training, cached streaming and comparative runtime
+remains independent of Python. The optional [training workflow](docs/training-v1.md)
+exports learned weights into this engine. Cached streaming and comparative runtime
 benchmarks remain upcoming work.
