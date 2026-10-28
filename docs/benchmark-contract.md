@@ -1,7 +1,7 @@
 # Public benchmark data contract
 
-Frozen data-engineering contract, 28 October 2026. Forecast target and model
-architecture remain subject to discussion with the user. This is preparation,
+Frozen data-engineering contract, 28 October 2026. The subsequently agreed
+forecast target and model architecture are in forecast-contract.md. This is preparation,
 not a trained-model result or a leaderboard reproduction.
 
 ## Source and ownership

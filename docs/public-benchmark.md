@@ -52,23 +52,20 @@ those statistics or see the future values it must predict.
 
 ## The first model discussion
 
-The proposal sent to the user is: use the last day's 96 readings, including the
-past temperature, to predict one temperature four steps (one hour) ahead. A second
-option is to predict all 96 temperatures in the next day. The window code supports
-both; the experiment target and architecture remain uncommitted choices.
+The user selected the one-hour point target and one-block architecture on
+28 October 2026. Use the last 96 readings, including past temperature, to predict
+one temperature four steps ahead. At 10:00, the input starts at the preceding
+day's 10:15 and ends at today's 10:00; the answer is for 11:00. The 10:15, 10:30,
+10:45 and 11:00 future measurements cannot enter the input. See
+[the complete model](forecast-v1.md) for implementation and tests.
 
-For example, with the most recent reading at 10:00, a four-step point forecast
-answers for 11:00. It cannot use the 10:15, 10:30, 10:45 or 11:00 measurements as
-inputs. Predicting the next day's curve requires many answers and gives us a
-broader forecasting task, with more training and diagnostic work.
-
-Before training, agree the horizon, input channels, positions and output meaning.
-Start the comparison with simple controls: repeat the latest temperature, repeat
+The horizon, input channels, positions and output meaning are now specified.
+Before training, freeze the experiment protocol. Start the comparison with simple controls: repeat the latest temperature, repeat
 the corresponding time yesterday, and a fitted linear predictor. Report forecast
 error separately from inference latency and memory. Use the same inputs and
-trained weights for native-versus-reference timing. The proposed one-hour task
-would be a development benchmark, not a replication of published long-horizon
-leaderboard scores. Architecture, baselines, metrics, seed list and stopping
+trained weights for native-versus-reference timing. The selected one-hour task
+is a development benchmark, not a replication of published long-horizon
+leaderboard scores. Baselines, metrics, seed list and stopping
 rules must be frozen before looking at held-out model outcomes.
 
 ## What the new files do
@@ -131,9 +128,9 @@ these tests. No training, financial result or forecasting speed claim is made.
 
 ## Next native work and QTS
 
-Once the complete model layout is agreed, implement the versioned weight loader
-and malformed-file tests, then the complete model and pinned reference parity.
-Only then train/export the chosen public-data example. Keep performance ideas in
+The complete native model and weight loader now have diagnostic tests. Establish
+pinned PyTorch reference parity next, then train/export the chosen public-data
+example under its frozen experiment protocol. Keep performance ideas in
 [the optimization notebook](performance.md#deferred-optimization-notebook).
 
 A read-only QTS check found 28 local HistData M1 archives, covering AUDUSD, EURUSD,

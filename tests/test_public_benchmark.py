@@ -192,6 +192,31 @@ class WindowTests(unittest.TestCase):
         with self.assertRaises(ValueError): list(b.windows(24, good, 'train', 4, 2, 'unknown'))
 
 
+class OneHourTaskTests(unittest.TestCase):
+    def test_agreed_target_and_clock_example(self):
+        task = json.loads((TOOL.parents[1]/'benchmarks/ettm1/one_hour.json').read_text())
+        self.assertEqual(task['context'], 96)
+        self.assertEqual(task['horizon_steps']*task['interval_seconds'], 3600)
+        self.assertEqual(task['target_column'], 'OT')
+        self.assertEqual(task['model']['blocks'], 1)
+        self.assertEqual(task['input_columns'], COLUMNS[1:])
+        rows = fixture(300)
+        indices = list(b.windows(300, {'train':200,'validation':250,'test':300},
+                                 'train',task['context'],task['horizon_steps'],task['target_mode']))
+        sample = next(w for w in indices if rows[w.input_end-1][0]=='2020-01-02 10:00:00')
+        self.assertEqual(rows[sample.input_start][0], '2020-01-01 10:15:00')
+        self.assertEqual(rows[sample.target_start][0], '2020-01-02 11:00:00')
+        self.assertEqual(sample.target_end-sample.target_start,1)
+
+    def test_full_dataset_window_counts(self):
+        ends = {'train':34560,'validation':46080,'test':57600}
+        for split,count in (('train',34461),('validation',11517),('test',11517)):
+            w=list(b.windows(69680,ends,split,96,4,'point'))
+            self.assertEqual(len(w),count)
+            self.assertEqual(w[-1].target_end,ends[split])
+            self.assertEqual(w[-1].target_start-(w[-1].input_end-1),4)
+
+
 class SnapshotTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(); self.addCleanup(self.tmp.cleanup)

@@ -12,11 +12,14 @@ Owned FP32 buffers and immutable model parameters are prepared during constructi
 Each inference caller owns its output and reusable workspace. Dense projections
 can use either the scalar or packed layout through the same public interface.
 
-The core now also provides [causal multihead attention and a pre-norm transformer
-block](attention-v1.md), with a fused Q/K/V projection and one attention-score row
-at a time. Inputs are embedded vectors. Position encoding, a forecasting head,
-model serialization, training and incremental caching remain pending. Synthetic correctness and local latency results exist; there is no
-forecast-quality or financial result. The CLI remains a build-information utility.
+The core provides [causal multihead attention and a pre-norm transformer
+block](attention-v1.md), with fused Q/K/V projection and one attention-score row
+at a time. The [complete forecaster](forecast-v1.md) adds frozen feature scaling,
+a learned input projection, fixed positions, final normalization and a scalar
+head. Weight files are bounded, versioned and digest-checked before construction.
+The CLI can inspect a model file. Pinned framework parity, trained forecasts and
+incremental caching remain open; component latency measurements do not establish
+full-system performance or financial usefulness.
 
 ## Portability
 

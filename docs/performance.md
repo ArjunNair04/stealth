@@ -155,3 +155,9 @@ ETTm1 downloading, parsing and scaler fitting are cold preparation tasks. Keep
 these outside timed native inference. The window iterator stores indices and
 creates one descriptor at a time; it avoids copying every overlapping window
 into one large array. This is a memory design choice, not a measured latency win.
+
+
+The first complete forecaster exposes per-origin outputs for causal diagnostics.
+A future final-only readout can avoid normalization/head work for unused earlier
+origins while retaining the trace path as a reference. Measure that change after
+trained parity; it does not require changing the agreed forecasting objective.

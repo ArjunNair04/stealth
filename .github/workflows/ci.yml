@@ -46,6 +46,9 @@ jobs:
       - name: Verify independent attention fixture
         if: matrix.name == 'Linux GCC'
         run: python3 tools/generate_attention_fixture.py --check
+      - name: Verify independent full-model fixture
+        if: matrix.name == 'Linux GCC'
+        run: python3 tools/generate_forecast_fixture.py --check
       - name: Configure debug
         run: cmake --preset dev -DSTEALTH_WARNINGS_AS_ERRORS=ON
       - name: Build debug

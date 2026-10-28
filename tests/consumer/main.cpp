@@ -1,9 +1,11 @@
 #include <array>
 #include <span>
 #include <stealth/feed_forward.hpp>
+#include <stealth/model_file.hpp>
 #include <stealth/numeric.hpp>
 #include <stealth/runtime.hpp>
 #include <stealth/transformer_block.hpp>
+#include <vector>
 
 int main() {
     using namespace stealth::numeric;
@@ -26,6 +28,23 @@ int main() {
         {one, zero, triple_zero, triple_zero, zero, zero, {one, zero, zero, zero, zero, zero}});
     TransformerWorkspace sequence(1, 1, 1, 1);
     if (transformer.forward(x, 1, y, sequence) != Error::ok || y[0] != 3)
+        return 1;
+    ForecastConfig config{1, 1, 1, 1, 1, 4, 0};
+    std::vector<float> parameters(forecast_parameter_count(config), 0);
+    parameters[0] = 20;
+    parameters[1] = 2;
+    ForecastModel forecaster(config, parameters);
+    ForecastWorkspace forecast_workspace(config);
+    if (forecaster.forward(x, 1, y, forecast_workspace) != Error::ok || y[0] != 20)
+        return 1;
+    bool rejected = false;
+    try {
+        auto invalid = load_forecaster({});
+        (void)invalid;
+    } catch (const std::invalid_argument &) {
+        rejected = true;
+    }
+    if (!rejected)
         return 1;
     return stealth::build_info().version.empty() ? 1 : 0;
 }

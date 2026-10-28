@@ -1,17 +1,18 @@
 # Stealth
 
-Portable C++20 numeric foundation for a CPU forecasting research project.
-Stealth is a working name. The native library now provides aligned FP32 storage,
-checked dense projections, softmax, layer normalization, GELU, residual addition
-a composed feed-forward block, causal multihead attention and a pre-norm
-transformer block. It includes a scalar reference, packed weight
-layout, component/integration tests and an installable CMake package.
+Portable C++20 CPU forecasting research project. Stealth is a working name.
+The native library provides checked numeric components, causal attention and a
+complete one-block point forecaster with a versioned weight-file loader. It has
+scalar and packed layouts, component/integration tests and an installable CMake
+package. The first task uses 96 ETTm1 readings to predict one temperature an hour
+ahead; training and pinned framework parity remain pending.
 
-Start with the [runnable attention example and file map](docs/attention-v1.md).
-The [first native milestone](docs/native-v1.md) records primitive evidence, and
-[the performance walkthrough](docs/performance.md) explains the optimizations. This is an early numeric library; a full transformer,
-trained forecast, streaming engine and Python wrapper remain future milestones.
-The CLI currently reports build metadata.
+Start with the [complete model walkthrough and runnable example](docs/forecast-v1.md).
+The [attention walkthrough](docs/attention-v1.md) and
+[performance guide](docs/performance.md) explain the underlying components.
+Independent diagnostic correctness evidence exists. Trained forecast quality,
+streaming and the optional Python wrapper remain separate milestones.
+The CLI reports build metadata and inspects model files.
 
 ## Start locally
 
@@ -24,6 +25,7 @@ cmake --build --preset dev
 ctest --preset dev
 ./build/dev/stealth --build-info
 ./build/dev/stealth_attention_demo
+./build/dev/stealth_forecast_demo
 ```
 
 On Windows, use a Visual Studio developer shell and append `.exe` to executable names.
@@ -68,7 +70,7 @@ matrix checks Linux GCC/Clang, Windows MSVC, and Intel/ARM macOS.
 include/stealth/  Public C++ API
 src/             Native implementation
 app/             Command-line program
-examples/        Runnable attention demonstration
+examples/        Runnable attention and forecast diagnostics
 cmake/           Version and package configuration
 tests/           Component, integration, allocation and installation tests
 bench/           Optional native latency benchmark
@@ -86,7 +88,8 @@ The repository is public for review. No redistribution licence has been selected
 
 The first learning dataset is ETTm1: electricity loads and equipment temperature
 at 15-minute intervals. A pinned-source downloader, strict data checks,
-training-only scaling and chronological window tests are implemented. The complete
-forecast model is still under design with the user. See the
+training-only scaling and chronological window tests are implemented. The user
+selected a one-hour point target and one block first. The native implementation
+is checked on diagnostic fixtures; training has not started. See the
 [plain-language guide](docs/public-benchmark.md) and
 [data contract](docs/benchmark-contract.md).

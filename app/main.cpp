@@ -1,3 +1,4 @@
+#include "stealth/model_file.hpp"
 #include "stealth/runtime.hpp"
 
 #include <iostream>
@@ -5,8 +6,8 @@
 
 namespace {
 void usage(std::ostream &output) {
-    output << "Usage: stealth [--version | --build-info | --help]\n"
-           << "Native development foundation; forecasting is not implemented yet.\n";
+    output << "Usage: stealth [--version | --build-info | --inspect-model FILE | --help]\n"
+           << "Native CPU forecaster; trained benchmark validation remains pending.\n";
 }
 } // namespace
 
@@ -14,6 +15,24 @@ int main(int argc, char *argv[]) {
     if (argc == 1 || (argc == 2 && std::string_view(argv[1]) == "--help")) {
         usage(std::cout);
         return 0;
+    }
+    if (argc == 3 && std::string_view(argv[1]) == "--inspect-model") {
+        try {
+            auto model = stealth::numeric::load_forecaster_file(argv[2]);
+            const auto c = model->config();
+            stealth::numeric::ForecastWorkspace workspace(c);
+            std::cout << "format_version: 1\nblocks: 1\nfeatures: " << c.features
+                      << "\nwidth: " << c.width << "\nheads: " << c.heads
+                      << "\nhidden: " << c.hidden << "\ncontext: " << c.context
+                      << "\nhorizon_steps: " << c.horizon << "\ntarget_feature: " << c.target
+                      << "\nparameter_bytes: " << model->parameter_bytes()
+                      << "\nposition_bytes: " << model->position_bytes()
+                      << "\nworkspace_bytes: " << workspace.bytes() << "\n";
+            return 0;
+        } catch (const std::exception &e) {
+            std::cerr << "Model rejected: " << e.what() << '\n';
+            return 1;
+        }
     }
     if (argc != 2) {
         usage(std::cerr);

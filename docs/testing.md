@@ -2,8 +2,9 @@
 
 Updated: 2026-10-28. These are acceptance requirements for future work; they are
 not a claim that the model or these tests already exist. Completed evidence is in verification.md, native-v1.md and attention-v1.md.
-Primitive and attention/block component checks have passed; full-model loading,
-PyTorch/trained reference, streaming and wrapper gates remain open.
+Primitive, attention/block, complete-model diagnostic and loading checks have
+passed; see forecast-v1.md. PyTorch/trained reference, streaming and wrapper gates
+remain open.
 
 ## First milestone
 
@@ -41,16 +42,13 @@ Specify a single-observation API boundary and separate per-model weights from
 per-stream mutable state. The initial inference engine has one writer per stream;
 parallel sharing requires a later explicit contract.
 
-Discuss the inputs, target and architecture with the user, then freeze the small
-model specification before composing it: two layers, width 64,
-four heads and feedforward width 256 are the proposed baseline. Also use a reduced
-one-layer fixture for diagnosis. State layer-normalization epsilon, activation
-formula, positional encoding, causal mask, inference dropout behavior and output
-meaning explicitly. Choose bounded episodes with explicit resets initially;
-continuous rolling-memory behavior needs a separate specification.
-
-Done: a compact specification and test cases have unambiguous expected behavior.
-These choices remain proposals until that specification is committed.
+Discuss model choices with the user before changing them. The user selected one
+block first and a one-hour point forecast. The first complete specification is
+now frozen in forecast-contract.md and benchmarks/ettm1/one_hour.json: width 64,
+four heads, hidden width 256, fixed sinusoidal positions, pre-norm, exact GELU,
+final layer normalization and a scalar head. Diagnostic shapes may be smaller.
+Every window starts its positions at zero; bounded cached episodes remain a
+separate implementation. The earlier two-block baseline was an unfrozen proposal.
 
 ## Objective 2: reliable native arithmetic
 
@@ -85,8 +83,7 @@ using the same weights and preprocessing, with dropout disabled. Use fixed
 untrained diagnostic weights first, then a reproducible public-data training/export
 example. Use ETTm1 for the requested public-data starting point; retain synthetic
 cases for diagnostic tests. Keep native correctness tests runnable from compact
-exported fixtures
-without installing Python; run a separate reference-generation/consistency job
+exported fixtures without installing Python; run a separate reference-generation/consistency job
 in its declared Python environment.
 
 Set per-operation and end-to-end absolute/relative tolerances before accepting

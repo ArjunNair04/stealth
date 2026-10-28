@@ -33,27 +33,28 @@ See [implementation evidence](native-v1.md) and [performance](performance.md).
 The task remains open until the implementation PR is merged. This establishes
 primitive and feed-forward correctness on tested inputs, not full-model parity.
 
-## 3. Small reference model and native parity (attention component gate passed locally)
+## 3. Small reference model and native parity (native diagnostic gates implemented)
 
-The feed-forward sublayer, causal multihead attention and composed pre-norm
-transformer block are implemented on `codex/causal-attention`. Independent equation
-fixtures, prefix/future invariance, failure isolation, allocation checks and a
-runnable demonstration pass locally. See [attention evidence](attention-v1.md).
+The user selected one temperature one hour ahead and one block first. The frozen
+configuration is seven inputs, 96 context rows, width 64, four heads and hidden
+width 256. See [the model contract](forecast-contract.md) and
+[implementation evidence](forecast-v1.md).
 
-Next, freeze the complete input/position/output model layout and versioned weight
-format. Test the loader before executing loaded models, establish pinned PyTorch
-parity, then train/export a reproducible public-data example. The user selected
-real public data for the first learning benchmark; synthetic cases remain
-diagnostic tests. Full-model and trained reference gates remain open; the current
-fixtures have diagnostic untrained weights.
+Native input scaling, projection, positions, the causal block, final normalization
+and scalar readout are implemented on `codex/one-block-forecaster`. The bounded
+versioned weight loader preserves the previous model on failure. Independent
+double-equation fixtures cover reduced and full task shapes; malformed files,
+causality, output isolation, allocation failure and installed consumers are tested.
 
-Freeze model layout and weight serialization, train/export a deterministic
-reference, and verify native forward outputs before adding caching. Specify
-position, normalization and reset behavior before testing incremental equivalence.
-Require corrupted-weight rejection, unchanged state on failure, layer/full-model
-reference checks, future-input invariance and declared numerical tolerances.
-Cached streaming is a separate acceptance gate after ordinary forward parity;
-test reset, capacity and stream isolation. See objectives 3-4 of the testing plan.
+Next: pin the PyTorch CPU reference environment, establish framework parity, then
+freeze the training/evaluation protocol and train/export the public-data example.
+Bind trained artifacts to data/scaler/feature-order/protocol provenance. These
+remaining gates keep issue #3 open. Synthetic fixtures remain diagnostic tests.
+
+Gate cached streaming separately after ordinary forward parity; test reset,
+capacity and stream isolation. A shifted 96-row window resets its positions and
+must not silently reuse an incompatible cache. Two-block variants need their own
+recorded comparison, not an untracked change to this first architecture.
 
 ## 4. Optional Python wrapper
 
@@ -90,6 +91,5 @@ See [verification](verification.md) for infrastructure and [native v1](native-v1
 ETTm1 source pinning, strict parsing, training-only scaling, chronological window
 indices and immutable preparation/replay are implemented on
 `codex/public-benchmark`. See [the data contract](benchmark-contract.md) and
-[the benchmark guide](public-benchmark.md). The final prediction horizon and
-complete architecture are discussed with the user before training. Weight-file
-loading remains the next native implementation after those choices are clear.
+[the benchmark guide](public-benchmark.md). The user has now selected the one-hour point target and one-block architecture.
+Native model/loading work is recorded above; training remains pending.
