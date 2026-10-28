@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "started_at_utc": "2026-10-28T08:10:17.803477+00:00",
+  "source_commit": "3bf9eed0025e72843ae065d8aee5fb363acd6e10",
+  "source_sha256": {
+    "CMakeLists.txt": "4f84f03e74fc6a5b5e0e80328e500bb69ce834f6e390a6582fcd504fe9f76b31",
+    "CMakePresets.json": "3680bbacdd3d3304faccb4c7012112c6192d20a2790691262739aff649f531ef",
+    "bench/native_benchmark.cpp": "991cb7638bf9117a49cbde58df56de7e2784086eb8f3d02061bb67ba3f988e94",
+    "cmake/build_config.hpp.in": "576f2d3a87daa27e125824ecda05ccf671aae24704d24a86263a43119cd2cd33",
+    "cmake/stealthConfig.cmake.in": "dff57e1fc11294cae5e6027d6003130373080cc593839ec0b85c2f1f9fd455cc",
+    "include/stealth/attention.hpp": "18827349e4a880c898158fee8b36655e6438a8da792653c424cd14063b2eb3ba",
+    "include/stealth/feed_forward.hpp": "6836afefe37db8225e9ea3b1951f565b6f7dcaee77752be2d81894664567cf2f",
+    "include/stealth/numeric.hpp": "7c579f13c0bc486717a8be2881c5132d6debe595bd4ee7c448f70f186b3c2527",
+    "include/stealth/runtime.hpp": "6edce2ec9b3cc4f22c5c0f5e2b4641498d05136b74577f186f987993379020eb",
+    "include/stealth/transformer_block.hpp": "b755684e8356bc082d4d62ece6339c688d550b9e490cadfc26e569c5b9411739",
+    "src/attention.cpp": "8943bd0a61dcd87467fa8a1590db89a9525204dc96a63af6cbf807230d79f50f",
+    "src/feed_forward.cpp": "4adfe3d8ab56f626a40aa83ae511b22598222c2acfeda57cc48d8e5714d73260",
+    "src/fp_policy.hpp": "4f50bb5a319fd01a7e1c22260926c24b7c8af795c747c7b5b29a49d37145ddd3",
+    "src/numeric.cpp": "c789252f4d7366a4671f1cd4be1b3749441f6230f52a0ebd695a0cf3809883b6",
+    "src/runtime.cpp": "428999fbf0d2e86993a4d24d3a04622aa752dd5e86bab40fea5399ebf7e79e58",
+    "src/sequence_detail.hpp": "fe884029a4fd012b4bcf2645f0b3b6691e0cb181924b59a41dd3a3e21d3a9acc",
+    "src/transformer_block.cpp": "f2a56cda255da7090753c97b93137e84a8daf3e2ea985d7429021543c34d0604",
+    "tools/record_benchmarks.py": "9db376a2c52b166fce854a398373cc128568035c178ebe2d1659a40669b2b21f"
+  },
+  "binary_sha256": "14cd76df71cf6be4178eaacce9f2ae581ebda12932e4bb01ad74ef26affe6213",
+  "numeric_compile_command": "/usr/bin/c++ -DSTEALTH_BUILD_CONFIGURATION=\\\"Release\\\" -I<source>/include -I<source>/build/release/generated -O3 -DNDEBUG -std=c++20 -fPIC -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Werror -ffp-contract=off -o CMakeFiles/stealth_core.dir/src/numeric.cpp.o -c <source>/src/numeric.cpp",
+  "cpu": "Intel(R) Core(TM) i5-10600 CPU @ 3.30GHz",
+  "architecture": "x86_64",
+  "os": "Darwin",
+  "os_version": "14.8.7",
+  "requested_trials": 3,
+  "samples_per_kernel": 1000,
+  "protocol": "Sequential processes; alternating scalar/packed call order; warm cache; one inference thread; no affinity or frequency control; ordinary desktop load; no clock-overhead subtraction.",
+  "trials": [
+    {
+      "file": "trial-01.json",
+      "sha256": "7ef6759cf0d0c76264cd9debe55742be794a3192e1cb558eb01b05066642daa4"
+    },
+    {
+      "file": "trial-02.json",
+      "sha256": "49b8cb3cbae4ae53905b3e41102e7f9f9e3897025a8cb376ff5f6feec8f7968b"
+    },
+    {
+      "file": "trial-03.json",
+      "sha256": "019b1c85e07c891261df8598034d66465c5988735ffcdbbede8d0e60b144fad6"
+    }
+  ]
+}

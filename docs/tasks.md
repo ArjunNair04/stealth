@@ -33,12 +33,17 @@ See [implementation evidence](native-v1.md) and [performance](performance.md).
 The task remains open until the implementation PR is merged. This establishes
 primitive and feed-forward correctness on tested inputs, not full-model parity.
 
-## 3. Small reference model and native parity (next)
+## 3. Small reference model and native parity (attention component gate passed locally)
 
-The feed-forward sublayer is implemented. Next, freeze a tiny causal-attention
-layout and its independent fixtures before extending the native model. Add
-attention component tests, then block/model parity and future-input invariance.
-Only after ordinary forward parity passes should caching enter the implementation.
+The feed-forward sublayer, causal multihead attention and composed pre-norm
+transformer block are implemented on `codex/causal-attention`. Independent equation
+fixtures, prefix/future invariance, failure isolation, allocation checks and a
+runnable demonstration pass locally. See [attention evidence](attention-v1.md).
+
+Next, freeze the complete input/position/output model layout and versioned weight
+format. Test the loader before executing loaded models, establish pinned PyTorch
+parity, then train/export a deterministic synthetic example. Full-model and trained
+reference gates remain open; the current fixtures have diagnostic untrained weights.
 
 Freeze model layout and weight serialization, train/export a deterministic
 reference, and verify native forward outputs before adding caching. Specify
@@ -58,7 +63,8 @@ all streaming work. See objective 5 of the testing plan.
 
 ## 5. CPU performance study and QTS adapter (partial measurement only)
 
-The first scalar-versus-packed microbenchmark is recorded. Established-runtime,
+Scalar-versus-packed primitive, feed-forward and full-sequence block microbenchmarks
+are recorded. Established-runtime,
 streaming, cold-start, sustained-load and end-to-end comparisons remain pending.
 
 Measure the same workload across native and established runtimes. Record CPU,

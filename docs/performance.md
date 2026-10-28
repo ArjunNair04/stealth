@@ -1,5 +1,7 @@
 # How the first latency improvements work
 
+For subsequent full-sequence attention/block measurements, see [attention v1](attention-v1.md).
+
 Think of inference as cooking the same recipe repeatedly. We prepare the
 workspace and put the ingredients in a useful order before the first serving.
 Each later serving follows a short, predictable path. Here, the ingredients are

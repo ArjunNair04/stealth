@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "tested_code_commit": "3bf9eed0025e72843ae065d8aee5fb363acd6e10",
+  "local": {
+    "debug": {
+      "passed": 30,
+      "total": 30
+    },
+    "release": {
+      "passed": 30,
+      "total": 30
+    },
+    "asan_ubsan": {
+      "passed": 29,
+      "total": 29
+    },
+    "fixture_regeneration": "exact for numeric and attention fixtures",
+    "relocated_consumer": "passed in Debug and Release"
+  },
+  "red_before_implementation": {
+    "attention_component_groups": 4,
+    "transformer_integration_groups": 5
+  },
+  "mutations": [
+    {
+      "mutation": "allow_future_keys_and_values",
+      "tests": [
+        "attention.causality",
+        "transformer.causality"
+      ],
+      "detected": true,
+      "restored_source_sha256": "8943bd0a61dcd87467fa8a1590db89a9525204dc96a63af6cbf807230d79f50f"
+    }
+  ],
+  "allocation_check": {
+    "new_cycles": 4000,
+    "kernels": [
+      "reference",
+      "packed"
+    ],
+    "observed_cpp_heap_allocations": 0,
+    "positive_control_allocations": 2,
+    "scope": "attention + transformer forward + nonfinite and bad-token-count paths; does not intercept every OS/library allocator"
+  },
+  "replay": {
+    "new_block_calls": 4000,
+    "workspaces": 2,
+    "execution": "sequential interleaving"
+  },
+  "ci": {
+    "url": "https://github.com/ArjunNair04/stealth/actions/runs/40654886326",
+    "status_at_recording": "Linux GCC, Linux Clang, Windows MSVC and macOS Intel passed; macOS ARM queued. Consult the linked run for subsequent completion."
+  },
+  "limitations": [
+    "No PyTorch parity claim",
+    "No trained model, positional/input stage, forecasting head, serialized-weight loader, cache, Python wrapper or trading test",
+    "One writer per workspace; no parallel stress test",
+    "Test groups are not independent proofs of zero defects"
+  ]
+}

@@ -12,9 +12,10 @@ Owned FP32 buffers and immutable model parameters are prepared during constructi
 Each inference caller owns its output and reusable workspace. Dense projections
 can use either the scalar or packed layout through the same public interface.
 
-The first composed layer is a pre-norm feed-forward residual block. Attention,
-position encoding, model serialization, training and incremental caching are still
-pending. Synthetic correctness and local latency results exist; there is no
+The core now also provides [causal multihead attention and a pre-norm transformer
+block](attention-v1.md), with a fused Q/K/V projection and one attention-score row
+at a time. Inputs are embedded vectors. Position encoding, a forecasting head,
+model serialization, training and incremental caching remain pending. Synthetic correctness and local latency results exist; there is no
 forecast-quality or financial result. The CLI remains a build-information utility.
 
 ## Portability

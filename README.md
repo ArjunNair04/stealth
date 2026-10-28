@@ -3,12 +3,13 @@
 Portable C++20 numeric foundation for a CPU forecasting research project.
 Stealth is a working name. The native library now provides aligned FP32 storage,
 checked dense projections, softmax, layer normalization, GELU, residual addition
-and a composed feed-forward block. It includes a scalar reference, packed weight
+a composed feed-forward block, causal multihead attention and a pre-norm
+transformer block. It includes a scalar reference, packed weight
 layout, component/integration tests and an installable CMake package.
 
-See [the first native milestone](docs/native-v1.md) for behavior and test evidence,
-and [the performance walkthrough](docs/performance.md) for measured results and
-how the optimizations work. This is an early numeric library; a full transformer,
+Start with the [runnable attention example and file map](docs/attention-v1.md).
+The [first native milestone](docs/native-v1.md) records primitive evidence, and
+[the performance walkthrough](docs/performance.md) explains the optimizations. This is an early numeric library; a full transformer,
 trained forecast, streaming engine and Python wrapper remain future milestones.
 The CLI currently reports build metadata.
 
@@ -22,9 +23,10 @@ cmake --preset dev
 cmake --build --preset dev
 ctest --preset dev
 ./build/dev/stealth --build-info
+./build/dev/stealth_attention_demo
 ```
 
-On Windows, use a Visual Studio developer shell and `./build/dev/stealth.exe`.
+On Windows, use a Visual Studio developer shell and append `.exe` to executable names.
 Open the repository folder in VS Code to use the checked-in CMake tasks and debugger.
 
 ## Build modes
@@ -66,6 +68,7 @@ matrix checks Linux GCC/Clang, Windows MSVC, and Intel/ARM macOS.
 include/stealth/  Public C++ API
 src/             Native implementation
 app/             Command-line program
+examples/        Runnable attention demonstration
 cmake/           Version and package configuration
 tests/           Component, integration, allocation and installation tests
 bench/           Optional native latency benchmark

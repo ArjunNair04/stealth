@@ -1,8 +1,9 @@
 # Test-first development and initial objectives
 
-Updated: 2026-10-27. These are acceptance requirements for future work; they are
-not a claim that the model or these tests already exist. The infrastructure checks
-in verification.md are the completed starting point.
+Updated: 2026-10-28. These are acceptance requirements for future work; they are
+not a claim that the model or these tests already exist. Completed evidence is in verification.md, native-v1.md and attention-v1.md.
+Primitive and attention/block component checks have passed; full-model loading,
+PyTorch/trained reference, streaming and wrapper gates remain open.
 
 ## First milestone
 
