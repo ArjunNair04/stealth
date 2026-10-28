@@ -55,6 +55,10 @@ persistence on test MAE; [all results](training-results-v1.md) are retained.
 Issue #3 stays open through review and merge.
 Synthetic learning fixtures remain software diagnostics.
 
+The next study freezes four small linear comparisons and diagnoses the unchanged
+trained models. It uses the original, already inspected test period for exploration;
+the remaining source tail stays unused. See [the diagnostic contract](forecast-diagnostics-v1.md).
+
 Gate cached streaming separately after ordinary forward parity; test reset,
 capacity and stream isolation. A shifted 96-row window resets its positions and
 must not silently reuse an incompatible cache. Two-block variants need their own

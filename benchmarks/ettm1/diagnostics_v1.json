@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "experiment_id": "ettm1_forecast_diagnostics_v1",
+  "task_id": "ettm1_one_hour_v1",
+  "purpose": "Diagnose the fixed transformer's persistence deficit and compare small linear baselines without changing or retraining the transformer",
+  "context": 96,
+  "horizon_steps": 4,
+  "target_index": 6,
+  "split_ends": {
+    "train": 34560,
+    "validation": 46080,
+    "test": 57600
+  },
+  "maximum_observation_end_exclusive": 57600,
+  "feature_sets": {
+    "temperature": [
+      6
+    ],
+    "all": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "target_modes": [
+    "level",
+    "change"
+  ],
+  "ridge_penalties": [
+    0.0001,
+    0.01,
+    1.0,
+    100.0
+  ],
+  "objective": "mean squared error plus penalty times squared coefficient norm; unpenalized fitted intercept",
+  "input_arithmetic": "Original observations rounded to FP32, then FP64 linear algebra; fixed training-only FP32 feature scales repeated over 96 lags; center predictors/targets using training windows only",
+  "selection": "lowest validation MAE within each of four families; smaller penalty wins an exact tie; report all 16 candidates",
+  "transformer_seeds": [
+    7,
+    19,
+    43
+  ],
+  "transformer_selection": "Use only the three previously sealed validation-selected v1 checkpoints; no retraining, calibration or test-based seed selection",
+  "movement_quantiles": [
+    0.5,
+    0.9
+  ],
+  "movement_buckets": "Fit absolute actual one-hour-change thresholds on training targets using linear quantiles; low <= q50, middle q50 < change <= q90, high > q90",
+  "diagnostics": [
+    "MAE",
+    "RMSE",
+    "mean signed forecast error",
+    "mean absolute predicted change",
+    "predicted/actual change correlation",
+    "fraction strictly worse than persistence",
+    "actual-movement buckets",
+    "target-calendar-month scores"
+  ],
+  "primary_metric": "MAE in original OT units",
+  "secondary_metric": "RMSE in original OT units",
+  "test_status": "Previously inspected v1 test period; retrospective exploratory comparison, not a new untouched confirmation",
+  "reserved_tail": "Rows 57600 onward: hashes/schema/clocks may be verified as part of the pinned source, but no outcomes, predictions, features or fitted statistics are computed there",
+  "failure_policy": "Abort on missing/changed sealed models, invalid source/scaler, nonfinite values, invalid eigen decomposition, or unannounced protocol changes; retain partial run and failure record",
+  "limitations": [
+    "No fresh statistical confirmation or trading evidence",
+    "No IID p-values for overlapping forecasts",
+    "Movement groups use actual future change for description only, not an actionable selection rule",
+    "An anchored linear model tests a regularization prior; it does not prove that changing a transformer head will help"
+  ],
+  "seasonal_period_steps": 96,
+  "original_score_replay_absolute_tolerance": 1e-06
+}
