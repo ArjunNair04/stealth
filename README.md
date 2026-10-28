@@ -12,7 +12,9 @@ Start with the [complete model walkthrough and runnable example](docs/forecast-v
 The [attention walkthrough](docs/attention-v1.md) and
 [performance guide](docs/performance.md) explain the underlying components.
 Independent diagnostic and framework parity tests are in place. Public-data
-learning results and comparative latency require separately recorded runs. The optional
+learning results are [recorded here](docs/training-results-v1.md); the simple
+persistence baseline beats all three first-run models. Comparative latency remains
+a separate experiment. The optional
 Python wrapper and bounded raw-window baseline are implemented.
 The CLI reports build metadata and inspects model files.
 

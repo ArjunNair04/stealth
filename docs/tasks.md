@@ -49,8 +49,10 @@ causality, output isolation, allocation failure and installed consumers are test
 The optional Torch CPU reference, framework/native parity, numerical gradient
 checks, AdamW training, accumulation, exact epoch restart, bounded pickle-free
 checkpoints and provenance-bound native export are implemented. See the
-[training guide](training-v1.md). The first fixed ETTm1 run and its aggregate
-results are recorded separately; issue #3 stays open through review and merge.
+[training guide](training-v1.md). The first fixed ETTm1 run is complete: all three trained exports pass sampled
+native parity, and exact full-size epoch restart is verified. None beats
+persistence on test MAE; [all results](training-results-v1.md) are retained.
+Issue #3 stays open through review and merge.
 Synthetic learning fixtures remain software diagnostics.
 
 Gate cached streaming separately after ordinary forward parity; test reset,

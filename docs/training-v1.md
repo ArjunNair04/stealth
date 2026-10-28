@@ -51,7 +51,8 @@ Training is an explicit optional installation. The local Intel Mac uses Python
 See [PyTorch's platform notice](https://dev-discuss.pytorch.org/t/pytorch-macos-x86-builds-deprecation-starting-january-2024/1690).
 The Linux CPU checks also exercise Torch 2.13.0 from the
 [official CPU wheel index](https://download.pytorch.org/whl/cpu/torch/).
-Check the CI result before calling that configuration verified.
+Both pinned Linux reference versions passed the initial CI suite. The PR shows
+the current checks after subsequent regression additions.
 
 ```sh
 python3.10 -m venv local/torch-reference-env
@@ -94,7 +95,8 @@ are not established by this workflow.
 ## Recovery and evidence limits
 
 Checkpoints contain ordinary numeric NPZ arrays and JSON, never pickle. Reads
-bound bytes/archive entries, verify hashes, reject malformed tensors and require
+bound bytes/archive entries and declared array shapes before allocation, verify
+hashes, reject malformed tensors and require
 the same experiment/environment. They return fresh objects. Manifest files are
 written last; partial directories are incomplete, and existing destinations are
 refused. Epoch checkpoints do not include an interrupted partial optimizer step.
@@ -120,3 +122,8 @@ public-data experiment. Native parity on trained ETTm1 exports samples 32 fixed,
 evenly spaced windows per split, checking all 96 origin outputs in both kernels
 at the predeclared absolute 5e-5 plus relative 2e-4 tolerance; it does not exhaust
 all possible model inputs.
+
+The first frozen run is complete. See [all results](training-results-v1.md): none
+of its three seeds beats persistence on test MAE. The software pipeline and model
+quality results are recorded separately. The final holdout has now been inspected;
+a follow-up design must record that fact and its evaluation protocol.

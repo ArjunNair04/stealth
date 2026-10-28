@@ -13,6 +13,11 @@ from torch_forecaster import Config
 from train_ettm1 import split_tensors, baseline_predictions, run_seed, verify_run, evaluate_runs, read_recipe
 
 
+def setUpModule():
+    torch.set_num_threads(1)
+    torch.use_deterministic_algorithms(True)
+
+
 class Experiment(unittest.TestCase):
     def test_target_clocks_and_baselines(self):
         rows=torch.arange(80,dtype=torch.float32).reshape(40,2)

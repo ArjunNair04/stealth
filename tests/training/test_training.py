@@ -24,6 +24,11 @@ def setup():
     return model,make_optimizer(model,SETTINGS),x,y,torch.Generator().manual_seed(19)
 
 
+def setUpModule():
+    torch.set_num_threads(1)
+    torch.use_deterministic_algorithms(True)
+
+
 class Training(unittest.TestCase):
     def test_accumulation_and_short_final_group(self):
         m,_,x,y,g=setup(); other=copy.deepcopy(m)

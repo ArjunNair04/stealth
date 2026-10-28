@@ -119,4 +119,6 @@ remain separate gates. No test/validation forecast errors are computed here.
 
 Training exports also require a provenance manifest binding the numerical file's
 hash to the task id, feature order, cadence, scaler fit, data snapshot, code and
-training protocol. Those research/export checks remain pending.
+training protocol. These research/export checks are implemented in the optional
+[Torch training workflow](training-v1.md); the [first frozen results](training-results-v1.md)
+include all seeds, baseline comparisons, trained parity and restart evidence.

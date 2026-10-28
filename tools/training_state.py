@@ -149,6 +149,22 @@ def load_checkpoint(path,binding):
                 or sum(i.file_size for i in infos)>MAX_CHECKPOINT
                 or any(i.compress_type!=zipfile.ZIP_STORED for i in infos)):
             raise ValueError('Unexpected checkpoint archive')
+        expected_shapes={'flat':(sum(math.prod(s) for s in config.shapes().values()),),
+                         'rng':tuple(torch.Generator().get_state().shape)}
+        expected_shapes.update({f'{key}_{i}': (() if key=='step' else shape)
+                                for i,shape in enumerate(shapes) if slots[i] for key in ('m','v','step')})
+        for info in infos:
+            name=info.filename[:-4]
+            with archive.open(info) as stream:
+                version=np.lib.format.read_magic(stream)
+                if version==(1,0): reader=np.lib.format.read_array_header_1_0
+                elif version==(2,0): reader=np.lib.format.read_array_header_2_0
+                else: raise ValueError('Unsupported NumPy array version')
+                shape,fortran,dtype=reader(stream,max_header_size=1024)
+                expected_dtype=np.dtype('uint8' if name=='rng' else 'float32')
+                if (shape!=expected_shapes[name] or fortran or dtype!=expected_dtype
+                        or stream.tell()+math.prod(shape)*dtype.itemsize!=info.file_size):
+                    raise ValueError('Invalid array header or declared payload size')
     with np.load(io.BytesIO(payload),allow_pickle=False,max_header_size=1024) as archive:
         arrays={name:archive[name] for name in expected}
     for name,array in arrays.items():
