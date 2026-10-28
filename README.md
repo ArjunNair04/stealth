@@ -81,3 +81,12 @@ docs/            Contracts, measured evidence, setup and work queue
 · [Tasks](docs/tasks.md) · [Test-first plan](docs/testing.md)
 
 The repository is public for review. No redistribution licence has been selected.
+
+## Public-data benchmark preparation
+
+The first learning dataset is ETTm1: electricity loads and equipment temperature
+at 15-minute intervals. A pinned-source downloader, strict data checks,
+training-only scaling and chronological window tests are implemented. The complete
+forecast model is still under design with the user. See the
+[plain-language guide](docs/public-benchmark.md) and
+[data contract](docs/benchmark-contract.md).

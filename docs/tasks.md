@@ -42,8 +42,10 @@ runnable demonstration pass locally. See [attention evidence](attention-v1.md).
 
 Next, freeze the complete input/position/output model layout and versioned weight
 format. Test the loader before executing loaded models, establish pinned PyTorch
-parity, then train/export a deterministic synthetic example. Full-model and trained
-reference gates remain open; the current fixtures have diagnostic untrained weights.
+parity, then train/export a reproducible public-data example. The user selected
+real public data for the first learning benchmark; synthetic cases remain
+diagnostic tests. Full-model and trained reference gates remain open; the current
+fixtures have diagnostic untrained weights.
 
 Freeze model layout and weight serialization, train/export a deterministic
 reference, and verify native forward outputs before adding caching. Specify
@@ -82,3 +84,12 @@ thresholds, and require new operational/financial gates before deployment.
 - [Measure the CPU performance frontier and define the QTS boundary](https://github.com/ArjunNair04/stealth/issues/5)
 
 See [verification](verification.md) for infrastructure and [native v1](native-v1.md) for the first numerical layers.
+
+## Public benchmark foundation
+
+ETTm1 source pinning, strict parsing, training-only scaling, chronological window
+indices and immutable preparation/replay are implemented on
+`codex/public-benchmark`. See [the data contract](benchmark-contract.md) and
+[the benchmark guide](public-benchmark.md). The final prediction horizon and
+complete architecture are discussed with the user before training. Weight-file
+loading remains the next native implementation after those choices are clear.

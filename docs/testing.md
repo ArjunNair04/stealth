@@ -41,7 +41,8 @@ Specify a single-observation API boundary and separate per-model weights from
 per-stream mutable state. The initial inference engine has one writer per stream;
 parallel sharing requires a later explicit contract.
 
-Freeze the small model specification before composing it: two layers, width 64,
+Discuss the inputs, target and architecture with the user, then freeze the small
+model specification before composing it: two layers, width 64,
 four heads and feedforward width 256 are the proposed baseline. Also use a reduced
 one-layer fixture for diagnosis. State layer-normalization epsilon, activation
 formula, positional encoding, causal mask, inference dropout behavior and output
@@ -81,8 +82,10 @@ change; it is not proof of trusted origin.
 
 Compare individual layers and the full model against pinned PyTorch CPU inference
 using the same weights and preprocessing, with dropout disabled. Use fixed
-untrained diagnostic weights first, then a deterministic synthetic training/export
-example. Keep native correctness tests runnable from compact exported fixtures
+untrained diagnostic weights first, then a reproducible public-data training/export
+example. Use ETTm1 for the requested public-data starting point; retain synthetic
+cases for diagnostic tests. Keep native correctness tests runnable from compact
+exported fixtures
 without installing Python; run a separate reference-generation/consistency job
 in its declared Python environment.
 

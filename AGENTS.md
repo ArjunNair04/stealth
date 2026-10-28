@@ -31,3 +31,10 @@ then refactor. Follow docs/testing.md. Expected results must be independent of
 the code under test. Fixes begin with regression cases. Preserve fixture provenance
 and justify numerical tolerances; do not weaken tests to hide discrepancies.
 Distinguish implemented/passing tests from planned acceptance criteria.
+
+Consult the user before fixing the forecasting objective or model architecture.
+Explain inputs, target, memory and trade-offs with a small concrete example. The
+first learning benchmark uses public real data; synthetic fixtures remain for
+arithmetic and failure tests. Later QTS data stays local and needs a separate
+clock/coverage audit. Track optimization opportunities in docs/performance.md;
+implement specialized kernels only after a measured bottleneck and parity tests.

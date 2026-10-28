@@ -138,3 +138,9 @@ versioned weight loading, establish pinned PyTorch agreement, and train/export a
 deterministic synthetic example. Only after ordinary full-model parity should
 cached streaming be introduced. Python bindings and a QTS data adapter remain
 separate gates. Issue #3 stays open until those full-model requirements pass.
+
+
+CI follow-up, 28 October 2026: all five jobs passed against final attention head
+`3e8437f76c01f6529faf06356ee27a8871e80dc3`, including the previously queued ARM
+macOS job. [Final-head run](https://github.com/ArjunNair04/stealth/actions/runs/40655586794).
+The original evidence snapshot remains unchanged as a record of publication time.

@@ -38,6 +38,8 @@ jobs:
       - name: Initialise MSVC environment
         if: runner.os == 'Windows'
         uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1
+      - name: Test public benchmark preparation (offline, standard library)
+        run: python -m unittest discover -s tests -p test_public_benchmark.py -v
       - name: Verify independent numeric fixture
         if: matrix.name == 'Linux GCC'
         run: python3 tools/generate_numeric_fixture.py --check

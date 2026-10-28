@@ -134,3 +134,24 @@ and one consumer, its capacity, wraparound, backpressure, memory ordering and
 shutdown behavior must be tested separately before integration. CPU pinning,
 NUMA placement and network/kernel changes belong to a specified deployment
 machine and workload. None is assumed by this portable numeric core.
+
+## Deferred optimization notebook
+
+The user wants the advanced optimization work after the complete model is correct.
+Retain a portable path and an independent reference. Record a measured bottleneck,
+the proposed change, numerical difference, memory cost and median/tail timing
+before accepting any specialization. Current candidates are:
+
+- Fixed-shape/template kernels and small-shape dispatch after benchmark dimensions
+  are agreed; check code size and tiny workloads as well as larger ones.
+- Explicit AVX/NEON, fusion and packing choices after compiler output and profiler
+  evidence; do not assume a branch-free rewrite is faster.
+- Bounded KV caching after reset/capacity/position semantics and prefix parity.
+- Prefetching and profile-guided optimization only for a stable measured workload.
+- Affinity, queue design and deployment-specific scheduling when real stream
+  arrival rates and latency budgets exist.
+
+ETTm1 downloading, parsing and scaler fitting are cold preparation tasks. Keep
+these outside timed native inference. The window iterator stores indices and
+creates one descriptor at a time; it avoids copying every overlapping window
+into one large array. This is a memory design choice, not a measured latency win.
