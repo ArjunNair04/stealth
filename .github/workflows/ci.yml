@@ -71,15 +71,22 @@ jobs:
         run: ctest --preset release
       - name: Benchmark smoke (no latency gate)
         run: ./build/release/stealth_bench --samples 100
+      - name: Runtime benchmark contracts (offline; no latency gate)
+        run: python -m unittest discover -s tests -p test_runtime_benchmark.py -v
       - name: Sanitizer configure
         if: matrix.name == 'Linux Clang'
-        run: cmake --preset sanitize
+        run: cmake --preset sanitize -DSTEALTH_BUILD_BENCHMARKS=ON
       - name: Sanitizer build
         if: matrix.name == 'Linux Clang'
         run: cmake --build --preset sanitize
       - name: Sanitizer test
         if: matrix.name == 'Linux Clang'
         run: ctest --preset sanitize
+      - name: Sanitized runtime benchmark contracts
+        if: matrix.name == 'Linux Clang'
+        env:
+          STEALTH_RUNTIME_BENCH: build/sanitize/stealth_runtime_bench
+        run: python -m unittest discover -s tests -p test_runtime_benchmark.py -v
       - name: Install declared Python build dependencies
         run: python -m pip install -r requirements-python-dev.txt
       - name: Download the declared runtime wheel

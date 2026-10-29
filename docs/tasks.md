@@ -88,7 +88,7 @@ latest window with positions reset to zero. Reset, rolling/reference agreement,
 bounds, allocations and concurrent independent streams are tested. This completes
 the raw-window baseline; KV caching and market-feed clock alignment remain separate.
 
-## 5. CPU performance study and QTS adapter (partial measurement only)
+## 5. CPU performance study and QTS adapter (runtime comparison in progress)
 
 Scalar-versus-packed primitive, feed-forward and full-sequence block microbenchmarks
 are recorded. Established-runtime,
@@ -117,3 +117,8 @@ indices and immutable preparation/replay are implemented on
 `codex/public-benchmark`. See [the data contract](benchmark-contract.md) and
 [the benchmark guide](public-benchmark.md). The user has now selected the one-hour point target and one-block architecture.
 Native model/loading and the frozen training workflow are recorded above.
+
+The saved correction-model runtime experiment is frozen in
+[the runtime contract](runtime-benchmark-v1.md). Native core, Python wrapper,
+strict Torch and ordinary eager Torch will use identical weights and windows,
+with parity before timing and separate process-memory reporting.
