@@ -113,5 +113,8 @@ a raw-window stream with reset and failure preservation. See the
 remains independent of Python. The optional [training workflow](docs/training-v1.md)
 exports learned weights into this engine. The [first runtime comparison](docs/runtime-results-v1.md) is complete: ordinary
 eager Torch is faster locally, while the standalone native engine uses less
-process memory. Cached streaming and current-platform deployment comparisons
-remain upcoming work.
+process memory. The [first profiled attention optimization](docs/attention-results-v1.md)
+reduces native full-model latency by 10.36% in a paired local experiment, with
+byte-identical native predictions and unchanged owned heap workspace. Torch
+remains faster in the fresh comparison. Cached streaming and current-platform
+deployment comparisons remain upcoming work.

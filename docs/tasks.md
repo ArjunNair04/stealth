@@ -88,7 +88,7 @@ latest window with positions reset to zero. Reset, rolling/reference agreement,
 bounds, allocations and concurrent independent streams are tested. This completes
 the raw-window baseline; KV caching and market-feed clock alignment remain separate.
 
-## 5. CPU performance study and QTS adapter (first runtime comparison complete)
+## 5. CPU performance study and QTS adapter (first measured optimization complete)
 
 The first saved-model comparison is complete: 72 cells across all three models,
 three trials, batch one/eight and four engines. All prediction checks pass. On
@@ -96,11 +96,16 @@ the local Intel Mac, ordinary eager Torch takes about 0.490 ms per batch-one
 window versus C++ core 1.942 ms; native process memory is much smaller. See
 [all results and limits](runtime-results-v1.md). No speed advantage is claimed.
 
-Native stack sampling is complete and identifies attention as the largest
-sampled component (~39%). An arithmetic-preserving eight-channel value loop is
-under test; see [its contract](attention-tiling-v1.md). Current-platform,
-compiled-Torch/independent-runtime, streaming, full cold-start, sustained-load
-and end-to-end comparisons remain pending. Issue #5 stays open.
+Native stack sampling identifies attention as the largest sampled component
+(~39%). The eight-channel value loop is implemented and accepted: paired
+batch-one p50 improves 10.36%, median p99 improves 8.23%, all 9,216 native model
+outputs are byte-identical and owned heap workspace is unchanged. A fresh
+four-engine comparison still favours ordinary Torch (median paired p50 ratio
+3.53 for one window, 6.96 for eight). See [all results](attention-results-v1.md)
+and [the numerical contract](attention-tiling-v1.md). Profile the improved engine
+before choosing another kernel change. Current-platform, compiled-Torch and
+independent-runtime, streaming, full cold-start, sustained-load and end-to-end
+comparisons remain pending. Issue #5 stays open.
 
 Measure the same workload across native and established runtimes. Record CPU,
 compiler, threads, warm-up, memory and latency distributions. Then define a

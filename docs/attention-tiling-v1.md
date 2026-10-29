@@ -1,5 +1,9 @@
 # First measured attention optimization
 
+The change is accepted: the paired full-model batch-one p50 reduction is 10.36%,
+with byte-identical native model outputs. [The results](attention-results-v1.md)
+include all 36 paired cells, the 72-cell Torch rerun, tails and verification.
+
 The saved-model profile puts attention at 38.8–39.4% of sampled stacks, dense
 projections at 32.4–34.6%, GELU at 17.0–20.2%, and layer normalization at
 5.4–5.7%. Softmax accounts for 12.4–13.4 percentage points within attention.

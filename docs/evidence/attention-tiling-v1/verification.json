@@ -1,0 +1,205 @@
+{
+  "audit": {
+    "all_file_hashes": true,
+    "all_latency_and_clock_statistics_recomputed": true,
+    "complete_unique_cells": true,
+    "consumed_output_checksums": true,
+    "profile_counts_recomputed": true,
+    "same_inputs_and_weights": true,
+    "same_native_binary_across_experiments": true,
+    "unchanged_source_hashes": true
+  },
+  "cells": {
+    "four_engine": 72,
+    "paired": 36
+  },
+  "ci": {
+    "checks": [
+      {
+        "conclusion": "success",
+        "name": "macOS ARM",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40918456454/job/123604891581"
+      },
+      {
+        "conclusion": "success",
+        "name": "Linux GCC",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40918456454/job/123604891348"
+      },
+      {
+        "conclusion": "success",
+        "name": "Windows MSVC",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40918456454/job/123604891316"
+      },
+      {
+        "conclusion": "success",
+        "name": "Torch 2.13.0+cpu CPU reference",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40918456549/job/123604891124"
+      },
+      {
+        "conclusion": "success",
+        "name": "macOS Intel",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40918456454/job/123604891063"
+      },
+      {
+        "conclusion": "success",
+        "name": "Torch 2.2.2+cpu CPU reference",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40918456549/job/123604890641"
+      },
+      {
+        "conclusion": "success",
+        "name": "Linux Clang",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40918456454/job/123604890527"
+      },
+      {
+        "conclusion": "success",
+        "name": "macOS Intel",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40918447215/job/123604859209"
+      },
+      {
+        "conclusion": "success",
+        "name": "macOS ARM",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40918447215/job/123604859001"
+      },
+      {
+        "conclusion": "success",
+        "name": "Windows MSVC",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40918447215/job/123604858833"
+      },
+      {
+        "conclusion": "success",
+        "name": "Linux Clang",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40918447215/job/123604858703"
+      },
+      {
+        "conclusion": "success",
+        "name": "Linux GCC",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40918447215/job/123604858255"
+      },
+      {
+        "conclusion": "success",
+        "name": "Torch 2.2.2+cpu CPU reference",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40918447051/job/123604857222"
+      },
+      {
+        "conclusion": "success",
+        "name": "Torch 2.13.0+cpu CPU reference",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40918447051/job/123604856950"
+      }
+    ],
+    "head_revision": "7c44028ccf6621a98950d602f413b6851cba6d6e",
+    "initial_failure": {
+      "commit": "9f67f1719033a48c808de57af39540ffe2b0e968",
+      "fix": "7c44028ccf6621a98950d602f413b6851cba6d6e changes only four test literals to 0.0F",
+      "native_behavior_changed": false,
+      "scope": "Windows tests failed compilation: std::fill integer zero assigned to float triggered C4244 under /WX"
+    }
+  },
+  "compiler_evidence": {
+    "assembly_sha256": "f1162283867305e25bc0b26a55737aba8693550451af75d64aafab4cfafa825b",
+    "function": "stealth::numeric::causal_attention",
+    "scope": "Observed AppleClang 16 x86_64 Release output; no cross-platform code-generation claim",
+    "vector_instructions": [
+      "cvtps2pd",
+      "mulpd",
+      "addpd"
+    ]
+  },
+  "complete_manifest_sha256": {
+    "paired": "db3755cf81ad67ac3de6c5632967f0ec18a7e6fde049b6c10456c2434b45a82c",
+    "profile": "47f6903625a2c31d34269c4d326852fa5a61dcca87ff29bfd86ea63a1119ddf8",
+    "runtime": "8667e2607eac42d133ae22e70a5c072878a0089f9e640fdeba0802d2d43eeeb6"
+  },
+  "experiment_id": "attention_value_tiling_v1",
+  "full_native_output_parity": {
+    "baseline_extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+    "candidate_extension_sha256": "952de26f2a49848b37de1657917f5b97a98f779dca0865880ca0cabf3a6d02a1",
+    "models": {
+      "19": {
+        "bitwise_equal": true,
+        "sha256": "6778543a7c1202ab116dc552785f1119851dbd24ceb68154880e5f0e53768f7d",
+        "values": 3072
+      },
+      "43": {
+        "bitwise_equal": true,
+        "sha256": "f1b0e418a2829e411cd0f9e39d22404c6adc3496b1f66501b3e4d0f4c7d02abf",
+        "values": 3072
+      },
+      "7": {
+        "bitwise_equal": true,
+        "sha256": "b9b7dfac4822f93f032af522e47b610db92369def563cff06fd4a3e5decd008e",
+        "values": 3072
+      }
+    }
+  },
+  "limitations": [
+    "Single Intel desktop with uncontrolled frequency/cache/OS scheduling",
+    "Local Torch 2.2.2 compatibility comparison; current Torch correctness in CI is not timing evidence",
+    "Full 96-row outputs, no final-only API or fused native batching",
+    "No deadlines, cold start, sustained/concurrent streams or QTS deployment inference",
+    "Same weights and arithmetic; no forecast-quality improvement"
+  ],
+  "local_checks": {
+    "debug_ctest": 53,
+    "profile_and_gate_tests": 3,
+    "release_ctest": 53,
+    "runtime_contracts": 9,
+    "sanitizer_ctest": 52,
+    "torch_tests": 46,
+    "wrapper_tests": 22
+  },
+  "log_sha256": {
+    "attention-dev.log": "7592120aef14c98f622223743598273ee1206951ba6b5a00bc8688369b9a2202",
+    "attention-package.log": "4dda816c02f748f3f40fd28a02fa990780599581cd05bdd9e5eebfbe98f8a853",
+    "attention-profile-tests.log": "1865416acdedfd5daae78e44004c844ffd19f1c1b3184260be7b7198cc5f0072",
+    "attention-release.log": "b022f017f70c7397f95b30401299e94f10b6a12f82b9a7abb8d5e5edd518c2d7",
+    "attention-runtime-contracts.log": "640674948ce34d8023d0c7ca4db699cd1a98aa8b008bb3a877f6fd9ede7987a5",
+    "attention-sanitize.log": "08d23f86fd927d42c49caaad70c92ad696b7574156ad19a1dfe17ee24ef83474",
+    "attention-tiling-mutation.log": "583d5f5c99cd4a175b01a680497d7959bb8e640ec42890f4b0ffb87111ebcd45",
+    "attention-tiling-red.log": "da74f79b2140c142e16a47641c199de9e4fc60cda92b4d4f1b77870d4f117603",
+    "attention-tiling-restored.log": "a5e5a100098767de9603781f242c08831267c5c0a11e4eaff140d8d9e8633717",
+    "attention-training-tests.log": "4c5e5830a4460669f60cd8dd3ef8cbda3105ce96a8046288108b9a6cc494610e",
+    "attention-windows-literal-fix.log": "b36a6c196671d73b6d1849a3862619b064393b7c387475defa116bee0f711e59",
+    "attention-wrapper-tests.log": "97a79ce1084c9c2784729d2e61e11ed3ac538ba5dacfcd324f5d5c04511bab7f",
+    "native-profile-parser-red.log": "46d8903836df1444efa8d7413edf184402fcf9ca60c1cc03dcacd30ad16235fe"
+  },
+  "measured_calls": {
+    "four_engine": 43200,
+    "paired": 21600
+  },
+  "measured_windows": {
+    "four_engine": 93600,
+    "paired": 46800
+  },
+  "memory": {
+    "hot_allocations": 0,
+    "kernel_selector": "Additional object bookkeeping; consumers rebuilt",
+    "local_tile_accumulator_bytes": 64,
+    "owned_workspace_bytes": 204576,
+    "owned_workspace_increase": 0
+  },
+  "mutation": "Replacing each tiled channel load with row[0] failed the tiled regression; correct code restored and all suites passed",
+  "packages": {
+    "stealth_cpu-0.1.0-cp310-cp310-macosx_14_0_x86_64.whl": "532e9a5632a31e06c92e3190d63a924f3528cbf8237777892f1544eaee7985fc",
+    "stealth_cpu-0.1.0.tar.gz": "96bbad6cefcca094aef73fe6e1413ada9b0a58510df617c9f71c2d78c5a2c9a5"
+  },
+  "paired_code_commit": "9f67f1719033a48c808de57af39540ffe2b0e968",
+  "paired_results_sha256": "c1bd338691eb540707447a846a4528ceae89d7484829c5ce76c58d0fffeb4d61",
+  "reserved_rows_used": 0,
+  "runtime_code_commit": "7c44028ccf6621a98950d602f413b6851cba6d6e",
+  "runtime_results_sha256": "3f48cabf3de824c785e1afb745683206b7b62e3b035dc9787693cdbdf9423390",
+  "schema_version": 1
+}

@@ -181,8 +181,18 @@ The [saved correction-model comparison](runtime-results-v1.md) is complete. Acro
 all three saved models and three trials, C++ core batch-one p50 is 1.909–1.974 ms;
 ordinary eager Torch is 0.487–0.506 ms. Native process memory is much smaller.
 All engines pass fixed-window parity before measurement. The Python wrapper has
-similar median latency to direct C++, so profiling should begin inside native
-computation. No particular kernel has yet been identified as the bottleneck.
+similar median latency to direct C++. Subsequent native sampling puts attention
+at about 39% of stacks. The [first measured attention change](attention-results-v1.md)
+computes eight independent FP64 value sums together, preserving their order.
+It reduces paired full-model batch-one p50 by 10.36% with byte-identical native
+predictions and no additional owned heap workspace. Two individual p99 pairs
+worsen despite an 8.23% median improvement, and all tails are retained.
+
+In the fresh four-engine comparison, C++ core is 1.714 ms and ordinary Torch
+0.491 ms at the median of nine cell medians. Torch remains faster. The new loop
+is portable C++20, with explicit scalar reference/tails; this compiler generates
+double-precision vector instructions. Profile the improved model before selecting
+the next change.
 
 Use the frozen benchmark to test one measured change at a time, keeping weights,
 inputs, full-output workload, threads and tolerances fixed. Compare matrix,
