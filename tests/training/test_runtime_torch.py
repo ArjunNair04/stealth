@@ -62,6 +62,17 @@ class StandardRuntime(unittest.TestCase):
                 proc=subprocess.run(args,capture_output=True,text=True,env=env);self.assertEqual(proc.returncode,0,proc.stderr)
                 result=json.loads(proc.stdout);self.assertEqual(len(result['times_ns']),2);self.assertEqual(result['max_abs_difference'],0)
                 if engine!='native_python': self.assertTrue(result['versions']['inference_mode'])
+                (tmp/'expected').write_bytes(struct.pack('<6f',*[v+1e-6 for v in (1,3,5,7,9,11)]))
+                near=subprocess.run(args,capture_output=True,text=True,env=env);self.assertEqual(near.returncode,0,near.stderr)
+                self.assertGreater(json.loads(near.stdout)['max_abs_difference'],0)
                 (tmp/'expected').write_bytes(struct.pack('<6f',*[99]*6))
                 bad=subprocess.run(args,capture_output=True,text=True,env=env);self.assertNotEqual(bad.returncode,0);self.assertEqual(bad.stdout,'')
                 (tmp/'expected').write_bytes(struct.pack('<6f',1,3,5,7,9,11))
+
+    def test_nonzero_float32_parity_metric_is_serializable(self):
+        import json
+        from runtime_common import parity
+        difference=parity(np.array([1.],np.float32),np.array([1.000001],np.float32),5e-5,2e-4)
+        self.assertGreater(difference,0)
+        self.assertIs(type(difference),float)
+        self.assertEqual(json.loads(json.dumps(difference)),difference)

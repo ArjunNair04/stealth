@@ -98,6 +98,8 @@ def main():
         hashes={p.name:digest(bounded(p)) for p in sorted(a.output.iterdir()) if p.is_file()}
         (a.output/'complete.json').write_bytes(canonical(dict(schema_version=1,files=hashes)))
     except Exception as error:
+        if isinstance(error,subprocess.CalledProcessError):
+            (a.output/'worker-failure.log').write_text((error.stdout or '')+(error.stderr or ''))
         (a.output/'failed.json').write_bytes(canonical(dict(error_type=type(error).__name__,message=str(error))))
         raise
 

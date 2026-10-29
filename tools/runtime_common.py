@@ -31,6 +31,7 @@ def parity(expected,actual,atol,rtol):
     if not math.isfinite(atol) or not math.isfinite(rtol) or atol<0 or rtol<0: raise ValueError('Bad parity tolerance')
     largest=0.
     for e,a in zip(expected,actual):
+        e,a=float(e),float(a)
         if not math.isfinite(e) or not math.isfinite(a) or abs(a-e)>atol+rtol*abs(e):
             raise ValueError('Runtime parity failed')
         largest=max(largest,abs(a-e))
