@@ -9,6 +9,8 @@ Start with [the consolidated baseline and review guide](docs/review-baseline.md)
 [PR #18](https://github.com/ArjunNair04/stealth/pull/18) preserves and brings together
 the twelve implementation PRs. The [active work queue](docs/tasks.md) separates
 completed engineering from the remaining performance and forecasting decisions.
+[Direction and exit gates](docs/direction.md) set the path from mixed-frequency
+observations to one trustworthy prediction pipeline.
 
 | What works | Current limit |
 | --- | --- |
@@ -95,6 +97,8 @@ docs/            Contracts, measured evidence, setup and work queue
 The repository is public for review. No redistribution licence has been selected.
 
 ## Run and evaluate
+
+- [Mixed-frequency signal timing reference](docs/signal-timeline-v1.md)
 
 - [Model walkthrough and native example](docs/forecast-v1.md)
 - [Python installation and component example](docs/python-stream-v1.md)

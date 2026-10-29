@@ -15,7 +15,10 @@ not erase retained buffer bytes. Allocate bounded storage at construction only.
 The stream retains its model's lifetime. Separate streams may share an immutable
 model concurrently; a stream itself must have exactly one caller at a time.
 Rows are already ordered, complete observations; timestamps, gaps, revisions and
-asynchronous market sources belong to a future adapter. Do not infer feed readiness.
+asynchronous market sources belong to an adapter. The offline
+[signal timeline reference](signal-timeline-v1.md) defines their first selection
+contract, but is not connected to WindowStream. Do not infer feed readiness or
+compress missing decision times by silently dropping rows.
 
 ## Python boundary
 

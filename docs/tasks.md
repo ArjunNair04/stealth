@@ -1,49 +1,55 @@
 # Active work queue
 
-The user approved consolidation and stronger runtime comparisons before further
-kernel optimization. [Baseline review](review-baseline.md) records findings and
-verification; [historical tasks](tasks-history.md) preserve the earlier sequence.
+[Direction and exit gates](direction.md) define the shortest path to a trustworthy
+mixed-frequency prediction pipeline. The user selected Linux for the next runtime
+comparison and UCL Beaker as the candidate host; interactive login is deferred.
+The user expects minute bars alongside daily, weekly and potentially monthly
+factors. Exact sources, freshness thresholds and prediction targets remain open.
 
-## 1. Consolidate the existing foundation
+## Completed foundation
 
-Implementation PRs #6–#17 are preserved in the single baseline PR #18. Two review
-findings are fixed: stale installed wheels can no longer enter the benchmark,
-and model inspection distinguishes format versions and output modes. Overview
-documentation now describes the implemented training/export/inference workflow.
-Review and merge are separate from successful builds; independent approval is
-still outstanding. No model architecture or inference arithmetic changed.
+- Baseline PR #18 consolidates #6–#17; their commits and branches are preserved.
+  The older PRs are closed as superseded. Independent review/merge remain open.
+- The numerical, model loading, Torch training/export and Python/raw-window
+  infrastructure pass their recorded checks. Forecast quality still trails
+  persistence; the local speed result is limited to its measured workload.
+- The [signal timeline reference](signal-timeline-v1.md) assembles bounded offline
+  observations by receipt, publication, effective time and revision. It provides
+  explicit readiness/age/provenance and schema order, with component and CLI demo
+  checks. It is not a feed connector or part of the installed native package.
 
-## 2. Establish the current-runtime comparison
+## Next local task: feature-to-model contract
 
-Prepare a supported common CPU host, exact package/build lock and identical raw
-validation windows. Compare native core, the wrapper, current eager Torch,
-compiled Torch and ONNX Runtime CPU. Latest-only batch one is primary; batch eight
-is reported separately. [Linux preparation](frontier-linux.md) records the fixed
-decision criteria and the host-lock requirements. Current host access, conversion
-and compiled/ONNX runner validation are still required before timing.
+Specify and test a versioned bundle that binds feature order/schema, preprocessing
+and weights. Add a checked bridge to existing inference sessions and a replay
+ledger. Missing/stale/withdrawn inputs must produce an explicit no-forecast result.
+Define gap and reset behavior before sending rows to WindowStream; dropping a
+minute silently must not make a spaced window look contiguous. Use invented
+fixtures first and test component behavior before integration. Consult the user
+before changing model inputs, objective, architecture or missing-data treatment.
 
-Stop further native kernel work until this comparison identifies a useful target.
-Retain unsupported/export/compile failures as outcomes. Do not substitute an old
-compatibility result or shared-CI timing for a supported-host performance result.
+## Parallel gate: current-runtime comparison
 
-## 3. Establish forecasting usefulness
+Implement and validate the compiled Torch and ONNX CPU adapters. After Beaker
+access resumes, inspect CPU queue/toolchain compatibility and obtain a permitted
+CPU allocation, then lock the environment and execute the [fixed comparison](frontier-linux.md).
+Keep Stealth in a separate checkout/environment. Shared login-node or noisy CI
+measurements cannot establish the latency frontier. Preserve failures and partial
+runs; do not tune kernels or rerun poor performance into a favourable result.
 
-Discuss one bounded modelling experiment with the user before changing the
-objective or architecture. Require simple baselines, validation-only choices and
-a protected final evaluation. The saved correction models still miss persistence
-on the primary old-test measure. The old test is exploratory; 12,080 reserved tail
-rows remain unused for model selection and scoring.
+## Then: one useful predictive experiment
 
-## Later gates
+Discuss a single target, horizon and target universe with the user. Use simple
+baselines, chronological splits, validation-only choices and a protected final
+evaluation. The saved ETTm1 correction models still miss persistence on primary
+old-test error; the old test is exploratory, and 12,080 reserved tail rows remain
+unused for model selection/scoring. Financial work must pass QTS data and timing
+gates and starts as research, with no live order execution.
 
-Multi-source clock/revision/missingness contracts, latest-only stream failure
-policy, sustained load, concurrency, recovery and a QTS adapter remain separate
-milestones. No financial deployment or research novelty follows from passing
-software tests. No new features are required to finish the present comparison.
+## Tracking
 
-## GitHub tracking
-
-- [Consolidated baseline PR #18](https://github.com/ArjunNair04/stealth/pull/18)
+- [Baseline PR #18](https://github.com/ArjunNair04/stealth/pull/18)
 - [Runtime and QTS boundary issue #5](https://github.com/ArjunNair04/stealth/issues/5)
 - [Model/reference issue #3](https://github.com/ArjunNair04/stealth/issues/3)
 - [Python interface issue #4](https://github.com/ArjunNair04/stealth/issues/4)
+- [Historical tasks and preserved outcomes](tasks-history.md)
