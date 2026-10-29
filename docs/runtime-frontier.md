@@ -6,6 +6,11 @@ improvements and remaining gaps. They cannot establish competitiveness with the
 best available deployments. Forecast accuracy is a separate question: faster
 execution of the same weights leaves the earlier persistence comparison unchanged.
 
+The [latest-only experiment](latest-results-v1.md) now beats the local eager
+baseline for one requested forecast, while losing for batches of eight. Both
+engines skip unused outputs. That useful workload-specific result still leaves
+current compiled and independent runtime comparisons outstanding.
+
 Think of this as a race between calculators. Each calculator must receive the
 same numbers, return the same requested answers, and use the same number of
 workers. We must also count preparation time separately from repeated calls.

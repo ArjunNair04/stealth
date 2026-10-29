@@ -47,3 +47,20 @@ ordinary Torch, both full trace and latest only. Keep outputs, versions, hashes,
 parity, setup/first-call time, clock cost, raw timings and memory scopes explicit.
 Report within-engine work savings separately from matched latest-only engine
 comparisons. All source-tail rows and QTS data remain unused.
+
+## Implementation and usage
+
+Implemented and verified in [the recorded experiment](latest-results-v1.md).
+With an existing loaded model and finite C-contiguous FP32 arrays:
+
+```python
+session = model.session()
+latest = session.predict_last(window)          # [T, F] -> Python float
+latest_batch = session.predict_last_batch(batch)  # [B, T, F] -> owned [B] array
+trace = session.predict(window)                # [T, F] -> all T diagnostic values
+```
+
+The final value predicts the selected horizon after the last input observation.
+`T` must be positive and within the model context; input feature order and scaler
+remain bound to the exported model. This is ordinary session inference, with no
+new feed ingestion, window cache or training behavior.

@@ -88,7 +88,7 @@ latest window with positions reset to zero. Reset, rolling/reference agreement,
 bounds, allocations and concurrent independent streams are tested. This completes
 the raw-window baseline; KV caching and market-feed clock alignment remain separate.
 
-## 5. CPU performance study and QTS adapter (attention and row execution measured)
+## 5. CPU performance study and QTS adapter (latest-only execution measured)
 
 The first saved-model comparison is complete: 72 cells across all three models,
 three trials, batch one/eight and four engines. All prediction checks pass. On
@@ -114,6 +114,21 @@ See [the complete comparison](dense-rows-results-v1.md). Current-platform,
 compiled-Torch and independent-runtime comparisons need the
 [explicit frontier requirements](runtime-frontier.md). Streaming, full cold start,
 sustained load and end-to-end comparisons remain pending. Issue #5 stays open.
+
+The latest-only path is now implemented and measured with the same optimization
+in ordinary Torch. Native latest-prefix calls preserve all 9,216 saved answers
+exactly and the original full trace is unchanged. Across 108 audited cells, the
+native full-to-last median paired p50 reduction is 87.62%. Matched latest-only
+median cell p50 is 0.181 ms native versus 0.287 ms Torch for one window; native
+still loses for eight windows (1.452 ms versus 0.566 ms). All native platform and
+both Torch-version CI jobs pass. See [the complete results](latest-results-v1.md).
+
+Next: profile latest-only computation before selecting another kernel change;
+then run current eager/compiled Torch and an independent runtime on a supported
+common host. Preserve the batch-eight deficit as an explicit engineering target.
+Streams retain full-trace execution until their failure contract is reviewed.
+Forecast quality remains below persistence for the saved models; objective or
+architecture changes require discussion with the user. Issue #5 remains open.
 
 Measure the same workload across native and established runtimes. Record CPU,
 compiler, threads, warm-up, memory and latency distributions. Then define a

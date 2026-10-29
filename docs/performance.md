@@ -229,3 +229,21 @@ tests; exposing independent accumulator vectors fixed its compiled loop.
 retained. This is a within-window matrix tile; cross-window batching is still
 sequential. [Frontier requirements](runtime-frontier.md) define the supported
 current-runtime comparison and the remaining performance target.
+
+## Request only the latest forecast
+
+The accepted one-block schedule retains all input embeddings and QKV projections,
+then evaluates only the last attention output, MLP and readout. The fixed 108-cell
+experiment applies the same schedule to Torch and keeps full-trace comparisons
+separate. Native full-to-last paired p50 improves 87.62%; native latest-only p50
+is about 0.181 ms versus 0.287 ms for ordinary eager Torch 2.2.2 on the local Intel
+Mac. Native loses for batch eight because windows are still processed sequentially.
+The full trace and all 9,216 latest-prefix answers are bitwise unchanged; there is
+no extra workspace and no native hot allocation. [Evidence and limitations](latest-results-v1.md)
+include all timings, tails and the different policy for skipped unused overflow.
+
+Profile this new execution schedule before another kernel change. Full-trace
+component shares cannot be reused as latest-only bottleneck evidence. Candidate
+work includes all-row QKV/input projections and effective batching; changing
+approximations or backends requires its own parity and performance gates. A second
+block needs earlier first-block states and changes what work can be skipped.

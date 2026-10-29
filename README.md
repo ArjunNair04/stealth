@@ -126,3 +126,11 @@ transformer. It reduces paired native latency a further 12.98%, preserves checke
 predictions exactly and adds 17.25 KiB of preallocated workspace. The failed first
 candidate is retained. [Current-runtime comparison requirements](docs/runtime-frontier.md)
 set the next benchmark target; leading-runtime parity has not been achieved.
+The [latest-only forecast path](docs/latest-results-v1.md) now answers the chosen
+one-hour target without computing unused earlier diagnostic outputs. On the local
+Intel Mac, matched latest-only median cell p50 is 0.181 ms for C++ and 0.287 ms for
+ordinary eager Torch 2.2.2; Torch remains faster for batches of eight. Native
+latest-prefix calls preserve all 9,216 checked saved answers exactly. Use
+`session.predict_last(x)` or `session.predict_last_batch(x)`; the full trace stays
+available. This local single-request win does not establish current-runtime
+frontier performance or better forecast accuracy.
