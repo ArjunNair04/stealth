@@ -45,3 +45,23 @@ batch one/eight. It requires 5% median paired batch-one p50 reduction, improveme
 for each seed in median and at most 10% median paired p99 increase. Memory and all
 tails are reported. Repeat the four-engine benchmark after acceptance. Failed
 candidates stay recorded. Shared CI establishes correctness, never stable latency.
+
+
+## Reproduce the frozen experiments
+
+Use a clean checkout and existing local model/input snapshots. Each output path
+must be new. The baseline is the preserved accepted attention executable, whose
+hash is fixed in the protocol.
+
+```sh
+python3 tools/compare_native.py --protocol benchmarks/ettm1/dense_rows_v1.json \
+  --baseline local/native-profile-v2/baseline-runtime \
+  --inputs local/runtime-attention-v1 --models local/ettm1-correction-v1 \
+  --output local/dense-rows-comparison-new
+local/torch-reference-env/bin/python tools/benchmark_runtime.py \
+  --raw local/datasets/ettm1-v1 --runs local/ettm1-correction-v1 \
+  --output local/runtime-dense-rows-new
+```
+
+Build and install the current native wheel before the four-engine experiment.
+The native core retains no Python or external numerical-library dependency.

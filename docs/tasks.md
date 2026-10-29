@@ -88,7 +88,7 @@ latest window with positions reset to zero. Reset, rolling/reference agreement,
 bounds, allocations and concurrent independent streams are tested. This completes
 the raw-window baseline; KV caching and market-feed clock alignment remain separate.
 
-## 5. CPU performance study and QTS adapter (first measured optimization complete)
+## 5. CPU performance study and QTS adapter (attention and row execution measured)
 
 The first saved-model comparison is complete: 72 cells across all three models,
 three trials, batch one/eight and four engines. All prediction checks pass. On
@@ -103,9 +103,17 @@ outputs are byte-identical and owned heap workspace is unchanged. A fresh
 four-engine comparison still favours ordinary Torch (median paired p50 ratio
 3.53 for one window, 6.96 for eight). See [all results](attention-results-v1.md)
 and [the numerical contract](attention-tiling-v1.md). Profile the improved engine
-before choosing another kernel change. Current-platform, compiled-Torch and
-independent-runtime, streaming, full cold-start, sustained-load and end-to-end
-comparisons remain pending. Issue #5 stays open.
+before choosing another kernel change.
+
+The next profile put dense projections first (34.6–36.2%). Four-row dense execution
+and bounded transformer/MLP integration now pass the fixed gate: 12.98% paired
+batch-one p50 reduction, 12.80% for eight windows, byte-identical trained outputs
+and zero hot allocations, at 17.25 KiB extra workspace per session. The first
+correct but scalarized implementation was slower and remains recorded as rejected.
+See [the complete comparison](dense-rows-results-v1.md). Current-platform,
+compiled-Torch and independent-runtime comparisons need the
+[explicit frontier requirements](runtime-frontier.md). Streaming, full cold start,
+sustained load and end-to-end comparisons remain pending. Issue #5 stays open.
 
 Measure the same workload across native and established runtimes. Record CPU,
 compiler, threads, warm-up, memory and latency distributions. Then define a

@@ -213,3 +213,19 @@ beat persistence, discuss its learning objective, validation behaviour and simpl
 model baselines before introducing a second transformer block. Runtime speed and
 forecast quality are separate questions. QTS adapters remain a later stage with
 explicit data clocks, missing observations and feature-order checks.
+
+
+## Bounded matrix rows
+
+The next accepted change adds `Dense::forward_rows` and bounded feed-forward row
+workspaces. The transformer normalizes rows independently, then processes up to
+four together through QKV and post-attention projections/MLP. Each output keeps
+its arithmetic order and the complete output is staged before publication.
+The same saved-model experiment records another 12.98% paired batch-one p50
+reduction and 12.80% for eight windows, with 17.25 KiB extra workspace and no hot
+allocations. A scalarized first candidate was rejected despite passing numerical
+tests; exposing independent accumulator vectors fixed its compiled loop.
+[All trials, rejected results and memory scopes](dense-rows-results-v1.md) are
+retained. This is a within-window matrix tile; cross-window batching is still
+sequential. [Frontier requirements](runtime-frontier.md) define the supported
+current-runtime comparison and the remaining performance target.

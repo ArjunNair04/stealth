@@ -118,3 +118,11 @@ reduces native full-model latency by 10.36% in a paired local experiment, with
 byte-identical native predictions and unchanged owned heap workspace. Torch
 remains faster in the fresh comparison. Cached streaming and current-platform
 deployment comparisons remain upcoming work.
+
+
+The [four-row matrix execution follow-up](docs/dense-rows-results-v1.md) reuses
+packed weights across observations and integrates bounded tiles into the MLP and
+transformer. It reduces paired native latency a further 12.98%, preserves checked
+predictions exactly and adds 17.25 KiB of preallocated workspace. The failed first
+candidate is retained. [Current-runtime comparison requirements](docs/runtime-frontier.md)
+set the next benchmark target; leading-runtime parity has not been achieved.

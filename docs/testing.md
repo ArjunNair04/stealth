@@ -1,11 +1,13 @@
 # Test-first development and initial objectives
 
-Updated: 2026-10-28. These are acceptance requirements for future work; they are
-not a claim that the model or these tests already exist. Completed evidence is in verification.md, native-v1.md and attention-v1.md.
-Primitive, attention/block, complete-model diagnostic and loading checks have
-passed; see forecast-v1.md. The optional wrapper and bounded raw-window stream
-are now implemented; see python-stream-v1.md. PyTorch/trained reference, cache
-equivalence and market-feed integration gates remain open.
+Updated: 2026-10-29. These acceptance requirements distinguish completed checks
+from open work. Primitive, attention/block, model loading, Torch training/export,
+Python wrapper and raw-window stream tests are implemented. The measured attention
+and [four-row execution](dense-rows-v1.md) changes add exact native parity,
+allocation, failure and performance gates. See the linked result records for
+actual outcomes; test requirements alone are not evidence of deployment readiness.
+Current-runtime frontier comparisons, cached streaming and market-feed integration
+remain open.
 
 ## First milestone
 
