@@ -6,7 +6,7 @@ namespace stealth {
 
 BuildInfo build_info() noexcept {
     return {detail::version, detail::compiler, detail::operating_system, detail::architecture,
-            STEALTH_BUILD_CONFIGURATION};
+            STEALTH_BUILD_CONFIGURATION, detail::source_fingerprint};
 }
 
 } // namespace stealth

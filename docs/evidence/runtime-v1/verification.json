@@ -1,0 +1,70 @@
+{
+  "ci": {
+    "code_commit": "e2bdec4b23a93e1f234c22d6033827514f0df001",
+    "conclusion": "All seven jobs successful; correctness/packaging only, not timing evidence",
+    "native_five_platforms": "https://github.com/ArjunNair04/stealth/actions/runs/40839540646",
+    "torch_two_versions": "https://github.com/ArjunNair04/stealth/actions/runs/40839540586"
+  },
+  "code_commit": "e2bdec4b23a93e1f234c22d6033827514f0df001",
+  "complete_manifest_sha256": "20a1d51572fe0428342e2ac3ac716e4c0d93efec2b7f417dc4c31e4fface98e6",
+  "experiment_id": "ettm1_correction_runtime_v1",
+  "independent_audit": {
+    "all_file_hashes": true,
+    "all_statistics_recomputed": true,
+    "complete_unique_cells": true,
+    "consumed_checksums_within_parity_bound": true,
+    "source_hashes_unchanged": true
+  },
+  "interrupted_run": {
+    "code_commit": "8eb45471f5516a0ff8af89f65f13edc4f3cf2233",
+    "directory": "local/runtime-v1",
+    "failed_record_sha256": "49dad882f6adacda3921f31888f7622c2c58a201a8dbacbbef9e8b21a6fcc97d",
+    "protocol_sha256": "122d9a4fc9232397e647631c9fad67ae94877a55a08be2b46e081136c5dd7575",
+    "reason": "Nonzero NumPy float32 parity difference could not be JSON encoded; regression added; results never mixed with complete rerun",
+    "status": "aborted after first native cell; no completed comparison"
+  },
+  "limitations": [
+    "Warm resident inputs; uncontrolled OS scheduling/frequency/cache",
+    "Torch standard uses FP32 layer_norm, GELU and causal SDPA; strict reference uses FP64 reductions",
+    "CPU compatibility benchmark on available host, not current-runtime frontier",
+    "No compiled Torch, ONNX, quantization, profiling, sustained/concurrent streams or network costs",
+    "First call follows model loading; no cold-disk/cache or full process startup claim"
+  ],
+  "local_checks": {
+    "debug_and_sanitizer_runtime_contracts": 9,
+    "debug_ctest": 52,
+    "public_data_tests": 23,
+    "release_ctest": 52,
+    "runtime_contracts": 9,
+    "sanitizer_ctest": 51,
+    "training_tests": 46,
+    "wrapper_tests": 22
+  },
+  "log_sha256": {
+    "runtime-build.log": "0eea5e8d612e11f521e6cac5213e0c1215f92c472e6095b507048d5b36bd90eb",
+    "runtime-configure.log": "f1f2d646a5be1c0c645614a9faaa6a3740365eab88ffa44722a9f4c60f90e9b8",
+    "runtime-contract-tests.log": "496c4320763b9852445c068ccfcafc961cf85860fe2ba104c5483535df2ca330",
+    "runtime-data-tests.log": "48e02bbbca9b2eff152433f07f30569c7ca9176579f92f73819341b7d3f7449f",
+    "runtime-dev.log": "6335ad2c0e9dc8b40d60be70942b47928abc6fe5304c0ad75ec923864375bb43",
+    "runtime-float32-red.log": "c43141f4a920c68c4a87ded04bcc16551f2def96be1439710e1951c2e7592eef",
+    "runtime-package.log": "3a441f1918e66a17ed593266637d28a2a6de498868f8ed9dcb48be4579473df2",
+    "runtime-rebuilt-wheel-tests.log": "d809d51127d994b4a524802d0571e6a657836c811ef0367660b7b4e308bf796a",
+    "runtime-red.log": "c396bf8760c8cb2a651f478cc3156063dd40ed928097f1a5890ef4ed8434ede2",
+    "runtime-release.log": "80635ce2e6a963c06ca83cc0e5f7748130b9797f0a8f4185b0c4c6e892c864c2",
+    "runtime-sanitize.log": "7fbbeb0200bbbb961a2c36ae741dcae76b6ffe3a9eda62a4a2e9ef2d470b1a5e",
+    "runtime-training-tests.log": "c2dd6337ed56d968f8a9f826c99c1f894b14b06c449849838f2f129e581aa03b",
+    "runtime-worker-red.log": "6fbfd67bced0806675e37c15279fc9950735703fc0af469b196bb052362b0e4b",
+    "runtime-wrapper-tests.log": "cd30d6c87062a7f796bdbf7284be2d4bdabf11c6cf2fe33a781b08cd80b9b3b4"
+  },
+  "measured_calls": 43200,
+  "measured_windows": 93600,
+  "packages": {
+    "stealth_cpu-0.1.0-cp310-cp310-macosx_14_0_x86_64.whl": "3031e3eff8f8e16ca8ea3341c8d6b1ed0bfdf3b6162c93dd8465c34e51946666",
+    "stealth_cpu-0.1.0.tar.gz": "d579290818d6798d2e8412e73ddae47a818a0478b963da49d5822fe256c4e139"
+  },
+  "parity": "All 96 outputs of all 32 windows checked in every cell before warm timing",
+  "reserved_rows_used": 0,
+  "results_sha256": "d988bd4f65e3cbffa4ad4724fc91d95016c31fe8f77c9c064723f03f51faf0cc",
+  "schema_version": 1,
+  "verified_cells": 72
+}

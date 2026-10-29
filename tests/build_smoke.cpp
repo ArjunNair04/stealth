@@ -14,12 +14,17 @@ int main() {
 #endif
     const auto info = stealth::build_info();
     const std::array fields{info.version, info.compiler, info.operating_system, info.architecture,
-                            info.configuration};
+                            info.configuration, info.source_fingerprint};
     for (const auto field : std::span(fields)) {
         if (field.empty()) {
             std::cerr << "The linked library returned an empty build field\n";
             return 1;
         }
+    }
+    if (info.source_fingerprint.size() != 64 ||
+        info.source_fingerprint.find_first_not_of("0123456789abcdef") != std::string_view::npos) {
+        std::cerr << "Invalid source fingerprint\n";
+        return 1;
     }
     std::cout << "C++20 consumer linked successfully: " << info.version << '\n';
     return 0;

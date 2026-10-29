@@ -1,0 +1,165 @@
+# Historical implementation queue
+
+Preserved at consolidation on 29 October 2026. Statements of next work below
+refer to their original milestones; use [the active queue](tasks.md) for current
+priorities. Negative results and earlier evidence links are retained.
+
+# Work queue
+
+## 1. Local C++ infrastructure (complete)
+
+- [x] Choose a permanent standalone checkout and repository identity (now public).
+- [x] Inspect the installed compiler, SDK, editor and GitHub account.
+- [x] Install CMake and Ninja through the existing local package manager.
+- [x] Create a C++20 library, CLI, CMake presets and editor configuration.
+- [x] Verify debug, release, sanitizer and relocated-install builds locally.
+- [x] Push the initial repository and verify the cross-platform CI matrix.
+
+Done means another clean checkout can configure, build, test and install using
+only a documented compiler, CMake and Ninja. Record actual passed configurations.
+
+## Test-first acceptance rules
+
+Follow [the testing plan](testing.md): specify behavior, observe an intended failing
+test, implement it, then refactor. Independently checked expected answers and
+failure cases are required. Infrastructure is verified; model correctness and
+trading readiness remain unestablished.
+
+## 2. Native numeric primitives (implemented on codex/native-primitives)
+
+- [x] Freeze bounded FP32 storage, shapes, errors and output-preservation rules.
+- [x] Implement dense, softmax, layer normalization, GELU and residual components.
+- [x] Retain scalar dense and add an output-packed layout with tail-lane checks.
+- [x] Compose a feed-forward block with an independent Python math fixture.
+- [x] Verify component failures, integration failures, moves, repeated calls and allocations.
+- [x] Run Debug, Release, sanitizers, relocation and all five platform CI jobs.
+- [x] Record three local latency trials and explain the speed/memory tradeoffs.
+
+See [implementation evidence](native-v1.md) and [performance](performance.md).
+The task remains open until the implementation PR is merged. This establishes
+primitive and feed-forward correctness on tested inputs, not full-model parity.
+
+## 3. Small reference model and native parity (training workflow implemented)
+
+The user selected one temperature one hour ahead and one block first. The frozen
+configuration is seven inputs, 96 context rows, width 64, four heads and hidden
+width 256. See [the model contract](forecast-contract.md) and
+[implementation evidence](forecast-v1.md).
+
+Native input scaling, projection, positions, the causal block, final normalization
+and scalar readout are implemented on `codex/one-block-forecaster`. The bounded
+versioned weight loader preserves the previous model on failure. Independent
+double-equation fixtures cover reduced and full task shapes; malformed files,
+causality, output isolation, allocation failure and installed consumers are tested.
+
+The optional Torch CPU reference, framework/native parity, numerical gradient
+checks, AdamW training, accumulation, exact epoch restart, bounded pickle-free
+checkpoints and provenance-bound native export are implemented. See the
+[training guide](training-v1.md). The first fixed ETTm1 run is complete: all three trained exports pass sampled
+native parity, and exact full-size epoch restart is verified. None beats
+persistence on test MAE; [all results](training-results-v1.md) are retained.
+Issue #3 stays open through review and merge.
+Synthetic learning fixtures remain software diagnostics.
+
+The diagnostic study is complete: all four validation-selected linear baselines
+also miss persistence on old-test MAE. Temperature-only fits nearly match it;
+quiet-window errors and seed-dependent bias explain where the transformers lose.
+All original scores reproduce exactly and two full runs are byte-identical.
+The old test is exploratory; the remaining source tail stays unused. See
+[the findings](forecast-diagnostics-results-v1.md) and
+[the diagnostic contract](forecast-diagnostics-v1.md). The user-approved correction-from-latest transformer is implemented in Torch,
+native inference, Python sessions and rolling streams. The matched three-seed,
+six-round run improves all paired original models but still loses to persistence
+on old-test MAE (0.448029, 0.424493 and 0.498065 versus 0.417916). Exact full-size
+restart and byte-identical scoring replay pass. See [the new contract](correction-model-v1.md)
+and [all correction results](correction-results-v1.md). The reserved tail remains unused.
+
+Gate cached streaming separately after ordinary forward parity; test reset,
+capacity and stream isolation. A shifted 96-row window resets its positions and
+must not silently reuse an incompatible cache. Two-block variants need their own
+recorded comparison, not an untracked change to this first architecture.
+
+## 4. Optional Python wrapper and bounded raw streams (implemented)
+
+The `stealth_cpu` package calls the same native core. It exposes reusable numeric
+components, full-model sessions, bounded sequential batching and raw-window
+streams. Strict NumPy buffer rules, explicit copies, lifetime, output ownership,
+failures and separate-session concurrency are tested. Native builds retain no
+Python dependency. Source archive -> wheel -> isolated runtime installation is
+checked across the platform matrix. See [implementation evidence](python-stream-v1.md).
+
+`WindowStream` stages each complete ordered row before accepting it, preserves
+history on failure, waits for full context before publishing, and recomputes the
+latest window with positions reset to zero. Reset, rolling/reference agreement,
+bounds, allocations and concurrent independent streams are tested. This completes
+the raw-window baseline; KV caching and market-feed clock alignment remain separate.
+
+## 5. CPU performance study and QTS adapter (latest-only execution measured)
+
+The first saved-model comparison is complete: 72 cells across all three models,
+three trials, batch one/eight and four engines. All prediction checks pass. On
+the local Intel Mac, ordinary eager Torch takes about 0.490 ms per batch-one
+window versus C++ core 1.942 ms; native process memory is much smaller. See
+[all results and limits](runtime-results-v1.md). No speed advantage is claimed.
+
+Native stack sampling identifies attention as the largest sampled component
+(~39%). The eight-channel value loop is implemented and accepted: paired
+batch-one p50 improves 10.36%, median p99 improves 8.23%, all 9,216 native model
+outputs are byte-identical and owned heap workspace is unchanged. A fresh
+four-engine comparison still favours ordinary Torch (median paired p50 ratio
+3.53 for one window, 6.96 for eight). See [all results](attention-results-v1.md)
+and [the numerical contract](attention-tiling-v1.md). Profile the improved engine
+before choosing another kernel change.
+
+The next profile put dense projections first (34.6–36.2%). Four-row dense execution
+and bounded transformer/MLP integration now pass the fixed gate: 12.98% paired
+batch-one p50 reduction, 12.80% for eight windows, byte-identical trained outputs
+and zero hot allocations, at 17.25 KiB extra workspace per session. The first
+correct but scalarized implementation was slower and remains recorded as rejected.
+See [the complete comparison](dense-rows-results-v1.md). Current-platform,
+compiled-Torch and independent-runtime comparisons need the
+[explicit frontier requirements](runtime-frontier.md). Streaming, full cold start,
+sustained load and end-to-end comparisons remain pending. Issue #5 stays open.
+
+The latest-only path is now implemented and measured with the same optimization
+in ordinary Torch. Native latest-prefix calls preserve all 9,216 saved answers
+exactly and the original full trace is unchanged. Across 108 audited cells, the
+native full-to-last median paired p50 reduction is 87.62%. Matched latest-only
+median cell p50 is 0.181 ms native versus 0.287 ms Torch for one window; native
+still loses for eight windows (1.452 ms versus 0.566 ms). All native platform and
+both Torch-version CI jobs pass. See [the complete results](latest-results-v1.md).
+
+Next: profile latest-only computation before selecting another kernel change;
+then run current eager/compiled Torch and an independent runtime on a supported
+common host. Preserve the batch-eight deficit as an explicit engineering target.
+Streams retain full-trace execution until their failure contract is reviewed.
+Forecast quality remains below persistence for the saved models; objective or
+architecture changes require discussion with the user. Issue #5 remains open.
+
+Measure the same workload across native and established runtimes. Record CPU,
+compiler, threads, warm-up, memory and latency distributions. Then define a
+separate, preregistered QTS pilot. Do not infer alpha from synthetic correctness.
+Keep deterministic correctness checks separate from hardware-specific timing
+thresholds, and require new operational/financial gates before deployment.
+
+## GitHub tasks
+
+- [Set up and verify portable local C++ development](https://github.com/ArjunNair04/stealth/issues/1)
+- [Implement the first native numeric primitives](https://github.com/ArjunNair04/stealth/issues/2)
+- [Establish a small reference model and native forward parity](https://github.com/ArjunNair04/stealth/issues/3)
+- [Add an optional Python wrapper after the native layers](https://github.com/ArjunNair04/stealth/issues/4)
+- [Measure the CPU performance frontier and define the QTS boundary](https://github.com/ArjunNair04/stealth/issues/5)
+
+See [verification](verification.md) for infrastructure and [native v1](native-v1.md) for the first numerical layers.
+
+## Public benchmark foundation
+
+ETTm1 source pinning, strict parsing, training-only scaling, chronological window
+indices and immutable preparation/replay are implemented on
+`codex/public-benchmark`. See [the data contract](benchmark-contract.md) and
+[the benchmark guide](public-benchmark.md). The user has now selected the one-hour point target and one-block architecture.
+Native model/loading and the frozen training workflow are recorded above.
+
+The saved correction-model runtime experiment is frozen in
+[the runtime contract](runtime-benchmark-v1.md), with
+[complete measured evidence](runtime-results-v1.md).

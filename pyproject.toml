@@ -1,0 +1,26 @@
+[build-system]
+requires = ["scikit-build-core==0.11.6", "pybind11==3.0.1"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "stealth-cpu"
+version = "0.1.0"
+description = "Checked C++ CPU forecasting components with an optional NumPy interface"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.26,<3"]
+
+[tool.scikit-build]
+minimum-version = "0.11.6"
+cmake.version = ">=3.25"
+cmake.build-type = "Release"
+wheel.packages = ["python/stealth_cpu"]
+install.components = ["python"]
+sdist.exclude = ["local/**", "build/**", "install/**", ".venv/**", "CMakeUserPresets.json", ".git/**", "docs/evidence/**"]
+
+[tool.scikit-build.cmake.define]
+STEALTH_BUILD_PYTHON = "ON"
+STEALTH_WARNINGS_AS_ERRORS = "ON"
+STEALTH_BUILD_CLI = "OFF"
+STEALTH_BUILD_EXAMPLES = "OFF"
+BUILD_TESTING = "OFF"

@@ -1,0 +1,100 @@
+{
+  "actual_source_audit": {
+    "columns": [
+      "date",
+      "HUFL",
+      "HULL",
+      "MUFL",
+      "MULL",
+      "LUFL",
+      "LULL",
+      "OT"
+    ],
+    "dataset_id": "ettm1_1d16c8f4",
+    "first": "2016-07-01 00:00:00",
+    "forecast_results_computed": false,
+    "interval_seconds": 900,
+    "last": "2018-06-26 19:45:00",
+    "partitions": {
+      "test": {
+        "end_row_exclusive": 57600,
+        "first": "2017-10-24 00:00:00",
+        "last": "2018-02-20 23:45:00",
+        "start_row": 46080
+      },
+      "train": {
+        "end_row_exclusive": 34560,
+        "first": "2016-07-01 00:00:00",
+        "last": "2017-06-25 23:45:00",
+        "start_row": 0
+      },
+      "validation": {
+        "end_row_exclusive": 46080,
+        "first": "2017-06-26 00:00:00",
+        "last": "2017-10-23 23:45:00",
+        "start_row": 34560
+      }
+    },
+    "rows": 69680,
+    "schema_version": 1,
+    "split_ends": {
+      "test": 57600,
+      "train": 34560,
+      "validation": 46080
+    },
+    "timezone": "unspecified_source_clock",
+    "unused_rows": 12080
+  },
+  "initial_red": {
+    "errors_including_subtests": 42,
+    "log_sha256": "c278cef44051d0d502f41297fa09fed8cca31727e3aa49328d0b37925e4e09ba",
+    "methods": 19,
+    "reason": "NotImplementedError from intended stubs"
+  },
+  "input_csv_sha256": "6ce1759b1a18e3328421d5d75fadcb316c449fcd7cec32820c8dafda71986c9e",
+  "local_tests": {
+    "native_debug_groups_passed": 30,
+    "native_release_groups_passed": 30,
+    "offline_methods_passed": 21,
+    "python": "3.10",
+    "relocated_consumers": "pass in both native suites"
+  },
+  "mutations": [
+    {
+      "detected_by_assertion": true,
+      "mutation": "training_suffix_leak",
+      "test": "test_future_suffix_cannot_change_fit_or_prefix"
+    },
+    {
+      "detected_by_assertion": true,
+      "mutation": "target_uses_current_input",
+      "test": "test_point_hand_computed_boundaries"
+    }
+  ],
+  "recorded_date": "2026-10-28",
+  "remaining_gates": [
+    "Agree forecast objective and model layout with user",
+    "Versioned native weight loader",
+    "Pinned reference and complete-model parity",
+    "Trained public-data benchmark",
+    "Cached streaming and Python bindings",
+    "Independent QTS clock/coverage and returns protocol"
+  ],
+  "replay": {
+    "artifact_hashes": {
+      "audit.json": "4bff902432a376bc8dbd58bf93ed42ea0663a859e39439c50408b43a11b47fb9",
+      "manifest.json": "fbf44b036c379f306d48e4eecbe0571882f8c4c4593c7e528f0b54a081942e0e",
+      "scaler.json": "f59893bffeb5c0ce307b5c88f9a2cb079b2c9ce3403d049759209577b568cf1c"
+    },
+    "separate_output_roots_byte_identical": true
+  },
+  "schema_version": 1,
+  "scope": "Public-data intake and preparation; no training or forecast score.",
+  "source_files": {
+    "benchmarks/ettm1/source.json": "493e626e4ad8e8a2af6f2a39a998edb9d0448b5ba15cc363dbf9766482e143e5",
+    "docs/benchmark-contract.md": "1316cc870ae1ba6997550d7d6d8d817da821f119356b17c5f44c2fc542b6c938",
+    "tests/test_public_benchmark.py": "e76241e13ebfcbe10ada59fc6c063bef6eba5b3751001c311c9afca37700921b",
+    "tools/prepare_public_benchmark.py": "b8e4e63c7064a880547ebc14bcfdb9fc4b6ade07ba1ef714d33339df195c1158"
+  },
+  "source_revision": "1d16c8f4f943005d613b5bc962e9eeb06058cf07"
+}

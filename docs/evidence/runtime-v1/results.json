@@ -1,0 +1,3194 @@
+{
+  "build": {
+    "compile_commands": {
+      "numeric.cpp": "/usr/bin/c++ -DSTEALTH_BUILD_CONFIGURATION=\\\"Release\\\" -I<repo>/include -I<repo>/build/release/generated -O3 -DNDEBUG -std=c++20 -fPIC -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Werror -ffp-contract=off -o CMakeFiles/stealth_core.dir/src/numeric.cpp.o -c <repo>/src/numeric.cpp",
+      "runtime_benchmark.cpp": "/usr/bin/c++ -I<repo>/include -O3 -DNDEBUG -std=c++20 -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Werror -o CMakeFiles/stealth_runtime_bench.dir/bench/runtime_benchmark.cpp.o -c <repo>/bench/runtime_benchmark.cpp"
+    },
+    "info": "version: 0.1.0\ncompiler: AppleClang 16.0.0.16000026\noperating_system: Darwin\narchitecture: x86_64\nconfiguration: Release\ncxx_standard: 20\n"
+  },
+  "code_commit": "e2bdec4b23a93e1f234c22d6033827514f0df001",
+  "completed_at": "2026-10-29T08:07:59.662998+00:00",
+  "data_sha256": "6ce1759b1a18e3328421d5d75fadcb316c449fcd7cec32820c8dafda71986c9e",
+  "environment": {
+    "cpu": "Intel(R) Core(TM) i5-10600 CPU @ 3.30GHz",
+    "machine": "x86_64",
+    "python": "3.10.6",
+    "release": "23.6.0",
+    "system": "Darwin",
+    "thread_env": {
+      "MKL_NUM_THREADS": "1",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    }
+  },
+  "experiment_id": "ettm1_correction_runtime_v1",
+  "input_sha256": "3ed32af0b79ef537e2f2d9a0fa9afda122335689be2aeabf4add7013e85e3595",
+  "model_sha256": {
+    "19": "237910f530e7c337227f2150da2f78da2518e996ee817c4f40e4ef4a78a1a080",
+    "43": "6400f2cb9a94237e8cd0e5a8083fd501c75fb9bfe60a7871675e12ccacdbca6a",
+    "7": "48d3433c9be2e2c411a06fdf981a78332d6f34af0767608d6d11ef9ca978e87d"
+  },
+  "native_binary_sha256": "f48f04ce0c95995530c997df042786764275a91cb3886dab5c643b3b64d30820",
+  "preparation": {
+    "19": {
+      "expected_sha256": "0fc9501064f7ee77d5bae723756f2af88b74619371ab752c0753606a77ae6143",
+      "model_sha256": "237910f530e7c337227f2150da2f78da2518e996ee817c4f40e4ef4a78a1a080",
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    "43": {
+      "expected_sha256": "f4c91957e0d3db550ef510d8720b3affcc995f19842d1d5054132a7e4bd64005",
+      "model_sha256": "6400f2cb9a94237e8cd0e5a8083fd501c75fb9bfe60a7871675e12ccacdbca6a",
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    "7": {
+      "expected_sha256": "89cec65b26ed7b3aa03816daa02a899c6d6823a79a3d106a82ae431b79fdd87f",
+      "model_sha256": "48d3433c9be2e2c411a06fdf981a78332d6f34af0767608d6d11ef9ca978e87d",
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    }
+  },
+  "protocol": {
+    "absolute_tolerance": 5e-05,
+    "context": 96,
+    "deterministic": true,
+    "engines": [
+      "native_core",
+      "native_python",
+      "torch_reference",
+      "torch_standard"
+    ],
+    "experiment_id": "ettm1_correction_runtime_v1",
+    "features": 7,
+    "limitations": [
+      "Warm resident inputs; uncontrolled OS scheduling/frequency/cache",
+      "Torch standard uses FP32 layer_norm, GELU and causal SDPA; strict reference uses FP64 reductions",
+      "CPU compatibility benchmark on available host, not current-runtime frontier",
+      "No compiled Torch, ONNX, quantization, profiling, sustained/concurrent streams or network costs",
+      "First call follows model loading; no cold-disk/cache or full process startup claim"
+    ],
+    "memory": "process peak RSS after imports, setup and timing; high-water marks, not live allocation or attributable model memory; native owned bytes separately",
+    "order": "rotate engine order by trial+seed_index+workload_index; each cell in a fresh serial process",
+    "relative_tolerance": 0.0002,
+    "schema_version": 1,
+    "seeds": [
+      7,
+      19,
+      43
+    ],
+    "split": "validation",
+    "statistics": "nearest-rank p50/p95/p99, mean, min/max; per-trial reports and ranges, no IID confidence claim",
+    "threads": 1,
+    "timing": "monotonic ns; all 96 outputs; inputs resident/prepared; no clock subtraction; one sample per synchronous forward; read checksum outside timing",
+    "trials": 3,
+    "warmup_calls": 64,
+    "window_ends": [
+      34560,
+      34931,
+      35302,
+      35674,
+      36045,
+      36417,
+      36788,
+      37160,
+      37531,
+      37903,
+      38274,
+      38646,
+      39017,
+      39389,
+      39760,
+      40132,
+      40503,
+      40875,
+      41246,
+      41618,
+      41989,
+      42361,
+      42732,
+      43104,
+      43475,
+      43847,
+      44218,
+      44590,
+      44961,
+      45333,
+      45704,
+      46076
+    ],
+    "window_selection": "32 integer-linspace input ends from 34560 through 46076 inclusive; zero-based end-exclusive; no targets read",
+    "windows": 32,
+    "workloads": [
+      {
+        "batch": 1,
+        "samples": 1000
+      },
+      {
+        "batch": 8,
+        "samples": 200
+      }
+    ]
+  },
+  "protocol_sha256": "122d9a4fc9232397e647631c9fad67ae94877a55a08be2b46e081136c5dd7575",
+  "records": [
+    {
+      "batch": 1,
+      "checksum": 15585.867270469666,
+      "clock": {
+        "count": 1000,
+        "max_ns": 55,
+        "mean_ns": 34.679,
+        "min_ns": 33,
+        "p50_ns": 35,
+        "p95_ns": 35,
+        "p99_ns": 36
+      },
+      "engine": "native_core",
+      "first_call_ns": 1951760,
+      "latency": {
+        "count": 1000,
+        "max_ns": 4222752,
+        "mean_ns": 1992160.753,
+        "min_ns": 1871305,
+        "p50_ns": 1955401,
+        "p95_ns": 2163371,
+        "p99_ns": 2540098
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 544768,
+        "final": 1560576,
+        "setup": 1544192
+      },
+      "position_bytes": 24576,
+      "record_sha256": "5c8a76980051cdf25923bf4c2d78a80a766b0b0838e760ca437b8c5d3db7187f",
+      "seed": 7,
+      "setup_ns": 2095266,
+      "trial": 1,
+      "workspace_bytes": 204576
+    },
+    {
+      "batch": 1,
+      "checksum": 15585.867270469666,
+      "clock": {
+        "count": 1000,
+        "max_ns": 151,
+        "mean_ns": 97.143,
+        "min_ns": 84,
+        "p50_ns": 98,
+        "p95_ns": 101,
+        "p99_ns": 109
+      },
+      "engine": "native_python",
+      "first_call_ns": 2040194,
+      "latency": {
+        "count": 1000,
+        "max_ns": 2882627,
+        "mean_ns": 1965785.643,
+        "min_ns": 1853634,
+        "p50_ns": 1934349,
+        "p95_ns": 2121512,
+        "p99_ns": 2385629
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 25890816,
+        "final": 28131328,
+        "setup": 28020736
+      },
+      "record_sha256": "42893f800f11b9d3eb22d5c3dee208ee44e3817ca575ea0d037a8ac83a638657",
+      "seed": 7,
+      "setup_ns": 5335438,
+      "trial": 1,
+      "versions": {
+        "extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+        "numpy": "1.26.4"
+      },
+      "workspace_bytes": 207264
+    },
+    {
+      "batch": 1,
+      "buffer_bytes": 24632,
+      "checksum": 15585.86725139618,
+      "clock": {
+        "count": 1000,
+        "max_ns": 12605,
+        "mean_ns": 105.991,
+        "min_ns": 89,
+        "p50_ns": 93,
+        "p95_ns": 96,
+        "p99_ns": 103
+      },
+      "engine": "torch_reference",
+      "first_call_ns": 2458547,
+      "latency": {
+        "count": 1000,
+        "max_ns": 2990520,
+        "mean_ns": 1373768.975,
+        "min_ns": 1215868,
+        "p50_ns": 1292776,
+        "p95_ns": 1805808,
+        "p99_ns": 2237758
+      },
+      "max_abs_difference": 0.0,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158879744,
+        "final": 165629952,
+        "setup": 162324480
+      },
+      "record_sha256": "5551416e646491b1e4979ab04ecaaa0c06653da192bbb2ebabbcc2a7d63fe628",
+      "seed": 7,
+      "setup_ns": 8737150,
+      "trial": 1,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "buffer_bytes": 24632,
+      "checksum": 15585.867219924927,
+      "clock": {
+        "count": 1000,
+        "max_ns": 170,
+        "mean_ns": 91.98,
+        "min_ns": 82,
+        "p50_ns": 92,
+        "p95_ns": 94,
+        "p99_ns": 96
+      },
+      "engine": "torch_standard",
+      "first_call_ns": 1658256,
+      "latency": {
+        "count": 1000,
+        "max_ns": 897421,
+        "mean_ns": 502894.592,
+        "min_ns": 474404,
+        "p50_ns": 487811,
+        "p95_ns": 619247,
+        "p99_ns": 742769
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 159023104,
+        "final": 165945344,
+        "setup": 162476032
+      },
+      "record_sha256": "83da3dcb8cbcef94045e5e7766610fc73c5746d3aa9d47c9cf533dfbdf36897a",
+      "seed": 7,
+      "setup_ns": 9120556,
+      "trial": 1,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 8,
+      "checksum": 3262.0624237060547,
+      "clock": {
+        "count": 1000,
+        "max_ns": 152,
+        "mean_ns": 95.636,
+        "min_ns": 85,
+        "p50_ns": 96,
+        "p95_ns": 99,
+        "p99_ns": 107
+      },
+      "engine": "native_python",
+      "first_call_ns": 15286275,
+      "latency": {
+        "count": 200,
+        "max_ns": 16912021,
+        "mean_ns": 15348955.99,
+        "min_ns": 14857016,
+        "p50_ns": 15263186,
+        "p95_ns": 15960302,
+        "p99_ns": 16150637
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 25923584,
+        "final": 28364800,
+        "setup": 28082176
+      },
+      "record_sha256": "229de5e4eb90635127aecc56e6c938dbdd806dbe2c602102671f8ef81a966ba6",
+      "seed": 7,
+      "setup_ns": 5157038,
+      "trial": 1,
+      "versions": {
+        "extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+        "numpy": "1.26.4"
+      },
+      "workspace_bytes": 207264
+    },
+    {
+      "batch": 8,
+      "buffer_bytes": 24632,
+      "checksum": 3262.0624256134033,
+      "clock": {
+        "count": 1000,
+        "max_ns": 172,
+        "mean_ns": 96.235,
+        "min_ns": 86,
+        "p50_ns": 96,
+        "p95_ns": 99,
+        "p99_ns": 102
+      },
+      "engine": "torch_reference",
+      "first_call_ns": 20127102,
+      "latency": {
+        "count": 200,
+        "max_ns": 10606703,
+        "mean_ns": 8465782.715,
+        "min_ns": 7508961,
+        "p50_ns": 8365728,
+        "p95_ns": 9405499,
+        "p99_ns": 9961732
+      },
+      "max_abs_difference": 0.0,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158818304,
+        "final": 176525312,
+        "setup": 162263040
+      },
+      "record_sha256": "cd61e20aac94e178d384de0b3017ca6a04bb054e5d78fbdacdd97f09510efa23",
+      "seed": 7,
+      "setup_ns": 11390469,
+      "trial": 1,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 8,
+      "buffer_bytes": 24632,
+      "checksum": 3262.0624265670776,
+      "clock": {
+        "count": 1000,
+        "max_ns": 236,
+        "mean_ns": 92.961,
+        "min_ns": 89,
+        "p50_ns": 93,
+        "p95_ns": 95,
+        "p99_ns": 102
+      },
+      "engine": "torch_standard",
+      "first_call_ns": 4093613,
+      "latency": {
+        "count": 200,
+        "max_ns": 3021654,
+        "mean_ns": 2104179.08,
+        "min_ns": 1955899,
+        "p50_ns": 2034991,
+        "p95_ns": 2374524,
+        "p99_ns": 2961146
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 159105024,
+        "final": 167288832,
+        "setup": 162537472
+      },
+      "record_sha256": "07adc6cce1afe2833f7024a91f34fb5f27dac602f37f88290d2d806f7d0a93f8",
+      "seed": 7,
+      "setup_ns": 8576522,
+      "trial": 1,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 8,
+      "checksum": 3262.0624237060547,
+      "clock": {
+        "count": 1000,
+        "max_ns": 41,
+        "mean_ns": 34.272,
+        "min_ns": 33,
+        "p50_ns": 34,
+        "p95_ns": 35,
+        "p99_ns": 35
+      },
+      "engine": "native_core",
+      "first_call_ns": 16076910,
+      "latency": {
+        "count": 200,
+        "max_ns": 59478041,
+        "mean_ns": 16125761.69,
+        "min_ns": 15364615,
+        "p50_ns": 15871829,
+        "p95_ns": 16546189,
+        "p99_ns": 16985114
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 532480,
+        "final": 1572864,
+        "setup": 1564672
+      },
+      "position_bytes": 24576,
+      "record_sha256": "4e3d4c7aea1374c2878cd221c47a1dcd16cc37215b8f0eb6ad762271adf8acd8",
+      "seed": 7,
+      "setup_ns": 2178385,
+      "trial": 1,
+      "workspace_bytes": 204576
+    },
+    {
+      "batch": 1,
+      "checksum": 15717.291118621826,
+      "clock": {
+        "count": 1000,
+        "max_ns": 2372,
+        "mean_ns": 95.052,
+        "min_ns": 81,
+        "p50_ns": 94,
+        "p95_ns": 99,
+        "p99_ns": 105
+      },
+      "engine": "native_python",
+      "first_call_ns": 2136221,
+      "latency": {
+        "count": 1000,
+        "max_ns": 3092644,
+        "mean_ns": 1983385.348,
+        "min_ns": 1869794,
+        "p50_ns": 1946849,
+        "p95_ns": 2126255,
+        "p99_ns": 2338071
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 25944064,
+        "final": 28221440,
+        "setup": 28098560
+      },
+      "record_sha256": "55468a5548981c25f9d28981cf76515de1d3fc18a4ceedd2eb2142812adc2a8e",
+      "seed": 19,
+      "setup_ns": 5307226,
+      "trial": 1,
+      "versions": {
+        "extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+        "numpy": "1.26.4"
+      },
+      "workspace_bytes": 207264
+    },
+    {
+      "batch": 1,
+      "buffer_bytes": 24632,
+      "checksum": 15717.291116714478,
+      "clock": {
+        "count": 1000,
+        "max_ns": 205,
+        "mean_ns": 94.522,
+        "min_ns": 83,
+        "p50_ns": 94,
+        "p95_ns": 99,
+        "p99_ns": 103
+      },
+      "engine": "torch_reference",
+      "first_call_ns": 2746710,
+      "latency": {
+        "count": 1000,
+        "max_ns": 34648607,
+        "mean_ns": 1418706.406,
+        "min_ns": 1231634,
+        "p50_ns": 1306247,
+        "p95_ns": 1620020,
+        "p99_ns": 2176079
+      },
+      "max_abs_difference": 0.0,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158597120,
+        "final": 165597184,
+        "setup": 162050048
+      },
+      "record_sha256": "9880e2796db009654005bbeb7396f28173b6a97f6994a5681c3e20ac5f0720ff",
+      "seed": 19,
+      "setup_ns": 8824722,
+      "trial": 1,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "buffer_bytes": 24632,
+      "checksum": 15717.291133403778,
+      "clock": {
+        "count": 1000,
+        "max_ns": 188,
+        "mean_ns": 93.391,
+        "min_ns": 89,
+        "p50_ns": 93,
+        "p95_ns": 96,
+        "p99_ns": 101
+      },
+      "engine": "torch_standard",
+      "first_call_ns": 1769352,
+      "latency": {
+        "count": 1000,
+        "max_ns": 1422299,
+        "mean_ns": 507934.356,
+        "min_ns": 476519,
+        "p50_ns": 488269,
+        "p95_ns": 647560,
+        "p99_ns": 789819
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158609408,
+        "final": 165376000,
+        "setup": 162107392
+      },
+      "record_sha256": "bd8ea8be2702ed13b28b69b8a8423b03dee5c93a16a81e72d418e86f7f660b76",
+      "seed": 19,
+      "setup_ns": 8567036,
+      "trial": 1,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "checksum": 15717.291118621826,
+      "clock": {
+        "count": 1000,
+        "max_ns": 43,
+        "mean_ns": 34.33,
+        "min_ns": 33,
+        "p50_ns": 34,
+        "p95_ns": 35,
+        "p99_ns": 36
+      },
+      "engine": "native_core",
+      "first_call_ns": 2002378,
+      "latency": {
+        "count": 1000,
+        "max_ns": 3080000,
+        "mean_ns": 1964470.005,
+        "min_ns": 1882649,
+        "p50_ns": 1915200,
+        "p95_ns": 2174011,
+        "p99_ns": 2404031
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 524288,
+        "final": 1552384,
+        "setup": 1536000
+      },
+      "position_bytes": 24576,
+      "record_sha256": "c85d1d7fe2b21d066c8472f1c1a4ac712db68cbf5e17c748c7fe6f309d5812f0",
+      "seed": 19,
+      "setup_ns": 2185791,
+      "trial": 1,
+      "workspace_bytes": 204576
+    },
+    {
+      "batch": 8,
+      "buffer_bytes": 24632,
+      "checksum": 3290.1317982673645,
+      "clock": {
+        "count": 1000,
+        "max_ns": 152,
+        "mean_ns": 93.52,
+        "min_ns": 82,
+        "p50_ns": 93,
+        "p95_ns": 98,
+        "p99_ns": 101
+      },
+      "engine": "torch_reference",
+      "first_call_ns": 12551954,
+      "latency": {
+        "count": 200,
+        "max_ns": 10028971,
+        "mean_ns": 8062458.545,
+        "min_ns": 7403043,
+        "p50_ns": 7909802,
+        "p95_ns": 9094639,
+        "p99_ns": 9681343
+      },
+      "max_abs_difference": 0.0,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158683136,
+        "final": 176476160,
+        "setup": 162189312
+      },
+      "record_sha256": "2a002f6d3186ad9e37aa438bab492f83cd272eec1f4d1be77e745f9ba34587af",
+      "seed": 19,
+      "setup_ns": 8565751,
+      "trial": 1,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 8,
+      "buffer_bytes": 24632,
+      "checksum": 3290.131800174713,
+      "clock": {
+        "count": 1000,
+        "max_ns": 267,
+        "mean_ns": 94.564,
+        "min_ns": 85,
+        "p50_ns": 94,
+        "p95_ns": 97,
+        "p99_ns": 102
+      },
+      "engine": "torch_standard",
+      "first_call_ns": 4070440,
+      "latency": {
+        "count": 200,
+        "max_ns": 2676226,
+        "mean_ns": 2088288.785,
+        "min_ns": 1959303,
+        "p50_ns": 2031236,
+        "p95_ns": 2349466,
+        "p99_ns": 2501380
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158937088,
+        "final": 167079936,
+        "setup": 162418688
+      },
+      "record_sha256": "f162a374baaf128d9934caccbabfb128fa2c30c81a66ebc165f327f38c927649",
+      "seed": 19,
+      "setup_ns": 8893000,
+      "trial": 1,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 8,
+      "checksum": 3290.131793498993,
+      "clock": {
+        "count": 1000,
+        "max_ns": 40,
+        "mean_ns": 34.33,
+        "min_ns": 33,
+        "p50_ns": 34,
+        "p95_ns": 35,
+        "p99_ns": 35
+      },
+      "engine": "native_core",
+      "first_call_ns": 15657547,
+      "latency": {
+        "count": 200,
+        "max_ns": 17852121,
+        "mean_ns": 15784578.73,
+        "min_ns": 15237639,
+        "p50_ns": 15695786,
+        "p95_ns": 16544541,
+        "p99_ns": 17045135
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 524288,
+        "final": 1544192,
+        "setup": 1536000
+      },
+      "position_bytes": 24576,
+      "record_sha256": "14d2cf001f941db20052fc8ed22a648a40fdb89d6d99fb3a37de88b35a9f93ce",
+      "seed": 19,
+      "setup_ns": 2341753,
+      "trial": 1,
+      "workspace_bytes": 204576
+    },
+    {
+      "batch": 8,
+      "checksum": 3290.131793498993,
+      "clock": {
+        "count": 1000,
+        "max_ns": 750,
+        "mean_ns": 110.659,
+        "min_ns": 86,
+        "p50_ns": 100,
+        "p95_ns": 154,
+        "p99_ns": 171
+      },
+      "engine": "native_python",
+      "first_call_ns": 16323353,
+      "latency": {
+        "count": 200,
+        "max_ns": 49934191,
+        "mean_ns": 17285937.095,
+        "min_ns": 15629452,
+        "p50_ns": 16042763,
+        "p95_ns": 24446855,
+        "p99_ns": 41041683
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 26021888,
+        "final": 28516352,
+        "setup": 28180480
+      },
+      "record_sha256": "620b5e1e69604f9b990fefffa230fbb5ae10eb92ebc5f4548577f0285f38f120",
+      "seed": 19,
+      "setup_ns": 5283797,
+      "trial": 1,
+      "versions": {
+        "extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+        "numpy": "1.26.4"
+      },
+      "workspace_bytes": 207264
+    },
+    {
+      "batch": 1,
+      "buffer_bytes": 24632,
+      "checksum": 15799.754905223846,
+      "clock": {
+        "count": 1000,
+        "max_ns": 137,
+        "mean_ns": 94.29,
+        "min_ns": 90,
+        "p50_ns": 94,
+        "p95_ns": 97,
+        "p99_ns": 98
+      },
+      "engine": "torch_reference",
+      "first_call_ns": 2667473,
+      "latency": {
+        "count": 1000,
+        "max_ns": 2661105,
+        "mean_ns": 1373314.872,
+        "min_ns": 1247273,
+        "p50_ns": 1291816,
+        "p95_ns": 1844649,
+        "p99_ns": 2314180
+      },
+      "max_abs_difference": 0.0,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158711808,
+        "final": 165466112,
+        "setup": 162164736
+      },
+      "record_sha256": "b3b3db2be4eff630e6cf2f010382e62d4980bb52ce335aa1487db50375eb3cf9",
+      "seed": 43,
+      "setup_ns": 8458635,
+      "trial": 1,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "buffer_bytes": 24632,
+      "checksum": 15799.754898071289,
+      "clock": {
+        "count": 1000,
+        "max_ns": 158,
+        "mean_ns": 94.04,
+        "min_ns": 83,
+        "p50_ns": 94,
+        "p95_ns": 97,
+        "p99_ns": 101
+      },
+      "engine": "torch_standard",
+      "first_call_ns": 1654983,
+      "latency": {
+        "count": 1000,
+        "max_ns": 17258749,
+        "mean_ns": 563496.093,
+        "min_ns": 472024,
+        "p50_ns": 487414,
+        "p95_ns": 712755,
+        "p99_ns": 1267744
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158969856,
+        "final": 165711872,
+        "setup": 162480128
+      },
+      "record_sha256": "e7ee4567cab2e1ecf7bc1d0c4a988879de875ee44c6d720866b276c905f6ee35",
+      "seed": 43,
+      "setup_ns": 8859028,
+      "trial": 1,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "checksum": 15799.75491476059,
+      "clock": {
+        "count": 1000,
+        "max_ns": 7372,
+        "mean_ns": 42.301,
+        "min_ns": 33,
+        "p50_ns": 35,
+        "p95_ns": 36,
+        "p99_ns": 36
+      },
+      "engine": "native_core",
+      "first_call_ns": 1934711,
+      "latency": {
+        "count": 1000,
+        "max_ns": 38001915,
+        "mean_ns": 2076006.7,
+        "min_ns": 1899502,
+        "p50_ns": 1974189,
+        "p95_ns": 2375577,
+        "p99_ns": 3021877
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 524288,
+        "final": 1527808,
+        "setup": 1503232
+      },
+      "position_bytes": 24576,
+      "record_sha256": "4c98fb6ee4c2fc7d527417d513b2c6c5683ad2e96d68fafbadf51b2bd0ac8ca4",
+      "seed": 43,
+      "setup_ns": 1794950,
+      "trial": 1,
+      "workspace_bytes": 204576
+    },
+    {
+      "batch": 1,
+      "checksum": 15799.75491476059,
+      "clock": {
+        "count": 1000,
+        "max_ns": 156,
+        "mean_ns": 93.472,
+        "min_ns": 81,
+        "p50_ns": 94,
+        "p95_ns": 99,
+        "p99_ns": 104
+      },
+      "engine": "native_python",
+      "first_call_ns": 2275731,
+      "latency": {
+        "count": 1000,
+        "max_ns": 3502363,
+        "mean_ns": 1999781.709,
+        "min_ns": 1883416,
+        "p50_ns": 1929608,
+        "p95_ns": 2411503,
+        "p99_ns": 2934489
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 25886720,
+        "final": 28196864,
+        "setup": 28045312
+      },
+      "record_sha256": "277493e4472426214dbe2c7b51f51ab04a4b4149551c5de52abcda5dcf70b89f",
+      "seed": 43,
+      "setup_ns": 4872612,
+      "trial": 1,
+      "versions": {
+        "extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+        "numpy": "1.26.4"
+      },
+      "workspace_bytes": 207264
+    },
+    {
+      "batch": 8,
+      "buffer_bytes": 24632,
+      "checksum": 3307.0654296875,
+      "clock": {
+        "count": 1000,
+        "max_ns": 247,
+        "mean_ns": 96.943,
+        "min_ns": 86,
+        "p50_ns": 97,
+        "p95_ns": 99,
+        "p99_ns": 103
+      },
+      "engine": "torch_standard",
+      "first_call_ns": 3869174,
+      "latency": {
+        "count": 200,
+        "max_ns": 3771048,
+        "mean_ns": 2107396.0,
+        "min_ns": 1949894,
+        "p50_ns": 2011465,
+        "p95_ns": 2628826,
+        "p99_ns": 3147052
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158973952,
+        "final": 167043072,
+        "setup": 162406400
+      },
+      "record_sha256": "801e4d6595dc643ed53e755692b8242fc0217d189d9fe44222c1ea7497a1f3dd",
+      "seed": 43,
+      "setup_ns": 8634550,
+      "trial": 1,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 8,
+      "checksum": 3307.0654244422913,
+      "clock": {
+        "count": 1000,
+        "max_ns": 62,
+        "mean_ns": 35.324,
+        "min_ns": 34,
+        "p50_ns": 35,
+        "p95_ns": 36,
+        "p99_ns": 37
+      },
+      "engine": "native_core",
+      "first_call_ns": 16001612,
+      "latency": {
+        "count": 200,
+        "max_ns": 50986620,
+        "mean_ns": 16286336.095,
+        "min_ns": 15436362,
+        "p50_ns": 15954156,
+        "p95_ns": 16996676,
+        "p99_ns": 17857108
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 524288,
+        "final": 1572864,
+        "setup": 1564672
+      },
+      "position_bytes": 24576,
+      "record_sha256": "35f0bdb52fa3450068c5cebcdfce9e228710f22505b95e3464d5eb0b4c2771da",
+      "seed": 43,
+      "setup_ns": 2453470,
+      "trial": 1,
+      "workspace_bytes": 204576
+    },
+    {
+      "batch": 8,
+      "checksum": 3307.0654244422913,
+      "clock": {
+        "count": 1000,
+        "max_ns": 151,
+        "mean_ns": 93.891,
+        "min_ns": 83,
+        "p50_ns": 94,
+        "p95_ns": 97,
+        "p99_ns": 106
+      },
+      "engine": "native_python",
+      "first_call_ns": 16707241,
+      "latency": {
+        "count": 200,
+        "max_ns": 48797535,
+        "mean_ns": 16384767.51,
+        "min_ns": 15311188,
+        "p50_ns": 16070032,
+        "p95_ns": 17262807,
+        "p99_ns": 19155651
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 25870336,
+        "final": 28327936,
+        "setup": 28012544
+      },
+      "record_sha256": "01d84ef0a5115dc14e11710be5f53d8e95e31bde20069e0a6d5c319a18974c6c",
+      "seed": 43,
+      "setup_ns": 4765173,
+      "trial": 1,
+      "versions": {
+        "extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+        "numpy": "1.26.4"
+      },
+      "workspace_bytes": 207264
+    },
+    {
+      "batch": 8,
+      "buffer_bytes": 24632,
+      "checksum": 3307.0654277801514,
+      "clock": {
+        "count": 1000,
+        "max_ns": 248,
+        "mean_ns": 94.95,
+        "min_ns": 85,
+        "p50_ns": 95,
+        "p95_ns": 97,
+        "p99_ns": 105
+      },
+      "engine": "torch_reference",
+      "first_call_ns": 13439924,
+      "latency": {
+        "count": 200,
+        "max_ns": 12125733,
+        "mean_ns": 8535049.995,
+        "min_ns": 7599612,
+        "p50_ns": 8427207,
+        "p95_ns": 9855660,
+        "p99_ns": 10958751
+      },
+      "max_abs_difference": 0.0,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158896128,
+        "final": 176599040,
+        "setup": 162324480
+      },
+      "record_sha256": "40334ad12f189c8f4cfa76aa366a097a5a7e150b5f0a2f0a54c9755b5683a04a",
+      "seed": 43,
+      "setup_ns": 9213315,
+      "trial": 1,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "checksum": 15585.867270469666,
+      "clock": {
+        "count": 1000,
+        "max_ns": 153,
+        "mean_ns": 93.781,
+        "min_ns": 82,
+        "p50_ns": 94,
+        "p95_ns": 98,
+        "p99_ns": 106
+      },
+      "engine": "native_python",
+      "first_call_ns": 2078178,
+      "latency": {
+        "count": 1000,
+        "max_ns": 64831875,
+        "mean_ns": 2164041.199,
+        "min_ns": 1859219,
+        "p50_ns": 1932114,
+        "p95_ns": 2656806,
+        "p99_ns": 5546513
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 25948160,
+        "final": 28225536,
+        "setup": 28110848
+      },
+      "record_sha256": "abb566087aacaf73450cff1d97a20097dffe1f14a1fe0eb14a3f7758355abf66",
+      "seed": 7,
+      "setup_ns": 5385735,
+      "trial": 2,
+      "versions": {
+        "extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+        "numpy": "1.26.4"
+      },
+      "workspace_bytes": 207264
+    },
+    {
+      "batch": 1,
+      "buffer_bytes": 24632,
+      "checksum": 15585.86725139618,
+      "clock": {
+        "count": 1000,
+        "max_ns": 152,
+        "mean_ns": 91.571,
+        "min_ns": 82,
+        "p50_ns": 91,
+        "p95_ns": 94,
+        "p99_ns": 99
+      },
+      "engine": "torch_reference",
+      "first_call_ns": 2509990,
+      "latency": {
+        "count": 1000,
+        "max_ns": 2288814,
+        "mean_ns": 1291601.813,
+        "min_ns": 1206995,
+        "p50_ns": 1260366,
+        "p95_ns": 1485852,
+        "p99_ns": 1695787
+      },
+      "max_abs_difference": 0.0,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158908416,
+        "final": 165625856,
+        "setup": 162369536
+      },
+      "record_sha256": "c8280dc360759557c53d6048d1d990bc86d97d7ed9d6b92543abeac9c4f58738",
+      "seed": 7,
+      "setup_ns": 9243951,
+      "trial": 2,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "buffer_bytes": 24632,
+      "checksum": 15585.867219924927,
+      "clock": {
+        "count": 1000,
+        "max_ns": 16911,
+        "mean_ns": 163.217,
+        "min_ns": 83,
+        "p50_ns": 94,
+        "p95_ns": 115,
+        "p99_ns": 144
+      },
+      "engine": "torch_standard",
+      "first_call_ns": 1854214,
+      "latency": {
+        "count": 1000,
+        "max_ns": 1002568,
+        "mean_ns": 503483.786,
+        "min_ns": 474987,
+        "p50_ns": 488409,
+        "p95_ns": 615233,
+        "p99_ns": 730744
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158928896,
+        "final": 165523456,
+        "setup": 162418688
+      },
+      "record_sha256": "4bd92f054cb22631aab366fd01c6ff45e568ce456f035b12e041c326a775b0c5",
+      "seed": 7,
+      "setup_ns": 8503520,
+      "trial": 2,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "checksum": 15585.867270469666,
+      "clock": {
+        "count": 1000,
+        "max_ns": 1109,
+        "mean_ns": 35.628,
+        "min_ns": 33,
+        "p50_ns": 34,
+        "p95_ns": 35,
+        "p99_ns": 36
+      },
+      "engine": "native_core",
+      "first_call_ns": 1936399,
+      "latency": {
+        "count": 1000,
+        "max_ns": 2766936,
+        "mean_ns": 1947054.197,
+        "min_ns": 1872676,
+        "p50_ns": 1909456,
+        "p95_ns": 2099519,
+        "p99_ns": 2313612
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 532480,
+        "final": 1556480,
+        "setup": 1540096
+      },
+      "position_bytes": 24576,
+      "record_sha256": "d6bd5c5311238b23609715ef5cd2d35c956b0a3dccf9db9261d4f6f152e4a4be",
+      "seed": 7,
+      "setup_ns": 1861090,
+      "trial": 2,
+      "workspace_bytes": 204576
+    },
+    {
+      "batch": 8,
+      "buffer_bytes": 24632,
+      "checksum": 3262.0624256134033,
+      "clock": {
+        "count": 1000,
+        "max_ns": 5525,
+        "mean_ns": 99.877,
+        "min_ns": 84,
+        "p50_ns": 94,
+        "p95_ns": 97,
+        "p99_ns": 103
+      },
+      "engine": "torch_reference",
+      "first_call_ns": 12400282,
+      "latency": {
+        "count": 200,
+        "max_ns": 10115067,
+        "mean_ns": 8006756.715,
+        "min_ns": 7388884,
+        "p50_ns": 7854602,
+        "p95_ns": 8955422,
+        "p99_ns": 9851630
+      },
+      "max_abs_difference": 0.0,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158703616,
+        "final": 176422912,
+        "setup": 162148352
+      },
+      "record_sha256": "49fdcea6dcb3188266081ea165d8899c930bc05a5f76c1e67ca21cdfd6fe4f82",
+      "seed": 7,
+      "setup_ns": 8544893,
+      "trial": 2,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 8,
+      "buffer_bytes": 24632,
+      "checksum": 3262.0624265670776,
+      "clock": {
+        "count": 1000,
+        "max_ns": 580,
+        "mean_ns": 93.592,
+        "min_ns": 83,
+        "p50_ns": 93,
+        "p95_ns": 96,
+        "p99_ns": 99
+      },
+      "engine": "torch_standard",
+      "first_call_ns": 3937057,
+      "latency": {
+        "count": 200,
+        "max_ns": 2868901,
+        "mean_ns": 2071821.385,
+        "min_ns": 1954659,
+        "p50_ns": 2013742,
+        "p95_ns": 2334223,
+        "p99_ns": 2726098
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158691328,
+        "final": 166805504,
+        "setup": 162148352
+      },
+      "record_sha256": "3e4e67fb9a698d59327b7149ebab9c8745b2e8326a36a48bdb9e9ddfdde732de",
+      "seed": 7,
+      "setup_ns": 8485472,
+      "trial": 2,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 8,
+      "checksum": 3262.0624237060547,
+      "clock": {
+        "count": 1000,
+        "max_ns": 57,
+        "mean_ns": 33.654,
+        "min_ns": 32,
+        "p50_ns": 34,
+        "p95_ns": 35,
+        "p99_ns": 35
+      },
+      "engine": "native_core",
+      "first_call_ns": 16327276,
+      "latency": {
+        "count": 200,
+        "max_ns": 51092599,
+        "mean_ns": 16080913.155,
+        "min_ns": 15163131,
+        "p50_ns": 15779207,
+        "p95_ns": 16804547,
+        "p99_ns": 18614849
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 524288,
+        "final": 1540096,
+        "setup": 1523712
+      },
+      "position_bytes": 24576,
+      "record_sha256": "d4470a9c7df565536799db53e44559a593d4318847479241dae9c802e954ae29",
+      "seed": 7,
+      "setup_ns": 2137560,
+      "trial": 2,
+      "workspace_bytes": 204576
+    },
+    {
+      "batch": 8,
+      "checksum": 3262.0624237060547,
+      "clock": {
+        "count": 1000,
+        "max_ns": 153,
+        "mean_ns": 93.108,
+        "min_ns": 82,
+        "p50_ns": 94,
+        "p95_ns": 97,
+        "p99_ns": 103
+      },
+      "engine": "native_python",
+      "first_call_ns": 15664800,
+      "latency": {
+        "count": 200,
+        "max_ns": 19837265,
+        "mean_ns": 15740851.96,
+        "min_ns": 15375254,
+        "p50_ns": 15623690,
+        "p95_ns": 16443169,
+        "p99_ns": 16796617
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 25964544,
+        "final": 28368896,
+        "setup": 28123136
+      },
+      "record_sha256": "c2aaca157c6c373d459b29fc76f9e89028b9da3f18ba7258099547732f2e6070",
+      "seed": 7,
+      "setup_ns": 5195757,
+      "trial": 2,
+      "versions": {
+        "extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+        "numpy": "1.26.4"
+      },
+      "workspace_bytes": 207264
+    },
+    {
+      "batch": 1,
+      "buffer_bytes": 24632,
+      "checksum": 15717.291116714478,
+      "clock": {
+        "count": 1000,
+        "max_ns": 172,
+        "mean_ns": 92.019,
+        "min_ns": 82,
+        "p50_ns": 92,
+        "p95_ns": 94,
+        "p99_ns": 101
+      },
+      "engine": "torch_reference",
+      "first_call_ns": 2410514,
+      "latency": {
+        "count": 1000,
+        "max_ns": 36079616,
+        "mean_ns": 1433169.773,
+        "min_ns": 1220935,
+        "p50_ns": 1273965,
+        "p95_ns": 1746048,
+        "p99_ns": 2406195
+      },
+      "max_abs_difference": 0.0,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158953472,
+        "final": 165789696,
+        "setup": 162426880
+      },
+      "record_sha256": "36c94a17b7a8ee635316b9009271a2a70949a95156b038d2352eb6effce76b9a",
+      "seed": 19,
+      "setup_ns": 9001193,
+      "trial": 2,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "buffer_bytes": 24632,
+      "checksum": 15717.291133403778,
+      "clock": {
+        "count": 1000,
+        "max_ns": 227,
+        "mean_ns": 94.168,
+        "min_ns": 84,
+        "p50_ns": 94,
+        "p95_ns": 97,
+        "p99_ns": 105
+      },
+      "engine": "torch_standard",
+      "first_call_ns": 1648448,
+      "latency": {
+        "count": 1000,
+        "max_ns": 1176741,
+        "mean_ns": 523814.611,
+        "min_ns": 481163,
+        "p50_ns": 505916,
+        "p95_ns": 646369,
+        "p99_ns": 815820
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158736384,
+        "final": 165416960,
+        "setup": 162205696
+      },
+      "record_sha256": "81b8bebad7905e3029efff4d691de41fdd3249b013c3f7013da2a62367f91e79",
+      "seed": 19,
+      "setup_ns": 8712254,
+      "trial": 2,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "checksum": 15717.291118621826,
+      "clock": {
+        "count": 1000,
+        "max_ns": 104,
+        "mean_ns": 34.139,
+        "min_ns": 33,
+        "p50_ns": 34,
+        "p95_ns": 35,
+        "p99_ns": 35
+      },
+      "engine": "native_core",
+      "first_call_ns": 2045954,
+      "latency": {
+        "count": 1000,
+        "max_ns": 3094116,
+        "mean_ns": 1975448.917,
+        "min_ns": 1773998,
+        "p50_ns": 1941593,
+        "p95_ns": 2187710,
+        "p99_ns": 2498196
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 524288,
+        "final": 1572864,
+        "setup": 1548288
+      },
+      "position_bytes": 24576,
+      "record_sha256": "609305bcc500b4a22cdcc9a91d43edf2b0d88c24322d1bc934e40833997680af",
+      "seed": 19,
+      "setup_ns": 1992020,
+      "trial": 2,
+      "workspace_bytes": 204576
+    },
+    {
+      "batch": 1,
+      "checksum": 15717.291118621826,
+      "clock": {
+        "count": 1000,
+        "max_ns": 159,
+        "mean_ns": 94.927,
+        "min_ns": 81,
+        "p50_ns": 96,
+        "p95_ns": 100,
+        "p99_ns": 109
+      },
+      "engine": "native_python",
+      "first_call_ns": 2111532,
+      "latency": {
+        "count": 1000,
+        "max_ns": 22217782,
+        "mean_ns": 2067389.61,
+        "min_ns": 1831790,
+        "p50_ns": 1924066,
+        "p95_ns": 2363966,
+        "p99_ns": 5008402
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 26083328,
+        "final": 28360704,
+        "setup": 28246016
+      },
+      "record_sha256": "2370f0c3454eb451e8a8cf6240ed442dcd766b7a013e74abe32db83f62ad09fd",
+      "seed": 19,
+      "setup_ns": 4826710,
+      "trial": 2,
+      "versions": {
+        "extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+        "numpy": "1.26.4"
+      },
+      "workspace_bytes": 207264
+    },
+    {
+      "batch": 8,
+      "buffer_bytes": 24632,
+      "checksum": 3290.131800174713,
+      "clock": {
+        "count": 1000,
+        "max_ns": 163,
+        "mean_ns": 94.395,
+        "min_ns": 83,
+        "p50_ns": 94,
+        "p95_ns": 97,
+        "p99_ns": 99
+      },
+      "engine": "torch_standard",
+      "first_call_ns": 4041660,
+      "latency": {
+        "count": 200,
+        "max_ns": 3038863,
+        "mean_ns": 2192243.64,
+        "min_ns": 1999422,
+        "p50_ns": 2153890,
+        "p95_ns": 2485543,
+        "p99_ns": 2703744
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158806016,
+        "final": 166969344,
+        "setup": 162246656
+      },
+      "record_sha256": "f95fd6a434d007758ca486e82d33ff324f194c91e3710aaaa55c6804b33d1067",
+      "seed": 19,
+      "setup_ns": 8595631,
+      "trial": 2,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 8,
+      "checksum": 3290.131793498993,
+      "clock": {
+        "count": 1000,
+        "max_ns": 1426,
+        "mean_ns": 36.574,
+        "min_ns": 33,
+        "p50_ns": 35,
+        "p95_ns": 36,
+        "p99_ns": 37
+      },
+      "engine": "native_core",
+      "first_call_ns": 16383378,
+      "latency": {
+        "count": 200,
+        "max_ns": 17857753,
+        "mean_ns": 15779239.555,
+        "min_ns": 15223716,
+        "p50_ns": 15676321,
+        "p95_ns": 16607581,
+        "p99_ns": 17307041
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 524288,
+        "final": 1519616,
+        "setup": 1503232
+      },
+      "position_bytes": 24576,
+      "record_sha256": "ccc7024de1da615b81b295edd84f95f87b127284bcf4a24388a28866ca8293ea",
+      "seed": 19,
+      "setup_ns": 1889575,
+      "trial": 2,
+      "workspace_bytes": 204576
+    },
+    {
+      "batch": 8,
+      "checksum": 3290.131793498993,
+      "clock": {
+        "count": 1000,
+        "max_ns": 198,
+        "mean_ns": 94.754,
+        "min_ns": 83,
+        "p50_ns": 95,
+        "p95_ns": 99,
+        "p99_ns": 106
+      },
+      "engine": "native_python",
+      "first_call_ns": 16629547,
+      "latency": {
+        "count": 200,
+        "max_ns": 16954230,
+        "mean_ns": 15790302.765,
+        "min_ns": 15544502,
+        "p50_ns": 15722326,
+        "p95_ns": 16194323,
+        "p99_ns": 16717936
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 25907200,
+        "final": 28356608,
+        "setup": 28020736
+      },
+      "record_sha256": "73e78043ffe7ea062b60bfc571b905012c17281739966551baabdbe3582da35a",
+      "seed": 19,
+      "setup_ns": 4891123,
+      "trial": 2,
+      "versions": {
+        "extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+        "numpy": "1.26.4"
+      },
+      "workspace_bytes": 207264
+    },
+    {
+      "batch": 8,
+      "buffer_bytes": 24632,
+      "checksum": 3290.1317982673645,
+      "clock": {
+        "count": 1000,
+        "max_ns": 1031,
+        "mean_ns": 101.563,
+        "min_ns": 90,
+        "p50_ns": 100,
+        "p95_ns": 103,
+        "p99_ns": 108
+      },
+      "engine": "torch_reference",
+      "first_call_ns": 13863261,
+      "latency": {
+        "count": 200,
+        "max_ns": 14457252,
+        "mean_ns": 8352184.33,
+        "min_ns": 7440770,
+        "p50_ns": 8228921,
+        "p95_ns": 9219136,
+        "p99_ns": 12246904
+      },
+      "max_abs_difference": 0.0,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158654464,
+        "final": 176435200,
+        "setup": 162140160
+      },
+      "record_sha256": "d0cc63b24045d7c138a0c4d947843e6f222441957072104fff4947b7951d47ca",
+      "seed": 19,
+      "setup_ns": 9007441,
+      "trial": 2,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "buffer_bytes": 24632,
+      "checksum": 15799.754898071289,
+      "clock": {
+        "count": 1000,
+        "max_ns": 223,
+        "mean_ns": 94.233,
+        "min_ns": 84,
+        "p50_ns": 94,
+        "p95_ns": 96,
+        "p99_ns": 99
+      },
+      "engine": "torch_standard",
+      "first_call_ns": 1949678,
+      "latency": {
+        "count": 1000,
+        "max_ns": 1341956,
+        "mean_ns": 513404.19,
+        "min_ns": 475618,
+        "p50_ns": 492776,
+        "p95_ns": 657590,
+        "p99_ns": 910825
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158801920,
+        "final": 165634048,
+        "setup": 162258944
+      },
+      "record_sha256": "6c90e5559072aa9ff979aace57b804780683e16dc909f8e0521ca164833dca08",
+      "seed": 43,
+      "setup_ns": 9350455,
+      "trial": 2,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "checksum": 15799.75491476059,
+      "clock": {
+        "count": 1000,
+        "max_ns": 55,
+        "mean_ns": 34.54,
+        "min_ns": 33,
+        "p50_ns": 35,
+        "p95_ns": 35,
+        "p99_ns": 36
+      },
+      "engine": "native_core",
+      "first_call_ns": 1930801,
+      "latency": {
+        "count": 1000,
+        "max_ns": 3002160,
+        "mean_ns": 1990673.824,
+        "min_ns": 1885024,
+        "p50_ns": 1947507,
+        "p95_ns": 2201301,
+        "p99_ns": 2455496
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 532480,
+        "final": 1556480,
+        "setup": 1540096
+      },
+      "position_bytes": 24576,
+      "record_sha256": "14e868e1b1750986522eff69a1adc6a2a59b8ee1b83b2104bda923ef03b52ae9",
+      "seed": 43,
+      "setup_ns": 2107488,
+      "trial": 2,
+      "workspace_bytes": 204576
+    },
+    {
+      "batch": 1,
+      "checksum": 15799.75491476059,
+      "clock": {
+        "count": 1000,
+        "max_ns": 195,
+        "mean_ns": 96.523,
+        "min_ns": 85,
+        "p50_ns": 97,
+        "p95_ns": 101,
+        "p99_ns": 111
+      },
+      "engine": "native_python",
+      "first_call_ns": 2123036,
+      "latency": {
+        "count": 1000,
+        "max_ns": 36729159,
+        "mean_ns": 2027090.893,
+        "min_ns": 1883026,
+        "p50_ns": 1937675,
+        "p95_ns": 2188423,
+        "p99_ns": 2568979
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 25948160,
+        "final": 28184576,
+        "setup": 28065792
+      },
+      "record_sha256": "f8305db3ca4bea7036474ce628d8974c420d908fbef7fafeec15629f1819edca",
+      "seed": 43,
+      "setup_ns": 5014832,
+      "trial": 2,
+      "versions": {
+        "extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+        "numpy": "1.26.4"
+      },
+      "workspace_bytes": 207264
+    },
+    {
+      "batch": 1,
+      "buffer_bytes": 24632,
+      "checksum": 15799.754905223846,
+      "clock": {
+        "count": 1000,
+        "max_ns": 214,
+        "mean_ns": 95.069,
+        "min_ns": 85,
+        "p50_ns": 95,
+        "p95_ns": 98,
+        "p99_ns": 103
+      },
+      "engine": "torch_reference",
+      "first_call_ns": 3104309,
+      "latency": {
+        "count": 1000,
+        "max_ns": 2229775,
+        "mean_ns": 1317009.691,
+        "min_ns": 1228785,
+        "p50_ns": 1276269,
+        "p95_ns": 1527378,
+        "p99_ns": 1874357
+      },
+      "max_abs_difference": 0.0,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158920704,
+        "final": 165576704,
+        "setup": 162373632
+      },
+      "record_sha256": "73c277ed563b4746f49496ddcc6bb3b69f3f3740d6ff7f3d2581467a0d245832",
+      "seed": 43,
+      "setup_ns": 10751580,
+      "trial": 2,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 8,
+      "checksum": 3307.0654244422913,
+      "clock": {
+        "count": 1000,
+        "max_ns": 46,
+        "mean_ns": 34.14,
+        "min_ns": 33,
+        "p50_ns": 34,
+        "p95_ns": 35,
+        "p99_ns": 35
+      },
+      "engine": "native_core",
+      "first_call_ns": 15743240,
+      "latency": {
+        "count": 200,
+        "max_ns": 62752778,
+        "mean_ns": 16188157.515,
+        "min_ns": 15507510,
+        "p50_ns": 15904188,
+        "p95_ns": 16600175,
+        "p99_ns": 17194618
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 532480,
+        "final": 1540096,
+        "setup": 1523712
+      },
+      "position_bytes": 24576,
+      "record_sha256": "3804560cdbd4279dc2df8bf12a6f5a3cf2f7b8bc1ffd705dc33f9e4856768eed",
+      "seed": 43,
+      "setup_ns": 1932399,
+      "trial": 2,
+      "workspace_bytes": 204576
+    },
+    {
+      "batch": 8,
+      "checksum": 3307.0654244422913,
+      "clock": {
+        "count": 1000,
+        "max_ns": 237,
+        "mean_ns": 96.006,
+        "min_ns": 85,
+        "p50_ns": 96,
+        "p95_ns": 99,
+        "p99_ns": 107
+      },
+      "engine": "native_python",
+      "first_call_ns": 15815655,
+      "latency": {
+        "count": 200,
+        "max_ns": 18780464,
+        "mean_ns": 16026042.64,
+        "min_ns": 15643778,
+        "p50_ns": 15958953,
+        "p95_ns": 16390087,
+        "p99_ns": 17006303
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 25948160,
+        "final": 28405760,
+        "setup": 28106752
+      },
+      "record_sha256": "a1507364e496fa3c8d5d10476ac7f460869e3886487a090f6cb13354dbf94865",
+      "seed": 43,
+      "setup_ns": 4876820,
+      "trial": 2,
+      "versions": {
+        "extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+        "numpy": "1.26.4"
+      },
+      "workspace_bytes": 207264
+    },
+    {
+      "batch": 8,
+      "buffer_bytes": 24632,
+      "checksum": 3307.0654277801514,
+      "clock": {
+        "count": 1000,
+        "max_ns": 574,
+        "mean_ns": 94.085,
+        "min_ns": 82,
+        "p50_ns": 94,
+        "p95_ns": 96,
+        "p99_ns": 100
+      },
+      "engine": "torch_reference",
+      "first_call_ns": 12818643,
+      "latency": {
+        "count": 200,
+        "max_ns": 13249355,
+        "mean_ns": 8331634.54,
+        "min_ns": 7381145,
+        "p50_ns": 8011519,
+        "p95_ns": 9263415,
+        "p99_ns": 12207061
+      },
+      "max_abs_difference": 0.0,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158732288,
+        "final": 176463872,
+        "setup": 162201600
+      },
+      "record_sha256": "988fb482013c443339b368d3afd3a6c7e56e678ed9e4142a07fd470197eda659",
+      "seed": 43,
+      "setup_ns": 8974050,
+      "trial": 2,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 8,
+      "buffer_bytes": 24632,
+      "checksum": 3307.0654296875,
+      "clock": {
+        "count": 1000,
+        "max_ns": 197,
+        "mean_ns": 94.179,
+        "min_ns": 85,
+        "p50_ns": 94,
+        "p95_ns": 97,
+        "p99_ns": 98
+      },
+      "engine": "torch_standard",
+      "first_call_ns": 3977215,
+      "latency": {
+        "count": 200,
+        "max_ns": 2747657,
+        "mean_ns": 2044048.595,
+        "min_ns": 1950469,
+        "p50_ns": 1984339,
+        "p95_ns": 2330546,
+        "p99_ns": 2487662
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158904320,
+        "final": 167137280,
+        "setup": 162426880
+      },
+      "record_sha256": "35e268d13a690a8c76f58d0a0ab14275f1bf09571fda1d89b2f52a9eb6db95b1",
+      "seed": 43,
+      "setup_ns": 9034335,
+      "trial": 2,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "buffer_bytes": 24632,
+      "checksum": 15585.86725139618,
+      "clock": {
+        "count": 1000,
+        "max_ns": 136,
+        "mean_ns": 94.145,
+        "min_ns": 85,
+        "p50_ns": 94,
+        "p95_ns": 98,
+        "p99_ns": 102
+      },
+      "engine": "torch_reference",
+      "first_call_ns": 2437812,
+      "latency": {
+        "count": 1000,
+        "max_ns": 2642325,
+        "mean_ns": 1286749.023,
+        "min_ns": 1212795,
+        "p50_ns": 1248772,
+        "p95_ns": 1478617,
+        "p99_ns": 1690167
+      },
+      "max_abs_difference": 0.0,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158670848,
+        "final": 165548032,
+        "setup": 162217984
+      },
+      "record_sha256": "48da319d444b3670f5ddf9e07633f9c3dfe9ce8275a6d8816911d4f523b94075",
+      "seed": 7,
+      "setup_ns": 8410993,
+      "trial": 3,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "buffer_bytes": 24632,
+      "checksum": 15585.867219924927,
+      "clock": {
+        "count": 1000,
+        "max_ns": 164,
+        "mean_ns": 93.348,
+        "min_ns": 89,
+        "p50_ns": 93,
+        "p95_ns": 96,
+        "p99_ns": 102
+      },
+      "engine": "torch_standard",
+      "first_call_ns": 1658776,
+      "latency": {
+        "count": 1000,
+        "max_ns": 1029984,
+        "mean_ns": 500958.949,
+        "min_ns": 471462,
+        "p50_ns": 489586,
+        "p95_ns": 587565,
+        "p99_ns": 750170
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158851072,
+        "final": 165335040,
+        "setup": 162381824
+      },
+      "record_sha256": "c683c1754296ffbd941ce97b54794b421c3f5d17fdbb009bd948837b4c57a05f",
+      "seed": 7,
+      "setup_ns": 8434038,
+      "trial": 3,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "checksum": 15585.867270469666,
+      "clock": {
+        "count": 1000,
+        "max_ns": 40,
+        "mean_ns": 34.533,
+        "min_ns": 33,
+        "p50_ns": 35,
+        "p95_ns": 35,
+        "p99_ns": 36
+      },
+      "engine": "native_core",
+      "first_call_ns": 1898941,
+      "latency": {
+        "count": 1000,
+        "max_ns": 2872260,
+        "mean_ns": 1951869.435,
+        "min_ns": 1875558,
+        "p50_ns": 1910286,
+        "p95_ns": 2199097,
+        "p99_ns": 2338014
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 532480,
+        "final": 1548288,
+        "setup": 1531904
+      },
+      "position_bytes": 24576,
+      "record_sha256": "cef62f7b02e085e6aa7999f861f5c1cc62009ae6ad780a6703aec00f7124f0fa",
+      "seed": 7,
+      "setup_ns": 1953657,
+      "trial": 3,
+      "workspace_bytes": 204576
+    },
+    {
+      "batch": 1,
+      "checksum": 15585.867270469666,
+      "clock": {
+        "count": 1000,
+        "max_ns": 166,
+        "mean_ns": 92.205,
+        "min_ns": 82,
+        "p50_ns": 92,
+        "p95_ns": 96,
+        "p99_ns": 102
+      },
+      "engine": "native_python",
+      "first_call_ns": 2065605,
+      "latency": {
+        "count": 1000,
+        "max_ns": 2868309,
+        "mean_ns": 1934510.288,
+        "min_ns": 1854602,
+        "p50_ns": 1887331,
+        "p95_ns": 2182352,
+        "p99_ns": 2378839
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 25845760,
+        "final": 28123136,
+        "setup": 28000256
+      },
+      "record_sha256": "a519609714abdb2bf1d0228cd9f64549381d40d8697ded03141e65494ab46d17",
+      "seed": 7,
+      "setup_ns": 4919684,
+      "trial": 3,
+      "versions": {
+        "extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+        "numpy": "1.26.4"
+      },
+      "workspace_bytes": 207264
+    },
+    {
+      "batch": 8,
+      "buffer_bytes": 24632,
+      "checksum": 3262.0624265670776,
+      "clock": {
+        "count": 1000,
+        "max_ns": 213,
+        "mean_ns": 100.154,
+        "min_ns": 93,
+        "p50_ns": 100,
+        "p95_ns": 103,
+        "p99_ns": 105
+      },
+      "engine": "torch_standard",
+      "first_call_ns": 3970482,
+      "latency": {
+        "count": 200,
+        "max_ns": 3358843,
+        "mean_ns": 2220694.89,
+        "min_ns": 1978371,
+        "p50_ns": 2149496,
+        "p95_ns": 2773058,
+        "p99_ns": 3177777
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158703616,
+        "final": 167055360,
+        "setup": 162193408
+      },
+      "record_sha256": "50613277f176936173bdc8d9f10fb65abb6b0171ebefb8105b1242106dda7beb",
+      "seed": 7,
+      "setup_ns": 8201492,
+      "trial": 3,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 8,
+      "checksum": 3262.0624237060547,
+      "clock": {
+        "count": 1000,
+        "max_ns": 52,
+        "mean_ns": 35.322,
+        "min_ns": 34,
+        "p50_ns": 35,
+        "p95_ns": 36,
+        "p99_ns": 37
+      },
+      "engine": "native_core",
+      "first_call_ns": 15745078,
+      "latency": {
+        "count": 200,
+        "max_ns": 53886435,
+        "mean_ns": 16290068.215,
+        "min_ns": 15227810,
+        "p50_ns": 15985353,
+        "p95_ns": 16881972,
+        "p99_ns": 19670500
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 524288,
+        "final": 1552384,
+        "setup": 1536000
+      },
+      "position_bytes": 24576,
+      "record_sha256": "c12a55713847f77d5aef6e5f1f0b7c303aaf5b869c6e07b038f9d1154e2665b1",
+      "seed": 7,
+      "setup_ns": 1864488,
+      "trial": 3,
+      "workspace_bytes": 204576
+    },
+    {
+      "batch": 8,
+      "checksum": 3262.0624237060547,
+      "clock": {
+        "count": 1000,
+        "max_ns": 156,
+        "mean_ns": 93.985,
+        "min_ns": 82,
+        "p50_ns": 94,
+        "p95_ns": 99,
+        "p99_ns": 108
+      },
+      "engine": "native_python",
+      "first_call_ns": 16456509,
+      "latency": {
+        "count": 200,
+        "max_ns": 21179384,
+        "mean_ns": 15989522.06,
+        "min_ns": 15182890,
+        "p50_ns": 15876064,
+        "p95_ns": 16472865,
+        "p99_ns": 18617162
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 25980928,
+        "final": 28356608,
+        "setup": 28135424
+      },
+      "record_sha256": "03a267c6e8378d815ce81a70155c96a628414929e137c1d076a5985b03fa5977",
+      "seed": 7,
+      "setup_ns": 5156342,
+      "trial": 3,
+      "versions": {
+        "extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+        "numpy": "1.26.4"
+      },
+      "workspace_bytes": 207264
+    },
+    {
+      "batch": 8,
+      "buffer_bytes": 24632,
+      "checksum": 3262.0624256134033,
+      "clock": {
+        "count": 1000,
+        "max_ns": 307,
+        "mean_ns": 94.87,
+        "min_ns": 86,
+        "p50_ns": 94,
+        "p95_ns": 98,
+        "p99_ns": 107
+      },
+      "engine": "torch_reference",
+      "first_call_ns": 13580310,
+      "latency": {
+        "count": 200,
+        "max_ns": 10759303,
+        "mean_ns": 8212970.16,
+        "min_ns": 7424664,
+        "p50_ns": 8061774,
+        "p95_ns": 9595892,
+        "p99_ns": 10526834
+      },
+      "max_abs_difference": 0.0,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 159084544,
+        "final": 176799744,
+        "setup": 162541568
+      },
+      "record_sha256": "ef94dc3f9c58965713e1ade15b701eb4a5f889c234ef754010d65adafc3e47e7",
+      "seed": 7,
+      "setup_ns": 8920113,
+      "trial": 3,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "buffer_bytes": 24632,
+      "checksum": 15717.291133403778,
+      "clock": {
+        "count": 1000,
+        "max_ns": 146,
+        "mean_ns": 95.008,
+        "min_ns": 83,
+        "p50_ns": 95,
+        "p95_ns": 99,
+        "p99_ns": 105
+      },
+      "engine": "torch_standard",
+      "first_call_ns": 1613719,
+      "latency": {
+        "count": 1000,
+        "max_ns": 1368623,
+        "mean_ns": 507589.966,
+        "min_ns": 475149,
+        "p50_ns": 491166,
+        "p95_ns": 609229,
+        "p99_ns": 768744
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158593024,
+        "final": 165679104,
+        "setup": 162070528
+      },
+      "record_sha256": "0178923a13795f6d4725c1e3581315d1757edbc589488c067e81748864b64ef3",
+      "seed": 19,
+      "setup_ns": 8371839,
+      "trial": 3,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "checksum": 15717.291118621826,
+      "clock": {
+        "count": 1000,
+        "max_ns": 60,
+        "mean_ns": 34.575,
+        "min_ns": 33,
+        "p50_ns": 35,
+        "p95_ns": 35,
+        "p99_ns": 36
+      },
+      "engine": "native_core",
+      "first_call_ns": 1914470,
+      "latency": {
+        "count": 1000,
+        "max_ns": 3145578,
+        "mean_ns": 1956081.318,
+        "min_ns": 1881632,
+        "p50_ns": 1909062,
+        "p95_ns": 2146894,
+        "p99_ns": 2633401
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 524288,
+        "final": 1527808,
+        "setup": 1503232
+      },
+      "position_bytes": 24576,
+      "record_sha256": "50d3f8ebbf5567f8abe42b95873fb3da36d41b349a15b700dea57098b8f6b92e",
+      "seed": 19,
+      "setup_ns": 1780859,
+      "trial": 3,
+      "workspace_bytes": 204576
+    },
+    {
+      "batch": 1,
+      "checksum": 15717.291118621826,
+      "clock": {
+        "count": 1000,
+        "max_ns": 186,
+        "mean_ns": 95.732,
+        "min_ns": 83,
+        "p50_ns": 96,
+        "p95_ns": 101,
+        "p99_ns": 107
+      },
+      "engine": "native_python",
+      "first_call_ns": 2046451,
+      "latency": {
+        "count": 1000,
+        "max_ns": 30087614,
+        "mean_ns": 1982123.855,
+        "min_ns": 1867547,
+        "p50_ns": 1894689,
+        "p95_ns": 2116340,
+        "p99_ns": 2606559
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 25903104,
+        "final": 28192768,
+        "setup": 28061696
+      },
+      "record_sha256": "42444718c79a6e621b0c765d979f187ee26fcbcdd2f81b262b6eb99fb27cfaf3",
+      "seed": 19,
+      "setup_ns": 4761846,
+      "trial": 3,
+      "versions": {
+        "extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+        "numpy": "1.26.4"
+      },
+      "workspace_bytes": 207264
+    },
+    {
+      "batch": 1,
+      "buffer_bytes": 24632,
+      "checksum": 15717.291116714478,
+      "clock": {
+        "count": 1000,
+        "max_ns": 198,
+        "mean_ns": 96.255,
+        "min_ns": 90,
+        "p50_ns": 96,
+        "p95_ns": 101,
+        "p99_ns": 104
+      },
+      "engine": "torch_reference",
+      "first_call_ns": 2400145,
+      "latency": {
+        "count": 1000,
+        "max_ns": 3133168,
+        "mean_ns": 1293818.448,
+        "min_ns": 1226227,
+        "p50_ns": 1259421,
+        "p95_ns": 1478209,
+        "p99_ns": 1845582
+      },
+      "max_abs_difference": 0.0,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158732288,
+        "final": 165326848,
+        "setup": 162197504
+      },
+      "record_sha256": "98e7685879f0dd22d64e16e4a36b3d97710a34119135b52792d6505af5a10341",
+      "seed": 19,
+      "setup_ns": 8575917,
+      "trial": 3,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 8,
+      "checksum": 3290.131793498993,
+      "clock": {
+        "count": 1000,
+        "max_ns": 40,
+        "mean_ns": 34.539,
+        "min_ns": 33,
+        "p50_ns": 35,
+        "p95_ns": 35,
+        "p99_ns": 36
+      },
+      "engine": "native_core",
+      "first_call_ns": 15655388,
+      "latency": {
+        "count": 200,
+        "max_ns": 17066821,
+        "mean_ns": 15799737.295,
+        "min_ns": 15180451,
+        "p50_ns": 15823143,
+        "p95_ns": 16204700,
+        "p99_ns": 16964462
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 532480,
+        "final": 1564672,
+        "setup": 1552384
+      },
+      "position_bytes": 24576,
+      "record_sha256": "82faf5940d9bf4eb8bf258dcc934ee97502dc1499f0d7741a81f161987423510",
+      "seed": 19,
+      "setup_ns": 2042067,
+      "trial": 3,
+      "workspace_bytes": 204576
+    },
+    {
+      "batch": 8,
+      "checksum": 3290.131793498993,
+      "clock": {
+        "count": 1000,
+        "max_ns": 127,
+        "mean_ns": 92.966,
+        "min_ns": 82,
+        "p50_ns": 94,
+        "p95_ns": 96,
+        "p99_ns": 104
+      },
+      "engine": "native_python",
+      "first_call_ns": 16236931,
+      "latency": {
+        "count": 200,
+        "max_ns": 16542182,
+        "mean_ns": 15786307.94,
+        "min_ns": 15475117,
+        "p50_ns": 15732996,
+        "p95_ns": 16133995,
+        "p99_ns": 16405926
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 25849856,
+        "final": 28368896,
+        "setup": 28004352
+      },
+      "record_sha256": "5f7bcf76f98fb1edafc6be6bdb85366e283a465d38177b4cdbbfc931c15d0acf",
+      "seed": 19,
+      "setup_ns": 4908941,
+      "trial": 3,
+      "versions": {
+        "extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+        "numpy": "1.26.4"
+      },
+      "workspace_bytes": 207264
+    },
+    {
+      "batch": 8,
+      "buffer_bytes": 24632,
+      "checksum": 3290.1317982673645,
+      "clock": {
+        "count": 1000,
+        "max_ns": 169,
+        "mean_ns": 90.998,
+        "min_ns": 80,
+        "p50_ns": 91,
+        "p95_ns": 93,
+        "p99_ns": 99
+      },
+      "engine": "torch_reference",
+      "first_call_ns": 12215920,
+      "latency": {
+        "count": 200,
+        "max_ns": 11412048,
+        "mean_ns": 8159761.59,
+        "min_ns": 7410181,
+        "p50_ns": 8001426,
+        "p95_ns": 9242643,
+        "p99_ns": 10689153
+      },
+      "max_abs_difference": 0.0,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 159031296,
+        "final": 176820224,
+        "setup": 162533376
+      },
+      "record_sha256": "f7c2da342ffc158f299411868b01359098a19f97dc260e9d91e25aaaf149d8e8",
+      "seed": 19,
+      "setup_ns": 8497099,
+      "trial": 3,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 8,
+      "buffer_bytes": 24632,
+      "checksum": 3290.131800174713,
+      "clock": {
+        "count": 1000,
+        "max_ns": 368,
+        "mean_ns": 93.114,
+        "min_ns": 89,
+        "p50_ns": 93,
+        "p95_ns": 95,
+        "p99_ns": 102
+      },
+      "engine": "torch_standard",
+      "first_call_ns": 3962837,
+      "latency": {
+        "count": 200,
+        "max_ns": 2900066,
+        "mean_ns": 2060722.35,
+        "min_ns": 1954187,
+        "p50_ns": 2006201,
+        "p95_ns": 2357418,
+        "p99_ns": 2622252
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158674944,
+        "final": 166830080,
+        "setup": 162156544
+      },
+      "record_sha256": "9f1a5fce6db6cf657786620c90df079b7ecfabf8b0857e85caf8050eba40d632",
+      "seed": 19,
+      "setup_ns": 8847537,
+      "trial": 3,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "checksum": 15799.75491476059,
+      "clock": {
+        "count": 1000,
+        "max_ns": 61,
+        "mean_ns": 33.779,
+        "min_ns": 32,
+        "p50_ns": 34,
+        "p95_ns": 35,
+        "p99_ns": 35
+      },
+      "engine": "native_core",
+      "first_call_ns": 1937674,
+      "latency": {
+        "count": 1000,
+        "max_ns": 2724982,
+        "mean_ns": 1983637.987,
+        "min_ns": 1901968,
+        "p50_ns": 1949806,
+        "p95_ns": 2167632,
+        "p99_ns": 2417028
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 532480,
+        "final": 1552384,
+        "setup": 1527808
+      },
+      "position_bytes": 24576,
+      "record_sha256": "a24343627bd5db72d62268c3b2c0a4c5bce6d212bcb637d767cc0a8d45ff6992",
+      "seed": 43,
+      "setup_ns": 2081972,
+      "trial": 3,
+      "workspace_bytes": 204576
+    },
+    {
+      "batch": 1,
+      "checksum": 15799.75491476059,
+      "clock": {
+        "count": 1000,
+        "max_ns": 182,
+        "mean_ns": 100.461,
+        "min_ns": 87,
+        "p50_ns": 102,
+        "p95_ns": 105,
+        "p99_ns": 113
+      },
+      "engine": "native_python",
+      "first_call_ns": 2147781,
+      "latency": {
+        "count": 1000,
+        "max_ns": 25520336,
+        "mean_ns": 2251051.058,
+        "min_ns": 1885991,
+        "p50_ns": 1973220,
+        "p95_ns": 3544625,
+        "p99_ns": 6376304
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 26046464,
+        "final": 28303360,
+        "setup": 28160000
+      },
+      "record_sha256": "b8aa75e3d38c9723fdec770fd585a81c7e6f790a034d441f7ea98fc237c9543f",
+      "seed": 43,
+      "setup_ns": 5099619,
+      "trial": 3,
+      "versions": {
+        "extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+        "numpy": "1.26.4"
+      },
+      "workspace_bytes": 207264
+    },
+    {
+      "batch": 1,
+      "buffer_bytes": 24632,
+      "checksum": 15799.754905223846,
+      "clock": {
+        "count": 1000,
+        "max_ns": 228,
+        "mean_ns": 94.243,
+        "min_ns": 89,
+        "p50_ns": 94,
+        "p95_ns": 96,
+        "p99_ns": 99
+      },
+      "engine": "torch_reference",
+      "first_call_ns": 2686080,
+      "latency": {
+        "count": 1000,
+        "max_ns": 2325681,
+        "mean_ns": 1292406.684,
+        "min_ns": 1217069,
+        "p50_ns": 1261345,
+        "p95_ns": 1473749,
+        "p99_ns": 1743372
+      },
+      "max_abs_difference": 0.0,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158883840,
+        "final": 165588992,
+        "setup": 162369536
+      },
+      "record_sha256": "eea6e7cbdce4205c0f4823bd6ead7dc7800e3112ead496ae5d49f5b1b48ee3f4",
+      "seed": 43,
+      "setup_ns": 8481419,
+      "trial": 3,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 1,
+      "buffer_bytes": 24632,
+      "checksum": 15799.754898071289,
+      "clock": {
+        "count": 1000,
+        "max_ns": 162,
+        "mean_ns": 91.778,
+        "min_ns": 87,
+        "p50_ns": 91,
+        "p95_ns": 95,
+        "p99_ns": 97
+      },
+      "engine": "torch_standard",
+      "first_call_ns": 1659754,
+      "latency": {
+        "count": 1000,
+        "max_ns": 902095,
+        "mean_ns": 506460.843,
+        "min_ns": 474861,
+        "p50_ns": 489737,
+        "p95_ns": 632446,
+        "p99_ns": 784712
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158597120,
+        "final": 165482496,
+        "setup": 162045952
+      },
+      "record_sha256": "318c9b92611fb8a4c8bf8a003985d64ed237f563cc78ac12f9c6743463bf6559",
+      "seed": 43,
+      "setup_ns": 8603744,
+      "trial": 3,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 8,
+      "checksum": 3307.0654244422913,
+      "clock": {
+        "count": 1000,
+        "max_ns": 43603,
+        "mean_ns": 146.455,
+        "min_ns": 81,
+        "p50_ns": 94,
+        "p95_ns": 98,
+        "p99_ns": 112
+      },
+      "engine": "native_python",
+      "first_call_ns": 15653481,
+      "latency": {
+        "count": 200,
+        "max_ns": 21835004,
+        "mean_ns": 16035311.2,
+        "min_ns": 15728242,
+        "p50_ns": 15963939,
+        "p95_ns": 16512434,
+        "p99_ns": 16988387
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 25878528,
+        "final": 28315648,
+        "setup": 28037120
+      },
+      "record_sha256": "a4982da7a240d0d15064c283d882ea6dbfd5b2e94d99d5cb2ce29cb7575955d3",
+      "seed": 43,
+      "setup_ns": 4969263,
+      "trial": 3,
+      "versions": {
+        "extension_sha256": "ca2509f17463326848eddaa37d051f98d10c8c0b4215b141c79565913d4b56b9",
+        "numpy": "1.26.4"
+      },
+      "workspace_bytes": 207264
+    },
+    {
+      "batch": 8,
+      "buffer_bytes": 24632,
+      "checksum": 3307.0654277801514,
+      "clock": {
+        "count": 1000,
+        "max_ns": 179,
+        "mean_ns": 97.245,
+        "min_ns": 94,
+        "p50_ns": 97,
+        "p95_ns": 100,
+        "p99_ns": 101
+      },
+      "engine": "torch_reference",
+      "first_call_ns": 15471436,
+      "latency": {
+        "count": 200,
+        "max_ns": 13552952,
+        "mean_ns": 8593949.045,
+        "min_ns": 7514631,
+        "p50_ns": 8338537,
+        "p95_ns": 10034795,
+        "p99_ns": 12176259
+      },
+      "max_abs_difference": 0.0,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158605312,
+        "final": 176394240,
+        "setup": 162082816
+      },
+      "record_sha256": "5f7f0e794edd447f0537252afbda753a27af48f11bf6835a4ecbab6dabbd2666",
+      "seed": 43,
+      "setup_ns": 9923947,
+      "trial": 3,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 8,
+      "buffer_bytes": 24632,
+      "checksum": 3307.0654296875,
+      "clock": {
+        "count": 1000,
+        "max_ns": 167,
+        "mean_ns": 91.678,
+        "min_ns": 82,
+        "p50_ns": 91,
+        "p95_ns": 94,
+        "p99_ns": 98
+      },
+      "engine": "torch_standard",
+      "first_call_ns": 4053358,
+      "latency": {
+        "count": 200,
+        "max_ns": 3028736,
+        "mean_ns": 2069449.59,
+        "min_ns": 1959022,
+        "p50_ns": 2009884,
+        "p95_ns": 2324071,
+        "p99_ns": 2839284
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 202756,
+      "peak_rss_bytes": {
+        "baseline": 158838784,
+        "final": 166899712,
+        "setup": 162299904
+      },
+      "record_sha256": "9cfbd9ba4bd64fd6c938549f10355797b4e4b43a8501c22d7cdd875de9e903f9",
+      "seed": 43,
+      "setup_ns": 8489590,
+      "trial": 3,
+      "versions": {
+        "deterministic": true,
+        "inference_mode": true,
+        "interop_threads": 1,
+        "numpy": "1.26.4",
+        "threads": 1,
+        "torch": "2.2.2",
+        "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+      }
+    },
+    {
+      "batch": 8,
+      "checksum": 3307.0654244422913,
+      "clock": {
+        "count": 1000,
+        "max_ns": 41,
+        "mean_ns": 33.634,
+        "min_ns": 32,
+        "p50_ns": 34,
+        "p95_ns": 35,
+        "p99_ns": 35
+      },
+      "engine": "native_core",
+      "first_call_ns": 16176826,
+      "latency": {
+        "count": 200,
+        "max_ns": 17727260,
+        "mean_ns": 15827532.565,
+        "min_ns": 15196036,
+        "p50_ns": 15702991,
+        "p95_ns": 16617248,
+        "p99_ns": 17198436
+      },
+      "max_abs_difference": 1.9073486328125e-06,
+      "parameter_bytes": 204604,
+      "peak_rss_bytes": {
+        "baseline": 524288,
+        "final": 1523712,
+        "setup": 1515520
+      },
+      "position_bytes": 24576,
+      "record_sha256": "f3f56a77ad4384a7b86001a371c516732eb2c687d8e2dca2140786e34e0a7cd4",
+      "seed": 43,
+      "setup_ns": 1812620,
+      "trial": 3,
+      "workspace_bytes": 204576
+    }
+  ],
+  "reserved_rows_used": 0,
+  "schema_version": 1,
+  "source_sha256": {
+    "CMakeLists.txt": "68610ce80d2e69fa74c8b4843ba11b28c3c1a0eeede9e1357080d00f22b0035c",
+    "bench/runtime_benchmark.cpp": "63e7e5225a555f01f58ef0335d6c672e75c57388e0c2931e131b7ba403a8407f",
+    "bindings/module.cpp": "61d020f3e919168bd68dc33b6ac83b72cc827e9ea6f0bb8d6eff496cd253dc15",
+    "include/stealth/attention.hpp": "18827349e4a880c898158fee8b36655e6438a8da792653c424cd14063b2eb3ba",
+    "include/stealth/feed_forward.hpp": "cfd79b2a5175962f4362ffaf1c6e0969e456b58aca2ff72d8d0a4a141cd1cc5f",
+    "include/stealth/forecaster.hpp": "437322b89e654637c55b63d1dbad848a346bdf718f96409dd4cd6847fb0b4374",
+    "include/stealth/model_file.hpp": "469416186dbb7a7d508d828f1b55e6bbbea3c3cf4dc594af8aeec7ec6ceb014e",
+    "include/stealth/numeric.hpp": "7c579f13c0bc486717a8be2881c5132d6debe595bd4ee7c448f70f186b3c2527",
+    "include/stealth/runtime.hpp": "6edce2ec9b3cc4f22c5c0f5e2b4641498d05136b74577f186f987993379020eb",
+    "include/stealth/transformer_block.hpp": "f3b13466d4e50dc212748e1561a943f30a7cc52c00751213a469de70323872b0",
+    "include/stealth/window_stream.hpp": "dffe3e0b5160a75f9ffb75de57134563d3211c26da950b677f03b22309614b82",
+    "src/attention.cpp": "8943bd0a61dcd87467fa8a1590db89a9525204dc96a63af6cbf807230d79f50f",
+    "src/feed_forward.cpp": "4adfe3d8ab56f626a40aa83ae511b22598222c2acfeda57cc48d8e5714d73260",
+    "src/forecaster.cpp": "e56c89210bbc100c6f54294bccb66f9a28222c4d41e26286b13f3622c2615f3b",
+    "src/model_file.cpp": "8bc201e35bc789e0676d9b3237efd255fd3f924ee18cc3a7bdbf7b1bc9921ce7",
+    "src/numeric.cpp": "c789252f4d7366a4671f1cd4be1b3749441f6230f52a0ebd695a0cf3809883b6",
+    "src/runtime.cpp": "428999fbf0d2e86993a4d24d3a04622aa752dd5e86bab40fea5399ebf7e79e58",
+    "src/sha256.cpp": "044ba616809c069b23965b8290c9ee242f810afa64aaf799a47f836f8ad7153b",
+    "src/transformer_block.cpp": "f2a56cda255da7090753c97b93137e84a8daf3e2ea985d7429021543c34d0604",
+    "src/window_stream.cpp": "bff607535378066395e9210098eb412d2a7bc8a808fc7cf81f74013862a216d9",
+    "tools/benchmark_runtime.py": "e6ecbd8f56e1e4bafa6aa87e7251dd83ab8a89cc5e7173f8e5c168f46fc73c5a",
+    "tools/runtime_common.py": "27c69749fe8e3deac0a6ef0a72e1b766195d2c53abab02a02ff106430cd90d57",
+    "tools/runtime_torch.py": "088caf6231bbb3349310444a7de18d47f107d354f1e0e505ff1327e467fba5d8",
+    "tools/runtime_worker.py": "9ac23545aae42f13b03f7484bf4402d24eb3febb1de97ce08072a90828864fe3"
+  },
+  "started_at": "2026-10-29T08:04:20.488045+00:00"
+}

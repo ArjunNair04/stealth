@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "generator_sha256": "3fecaf0459cf6800c7426e669a34777b4c36d4e5768033d4eeab7eab8c364814",
+  "equations_dependency_sha256": "f3c35e5322400b944e33293e4d5f42a2ed7cfc0ab42f88ff925b72507bc9f351",
+  "fixture_sha256": "3564ad03f90af86afff6bfd043d11773e721c7db9122f367111533a4e8d8aab6",
+  "artifact_sha256": "7e9b8b9574c9b90b490d7f4cebca83b443350d0552f5e8b798629be490394375",
+  "reference": "Independent Python double equations plus hashlib; not PyTorch; no native outputs",
+  "purpose": "Untrained diagnostic weights only; compact and full 96x7 width-64 task shapes",
+  "tolerance": {
+    "absolute": 5e-05,
+    "relative": 0.0002
+  }
+}

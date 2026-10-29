@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "experiment_id": "ettm1_correction_runtime_v1",
+  "seeds": [
+    7,
+    19,
+    43
+  ],
+  "engines": [
+    "native_core",
+    "native_python",
+    "torch_reference",
+    "torch_standard"
+  ],
+  "trials": 3,
+  "windows": 32,
+  "split": "validation",
+  "window_selection": "32 integer-linspace input ends from 34560 through 46076 inclusive; zero-based end-exclusive; no targets read",
+  "window_ends": [
+    34560,
+    34931,
+    35302,
+    35674,
+    36045,
+    36417,
+    36788,
+    37160,
+    37531,
+    37903,
+    38274,
+    38646,
+    39017,
+    39389,
+    39760,
+    40132,
+    40503,
+    40875,
+    41246,
+    41618,
+    41989,
+    42361,
+    42732,
+    43104,
+    43475,
+    43847,
+    44218,
+    44590,
+    44961,
+    45333,
+    45704,
+    46076
+  ],
+  "context": 96,
+  "features": 7,
+  "warmup_calls": 64,
+  "workloads": [
+    {
+      "batch": 1,
+      "samples": 1000
+    },
+    {
+      "batch": 8,
+      "samples": 200
+    }
+  ],
+  "absolute_tolerance": 5e-05,
+  "relative_tolerance": 0.0002,
+  "threads": 1,
+  "deterministic": true,
+  "order": "rotate engine order by trial+seed_index+workload_index; each cell in a fresh serial process",
+  "timing": "monotonic ns; all 96 outputs; inputs resident/prepared; no clock subtraction; one sample per synchronous forward; read checksum outside timing",
+  "statistics": "nearest-rank p50/p95/p99, mean, min/max; per-trial reports and ranges, no IID confidence claim",
+  "memory": "process peak RSS after imports, setup and timing; high-water marks, not live allocation or attributable model memory; native owned bytes separately",
+  "limitations": [
+    "Warm resident inputs; uncontrolled OS scheduling/frequency/cache",
+    "Torch standard uses FP32 layer_norm, GELU and causal SDPA; strict reference uses FP64 reductions",
+    "CPU compatibility benchmark on available host, not current-runtime frontier",
+    "No compiled Torch, ONNX, quantization, profiling, sustained/concurrent streams or network costs",
+    "First call follows model loading; no cold-disk/cache or full process startup claim"
+  ]
+}

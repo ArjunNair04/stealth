@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "experiment_id": "dense_rows_v1",
+  "profile_protocol": "benchmarks/ettm1/native_profile_v2.json",
+  "baseline_binary_sha256": "c1eeeea0022cfc5945ec775c37bb0ff2dd1d046305069f5fe658c1837a010360",
+  "change": "Compute four independent dense rows together using existing eight-column packed weights; integrate bounded four-row stages into transformer QKV, projection and feed-forward. Preserve every output accumulation order and final publication on failure.",
+  "numerical_gate": "Bitwise row-wise/dense-rows and feed-forward equality on fixed finite cases; full trained native outputs identical; errors and output preservation; no tolerance relaxation",
+  "performance_gate": "At least 5% median paired batch-one p50 reduction, each seed improves in median, at most 10% median paired p99 increase; zero hot allocations; explicitly report the additional bounded four-row workspace",
+  "seeds": [
+    7,
+    19,
+    43
+  ],
+  "trials": 3,
+  "warmup_calls": 64,
+  "workloads": [
+    {
+      "batch": 1,
+      "samples": 1000
+    },
+    {
+      "batch": 8,
+      "samples": 200
+    }
+  ],
+  "order": "Alternate preserved baseline and candidate process order by trial+seed_index+workload_index; serial calls with sampling disabled",
+  "inputs": "Same 32 validation windows and reference outputs as runtime_v1; verify hashes before each experiment",
+  "secondary": "Repeat the frozen four-engine runtime comparison after acceptance; retain failed/negative outcomes",
+  "tile_rows": 4,
+  "baseline_results": "docs/evidence/attention-tiling-v1/runtime.json"
+}

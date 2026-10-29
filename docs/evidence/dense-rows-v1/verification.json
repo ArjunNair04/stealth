@@ -1,0 +1,222 @@
+{
+  "assembly": {
+    "first_multiply_counts": {
+      "mulps": 6,
+      "mulss": 35
+    },
+    "first_sha256": "3d6128ccbead4164a5aaed09d3b22e49c63c226fe8af529994549247793efab2",
+    "scope": "Static instruction counts for the complete Dense::forward_rows function on AppleClang 16 x86_64; not dynamic execution counts or all-platform guarantees",
+    "second_multiply_counts": {
+      "mulps": 14,
+      "mulss": 3
+    },
+    "second_sha256": "18bc1ef6ad4c65b78b4289174c2861b821091d18154466689e49b8388b3a7ad7"
+  },
+  "audit": {
+    "all_file_hashes": true,
+    "all_latency_and_clock_statistics_recomputed": true,
+    "consumed_outputs_checked": true,
+    "profile_counts_recomputed": true,
+    "same_inputs_and_weights": true,
+    "same_native_binary_across_accepted_experiments": true,
+    "unchanged_source_hashes": true,
+    "unique_complete_cells": true
+  },
+  "cells": {
+    "paired": 36,
+    "rejected": 36,
+    "runtime": 72
+  },
+  "ci": {
+    "checks": [
+      {
+        "conclusion": "success",
+        "name": "Linux Clang",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40922755211/job/123620097072"
+      },
+      {
+        "conclusion": "success",
+        "name": "Linux GCC",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40922755211/job/123620096957"
+      },
+      {
+        "conclusion": "success",
+        "name": "macOS ARM",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40922755211/job/123620096867"
+      },
+      {
+        "conclusion": "success",
+        "name": "macOS Intel",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40922755211/job/123620096755"
+      },
+      {
+        "conclusion": "success",
+        "name": "Windows MSVC",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40922755211/job/123620096361"
+      },
+      {
+        "conclusion": "success",
+        "name": "Torch 2.2.2+cpu CPU reference",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40922754798/job/123620095075"
+      },
+      {
+        "conclusion": "success",
+        "name": "Torch 2.13.0+cpu CPU reference",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40922754798/job/123620094473"
+      },
+      {
+        "conclusion": "success",
+        "name": "Torch 2.2.2+cpu CPU reference",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40922738266/job/123620040111"
+      },
+      {
+        "conclusion": "success",
+        "name": "Torch 2.13.0+cpu CPU reference",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40922738266/job/123620039566"
+      },
+      {
+        "conclusion": "success",
+        "name": "macOS Intel",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40922738055/job/123620038794"
+      },
+      {
+        "conclusion": "success",
+        "name": "macOS ARM",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40922738055/job/123620038741"
+      },
+      {
+        "conclusion": "success",
+        "name": "Windows MSVC",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40922738055/job/123620038725"
+      },
+      {
+        "conclusion": "success",
+        "name": "Linux Clang",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40922738055/job/123620038635"
+      },
+      {
+        "conclusion": "success",
+        "name": "Linux GCC",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/40922738055/job/123620038327"
+      }
+    ],
+    "head_revision": "91561ea77f1c4adf72f7daf3fac563c296fbde7b",
+    "scope": "All five native platforms and both Torch versions; push and PR runs. Correctness and packaging only, not latency evidence."
+  },
+  "complete_manifest_sha256": {
+    "paired": "54eb4130190989adbfce9bb30c7c30a3bbc3ad982c34463560c38eb04ab7f22b",
+    "profile": "dfe962175c7b301b0fa61ac5b23df66f40e9c1dc7eb9914f87da23b3f296c93d",
+    "rejected": "daeec7ecb89531dfc50f8f511762370611d35cc7b8b6d36aa3008555fd24c214",
+    "runtime": "ac2bfad9cb1b29c2f19bee8899d48373806dea4710683119033dcdea11af46e8"
+  },
+  "experiment_id": "dense_rows_v1",
+  "full_native_output_parity": {
+    "baseline_extension_sha256": "952de26f2a49848b37de1657917f5b97a98f779dca0865880ca0cabf3a6d02a1",
+    "candidate_extension_sha256": "f60272bf78fc751a69a310938844450c7eb983769a002a53c80ae1179da749d3",
+    "models": {
+      "19": {
+        "bitwise_equal": true,
+        "python_workspace_bytes": 224928,
+        "sha256": "6778543a7c1202ab116dc552785f1119851dbd24ceb68154880e5f0e53768f7d",
+        "values": 3072
+      },
+      "43": {
+        "bitwise_equal": true,
+        "python_workspace_bytes": 224928,
+        "sha256": "f1b0e418a2829e411cd0f9e39d22404c6adc3496b1f66501b3e4d0f4c7d02abf",
+        "values": 3072
+      },
+      "7": {
+        "bitwise_equal": true,
+        "python_workspace_bytes": 224928,
+        "sha256": "b9b7dfac4822f93f032af522e47b610db92369def563cff06fd4a3e5decd008e",
+        "values": 3072
+      }
+    }
+  },
+  "limitations": [
+    "One Intel Mac, uncontrolled OS/frequency/cache",
+    "Torch 2.2.2 compatibility comparison, not current-platform frontier",
+    "Only saved one-block 96x7 workload performance is evaluated",
+    "Batch eight still loops over windows; four-row tiling works within a window",
+    "No forecast-quality change or deployment promotion"
+  ],
+  "local_checks": {
+    "debug_ctest": 56,
+    "profile_and_gate_tests": 4,
+    "release_ctest": 56,
+    "runtime_contracts": 9,
+    "sanitizer_ctest": 55,
+    "torch_tests": 46,
+    "wrapper_tests": 22
+  },
+  "log_sha256": {
+    "dense-rows-dev.log": "42038222bd29a773b2d3d718a09a0cab5a9ec8ad30f8021b025ccfc163446063",
+    "dense-rows-focused.log": "1c62d499151d840bec6396ecee7f25ab939d79ce0d4efea527afbb8cf4175b28",
+    "dense-rows-mutation.log": "84016c1e43bf33ebd7765740c1e26bd8370222f979ebbf3fb0919554dc086b4e",
+    "dense-rows-package.log": "2d41ceb50670901148a3b1fd8aa506e1cf59d107e0ebbd45a3f58b82c92a7f44",
+    "dense-rows-profile-red.log": "cb8e01ad0b5f03e8a3695bbcde67719b4900512760a8864de771bcb6d45d71fe",
+    "dense-rows-profile-tests.log": "42520d71a1fd7d34cc9ffda7476d0c3d3f1b780a01d52be7f891c1469435cb37",
+    "dense-rows-red.log": "7e72c555491342a61c2a6772c8cd6ea6360b11effd1165bdd290af59c0e6ac79",
+    "dense-rows-release.log": "c164458c9a3ff012ec80b942becc33a2066d5c68dc06e1e7ee82aed6ba77126e",
+    "dense-rows-restored.log": "bee7f5a138faeb39bfc51e7021ceda8502083a10526869eb2d87bdc4d8e503ba",
+    "dense-rows-revision2-build.log": "6c8c0d0afec1ad7a903470416588a87984bdbbefce98252be78bb74e2f96b7a0",
+    "dense-rows-revision2-dev.log": "85c8a836428ca35f262c48d14ba19b992a531eec0a479c5c17cff425eb39692e",
+    "dense-rows-revision2-mutation.log": "84016c1e43bf33ebd7765740c1e26bd8370222f979ebbf3fb0919554dc086b4e",
+    "dense-rows-revision2-package.log": "1286f0e4b802c265289988d76e5827e05ab833a1875d9d4fa1761a2d03b9f766",
+    "dense-rows-revision2-runtime-contracts.log": "704ac1bdbd0b9c0bf044896a5914b215ecb677e54d68d12273f307c995f4e89c",
+    "dense-rows-revision2-sanitize.log": "6a8741632106f3414af1ce680d2923e3f0cfad84315dc3059aa0abaae2b030af",
+    "dense-rows-revision2-training-tests.log": "b9033299ee4e504e6f8d60b89513a2177f9e7745b83b41cc444d868064056ceb",
+    "dense-rows-revision2-wrapper-tests.log": "d92911bec43da1e76171b3eb508347016b1d968ac6f8b43580d9c4fe5d50bc2d",
+    "dense-rows-runtime-contracts.log": "a521c78701803f68c0eb3194e1c2a1a086da9c355d7405beafab8971728776b8",
+    "dense-rows-sanitize.log": "95a77dfccdba86d00357387d13cde92cdc6fe13ab412786a58e8d018b203d7da",
+    "dense-rows-training-tests.log": "3c63bfdbe64b2f135066a75017e3579dfbe6f48f6b62b4db756b8e302928adb2",
+    "dense-rows-wrapper-tests.log": "4e00bbd82a0978e9f6dff826cb5038044fe47dadf51e4e15cacafb3b6ae329d9"
+  },
+  "measured_calls": {
+    "paired": 21600,
+    "rejected": 21600,
+    "runtime": 43200
+  },
+  "memory": {
+    "extra_workspace_bytes": 17664,
+    "hot_allocations": 0,
+    "parameter_bytes": 204604,
+    "position_bytes": 24576,
+    "workspace_after": 222240,
+    "workspace_before": 204576
+  },
+  "mutation": "Wrong second-row input failed bitwise regression; correct source restored, rebuilt and retested",
+  "packages": {
+    "stealth_cpu-0.1.0-cp310-cp310-macosx_14_0_x86_64.whl": "43d2104c8d8aa28c46271e48792015fce9800e384ffe1e718b1f44d316bec43c",
+    "stealth_cpu-0.1.0.tar.gz": "6c845c4fd89472d89e5134b7aa327f5100aa40aa8449915f5137f3ae78fcea48"
+  },
+  "paired_code_commit": "91561ea77f1c4adf72f7daf3fac563c296fbde7b",
+  "rejected": {
+    "all_cells_retained": true,
+    "reason": "Correct but 79.38% median paired p50 regression; nested accumulator array scalarized on this compiler"
+  },
+  "rejected_code_commit": "c94308b16dcf072bb7cfae5df06bb39a4c726cd8",
+  "reserved_rows_used": 0,
+  "results_sha256": {
+    "paired": "8c358e4fa6b68f6deb5eb03d9fca825c0344173b6b27dff76475b80e863e6e72",
+    "rejected": "12e814eaef0f2bbdd341bc9356a9562ba9cf0db4a8be8f0f9e2bb50008934b1c",
+    "runtime": "fa371a4725e425f394c112a65301fd00ac5906118badfd44c106aa690bb98292"
+  },
+  "runtime_code_commit": "91561ea77f1c4adf72f7daf3fac563c296fbde7b",
+  "schema_version": 1
+}

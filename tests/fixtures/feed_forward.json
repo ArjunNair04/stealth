@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "generator_sha256": "fd98b52c789bb37cefaf2e8fdd51da0762c5f8c5414ce80ae574d9207b5591aa",
+  "fixture_sha256": "291904626687a38ed009160fe3ad99c2d7d1cfa221463d9348949446e8e98736",
+  "reference": "Python standard library, double precision math.fsum/erfc, deterministic explicit parameters",
+  "dimensions": {
+    "width": 4,
+    "hidden": 7
+  },
+  "tolerances": {
+    "absolute": 2e-05,
+    "relative": 5e-05
+  },
+  "purpose": "Numerical integration evidence only; no trained model or financial data"
+}

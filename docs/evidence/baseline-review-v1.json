@@ -1,0 +1,267 @@
+{
+  "build_identity": {
+    "build_info": {
+      "architecture": "x86_64",
+      "compiler": "AppleClang 16.0.0.16000026",
+      "configuration": "Release",
+      "operating_system": "Darwin",
+      "source_fingerprint": "bd6803db3aae724ca8aa767a6f2bb8e65cef53e01e26d15435873c8936b5caea",
+      "version": "0.1.0"
+    },
+    "extension_sha256": "ed13b1809c6921a7338c3ca9b3189223d717939d856316730a3532ab66fbd600"
+  },
+  "ci": {
+    "checks": [
+      {
+        "conclusion": "success",
+        "details_url": "https://github.com/ArjunNair04/stealth/actions/runs/40942927369/job/123690705925",
+        "head_sha": "cf9ab8c7227249f2fbd8b5e58f2480cce473cc4c",
+        "id": 123690705925,
+        "name": "Windows MSVC",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "details_url": "https://github.com/ArjunNair04/stealth/actions/runs/40942927369/job/123690705718",
+        "head_sha": "cf9ab8c7227249f2fbd8b5e58f2480cce473cc4c",
+        "id": 123690705718,
+        "name": "Linux GCC",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "details_url": "https://github.com/ArjunNair04/stealth/actions/runs/40942927369/job/123690705649",
+        "head_sha": "cf9ab8c7227249f2fbd8b5e58f2480cce473cc4c",
+        "id": 123690705649,
+        "name": "macOS Intel",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "details_url": "https://github.com/ArjunNair04/stealth/actions/runs/40942927369/job/123690705623",
+        "head_sha": "cf9ab8c7227249f2fbd8b5e58f2480cce473cc4c",
+        "id": 123690705623,
+        "name": "Linux Clang",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "details_url": "https://github.com/ArjunNair04/stealth/actions/runs/40942927354/job/123690705346",
+        "head_sha": "cf9ab8c7227249f2fbd8b5e58f2480cce473cc4c",
+        "id": 123690705346,
+        "name": "Torch 2.2.2+cpu CPU reference",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "details_url": "https://github.com/ArjunNair04/stealth/actions/runs/40942927369/job/123690705268",
+        "head_sha": "cf9ab8c7227249f2fbd8b5e58f2480cce473cc4c",
+        "id": 123690705268,
+        "name": "macOS ARM",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "details_url": "https://github.com/ArjunNair04/stealth/actions/runs/40942927354/job/123690705086",
+        "head_sha": "cf9ab8c7227249f2fbd8b5e58f2480cce473cc4c",
+        "id": 123690705086,
+        "name": "Torch 2.13.0+cpu CPU reference",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "details_url": "https://github.com/ArjunNair04/stealth/actions/runs/40942841822/job/123690425488",
+        "head_sha": "cf9ab8c7227249f2fbd8b5e58f2480cce473cc4c",
+        "id": 123690425488,
+        "name": "Linux GCC",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "details_url": "https://github.com/ArjunNair04/stealth/actions/runs/40942841822/job/123690425390",
+        "head_sha": "cf9ab8c7227249f2fbd8b5e58f2480cce473cc4c",
+        "id": 123690425390,
+        "name": "macOS ARM",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "details_url": "https://github.com/ArjunNair04/stealth/actions/runs/40942841822/job/123690425374",
+        "head_sha": "cf9ab8c7227249f2fbd8b5e58f2480cce473cc4c",
+        "id": 123690425374,
+        "name": "macOS Intel",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "details_url": "https://github.com/ArjunNair04/stealth/actions/runs/40942841822/job/123690425353",
+        "head_sha": "cf9ab8c7227249f2fbd8b5e58f2480cce473cc4c",
+        "id": 123690425353,
+        "name": "Windows MSVC",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "details_url": "https://github.com/ArjunNair04/stealth/actions/runs/40942841779/job/123690425174",
+        "head_sha": "cf9ab8c7227249f2fbd8b5e58f2480cce473cc4c",
+        "id": 123690425174,
+        "name": "Torch 2.2.2+cpu CPU reference",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "details_url": "https://github.com/ArjunNair04/stealth/actions/runs/40942841822/job/123690424948",
+        "head_sha": "cf9ab8c7227249f2fbd8b5e58f2480cce473cc4c",
+        "id": 123690424948,
+        "name": "Linux Clang",
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "details_url": "https://github.com/ArjunNair04/stealth/actions/runs/40942841779/job/123690424769",
+        "head_sha": "cf9ab8c7227249f2fbd8b5e58f2480cce473cc4c",
+        "id": 123690424769,
+        "name": "Torch 2.13.0+cpu CPU reference",
+        "status": "completed"
+      }
+    ],
+    "head": "cf9ab8c7227249f2fbd8b5e58f2480cce473cc4c"
+  },
+  "code_commit": "cf9ab8c7227249f2fbd8b5e58f2480cce473cc4c",
+  "fixes": [
+    {
+      "id": "R1",
+      "problem": "Benchmark could attribute a stale installed wheel to the current source tree",
+      "regression": "Missing/stale/non-Release metadata fails; real old wheel rejected; removing guard fails regression",
+      "resolution": "Shared source fingerprint with preflight and worker rejection before timing",
+      "severity": "medium"
+    },
+    {
+      "id": "R2",
+      "problem": "CLI reported correction model files as format version 1",
+      "regression": "Both version-1 level and version-2 correction artifacts checked through CLI",
+      "resolution": "Validated version and output mode inspection",
+      "severity": "medium"
+    }
+  ],
+  "inherited_head": "3b46023ef0d69ced85f0560a795b02894573ba50",
+  "isolated_package": {
+    "artifacts": {
+      "numpy-2.2.6-cp310-cp310-macosx_14_0_x86_64.whl": "5a6429d4be8ca66d889b7cf70f536a397dc45ba6faeb5f8c5427935d9592e9cf",
+      "stealth_cpu-0.1.0-cp310-cp310-macosx_14_0_x86_64.whl": "1f6e4da590a33bc35fb7636d32b28ec14015210b9d6a40859c29b47de3138238",
+      "stealth_cpu-0.1.0.tar.gz": "1fa04b4ce55ae289d1118ef7912f0660566a36408dfeb1b4f7b4a5896f55c387"
+    },
+    "built_wheel_from_sdist": true,
+    "python": "3.10.6",
+    "runtime_dependencies": [
+      "numpy==2.2.6"
+    ],
+    "runtime_install_network": false,
+    "schema_version": 1,
+    "status": "passed",
+    "wheel_members": [
+      "stealth_cpu/__init__.py",
+      "stealth_cpu/_core.cpython-310-darwin.so",
+      "stealth_cpu-0.1.0.dist-info/METADATA",
+      "stealth_cpu-0.1.0.dist-info/WHEEL",
+      "stealth_cpu-0.1.0.dist-info/RECORD"
+    ]
+  },
+  "limits": [
+    "No independent external review approval",
+    "No new latency measurement or performance claim",
+    "No architecture, learned weights or inference arithmetic changes",
+    "Current-runtime host and compiled/ONNX adapters remain pending",
+    "No new training, reserved-tail scoring or QTS data use"
+  ],
+  "local_checks": {
+    "debug_ctest": 59,
+    "independent_fixtures": [
+      "numeric",
+      "attention",
+      "forecast"
+    ],
+    "isolated_package": true,
+    "isolated_wrapper_source_identity_tests": 24,
+    "offline_python_tests": 44,
+    "release_ctest": 59,
+    "sanitized_runtime_cli_tests": 12,
+    "sanitizer_ctest": 58,
+    "torch_tests": 47,
+    "wrapper_tests": 24
+  },
+  "log_sha256": {
+    "cli-green.log": "536658d548d492487ec023c44d91b4f1ff62822f92024937db4d7d7c858c329d",
+    "cli-red.log": "0fc0f49c5890822b6f1d63767b6f7910936d7a1525eec5c3b74d32fe01d4fbf6",
+    "dev.log": "5333ae318de9836a806bf69e0acc4fecf91ff4a09419c93e4bc439fffdc620c8",
+    "fixtures.log": "d198357ec37ecb100bad4b061190c9c4dd01a3cf42f397ebe3f898e9a49c299b",
+    "identity-green.log": "55259699f1d9a6c439a1828e19e15bf568bd7eaa6c1da4f4a3527ff5f3bd9fb2",
+    "identity-mutation.log": "38a535f8c7a7d4e182d889cbb0031b06d839550159b34d170d541b77f300774c",
+    "identity-red.log": "c3ccfa8b60e59af9b7b4e36aa020dc660fca9a9061f208982e47c5e9604cb555",
+    "isolated-build-identity-tests.log": "00787c5c8593bc2e35509cb015dc80f226a9e350adf334e4c45f777b821b29f3",
+    "isolated-package.log": "d46c7c2e819db86a5400e580132f98c5a390c33f525b273419386acb2e5538bd",
+    "isolated-package/build.log": "2daf41d83fd292e42fc344ccad517cef7d7f66fad2299eba402a4a918d961f63",
+    "isolated-package/example.log": "dcb6918e882faeddcad9674fc63c582b233bf8c300d8540e86dcd86cff499f61",
+    "isolated-package/install.log": "264a53252462f0d8213ea2af40fc8f9585e9a004cfd93289f97ccee0f2e1a470",
+    "isolated-package/isolation.log": "6e05cb618ad5683c2a6354100390dedda49936528546504aa152f589dee7a71c",
+    "isolated-package/tests.log": "0ec1507f5dbe47f1802c45fe12bf4c4ccc9d8494c4c214c94f7855f2894be25b",
+    "package.log": "c13eafd1124c54cf233cda0812b6f5f3a4f22ee158ae572caa0a6229b191e9ac",
+    "release.log": "aa5944aa499f31280b206f6c99f1f3313c717dcfb4cf29af213e6556027300ba",
+    "sanitize.log": "73bdb6150af31d399ccb2bd9c52d7020a3d1cb491b0c56cd0fadef77cbdd9b17",
+    "sanitized-runner.log": "cb49133b3f8b47fa2afeee346e9760f530c1432fbae68ddb0db853e8f37bf909",
+    "stale-extension-rejection.log": "61b281a8e71fbcf690b5f79f97f7e9393db5488c94c41f5c045529f1747de69a",
+    "standard-tests.log": "cccfda69e44d8291cce31510acdb445ddc3b79b87ccad277b9384ec976de34e4",
+    "training.log": "75f54a3c55fbe398ab71a8acf3120274ec2859dbc14e62653e081c6b42b5f1c8",
+    "wrapper-red.log": "022ac7a5e988f2846ad41216d08f67b17a3639d6d136eaf620cd2ed1a3f38035",
+    "wrapper.log": "4c60d4af1ea53c92603b37ed0f8a47703e27aa539992c8834ce0ca2a47879a0a"
+  },
+  "review_kind": "internal_integration_review",
+  "review_scope": [
+    "native numeric and failure boundaries",
+    "validated model loading",
+    "Python ownership and session reuse",
+    "training/checkpoint/export boundary",
+    "benchmark provenance",
+    "packaging and reviewer navigation"
+  ],
+  "saved_output_parity": {
+    "extension": {
+      "build_info": {
+        "architecture": "x86_64",
+        "compiler": "AppleClang 16.0.0.16000026",
+        "configuration": "Release",
+        "operating_system": "Darwin",
+        "source_fingerprint": "bd6803db3aae724ca8aa767a6f2bb8e65cef53e01e26d15435873c8936b5caea",
+        "version": "0.1.0"
+      },
+      "extension_sha256": "ed13b1809c6921a7338c3ca9b3189223d717939d856316730a3532ab66fbd600"
+    },
+    "models": {
+      "19": {
+        "bitwise_equal": true,
+        "full_sha256": "6778543a7c1202ab116dc552785f1119851dbd24ceb68154880e5f0e53768f7d",
+        "full_values": 3072,
+        "latest_values": 32
+      },
+      "43": {
+        "bitwise_equal": true,
+        "full_sha256": "f1b0e418a2829e411cd0f9e39d22404c6adc3496b1f66501b3e4d0f4c7d02abf",
+        "full_values": 3072,
+        "latest_values": 32
+      },
+      "7": {
+        "bitwise_equal": true,
+        "full_sha256": "b9b7dfac4822f93f032af522e47b610db92369def563cff06fd4a3e5decd008e",
+        "full_values": 3072,
+        "latest_values": 32
+      }
+    }
+  },
+  "schema_version": 1,
+  "test_source_sha256": {
+    "tests/build_smoke.cpp": "ea13f6e654b4959eff0f4e3f0b05b3c71ee2038eb8b9486daf2eac8a45fdcbdc",
+    "tests/python/test_bindings.py": "546731e8aea1ff80bebd52f0641c2f8abdab3b5ef101e69d7ba83f68169219b0",
+    "tests/test_build_identity.py": "aee733b91a708d7b685eae1f24d66abfa66b250b2205627f8ecf0742eb14c2c1",
+    "tests/test_runtime_benchmark.py": "43a2e2a29d4d6963d3cf8de9dcb308f82021632d1417536e694116369a93b878"
+  }
+}

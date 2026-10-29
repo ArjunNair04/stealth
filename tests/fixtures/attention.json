@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "generator_sha256": "f3c35e5322400b944e33293e4d5f42a2ed7cfc0ab42f88ff925b72507bc9f351",
+  "fixture_sha256": "034a1f6dd13ff247b456b91d88dae91662dcbd129e1201588b757d0d7eb3d1bc",
+  "dimensions": {
+    "tokens": 4,
+    "width": 4,
+    "heads": 2,
+    "hidden": 7
+  },
+  "reference": "Independent Python standard-library double equations (math.fsum/exp/erfc); not PyTorch",
+  "attention_tolerance": {
+    "absolute": 2e-05,
+    "relative": 5e-05
+  },
+  "block_tolerance": {
+    "absolute": 3e-05,
+    "relative": 0.0001
+  },
+  "purpose": "Untrained diagnostic weights only; no prediction or financial evidence"
+}

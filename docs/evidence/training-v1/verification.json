@@ -1,0 +1,71 @@
+{
+  "cold_loader_hardening": "Reject NPZ declared shapes/dtypes/lengths before NumPy allocation; numerical training code unchanged",
+  "experiment_code_commit": "5022cc7fed671749650b53c1b5ef3fdd67254894",
+  "full_epoch_replay": {
+    "model_parameters_exact": true,
+    "optimizer_exact": true,
+    "rng_exact": true,
+    "training_metric_exact": true,
+    "validation_metrics_exact": true
+  },
+  "initial_ci": {
+    "commit": "5022cc7fed671749650b53c1b5ef3fdd67254894",
+    "native_matrix_jobs_passed": 5,
+    "native_run": "https://github.com/ArjunNair04/stealth/actions/runs/40710580824",
+    "reference_run": "https://github.com/ArjunNair04/stealth/actions/runs/40710580481",
+    "torch_reference_jobs_passed": 2
+  },
+  "local_log_sha256": {
+    "torch-archive-preflight-green.log": "5902a53cacad39de59f378ef34177deec3e9c20f9edbbbbb1dc0d9be30fcca90",
+    "torch-archive-preflight-red.log": "12635fee3cf66147cfbeb6d98061361a4963e798a71ff2c2820b390e162f58f5",
+    "torch-data-regression.log": "8033886f20007ede04ae7816bde5ef1fc3ee08b79b3d898dab6544be44709712",
+    "torch-final-tests.log": "f8eadf119bdefe34a6a9071adaca23d10dd6241d21fa9b79db59399b23ddf660",
+    "torch-mutation-future_attention.log": "27836187a57b0bd9c28ed448de6c94a4480a4cb31dd6315edad9b98e30fc23e0",
+    "torch-mutation-lost_shuffle_state.log": "b80b0ace286dffdb7585b4fdf9a09dba1e5334c061b4d606022b89f5cb10dc6d",
+    "torch-mutation-partial_accumulation-independent.log": "087c1ff485363910a42f4bacf0daa5b91ecdd4280ff3425565217af33e0e1b4c",
+    "torch-numpy126-bindings.log": "9abb1fe84fc5ff0cb69d3c953d1640dccbbe94212c3de40da4d906b18ec744e4",
+    "torch-preflight-final.log": "52f8e67049603c25ac5ccd19751d513f1b811fa923de9d870946c6e38cdbbfac"
+  },
+  "mutation_checks": [
+    {
+      "detected": true,
+      "fault": "future_attention",
+      "log": "torch-mutation-future_attention.log",
+      "returncode": 1
+    },
+    {
+      "detected": true,
+      "fault": "partial_accumulation",
+      "log": "torch-mutation-partial_accumulation-independent.log",
+      "note": "Initial partition-to-partition test shared the faulty denominator; added independent hand-gradient regression before claiming detection",
+      "returncode": 0
+    },
+    {
+      "detected": true,
+      "fault": "lost_shuffle_state",
+      "log": "torch-mutation-lost_shuffle_state.log",
+      "returncode": 1
+    }
+  ],
+  "passed_tests": {
+    "installed_wrapper_numpy_1_26": 22,
+    "public_data": 23,
+    "training_reference_and_experiment": 18
+  },
+  "schema_version": 1,
+  "source_sha256": {
+    ".github/workflows/training.yml": "a22a8beaf8f82051e082bb8698515f3679cc1df9b2b72fd75eff2f76a5c52835",
+    "benchmarks/ettm1/one_hour.json": "88c799940d1af57c31e14f561543a762976502dd13edb68fb68260941e70137e",
+    "benchmarks/ettm1/training_v1.json": "36c1978576465ea61936844b512fa4d878a89853f1fc45ecb73c616838ec1b75",
+    "requirements-training-common.txt": "ca8acdc892e244155fc09b2ff05aa33a677435e9af101b569e2e732d6949a6cf",
+    "requirements-training-macos-intel.txt": "4f9727e6964c3a5420a30e4665b2293ca5423d2acc5c3021a012da2c8184c426",
+    "tests/training/test_accumulation_answer.py": "6eb556a9d315fac4f46a24f618f96867ee7eb6e5f31ecebbde25034667faf3e4",
+    "tests/training/test_checkpoint_archive.py": "e72858869b603718b3a70ef1562dab8a9e58a813ccb9ae4125cd433a25211859",
+    "tests/training/test_experiment.py": "abbfa0eee67f4c6055f9374efb014ad7b5a4f94af89971c46d551e1bece41e25",
+    "tests/training/test_reference.py": "929a0eb00963bbcdebe2494f9614fe89c2a5cf52189d86e75e9fc8c237246fcf",
+    "tests/training/test_training.py": "42a4396906531450419324a4c8f27b48561789a43da0ce17c18c72abf4ed4ef0",
+    "tools/torch_forecaster.py": "f80d18970c04e696654935ec6a50ca380e6ec3ceff17e3e29f6d749d7fb53c30",
+    "tools/train_ettm1.py": "4652d3dc0f8a6d71f1a3c427062940c2264ae3337ec7c68bb5383d4889820ec2",
+    "tools/training_state.py": "d1ebbd87e782bdf244e4eaa174a064e1bfbdf69dad1e08bd580ab57169e0bdb8"
+  }
+}

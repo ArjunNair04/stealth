@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "experiment_id": "attention_value_tiling_v1",
+  "profile_protocol": "benchmarks/ettm1/native_profile_v1.json",
+  "baseline_binary_sha256": "f48f04ce0c95995530c997df042786764275a91cb3886dab5c643b3b64d30820",
+  "change": "Compute eight independent value-channel sums together; keep each sum in FP64 and the original observation order. Leave query/key scores and softmax unchanged. Scalar tail and explicit reference kernel remain.",
+  "tile_channels": 8,
+  "numerical_gate": "Bitwise reference/tiled component equality on fixed finite cases and identical errors/output preservation; trained export tolerance unchanged",
+  "performance_gate": "At least 5% median paired batch-one p50 reduction; each saved seed improves in median; report all p99 results, with no more than 10% median paired p99 increase; no extra heap workspace or hot allocations",
+  "seeds": [
+    7,
+    19,
+    43
+  ],
+  "trials": 3,
+  "warmup_calls": 64,
+  "workloads": [
+    {
+      "batch": 1,
+      "samples": 1000
+    },
+    {
+      "batch": 8,
+      "samples": 200
+    }
+  ],
+  "order": "Alternate preserved baseline and candidate process order by trial+seed_index+workload_index; serial calls with sampling disabled",
+  "inputs": "Same 32 validation windows and reference outputs as runtime_v1; verify hashes before each experiment",
+  "secondary": "Repeat the frozen four-engine runtime comparison after acceptance; retain failed/negative outcomes"
+}

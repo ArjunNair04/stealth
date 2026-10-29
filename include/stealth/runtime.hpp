@@ -11,6 +11,7 @@ struct BuildInfo {
     std::string_view operating_system;
     std::string_view architecture;
     std::string_view configuration;
+    std::string_view source_fingerprint;
 };
 
 [[nodiscard]] BuildInfo build_info() noexcept;

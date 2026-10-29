@@ -1,0 +1,127 @@
+{
+  "allocation_checks": {
+    "added_hot_cycles": 4000,
+    "cold_failure_points_per_kernel": 21,
+    "intercepted_hot_allocations": 0,
+    "kernels": [
+      "reference",
+      "packed"
+    ],
+    "scope": "Intercepted ordinary/aligned C++ new/new[]; not every C/OS allocator"
+  },
+  "base_revision": "2f23dbb3363662877b7380620bec54387bd12b86",
+  "date": "2026-10-28",
+  "file_checks": {
+    "additional_sha_known_answer": "abc",
+    "every_byte_one_bit_flip_rejected": true,
+    "every_truncation_rejected": true,
+    "fixture_bytes": 984,
+    "hashlib_lengths": 17,
+    "maximum_hash_test_bytes": 1048576,
+    "nonfinite_parameter_locations": 222,
+    "seed_hex": "20261028",
+    "seeded_mutation_cases": 1500,
+    "semantic_headers": 21
+  },
+  "fixture_metadata": {
+    "artifact_sha256": "7e9b8b9574c9b90b490d7f4cebca83b443350d0552f5e8b798629be490394375",
+    "equations_dependency_sha256": "f3c35e5322400b944e33293e4d5f42a2ed7cfc0ab42f88ff925b72507bc9f351",
+    "fixture_sha256": "3564ad03f90af86afff6bfd043d11773e721c7db9122f367111533a4e8d8aab6",
+    "generator_sha256": "3fecaf0459cf6800c7426e669a34777b4c36d4e5768033d4eeab7eab8c364814",
+    "purpose": "Untrained diagnostic weights only; compact and full 96x7 width-64 task shapes",
+    "reference": "Independent Python double equations plus hashlib; not PyTorch; no native outputs",
+    "schema_version": 1,
+    "tolerance": {
+      "absolute": 5e-05,
+      "relative": 0.0002
+    }
+  },
+  "full_task_fixture": {
+    "context": 96,
+    "features": 7,
+    "heads": 4,
+    "hidden": 256,
+    "max_absolute_error": 3.09944e-06,
+    "scalar_packed_bitwise_equal": true,
+    "width": 64,
+    "worst_origin_zero_based": 19
+  },
+  "initial_red": {
+    "failed_groups": 11,
+    "groups": 11,
+    "log_sha256": "c16b6b425c3452fbc839e86b9bba81ffca90755de5036c86a0598f5ac41cf7d9",
+    "reason": "Expected stub returns/exceptions and incorrect zero hash"
+  },
+  "local_suites": {
+    "asan_ubsan_groups": 43,
+    "boundary_additions": "Maximum valid shapes and real file boundary tests subsequently rebuilt and rerun on all three native presets",
+    "debug_groups": 44,
+    "logs": {
+      "forecast-debug-final.log": "f9c22166e2097eb858fe98ed46bdc88dd53e4b17b38a452402857440b3b952f2",
+      "forecast-final-boundaries-dev.log": "0e39a4d81b11c68cfbb311406bac9faf96172f64a9cc98d4e1fbf70627364438",
+      "forecast-final-boundaries-release.log": "9b05145ea05861d0183591f8602fae3e97b48629a81670d68f95caa11fb775e2",
+      "forecast-final-boundaries-sanitize.log": "c4f797581a40dd63d84419f5249c4aefaa128230827c3139676884d2a56a81b1",
+      "forecast-release-final.log": "feb2802ca348b920e57bfd3bbe4c116481c2b546e4cfb9a0e08959502e7d3d28",
+      "forecast-sanitize-final.log": "1eb1762f7432c30585b5ca712b678fda52dc9dc55f5ccb7c3b7565ecf7ff6853"
+    },
+    "python_data_methods": 23,
+    "release_groups": 44
+  },
+  "mutations": [
+    {
+      "detected": true,
+      "mutation": "missing_positions",
+      "test": "forecast.parity"
+    },
+    {
+      "detected": true,
+      "mutation": "partial_output_publication",
+      "test": "forecast.failures"
+    },
+    {
+      "detected": true,
+      "mutation": "skipped_integrity_check",
+      "test": "model_file.corruption"
+    }
+  ],
+  "packed_owned_buffer_bytes": {
+    "exclusions": [
+      "caller input/output",
+      "object bookkeeping",
+      "allocator overhead"
+    ],
+    "parameters_and_scaler": 204604,
+    "positions": 24576,
+    "workspace_per_caller": 204576
+  },
+  "remaining": [
+    "Pinned PyTorch CPU parity",
+    "Frozen training/evaluation protocol",
+    "Trained ETTm1 example and export provenance",
+    "Python wrapper",
+    "Bounded cached streaming",
+    "Forecast-quality and trained latency comparison",
+    "Separate QTS experiment"
+  ],
+  "schema_version": 1,
+  "scope": "One-block native forecaster and version-1 numerical model file; diagnostic untrained weights only.",
+  "source_sha256": {
+    "benchmarks/ettm1/one_hour.json": "6a79c168e8152dedb32c091a03e288f781ea38515e8d7641b22e4602b68ad38c",
+    "docs/forecast-contract.md": "0a9d60df871e5acf362969414b841ba2a62440d36b7e52a0d1dca78af07e7e56",
+    "include/stealth/forecaster.hpp": "5a38ed5639067f92309e07497272783176de9aeb9a7192c1c2df42b0736c3a15",
+    "include/stealth/model_file.hpp": "469416186dbb7a7d508d828f1b55e6bbbea3c3cf4dc594af8aeec7ec6ceb014e",
+    "src/forecaster.cpp": "87f809cf7d54aa73b5b9d208f77e8698e134b2cb577d1755a7b9b37334468c1f",
+    "src/model_file.cpp": "89dba279c0e8fa2fb556aff15b0d10e7be4158cb33845b8f5093be73a0d5289a",
+    "src/sha256.cpp": "044ba616809c069b23965b8290c9ee242f810afa64aaf799a47f836f8ad7153b",
+    "src/sha256.hpp": "da7e0e9ae779085b790e50af5b6e2eac8954539cd7acdeb833309825499dc224",
+    "tests/allocation_tests.cpp": "95057daf3796841bdfdf81c2f68685a86397e60b25610c76f519450fcc76b757",
+    "tests/forecast_tests.cpp": "2fd8aa2eb7573a28609fd4ce527b57c1f22508fe8b029e0fa1e8998293a76ca7",
+    "tests/model_file_tests.cpp": "9eef469d955799a585ea055526f73cd28e714b224dc532e1ad61a8cf996310a1",
+    "tests/test_public_benchmark.py": "eff81a906410a9d0b0d6e9ecb92a0faf3c9a9f5e083117b31038f1abb115d7ac",
+    "tools/generate_forecast_fixture.py": "3fecaf0459cf6800c7426e669a34777b4c36d4e5768033d4eeab7eab8c364814"
+  },
+  "user_choices": {
+    "blocks": 1,
+    "target": "one temperature one hour ahead"
+  }
+}

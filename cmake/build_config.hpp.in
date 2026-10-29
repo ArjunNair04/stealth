@@ -1,6 +1,7 @@
 #pragma once
 
 namespace stealth::detail {
+inline constexpr char source_fingerprint[] = "@STEALTH_SOURCE_FINGERPRINT@";
 inline constexpr char version[] = "@PROJECT_VERSION@";
 inline constexpr char compiler[] = "@CMAKE_CXX_COMPILER_ID@ @CMAKE_CXX_COMPILER_VERSION@";
 inline constexpr char operating_system[] = "@CMAKE_SYSTEM_NAME@";

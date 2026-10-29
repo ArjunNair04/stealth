@@ -1,0 +1,3 @@
+# Last official macOS x86_64 Torch release. Python 3.10 used locally.
+-r requirements-training-common.txt
+torch==2.2.2

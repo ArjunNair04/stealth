@@ -1,65 +1,49 @@
-# Work queue
+# Active work queue
 
-## 1. Local C++ infrastructure (complete)
+The user approved consolidation and stronger runtime comparisons before further
+kernel optimization. [Baseline review](review-baseline.md) records findings and
+verification; [historical tasks](tasks-history.md) preserve the earlier sequence.
 
-- [x] Choose a permanent standalone checkout and repository identity (now public).
-- [x] Inspect the installed compiler, SDK, editor and GitHub account.
-- [x] Install CMake and Ninja through the existing local package manager.
-- [x] Create a C++20 library, CLI, CMake presets and editor configuration.
-- [x] Verify debug, release, sanitizer and relocated-install builds locally.
-- [x] Push the initial repository and verify the cross-platform CI matrix.
+## 1. Consolidate the existing foundation
 
-Done means another clean checkout can configure, build, test and install using
-only a documented compiler, CMake and Ninja. Record actual passed configurations.
+Implementation PRs #6–#17 are preserved in the single baseline PR #18. Two review
+findings are fixed: stale installed wheels can no longer enter the benchmark,
+and model inspection distinguishes format versions and output modes. Overview
+documentation now describes the implemented training/export/inference workflow.
+Review and merge are separate from successful builds; independent approval is
+still outstanding. No model architecture or inference arithmetic changed.
 
-## Test-first acceptance rules
+## 2. Establish the current-runtime comparison
 
-Follow [the testing plan](testing.md): specify behavior, observe an intended failing
-test, implement it, then refactor. Independently checked expected answers and
-failure cases are required. Infrastructure is verified; model correctness and
-trading readiness remain unestablished.
+Prepare a supported common CPU host, exact package/build lock and identical raw
+validation windows. Compare native core, the wrapper, current eager Torch,
+compiled Torch and ONNX Runtime CPU. Latest-only batch one is primary; batch eight
+is reported separately. [Linux preparation](frontier-linux.md) records the fixed
+decision criteria and the host-lock requirements. Current host access, conversion
+and compiled/ONNX runner validation are still required before timing.
 
-## 2. Native numeric primitives
+Stop further native kernel work until this comparison identifies a useful target.
+Retain unsupported/export/compile failures as outcomes. Do not substitute an old
+compatibility result or shared-CI timing for a supported-host performance result.
 
-Define contiguous FP32 buffers, shapes and errors; implement only the operations
-needed by the agreed small model. Check mathematical fixtures, malformed shapes,
-non-finite input policy and allocation behavior. Keep a clear scalar reference.
-Freeze the buffer/operation contract first, then use hand-calculated fixtures,
-independent higher-precision results and mathematical properties. See objectives
-1-2 of the testing plan; this is the immediate next implementation.
+## 3. Establish forecasting usefulness
 
-## 3. Small reference model and native parity
+Discuss one bounded modelling experiment with the user before changing the
+objective or architecture. Require simple baselines, validation-only choices and
+a protected final evaluation. The saved correction models still miss persistence
+on the primary old-test measure. The old test is exploratory; 12,080 reserved tail
+rows remain unused for model selection and scoring.
 
-Freeze model layout and weight serialization, train/export a deterministic
-reference, and verify native forward outputs before adding caching. Specify
-position, normalization and reset behavior before testing incremental equivalence.
-Require corrupted-weight rejection, unchanged state on failure, layer/full-model
-reference checks, future-input invariance and declared numerical tolerances.
-Cached streaming is a separate acceptance gate after ordinary forward parity;
-test reset, capacity and stream isolation. See objectives 3-4 of the testing plan.
+## Later gates
 
-## 4. Optional Python wrapper
+Multi-source clock/revision/missingness contracts, latest-only stream failure
+policy, sustained load, concurrency, recovery and a QTS adapter remain separate
+milestones. No financial deployment or research novelty follows from passing
+software tests. No new features are required to finish the present comparison.
 
-After native primitives are stable, add pybind11/scikit-build-core packaging and
-isolated-install tests. Verify Python/native parity, buffer lifetime, invalid
-inputs and explicitly documented copy behavior. Native builds remain independent.
-The wrapper can start once the early native API is stable; it need not wait for
-all streaming work. See objective 5 of the testing plan.
+## GitHub tracking
 
-## 5. CPU performance study and QTS adapter
-
-Measure the same workload across native and established runtimes. Record CPU,
-compiler, threads, warm-up, memory and latency distributions. Then define a
-separate, preregistered QTS pilot. Do not infer alpha from synthetic correctness.
-Keep deterministic correctness checks separate from hardware-specific timing
-thresholds, and require new operational/financial gates before deployment.
-
-## GitHub tasks
-
-- [Set up and verify portable local C++ development](https://github.com/ArjunNair04/stealth/issues/1)
-- [Implement the first native numeric primitives](https://github.com/ArjunNair04/stealth/issues/2)
-- [Establish a small reference model and native forward parity](https://github.com/ArjunNair04/stealth/issues/3)
-- [Add an optional Python wrapper after the native layers](https://github.com/ArjunNair04/stealth/issues/4)
-- [Measure the CPU performance frontier and define the QTS boundary](https://github.com/ArjunNair04/stealth/issues/5)
-
-See [verification](verification.md) for the completed infrastructure checks.
+- [Consolidated baseline PR #18](https://github.com/ArjunNair04/stealth/pull/18)
+- [Runtime and QTS boundary issue #5](https://github.com/ArjunNair04/stealth/issues/5)
+- [Model/reference issue #3](https://github.com/ArjunNair04/stealth/issues/3)
+- [Python interface issue #4](https://github.com/ArjunNair04/stealth/issues/4)
