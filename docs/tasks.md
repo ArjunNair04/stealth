@@ -88,11 +88,17 @@ latest window with positions reset to zero. Reset, rolling/reference agreement,
 bounds, allocations and concurrent independent streams are tested. This completes
 the raw-window baseline; KV caching and market-feed clock alignment remain separate.
 
-## 5. CPU performance study and QTS adapter (runtime comparison in progress)
+## 5. CPU performance study and QTS adapter (first runtime comparison complete)
 
-Scalar-versus-packed primitive, feed-forward and full-sequence block microbenchmarks
-are recorded. Established-runtime,
-streaming, cold-start, sustained-load and end-to-end comparisons remain pending.
+The first saved-model comparison is complete: 72 cells across all three models,
+three trials, batch one/eight and four engines. All prediction checks pass. On
+the local Intel Mac, ordinary eager Torch takes about 0.490 ms per batch-one
+window versus C++ core 1.942 ms; native process memory is much smaller. See
+[all results and limits](runtime-results-v1.md). No speed advantage is claimed.
+
+Next, profile native computation before changing kernels. Current-platform,
+compiled-Torch/independent-runtime, streaming, full cold-start, sustained-load
+and end-to-end comparisons remain pending. Issue #5 stays open.
 
 Measure the same workload across native and established runtimes. Record CPU,
 compiler, threads, warm-up, memory and latency distributions. Then define a
@@ -119,6 +125,5 @@ indices and immutable preparation/replay are implemented on
 Native model/loading and the frozen training workflow are recorded above.
 
 The saved correction-model runtime experiment is frozen in
-[the runtime contract](runtime-benchmark-v1.md). Native core, Python wrapper,
-strict Torch and ordinary eager Torch will use identical weights and windows,
-with parity before timing and separate process-memory reporting.
+[the runtime contract](runtime-benchmark-v1.md), with
+[complete measured evidence](runtime-results-v1.md).

@@ -111,5 +111,7 @@ a raw-window stream with reset and failure preservation. See the
 [installation and component guide](docs/python-stream-v1.md) and
 [runnable Python example](examples/python_components.py). The native CMake build
 remains independent of Python. The optional [training workflow](docs/training-v1.md)
-exports learned weights into this engine. Cached streaming and comparative runtime
-benchmarks remain upcoming work.
+exports learned weights into this engine. The [first runtime comparison](docs/runtime-results-v1.md) is complete: ordinary
+eager Torch is faster locally, while the standalone native engine uses less
+process memory. Cached streaming and current-platform deployment comparisons
+remain upcoming work.

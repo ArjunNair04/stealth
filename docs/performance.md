@@ -175,22 +175,28 @@ markers restart at zero. A future cache must prove equivalence for its stated
 semantics; simply retaining prior keys/values is not an equivalent optimization.
 No wrapper, full-stream or training speed claim is recorded in this milestone.
 
-## Next performance experiment
+## Full-model runtime evidence and next experiment
 
-The trained export makes a controlled speed comparison possible: every engine
-must use the same weights, ordered inputs and one-hour output. First test batch 1
-on a full 96-row window, then bounded multi-window throughput separately. Keep
-loading, input preparation and steady-state arithmetic as separate measurements.
-Report warm-up, threads, allocation/interface costs, median and tail latency,
-resident memory, and multiple repeated trials on an otherwise idle machine.
+The [saved correction-model comparison](runtime-results-v1.md) is complete. Across
+all three saved models and three trials, C++ core batch-one p50 is 1.909–1.974 ms;
+ordinary eager Torch is 0.487–0.506 ms. Native process memory is much smaller.
+All engines pass fixed-window parity before measurement. The Python wrapper has
+similar median latency to direct C++, so profiling should begin inside native
+computation. No particular kernel has yet been identified as the bottleneck.
 
-The parity-focused Torch reference deliberately uses double reductions. Comparing
-only against that implementation would not establish a competitive advantage.
-Include an ordinary optimized Torch implementation and an established deployment
-runtime after verifying their exported predictions against the same reference.
-Use a current supported environment for that comparison; the local Intel Mac
-Torch 2.2.2 run is a compatibility result. Shared CI runners establish portability
-and numerical correctness, not a stable latency frontier.
+Use the frozen benchmark to test one measured change at a time, keeping weights,
+inputs, full-output workload, threads and tolerances fixed. Compare matrix,
+attention and normalization costs before choosing fusion, an optional optimized
+matrix library, fixed-shape specialization or improved batching. Keep the portable
+path and independent reference. Do not accept a local microkernel win without
+checking full-model latency, tail behavior and memory.
+
+The parity-focused Torch reference deliberately uses double reductions; the
+experiment also includes ordinary FP32 layer normalization, exact GELU and causal
+SDPA. Both use Torch 2.2.2 on the local Intel Mac. This is a compatibility result.
+A current supported Linux/ARM environment, compiled Torch and an independent
+inference runtime remain necessary to map the performance frontier. Shared CI
+runners establish portability and numerical correctness, not stable latency.
 
 Do not change the model while comparing runtimes. If the initial learner fails to
 beat persistence, discuss its learning objective, validation behaviour and simple
