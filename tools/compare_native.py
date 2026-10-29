@@ -13,6 +13,7 @@ ROOT=Path(__file__).resolve().parents[1]
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--protocol',type=Path,default=ROOT/'benchmarks/ettm1/attention_tiling_v1.json')
     parser.add_argument('--baseline',type=Path,required=True)
     parser.add_argument('--inputs',type=Path,required=True)
     parser.add_argument('--models',type=Path,required=True)
@@ -23,9 +24,9 @@ def main():
     env={**os.environ,**{k:'1' for k in ('OMP_NUM_THREADS','MKL_NUM_THREADS','OPENBLAS_NUM_THREADS','VECLIB_MAXIMUM_THREADS')}}
     def run(command):return subprocess.run([str(x) for x in command],cwd=ROOT,env=env,capture_output=True,text=True,check=True)
     if run(['git','status','--porcelain']).stdout.strip():raise ValueError('Commit the candidate and protocol before timing')
-    protocol_path=ROOT/'benchmarks/ettm1/attention_tiling_v1.json'
+    protocol_path=args.protocol.resolve()
     protocol=json.loads(bounded(protocol_path))
-    original=json.loads(bounded(ROOT/'docs/evidence/runtime-v1/results.json'))
+    original=json.loads(bounded(ROOT/protocol.get('baseline_results','docs/evidence/runtime-v1/results.json')))
     if digest(bounded(args.baseline))!=protocol['baseline_binary_sha256']:raise ValueError('Wrong baseline binary')
     if digest(bounded(args.inputs/'input.bin'))!=original['input_sha256']:raise ValueError('Wrong inputs')
     for seed in protocol['seeds']:

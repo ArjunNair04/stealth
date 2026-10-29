@@ -25,15 +25,16 @@ std::size_t workspace_elements(std::size_t capacity, std::size_t width, std::siz
                                std::size_t hidden) {
     sequence_detail::dimensions(capacity, width, heads);
     (void)checked_hidden(hidden);
-    // Five sequences (Q,K,V,context,candidate), six row buffers, and 3*width scratch.
-    return (5 * capacity + 9) * width;
+    // Five sequences, plus bounded row tiles (not whole-sequence hidden activations).
+    return (5 * capacity + 9 * std::min(std::size_t{4}, capacity)) * width;
 }
 } // namespace
 TransformerWorkspace::TransformerWorkspace(std::size_t capacity, std::size_t width,
                                            std::size_t heads, std::size_t hidden)
     : capacity_(capacity), width_(width), heads_(heads), hidden_(hidden),
       storage_(workspace_elements(capacity, width, heads, hidden)),
-      attention_(capacity, width, heads), feed_forward_(width, hidden) {}
+      attention_(capacity, width, heads),
+      feed_forward_(width, hidden, std::min(std::size_t{4}, capacity)) {}
 
 TransformerBlock::TransformerBlock(std::size_t width, std::size_t heads, std::size_t hidden,
                                    TransformerParameters p, float epsilon, DenseKernel kernel)
@@ -75,38 +76,54 @@ Error TransformerBlock::forward(std::span<const float> input, std::size_t tokens
     auto value = storage.subspan(2 * capacity_count, count);
     auto context = storage.subspan(3 * capacity_count, count);
     auto candidate = storage.subspan(4 * capacity_count, count);
+    const auto tile = std::min(std::size_t{4}, workspace.capacity_);
+    const auto tile_width = tile * width_;
     const auto offset = 5 * capacity_count;
-    auto normalized = storage.subspan(offset, width_);
-    auto qkv = storage.subspan(offset + width_, 3 * width_);
-    auto projected = storage.subspan(offset + 4 * width_, width_);
-    auto residual = storage.subspan(offset + 5 * width_, width_);
-    auto scratch = storage.subspan(offset + 6 * width_, 3 * width_);
-    for (std::size_t t = 0; t < tokens; ++t) {
-        auto status = layer_norm(input.subspan(t * width_, width_), scale_.span(), shift_.span(),
-                                 epsilon_, normalized, scratch);
+    auto normalized = storage.subspan(offset, tile_width);
+    auto qkv = storage.subspan(offset + tile_width, 3 * tile_width);
+    auto projected = storage.subspan(offset + 4 * tile_width, tile_width);
+    auto residual = storage.subspan(offset + 5 * tile_width, tile_width);
+    auto scratch = storage.subspan(offset + 6 * tile_width, 3 * tile_width);
+    for (std::size_t t = 0; t < tokens; t += tile) {
+        const auto rows = std::min(tile, tokens - t);
+        for (std::size_t r = 0; r < rows; ++r) {
+            const auto status =
+                layer_norm(input.subspan((t + r) * width_, width_), scale_.span(), shift_.span(),
+                           epsilon_, normalized.subspan(r * width_, width_), scratch);
+            if (status != Error::ok)
+                return status;
+        }
+        const auto status = qkv_.forward_rows(normalized.first(rows * width_), rows,
+                                              qkv.first(rows * 3 * width_), scratch);
         if (status != Error::ok)
             return status;
-        status = qkv_.forward(normalized, qkv, scratch);
-        if (status != Error::ok)
-            return status;
-        std::copy_n(qkv.begin(), width_, query.begin() + static_cast<std::ptrdiff_t>(t * width_));
-        std::copy_n(qkv.begin() + static_cast<std::ptrdiff_t>(width_), width_,
-                    key.begin() + static_cast<std::ptrdiff_t>(t * width_));
-        std::copy_n(qkv.begin() + static_cast<std::ptrdiff_t>(2 * width_), width_,
-                    value.begin() + static_cast<std::ptrdiff_t>(t * width_));
+        for (std::size_t r = 0; r < rows; ++r) {
+            const auto source = qkv.subspan(r * 3 * width_, 3 * width_);
+            const auto destination = static_cast<std::ptrdiff_t>((t + r) * width_);
+            std::copy_n(source.begin(), width_, query.begin() + destination);
+            std::copy_n(source.begin() + static_cast<std::ptrdiff_t>(width_), width_,
+                        key.begin() + destination);
+            std::copy_n(source.begin() + static_cast<std::ptrdiff_t>(2 * width_), width_,
+                        value.begin() + destination);
+        }
     }
     auto status = causal_attention(query, key, value, tokens, context, workspace.attention_);
     if (status != Error::ok)
         return status;
-    for (std::size_t t = 0; t < tokens; ++t) {
-        status = projection_.forward(context.subspan(t * width_, width_), projected, scratch);
+    for (std::size_t t = 0; t < tokens; t += tile) {
+        const auto rows = std::min(tile, tokens - t);
+        const auto elements = rows * width_;
+        status = projection_.forward_rows(context.subspan(t * width_, elements), rows,
+                                          projected.first(elements), scratch);
         if (status != Error::ok)
             return status;
-        status = residual_add(input.subspan(t * width_, width_), projected, residual, scratch);
+        status = residual_add(input.subspan(t * width_, elements), projected.first(elements),
+                              residual.first(elements), scratch);
         if (status != Error::ok)
             return status;
-        status = feed_forward_.forward(residual, candidate.subspan(t * width_, width_),
-                                       workspace.feed_forward_);
+        status = feed_forward_.forward_rows(residual.first(elements), rows,
+                                            candidate.subspan(t * width_, elements),
+                                            workspace.feed_forward_);
         if (status != Error::ok)
             return status;
     }

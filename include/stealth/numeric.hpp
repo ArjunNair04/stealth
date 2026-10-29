@@ -50,6 +50,10 @@ class Dense {
     Dense &operator=(Dense &&) noexcept = default;
     [[nodiscard]] Error forward(std::span<const float> input, std::span<float> output,
                                 std::span<float> scratch) const noexcept;
+    // Contiguous rows; scratch stages the complete output before publication.
+    [[nodiscard]] Error forward_rows(std::span<const float> input, std::size_t rows,
+                                     std::span<float> output,
+                                     std::span<float> scratch) const noexcept;
     [[nodiscard]] std::size_t inputs() const noexcept { return inputs_; }
     [[nodiscard]] std::size_t outputs() const noexcept { return outputs_; }
     [[nodiscard]] std::size_t parameter_bytes() const noexcept;

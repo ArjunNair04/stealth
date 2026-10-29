@@ -157,9 +157,15 @@ std::size_t Dense::parameter_bytes() const noexcept {
 
 Error Dense::forward(std::span<const float> input, std::span<float> output,
                      std::span<float> scratch) const noexcept {
-    if (outputs_ == 0 || bias_.size() != outputs_ || weights_.size() == 0)
+    return forward_rows(input, 1, output, scratch);
+}
+
+Error Dense::forward_rows(std::span<const float> input, std::size_t rows, std::span<float> output,
+                          std::span<float> scratch) const noexcept {
+    if (inputs_ == 0 || outputs_ == 0 || bias_.size() != outputs_ || weights_.size() == 0)
         return Error::invalid_state;
-    if (input.size() != inputs_ || output.size() != outputs_)
+    if (rows == 0 || rows > max_elements / inputs_ || rows > max_elements / outputs_ ||
+        input.size() != rows * inputs_ || output.size() != rows * outputs_)
         return Error::shape_mismatch;
     const auto status = validate({input}, output, scratch);
     if (status != Error::ok)
@@ -167,29 +173,40 @@ Error Dense::forward(std::span<const float> input, std::span<float> output,
     const auto weights = weights_.span();
     const auto bias = bias_.span();
     if (kernel_ == DenseKernel::reference) {
-        for (std::size_t o = 0; o < outputs_; ++o) {
-            float accumulator = bias[o];
-            for (std::size_t i = 0; i < inputs_; ++i) {
-                accumulator += weights[o * inputs_ + i] * input[i];
+        for (std::size_t row = 0; row < rows; ++row)
+            for (std::size_t o = 0; o < outputs_; ++o) {
+                float accumulator = bias[o];
+                for (std::size_t i = 0; i < inputs_; ++i)
+                    accumulator += weights[o * inputs_ + i] * input[row * inputs_ + i];
+                scratch[row * outputs_ + o] = accumulator;
             }
-            scratch[o] = accumulator;
-        }
     } else {
-        for (std::size_t start = 0; start < outputs_; start += lanes) {
-            std::array<float, lanes> accumulator{};
-            const auto count = std::min(lanes, outputs_ - start);
-            for (std::size_t lane = 0; lane < count; ++lane)
-                accumulator[lane] = bias[start + lane];
-            const float *tile = weights.data() + (start / lanes) * inputs_ * lanes;
-            for (std::size_t i = 0; i < inputs_; ++i) {
-                const float value = input[i];
-                for (std::size_t lane = 0; lane < lanes; ++lane) {
-                    accumulator[lane] += tile[i * lanes + lane] * value;
-                }
+        // Fixed row tiles expose independent sums and reuse each packed weight.
+        // Each individual sum keeps the original FP32 product/add order.
+        const auto tile_rows = [&]<std::size_t Rows>(std::size_t row) {
+            for (std::size_t start = 0; start < outputs_; start += lanes) {
+                std::array<std::array<float, lanes>, Rows> accumulator{};
+                const auto count = std::min(lanes, outputs_ - start);
+                for (std::size_t r = 0; r < Rows; ++r)
+                    for (std::size_t lane = 0; lane < count; ++lane)
+                        accumulator[r][lane] = bias[start + lane];
+                const float *tile = weights.data() + (start / lanes) * inputs_ * lanes;
+                for (std::size_t i = 0; i < inputs_; ++i)
+                    for (std::size_t r = 0; r < Rows; ++r) {
+                        const float value = input[(row + r) * inputs_ + i];
+                        for (std::size_t lane = 0; lane < lanes; ++lane)
+                            accumulator[r][lane] += tile[i * lanes + lane] * value;
+                    }
+                for (std::size_t r = 0; r < Rows; ++r)
+                    for (std::size_t lane = 0; lane < count; ++lane)
+                        scratch[(row + r) * outputs_ + start + lane] = accumulator[r][lane];
             }
-            for (std::size_t lane = 0; lane < count; ++lane)
-                scratch[start + lane] = accumulator[lane];
-        }
+        };
+        std::size_t row = 0;
+        for (; row + 4 <= rows; row += 4)
+            tile_rows.template operator()<4>(row);
+        for (; row < rows; ++row)
+            tile_rows.template operator()<1>(row);
     }
     return publish(scratch, output);
 }

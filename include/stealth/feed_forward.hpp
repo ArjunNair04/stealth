@@ -13,11 +13,12 @@ struct FeedForwardParameters {
 
 class FeedForwardWorkspace {
   public:
-    FeedForwardWorkspace(std::size_t width, std::size_t hidden);
+    FeedForwardWorkspace(std::size_t width, std::size_t hidden, std::size_t capacity = 1);
     [[nodiscard]] std::size_t bytes() const noexcept { return storage_.size() * sizeof(float); }
 
   private:
     friend class FeedForward;
+    std::size_t capacity_;
     std::size_t width_;
     std::size_t hidden_;
     AlignedBuffer storage_;
@@ -29,6 +30,9 @@ class FeedForward {
                 float epsilon = 1e-5F, DenseKernel kernel = DenseKernel::packed);
     [[nodiscard]] Error forward(std::span<const float> input, std::span<float> output,
                                 FeedForwardWorkspace &workspace) const noexcept;
+    [[nodiscard]] Error forward_rows(std::span<const float> input, std::size_t rows,
+                                     std::span<float> output,
+                                     FeedForwardWorkspace &workspace) const noexcept;
     [[nodiscard]] std::size_t parameter_bytes() const noexcept;
     [[nodiscard]] std::size_t width() const noexcept { return width_; }
     [[nodiscard]] std::size_t hidden() const noexcept { return hidden_; }

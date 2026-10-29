@@ -116,6 +116,29 @@ int main() {
             for (std::size_t i = 0; i < output.size(); ++i)
                 test::near(output[i], fixture::expected[i], 2e-5, 5e-5);
         }
+        // Four-row packed tiles and a fifth-row tail, including the complete MLP.
+        for (auto kernel : {DenseKernel::reference, DenseKernel::packed}) {
+            FeedForward model(fixture::width, fixture::hidden,
+                              {fixture::scale, fixture::shift, fixture::up_weights,
+                               fixture::up_bias, fixture::down_weights, fixture::down_bias},
+                              fixture::epsilon, kernel);
+            FeedForwardWorkspace ws(fixture::width, fixture::hidden, 5);
+            std::array<float, 5 * fixture::width> input{}, output{};
+            for (std::size_t row = 0; row < 5; ++row)
+                std::copy(fixture::input.begin(), fixture::input.end(),
+                          input.begin() + static_cast<std::ptrdiff_t>(row * fixture::width));
+            allocations = 0;
+            tracking = true;
+            bool failed = false;
+            for (int i = 0; i < 200; ++i)
+                if (model.forward_rows(input, 5, output, ws) != Error::ok)
+                    failed = true;
+            tracking = false;
+            CHECK(!failed);
+            CHECK(allocations == 0);
+            for (std::size_t i = 0; i < output.size(); ++i)
+                test::near(output[i], fixture::expected[i % fixture::width], 2e-5, 5e-5);
+        }
         namespace f = attention_fixture;
         for (auto kernel : {DenseKernel::reference, DenseKernel::packed}) {
             TransformerBlock model(f::width, f::heads, f::hidden,
