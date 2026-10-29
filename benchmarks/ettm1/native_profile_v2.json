@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "experiment_id": "native_profile_v2",
+  "baseline_commit": "d9b450286c521ba0d8827cc741c74c0941f1bd22",
+  "native_binary_sha256": "c1eeeea0022cfc5945ec775c37bb0ff2dd1d046305069f5fe658c1837a010360",
+  "input_sha256": "3ed32af0b79ef537e2f2d9a0fa9afda122335689be2aeabf4add7013e85e3595",
+  "model_sha256": {
+    "19": "237910f530e7c337227f2150da2f78da2518e996ee817c4f40e4ef4a78a1a080",
+    "43": "6400f2cb9a94237e8cd0e5a8083fd501c75fb9bfe60a7871675e12ccacdbca6a",
+    "7": "48d3433c9be2e2c411a06fdf981a78332d6f34af0767608d6d11ef9ca978e87d"
+  },
+  "seeds": [
+    7,
+    19,
+    43
+  ],
+  "profiler": "/usr/bin/sample",
+  "duration_seconds": 5,
+  "interval_milliseconds": 1,
+  "forward_samples": 10000,
+  "batch": 1,
+  "warmup_calls": 64,
+  "purpose": "Locate dominant native call stacks before selecting one arithmetic-preserving optimization",
+  "timing_policy": "Sampled runs are attribution only; do not use their timings as uninstrumented latency evidence"
+}
