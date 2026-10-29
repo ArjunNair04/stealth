@@ -50,7 +50,10 @@ native package owns inference. Public wheel publication remains open. API/ABI co
 
 ## Research boundary
 
-Future signal records need source identity, effective and available timestamps,
-age and missingness/quality state. Keep data collection, forecasts and portfolio
-policy separate. Reuse QTS contracts through an adapter once a native model exists;
+The offline [signal timeline](signal-timeline-v1.md) now provides source/entity/
+field identity, effective/publication/receipt clocks, revisions, ages and explicit
+missing/stale/withdrawn states. It is a standard-library reference under tools/,
+separate from the installed inference package. A schema-bound bridge and actual
+source adapters remain open. Data collection, features, forecasts and portfolio
+policy have separate contracts. Reuse QTS contracts through a later adapter;
 do not import QTS datasets into this infrastructure repository.

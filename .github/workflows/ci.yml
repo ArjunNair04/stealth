@@ -48,6 +48,8 @@ jobs:
           python-version: ${{ matrix.python }}
       - name: Test public benchmark preparation (offline, standard library)
         run: python -m unittest discover -s tests -p test_public_benchmark.py -v
+      - name: Signal timing and mixed-frequency replay contracts (offline)
+        run: python -m unittest discover -s tests -p test_signal_timeline.py -v
       - name: Source identity contracts (standard library)
         run: python -m unittest discover -s tests -p test_build_identity.py -v
       - name: Verify independent numeric fixture
