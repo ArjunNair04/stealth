@@ -180,8 +180,8 @@ void tiled() {
                 CHECK(actual[i] == expected[i]);
         }
         // Distinctive head/channel values independently expose cross-head loads.
-        std::fill(q.begin(), q.end(), 0);
-        std::fill(k.begin(), k.end(), 0);
+        std::fill(q.begin(), q.end(), 0.0F);
+        std::fill(k.begin(), k.end(), 0.0F);
         for (std::size_t t = 0; t < tokens; ++t)
             for (std::size_t c = 0; c < width; ++c)
                 v[t * width + c] = static_cast<float>(c + 1);
@@ -199,8 +199,8 @@ void tiled() {
             std::fill(k.begin(), k.end(), std::numeric_limits<float>::max());
             CHECK(causal_attention(q, k, v, tokens, actual, ws) == Error::numerical_error);
             test::unchanged(actual);
-            std::fill(q.begin(), q.end(), 0);
-            std::fill(k.begin(), k.end(), 0);
+            std::fill(q.begin(), q.end(), 0.0F);
+            std::fill(k.begin(), k.end(), 0.0F);
         }
     };
     for (std::size_t head_width : {1U, 3U, 7U, 8U, 9U, 15U, 16U, 17U, 31U, 32U, 63U, 64U, 65U, 127U,
