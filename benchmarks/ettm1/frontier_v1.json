@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "experiment_id": "current_cpu_frontier_v1",
+  "status": "specification_only_pending_host_lock_and_runner_validation",
+  "host_lock": null,
+  "purpose": "Decide where the custom engine merits further work before any new kernel tuning.",
+  "engines": [
+    "native_core",
+    "native_python",
+    "torch_eager",
+    "torch_compiled_inductor",
+    "onnxruntime_cpu"
+  ],
+  "primary": {
+    "output": "last",
+    "batch": 1
+  },
+  "secondary": {
+    "output": "last",
+    "batch": 8
+  },
+  "seeds": [
+    7,
+    19,
+    43
+  ],
+  "trials": 3,
+  "windows": 32,
+  "context": 96,
+  "features": 7,
+  "window_ends": [
+    34560,
+    34931,
+    35302,
+    35674,
+    36045,
+    36417,
+    36788,
+    37160,
+    37531,
+    37903,
+    38274,
+    38646,
+    39017,
+    39389,
+    39760,
+    40132,
+    40503,
+    40875,
+    41246,
+    41618,
+    41989,
+    42361,
+    42732,
+    43104,
+    43475,
+    43847,
+    44218,
+    44590,
+    44961,
+    45333,
+    45704,
+    46076
+  ],
+  "model_sha256": {
+    "19": "237910f530e7c337227f2150da2f78da2518e996ee817c4f40e4ef4a78a1a080",
+    "43": "6400f2cb9a94237e8cd0e5a8083fd501c75fb9bfe60a7871675e12ccacdbca6a",
+    "7": "48d3433c9be2e2c411a06fdf981a78332d6f34af0767608d6d11ef9ca978e87d"
+  },
+  "data_sha256": "6ce1759b1a18e3328421d5d75fadcb316c449fcd7cec32820c8dafda71986c9e",
+  "input_sha256": "3ed32af0b79ef537e2f2d9a0fa9afda122335689be2aeabf4add7013e85e3595",
+  "warmup_calls": 64,
+  "workloads": [
+    {
+      "batch": 1,
+      "samples": 1000
+    },
+    {
+      "batch": 8,
+      "samples": 200
+    }
+  ],
+  "threads": {
+    "intra_op": 1,
+    "inter_op": 1
+  },
+  "absolute_tolerance": 5e-05,
+  "relative_tolerance": 0.0002,
+  "expected_cells": 90,
+  "expected_timed_calls": 54000,
+  "candidate_environment": {
+    "system": "Linux",
+    "architecture": "x86_64",
+    "python": "3.12",
+    "torch": "2.15.0+cpu",
+    "onnxruntime": "1.31.1",
+    "onnx": "1.23.2",
+    "numpy": "1.26.4"
+  },
+  "required_host_lock": [
+    "cpu_model_and_isa",
+    "os_and_kernel",
+    "glibc",
+    "python_patch",
+    "compiler_and_flags",
+    "cmake_and_ninja",
+    "all_resolved_package_versions_and_wheel_sha256",
+    "native_binary_and_extension_sha256",
+    "source_fingerprint",
+    "cpu_affinity",
+    "power_governor_or_unavailable_reason",
+    "thread_and_library_environment",
+    "export_graph_hashes",
+    "compile_settings_and_cache_policy"
+  ],
+  "timing": "Fresh serial process per seed/trial/batch/engine; rotate order; resident prepared inputs; include input/output finite validation and normal API work; compilation/export/setup and first call separately reported; no clock subtraction.",
+  "compiled_contract": "Pure tensor graph with fullgraph=True, fixed batch/context, inference mode, no silent eager fallback; validation surrounds the graph within each measured call. Record compile errors and graph breaks.",
+  "onnx_contract": "CPUExecutionProvider only; graph optimization all, sequential execution, one intra/inter-op thread, spinning disabled; same preprocessing, positions, exact GELU, last-query attention and correction head; export/optimized graphs retained locally and hashed.",
+  "admission": "Verify each engine against independent reference and all 32 saved windows per model/batch before timing. Wrong output selection, unsupported operators, graph breaks or source identity mismatch block acceptance.",
+  "gate": "For each batch independently: native_core median of nine cell p50s <= 1.20 times the smallest baseline median p50, AND native_core median of nine cell p99s <= 1.20 times the smallest baseline median p99. Baselines are current eager Torch, compiled Torch and ONNX CPU; all must complete and pass parity. Report wrapper separately.",
+  "budget": {
+    "max_compile_seconds_per_cell": 180,
+    "max_measurement_run_seconds": 2700,
+    "max_acceptance_runs": 1
+  },
+  "stopping": "Preserve failure/timeout/partial records. Fix a demonstrated correctness or environment defect in a new run; do not retune kernels, change tolerances or silently rerun a poor result. A supported-runtime failure prevents a complete frontier claim.",
+  "frozen_weights": true,
+  "retraining": false,
+  "reserved_tail_rows_used": 0
+}

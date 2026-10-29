@@ -41,14 +41,16 @@ one relevant baseline. [PyTorch CPU compiler guide](https://docs.pytorch.org/tut
 explains generated code, profiling and correctness checks; it does not predict
 a speedup for this model.
 
-Start with the existing 96-by-7, one-block, full-96-output workload, all three
-saved models and identical validation windows. Preserve preprocessing, causal
-mask, epsilon, exact-GELU definition, positions and correction head. Freeze the
+Start with the existing 96-by-7, one-block workload returning the latest forecast,
+all three saved models and identical validation windows. Keep the full trace for
+diagnostic parity and causality checks. Preserve preprocessing, causal mask,
+epsilon, exact-GELU definition, positions and correction head. Freeze the
 converted graph hashes and verify every output against the reference before any
 timing. Report dtype and numerical differences. Quantization or approximate
 functions need a separate experiment; they cannot silently replace this baseline.
-A final-output-only workload must likewise change every engine's requested output
-and be reported separately.
+Every timed engine must implement the same latest-only request. The bounded
+[Linux specification](frontier-linux.md) records the next gate; it remains pending
+a host lock and compiled/ONNX adapter validation.
 
 The first comparison uses one intra-op and one inter-op thread. ONNX Runtime's
 default intra-op setting can use multiple physical cores; explicitly set one
@@ -84,9 +86,10 @@ forecast validation, costs and risk controls. Those requirements are still open.
 
 ## Native implementation direction
 
-The row APIs now expose a matrix workload instead of a string of isolated
-matrix-vector calls. After profiling the accepted engine, compare further native
-tiling/fusion with optional mature CPU matrix and vector-math backends. Keep the
+The row APIs expose a matrix workload. Complete the current-runtime comparison
+before choosing further native optimization. If it identifies a worthwhile gap,
+profile that workload and compare further native tiling/fusion with optional
+mature CPU matrix and vector-math backends. Keep the
 portable fallback and numerical checks. Measure the integration, packing/setup,
 code size and memory costs; a microkernel win alone is insufficient. These are
 established engineering techniques, not a research-novelty claim.

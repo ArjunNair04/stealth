@@ -95,6 +95,8 @@ class BuildMetadata(unittest.TestCase):
         info=s.build_info()
         self.assertEqual(info['configuration'],'Release')
         self.assertRegex(info['source_fingerprint'],r'^[0-9a-f]{64}$')
+        from build_identity import require_source_build
+        require_source_build(info,Path(__file__).resolve().parents[2])
         for field in ('version','compiler','operating_system','architecture'):
             self.assertTrue(info[field])
         info['source_fingerprint']='changed'

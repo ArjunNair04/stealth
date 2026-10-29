@@ -1,22 +1,28 @@
 # Stealth
 
-Portable C++20 CPU forecasting research project. Stealth is a working name.
-The native library provides checked numeric components, causal attention and a
-complete one-block point forecaster with a versioned weight-file loader. It has
-scalar and packed layouts, component/integration tests and an installable CMake
-package. The first task uses 96 ETTm1 readings to predict one temperature an hour
-ahead. The optional Torch reference, tested training/checkpoint workflow and native
-export are implemented; see [the training guide](docs/training-v1.md).
+Portable C++20 CPU forecasting research project, with optional Python inference
+and Torch training. The permanent checkout contains the complete one-block model,
+export/load workflow and tested numerical components. Training runs in Torch;
+inference can run through the C++ library or its NumPy interface without Torch.
 
-Start with the [complete model walkthrough and runnable example](docs/forecast-v1.md).
-The [attention walkthrough](docs/attention-v1.md) and
-[performance guide](docs/performance.md) explain the underlying components.
-Independent diagnostic and framework parity tests are in place. Public-data
-learning results are [recorded here](docs/training-results-v1.md); the simple
-persistence baseline beats all three first-run models. Comparative latency remains
-a separate experiment. The optional
-Python wrapper and bounded raw-window baseline are implemented.
-The CLI reports build metadata and inspects model files.
+Start with [the consolidated baseline and review guide](docs/review-baseline.md).
+[PR #18](https://github.com/ArjunNair04/stealth/pull/18) preserves and brings together
+the twelve implementation PRs. The [active work queue](docs/tasks.md) separates
+completed engineering from the remaining performance and forecasting decisions.
+
+| What works | Current limit |
+| --- | --- |
+| Portable native builds, installation and Python packaging | Rebuild binaries for each device; the 0.x ABI is provisional |
+| Dense/MLP, multihead attention, layer norm, exact GELU and one-block forecasts | This is a specific inference architecture; dropout and new depth are not implemented |
+| Torch training, checkpoints, native export and checked loading | Saved ETTm1 models still lose to the last-value baseline on primary old-test error |
+| Full traces, latest-only sessions, sequential batches and bounded raw streams | Streams recompute the full window; market-clock integration remains open |
+| Measured native optimizations | Latest-only local p50: 0.181 ms C++ versus 0.287 ms eager Torch 2.2.2; Torch wins at batch eight |
+
+The local latency result covers one Intel Mac and the saved one-block workload.
+Current compiled and independent runtime comparisons, sustained-load testing,
+research novelty and financial usefulness remain unestablished. See
+[all latest-only measurements](docs/latest-results-v1.md) and
+[all correction-model outcomes](docs/correction-results-v1.md).
 
 ## Start locally
 
@@ -88,49 +94,18 @@ docs/            Contracts, measured evidence, setup and work queue
 
 The repository is public for review. No redistribution licence has been selected.
 
-## Public-data benchmark preparation
+## Run and evaluate
 
-The first learning dataset is ETTm1: electricity loads and equipment temperature
-at 15-minute intervals. A pinned-source downloader, strict data checks,
-training-only scaling and chronological window tests are implemented. The user
-selected a one-hour point target and one block first. The native implementation
-is checked against independent equations and the Torch reference. The frozen
-training recipe is in `benchmarks/ettm1/training_v1.json`. See the
-[plain-language guide](docs/public-benchmark.md) and
-[data contract](docs/benchmark-contract.md). The
-[first training result](docs/training-results-v1.md) and
-[follow-up diagnosis](docs/forecast-diagnostics-results-v1.md), and
-[correction-model comparison](docs/correction-results-v1.md) retain all outcomes: persistence still wins on test MAE. No forecast or runtime advantage is
-claimed from the completed correctness work.
+- [Model walkthrough and native example](docs/forecast-v1.md)
+- [Python installation and component example](docs/python-stream-v1.md)
+- [Latest-only session API](docs/latest-forecast-v1.md)
+- [Pinned public-data preparation](docs/public-benchmark.md)
+- [Training, restart and native export](docs/training-v1.md)
+- [Current-runtime comparison requirements](docs/runtime-frontier.md)
+- [Linux comparison preparation](docs/frontier-linux.md)
 
-## Optional Python and raw-window interface
-
-The `stealth_cpu` package now calls the same native components and forecaster.
-It includes owned prediction sessions, a bounded sequential batch interface and
-a raw-window stream with reset and failure preservation. See the
-[installation and component guide](docs/python-stream-v1.md) and
-[runnable Python example](examples/python_components.py). The native CMake build
-remains independent of Python. The optional [training workflow](docs/training-v1.md)
-exports learned weights into this engine. The [first runtime comparison](docs/runtime-results-v1.md) is complete: ordinary
-eager Torch is faster locally, while the standalone native engine uses less
-process memory. The [first profiled attention optimization](docs/attention-results-v1.md)
-reduces native full-model latency by 10.36% in a paired local experiment, with
-byte-identical native predictions and unchanged owned heap workspace. Torch
-remains faster in the fresh comparison. Cached streaming and current-platform
-deployment comparisons remain upcoming work.
-
-
-The [four-row matrix execution follow-up](docs/dense-rows-results-v1.md) reuses
-packed weights across observations and integrates bounded tiles into the MLP and
-transformer. It reduces paired native latency a further 12.98%, preserves checked
-predictions exactly and adds 17.25 KiB of preallocated workspace. The failed first
-candidate is retained. [Current-runtime comparison requirements](docs/runtime-frontier.md)
-set the next benchmark target; leading-runtime parity has not been achieved.
-The [latest-only forecast path](docs/latest-results-v1.md) now answers the chosen
-one-hour target without computing unused earlier diagnostic outputs. On the local
-Intel Mac, matched latest-only median cell p50 is 0.181 ms for C++ and 0.287 ms for
-ordinary eager Torch 2.2.2; Torch remains faster for batches of eight. Native
-latest-prefix calls preserve all 9,216 checked saved answers exactly. Use
-`session.predict_last(x)` or `session.predict_last_batch(x)`; the full trace stays
-available. This local single-request win does not establish current-runtime
-frontier performance or better forecast accuracy.
+Use `stealth --inspect-model path/to/model.stlf` to inspect the validated format
+version, output mode and dimensions. Before benchmarking an installed Python
+wheel, run `python tools/build_identity.py --check-extension`: stale or non-Release
+builds are rejected. Rebuild native consumers and wheels after updating this
+baseline because build metadata adds a public field; model files are unchanged.

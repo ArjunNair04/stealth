@@ -1,4 +1,4 @@
-# Native boundary and later Python wrapper
+# Native, Python and training boundaries
 
 The native library is the shared core. The CLI and optional Python extension
 call the same implementation.
@@ -17,9 +17,10 @@ block](attention-v1.md), with fused Q/K/V projection and one attention-score row
 at a time. The [complete forecaster](forecast-v1.md) adds frozen feature scaling,
 a learned input projection, fixed positions, final normalization and a scalar
 head. Weight files are bounded, versioned and digest-checked before construction.
-The CLI can inspect a model file. Pinned framework parity, trained forecasts and
-incremental caching remain open; component latency measurements do not establish
-full-system performance or financial usefulness.
+The CLI inspects validated model versions and dimensions. Torch reference parity,
+training/checkpoints and native export are implemented. Latest-only inference
+has a measured local single-request advantage; incremental caching and a current
+runtime comparison remain open. Forecast quality still trails persistence.
 
 ## Portability
 
@@ -28,8 +29,8 @@ behind optional backends. Avoid Apple Accelerate, AVX, CUDA or any particular
 Python runtime as requirements of the baseline build. Source portability does not
 mean a single binary runs on every CPU or operating system.
 
-The static core is built with position-independent code so it can later be linked
-into a Python extension. Public includes are separated from generated/private
+The static core is built with position-independent code and is linked
+into the optional Python extension. Public includes are separated from generated/private
 headers; consumers link the exported `stealth::core` target. API/ABI compatibility
 is not promised during the initial 0.x research phase.
 
@@ -44,8 +45,8 @@ release the GIL during inference; concurrent reuse of one session is rejected.
 
 The raw stream recomputes a bounded latest window and does not assume cache
 compatibility when positions restart. See [the contract](python-stream-contract.md)
-and [installation/evidence](python-stream-v1.md). No training/autograd or public
-wheel publication is included. API/ABI compatibility remains provisional in 0.x.
+and [installation/evidence](python-stream-v1.md). The separate Torch workflow owns training and automatic differentiation; the
+native package owns inference. Public wheel publication remains open. API/ABI compatibility remains provisional in 0.x.
 
 ## Research boundary
 
