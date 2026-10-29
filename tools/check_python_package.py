@@ -56,7 +56,7 @@ def main():
             if name.is_absolute() or '..' in name.parts or any(part in ('local','build','install','.git','.venv','CMakeUserPresets.json','.env') for part in name.parts):
                 raise RuntimeError(f'Unexpected source member: {name}')
         relative = {str(PurePosixPath(*n.parts[1:])) for n in source_names}
-        for required in ('CMakeLists.txt','bindings/module.cpp','src/window_stream.cpp','include/stealth/window_stream.hpp','python/stealth_cpu/__init__.py'):
+        for required in ('CMakeLists.txt','bindings/module.cpp','src/window_stream.cpp','include/stealth/window_stream.hpp','python/stealth_cpu/__init__.py','tools/build_identity.py'):
             if required not in relative: raise RuntimeError(f'Missing source file: {required}')
     runtime = output/'runtime'
     venv.EnvBuilder(with_pip=True).create(runtime)

@@ -17,6 +17,21 @@ if(STEALTH_ENABLE_SANITIZERS AND (MSVC OR NOT CMAKE_CXX_COMPILER_ID MATCHES "Cla
     message(FATAL_ERROR "This sanitizer configuration requires GCC or Clang on macOS/Linux")
 endif()
 
+# Bind native binaries and wheels to the source files they actually compiled.
+# Paths and SHA-256 lines match tools/build_identity.py, including source archives.
+file(GLOB_RECURSE stealth_identity_sources CONFIGURE_DEPENDS RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    "src/*.cpp" "src/*.hpp" "include/*.hpp" "bindings/*.cpp"
+    "python/*.py" "cmake/*.in" "cmake/*.cmake" "app/*.cpp" "bench/*.cpp")
+list(APPEND stealth_identity_sources CMakeLists.txt pyproject.toml tools/build_identity.py)
+list(SORT stealth_identity_sources)
+set(stealth_identity_material "")
+foreach(source IN LISTS stealth_identity_sources)
+    file(SHA256 "${CMAKE_CURRENT_SOURCE_DIR}/${source}" source_sha)
+    string(APPEND stealth_identity_material "${source}:${source_sha}\n")
+    set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${source}")
+endforeach()
+string(SHA256 STEALTH_SOURCE_FINGERPRINT "${stealth_identity_material}")
+
 configure_file(cmake/build_config.hpp.in generated/stealth/build_config.hpp @ONLY)
 
 function(stealth_development_options target)

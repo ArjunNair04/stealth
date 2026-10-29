@@ -45,6 +45,7 @@ def main():
         sha=digest(bounded(a.runs/f'seed{seed}'/'model.stlf'))
         if sha!=prior['models'][str(seed)]['model_sha256']: raise ValueError('Saved selected model changed')
         model_hashes[str(seed)]=sha
+    extension=json.loads(command([sys.executable,ROOT/'tools/build_identity.py','--check-extension'],env).stdout)
     a.output.mkdir(parents=True,exist_ok=False)
     # Rebuild from the clean recorded tree before any measurement.
     configured=command(['cmake','--preset','release','-DSTEALTH_BUILD_BENCHMARKS=ON','-DSTEALTH_WARNINGS_AS_ERRORS=ON'],env)
@@ -53,6 +54,8 @@ def main():
     cli=a.native.parent/('stealth.exe' if os.name=='nt' else 'stealth')
     build_info=command([cli,'--build-info'],env).stdout
     if 'configuration: Release' not in build_info: raise ValueError('Require Release build')
+    if 'source_fingerprint: '+extension['build_info']['source_fingerprint'] not in build_info:
+        raise ValueError('Native and Python source identities differ')
     compile_entries=json.loads((a.native.parent/'compile_commands.json').read_text())
     flags={}
     for item in compile_entries:
@@ -64,9 +67,9 @@ def main():
     elif sys.platform.startswith('linux'):
         for line in Path('/proc/cpuinfo').read_text().splitlines():
             if line.startswith('model name'): cpu=line.split(':',1)[1].strip();break
-    source_paths=['bench/runtime_benchmark.cpp','tools/runtime_common.py','tools/runtime_torch.py','tools/runtime_worker.py','tools/benchmark_latest.py','CMakeLists.txt']+sorted(str(x.relative_to(ROOT)) for x in (ROOT/'src').glob('*.cpp'))+sorted(str(x.relative_to(ROOT)) for x in (ROOT/'include').rglob('*.hpp'))+['bindings/module.cpp']
+    source_paths=['bench/runtime_benchmark.cpp','tools/runtime_common.py','tools/build_identity.py','tools/runtime_torch.py','tools/runtime_worker.py','tools/benchmark_latest.py','CMakeLists.txt']+sorted(str(x.relative_to(ROOT)) for x in (ROOT/'src').glob('*.cpp'))+sorted(str(x.relative_to(ROOT)) for x in (ROOT/'include').rglob('*.hpp'))+['bindings/module.cpp']
     started=dict(schema_version=1,experiment_id=protocol['experiment_id'],code_commit=commit,started_at=datetime.now(timezone.utc).isoformat(),
-        protocol_sha256=digest(bounded(PROTOCOL)),data_sha256=digest(raw),input_sha256=digest(payload),model_sha256=model_hashes,
+        extension_identity=extension,protocol_sha256=digest(bounded(PROTOCOL)),data_sha256=digest(raw),input_sha256=digest(payload),model_sha256=model_hashes,
         native_binary_sha256=digest(bounded(a.native)),source_sha256={p:digest(bounded(ROOT/p)) for p in source_paths},
         build=dict(info=build_info,compile_commands=flags),
         environment=dict(cpu=cpu,system=platform.system(),release=platform.release(),machine=platform.machine(),python=platform.python_version(),thread_env=THREADS),

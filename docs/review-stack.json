@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "inherited_head": "3b46023ef0d69ced85f0560a795b02894573ba50",
+  "review_submissions": 0,
+  "review_threads": 0,
+  "original_pull_requests": [
+    {
+      "number": 6,
+      "title": "Add tested CPU numeric layers and packed feed-forward inference",
+      "url": "https://github.com/ArjunNair04/stealth/pull/6",
+      "head": "codex/native-primitives",
+      "head_sha": "54a0f19437113bc914d32282cab0c913250cb628",
+      "base": "main",
+      "base_sha": "cf5df72c9917efea66ea41cb956adbb454f30277",
+      "state": "open",
+      "merged": false
+    },
+    {
+      "number": 7,
+      "title": "Add causal attention, tested transformer block and runnable example",
+      "url": "https://github.com/ArjunNair04/stealth/pull/7",
+      "head": "codex/causal-attention",
+      "head_sha": "3e8437f76c01f6529faf06356ee27a8871e80dc3",
+      "base": "codex/native-primitives",
+      "base_sha": "54a0f19437113bc914d32282cab0c913250cb628",
+      "state": "open",
+      "merged": false
+    },
+    {
+      "number": 8,
+      "title": "Prepare a reproducible public forecasting benchmark",
+      "url": "https://github.com/ArjunNair04/stealth/pull/8",
+      "head": "codex/public-benchmark",
+      "head_sha": "2f23dbb3363662877b7380620bec54387bd12b86",
+      "base": "codex/causal-attention",
+      "base_sha": "3e8437f76c01f6529faf06356ee27a8871e80dc3",
+      "state": "open",
+      "merged": false
+    },
+    {
+      "number": 9,
+      "title": "Add the one-block point forecaster and validated model files",
+      "url": "https://github.com/ArjunNair04/stealth/pull/9",
+      "head": "codex/one-block-forecaster",
+      "head_sha": "a74ac81aa74e9264b7c84b1ab0333f50c758f36f",
+      "base": "codex/public-benchmark",
+      "base_sha": "2f23dbb3363662877b7380620bec54387bd12b86",
+      "state": "open",
+      "merged": false
+    },
+    {
+      "number": 10,
+      "title": "Add Python inference packaging and bounded raw-window streams",
+      "url": "https://github.com/ArjunNair04/stealth/pull/10",
+      "head": "codex/python-stream-infrastructure",
+      "head_sha": "3c7c2a893fdd12b887719d9367ed85c5a2d7c8e7",
+      "base": "codex/one-block-forecaster",
+      "base_sha": "a74ac81aa74e9264b7c84b1ab0333f50c758f36f",
+      "state": "open",
+      "merged": false
+    },
+    {
+      "number": 11,
+      "title": "Add reproducible Torch training and native export",
+      "url": "https://github.com/ArjunNair04/stealth/pull/11",
+      "head": "codex/torch-training-reference",
+      "head_sha": "50a6c5cdf6db9b9cc6710a48b50177fcd7183bdd",
+      "base": "codex/python-stream-infrastructure",
+      "base_sha": "3c7c2a893fdd12b887719d9367ed85c5a2d7c8e7",
+      "state": "open",
+      "merged": false
+    },
+    {
+      "number": 12,
+      "title": "Diagnose the persistence deficit with frozen linear baselines",
+      "url": "https://github.com/ArjunNair04/stealth/pull/12",
+      "head": "codex/forecast-diagnostics",
+      "head_sha": "dd8647c671462212803ad99cb5105c1ee2b293fb",
+      "base": "codex/torch-training-reference",
+      "base_sha": "50a6c5cdf6db9b9cc6710a48b50177fcd7183bdd",
+      "state": "open",
+      "merged": false
+    },
+    {
+      "number": 13,
+      "title": "Start forecasts at persistence and learn a correction",
+      "url": "https://github.com/ArjunNair04/stealth/pull/13",
+      "head": "codex/correction-forecaster",
+      "head_sha": "87e7bc12eacec21a690bff4fdf3db85f1dfff315",
+      "base": "codex/forecast-diagnostics",
+      "base_sha": "dd8647c671462212803ad99cb5105c1ee2b293fb",
+      "state": "open",
+      "merged": false
+    },
+    {
+      "number": 14,
+      "title": "Record saved-model CPU latency and memory across C++ and Torch",
+      "url": "https://github.com/ArjunNair04/stealth/pull/14",
+      "head": "codex/runtime-benchmark",
+      "head_sha": "425f3e6fb149f01798ae8419baafe5caa142f7cf",
+      "base": "codex/correction-forecaster",
+      "base_sha": "87e7bc12eacec21a690bff4fdf3db85f1dfff315",
+      "state": "open",
+      "merged": false
+    },
+    {
+      "number": 15,
+      "title": "Reduce native inference latency with exact attention channel tiling",
+      "url": "https://github.com/ArjunNair04/stealth/pull/15",
+      "head": "codex/profile-attention",
+      "head_sha": "d9b450286c521ba0d8827cc741c74c0941f1bd22",
+      "base": "codex/runtime-benchmark",
+      "base_sha": "425f3e6fb149f01798ae8419baafe5caa142f7cf",
+      "state": "open",
+      "merged": false
+    },
+    {
+      "number": 16,
+      "title": "Reduce full-model latency with bounded four-row matrix execution",
+      "url": "https://github.com/ArjunNair04/stealth/pull/16",
+      "head": "codex/dense-rows",
+      "head_sha": "746c27acaf57f893d797359e199d005c65033de2",
+      "base": "codex/profile-attention",
+      "base_sha": "d9b450286c521ba0d8827cc741c74c0941f1bd22",
+      "state": "open",
+      "merged": false
+    },
+    {
+      "number": 17,
+      "title": "Compute latest forecasts without unused diagnostic rows",
+      "url": "https://github.com/ArjunNair04/stealth/pull/17",
+      "head": "codex/latest-forecast",
+      "head_sha": "3b46023ef0d69ced85f0560a795b02894573ba50",
+      "base": "codex/dense-rows",
+      "base_sha": "746c27acaf57f893d797359e199d005c65033de2",
+      "state": "open",
+      "merged": false
+    }
+  ],
+  "all_heads_preserved_in_consolidation": true
+}

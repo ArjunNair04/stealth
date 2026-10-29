@@ -2,7 +2,6 @@
 """One fresh process, one engine, one saved model and one batch size."""
 import argparse
 import gc
-import importlib
 import json
 from pathlib import Path
 import struct
@@ -25,7 +24,8 @@ def main():
     if args.prepare and args.output!='all': raise ValueError('Prepare the full reference trace')
     if args.engine=='native_python':
         import stealth_cpu as native
-        versions=dict(numpy=np.__version__,extension_sha256=digest(Path(importlib.import_module('stealth_cpu._core').__file__).read_bytes()))
+        from build_identity import extension_identity
+        versions=dict(numpy=np.__version__,**extension_identity())
     else:
         import torch
         from runtime_torch import load_export

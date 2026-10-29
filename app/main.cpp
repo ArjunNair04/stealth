@@ -7,7 +7,7 @@
 namespace {
 void usage(std::ostream &output) {
     output << "Usage: stealth [--version | --build-info | --inspect-model FILE | --help]\n"
-           << "Native CPU forecaster; trained benchmark validation remains pending.\n";
+           << "Native CPU forecaster; see the recorded correctness, accuracy and runtime results.\n";
 }
 } // namespace
 
@@ -21,7 +21,10 @@ int main(int argc, char *argv[]) {
             auto model = stealth::numeric::load_forecaster_file(argv[2]);
             const auto c = model->config();
             stealth::numeric::ForecastWorkspace workspace(c);
-            std::cout << "format_version: 1\nblocks: 1\nfeatures: " << c.features
+            const bool correction = c.output == stealth::numeric::ForecastOutput::correction;
+            std::cout << "format_version: " << (correction ? 2 : 1)
+                      << "\noutput_mode: " << (correction ? "correction" : "level")
+                      << "\nblocks: 1\nfeatures: " << c.features
                       << "\nwidth: " << c.width << "\nheads: " << c.heads
                       << "\nhidden: " << c.hidden << "\ncontext: " << c.context
                       << "\nhorizon_steps: " << c.horizon << "\ntarget_feature: " << c.target
@@ -48,6 +51,7 @@ int main(int argc, char *argv[]) {
                   << "operating_system: " << info.operating_system << '\n'
                   << "architecture: " << info.architecture << '\n'
                   << "configuration: " << info.configuration << '\n'
+                  << "source_fingerprint: " << info.source_fingerprint << '\n'
                   << "cxx_standard: 20\n";
     } else {
         std::cerr << "Unknown argument: " << argument << '\n';

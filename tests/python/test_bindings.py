@@ -90,6 +90,17 @@ class Components(unittest.TestCase):
         self.assertTrue(y.flags.owndata); np.testing.assert_array_equal(y, before)
 
 
+class BuildMetadata(unittest.TestCase):
+    def test_native_build_identity_is_exposed(self):
+        info=s.build_info()
+        self.assertEqual(info['configuration'],'Release')
+        self.assertRegex(info['source_fingerprint'],r'^[0-9a-f]{64}$')
+        for field in ('version','compiler','operating_system','architecture'):
+            self.assertTrue(info[field])
+        info['source_fingerprint']='changed'
+        self.assertNotEqual(s.build_info()['source_fingerprint'],'changed')
+
+
 class Models(unittest.TestCase):
     def setUp(self):
         self.c, self.p, self.x, self.y, self.artifact = data()

@@ -6,9 +6,9 @@ concurrent caller. This interface does not provide automatic differentiation.
 """
 from ._core import (
     Dense, FeedForward, ForecastConfig, ForecastModel, ForecastSession, WindowStream,
-    causal_attention, gelu, layer_norm, residual_add, softmax, parameter_count,
+    build_info, causal_attention, gelu, layer_norm, residual_add, softmax, parameter_count,
 )
 __version__ = "0.1.0"
 __all__ = ["Dense", "FeedForward", "ForecastConfig", "ForecastModel", "ForecastSession",
            "WindowStream", "causal_attention", "gelu", "layer_norm", "residual_add",
-           "softmax", "parameter_count"]
+           "softmax", "parameter_count", "build_info"]

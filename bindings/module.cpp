@@ -1,4 +1,5 @@
 #include "stealth/feed_forward.hpp"
+#include "stealth/runtime.hpp"
 #include "stealth/model_file.hpp"
 #include "stealth/window_stream.hpp"
 #include <algorithm>
@@ -177,6 +178,17 @@ struct Stream {
 } // namespace
 PYBIND11_MODULE(_core, m) {
     m.doc() = "Checked native CPU inference. No implicit casts or autograd.";
+    m.def("build_info", [] {
+        const auto info = stealth::build_info();
+        py::dict result;
+        result["version"] = std::string(info.version);
+        result["compiler"] = std::string(info.compiler);
+        result["operating_system"] = std::string(info.operating_system);
+        result["architecture"] = std::string(info.architecture);
+        result["configuration"] = std::string(info.configuration);
+        result["source_fingerprint"] = std::string(info.source_fingerprint);
+        return result;
+    });
     m.def("gelu", [](const py::object &x) {
         auto a = array(x, 1);
         py::array_t<float> y(a.size());

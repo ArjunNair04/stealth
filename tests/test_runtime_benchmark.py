@@ -64,6 +64,19 @@ class NativeRunner(unittest.TestCase):
             r=json.loads(p.stdout);self.assertEqual(len(r['times_ns']),3)
             self.assertEqual(r['max_abs_difference'],0)
             self.assertGreater(r['checksum'],0);self.assertGreater(r['workspace_bytes'],0)
+    def test_inspection_reports_serialized_version_and_output_mode(self):
+        cli=self.binary.parent/('stealth.exe' if os.name=='nt' else 'stealth')
+        for version,mode in ((2,'correction'),(1,'level')):
+            blob=bytearray((self.root/'model').read_bytes())
+            blob[6]=ord(str(version));struct.pack_into('<I',blob,8,version)
+            struct.pack_into('<I',blob,56,version-1)
+            blob[-32:]=hashlib.sha256(blob[:-32]).digest()
+            (self.root/'model').write_bytes(blob)
+            result=subprocess.run([str(cli),'--inspect-model',str(self.root/'model')],capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            self.assertIn(f'format_version: {version}\n',result.stdout)
+            self.assertIn(f'output_mode: {mode}\n',result.stdout)
+
     def test_latest_mode_selects_each_last_origin(self):
         for batch in (1,2,4):
             proc=self.run_native(str(batch),output='last');self.assertEqual(proc.returncode,0,proc.stderr)
