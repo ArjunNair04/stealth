@@ -31,8 +31,8 @@ class TransformerBlock {
                      TransformerParameters parameters, float epsilon = 1e-5F,
                      DenseKernel kernel = DenseKernel::packed);
     [[nodiscard]] Error forward(std::span<const float> input, std::size_t tokens,
-                                std::span<float> output,
-                                TransformerWorkspace &workspace) const noexcept;
+                                std::span<float> output, TransformerWorkspace &workspace,
+                                SequenceOutput mode = SequenceOutput::all) const noexcept;
     [[nodiscard]] std::size_t parameter_bytes() const noexcept;
 
   private:

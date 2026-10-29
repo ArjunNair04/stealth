@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "experiment_id": "latest_forecast_v1",
+  "seeds": [
+    7,
+    19,
+    43
+  ],
+  "engines": [
+    "native_core",
+    "native_python",
+    "torch_standard"
+  ],
+  "trials": 3,
+  "windows": 32,
+  "split": "validation",
+  "window_selection": "32 integer-linspace input ends from 34560 through 46076 inclusive; zero-based end-exclusive; no targets read",
+  "window_ends": [
+    34560,
+    34931,
+    35302,
+    35674,
+    36045,
+    36417,
+    36788,
+    37160,
+    37531,
+    37903,
+    38274,
+    38646,
+    39017,
+    39389,
+    39760,
+    40132,
+    40503,
+    40875,
+    41246,
+    41618,
+    41989,
+    42361,
+    42732,
+    43104,
+    43475,
+    43847,
+    44218,
+    44590,
+    44961,
+    45333,
+    45704,
+    46076
+  ],
+  "context": 96,
+  "features": 7,
+  "warmup_calls": 64,
+  "workloads": [
+    {
+      "batch": 1,
+      "samples": 1000
+    },
+    {
+      "batch": 8,
+      "samples": 200
+    }
+  ],
+  "absolute_tolerance": 5e-05,
+  "relative_tolerance": 0.0002,
+  "threads": 1,
+  "deterministic": true,
+  "order": "Rotate engine/output-mode combinations by trial+seed_index+workload_index; fresh serial process per cell",
+  "timing": "Monotonic ns; all mode returns 96 values per window, last mode one; resident prepared inputs; no clock subtraction; consume checksum outside timing",
+  "statistics": "nearest-rank p50/p95/p99, mean, min/max; per-trial reports and ranges, no IID confidence claim",
+  "memory": "process peak RSS after imports, setup and timing; high-water marks, not live allocation or attributable model memory; native owned bytes separately",
+  "limitations": [
+    "Warm resident inputs; uncontrolled OS scheduling/frequency/cache",
+    "Torch standard uses FP32 layer_norm, exact GELU and SDPA; last query reads all K/V rows without a causal mask; strict FP64 reference only prepares expected outputs",
+    "CPU compatibility benchmark on available host, not current-runtime frontier",
+    "No compiled Torch, ONNX, quantization, profiling, sustained/concurrent streams or network costs",
+    "First call follows model loading; no cold-disk/cache or full process startup claim"
+  ],
+  "output_modes": [
+    "all",
+    "last"
+  ],
+  "purpose": "Report within-engine removal of unused diagnostic outputs separately from matched latest-only latency. Current one-block architecture; no weight/objective change.",
+  "numerical_gate": "Native latest-prefix outputs bitwise equal preserved full traces on all 9216 saved-window origins; matched engines retain 5e-5 absolute/2e-4 relative tolerance; all outputs checked before each cell",
+  "performance_gate": "Native latest must reduce median paired batch-one p50 by at least 50% versus its full trace, improve each seed in median and not worsen median paired p99. Report all cells. Matched latest-only engine ratios are separate; the current-runtime frontier target is not established by this compatibility run.",
+  "baseline_results": "docs/evidence/dense-rows-v1/runtime.json"
+}

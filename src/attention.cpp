@@ -21,16 +21,18 @@ AttentionWorkspace::AttentionWorkspace(std::size_t capacity, std::size_t width, 
 
 Error causal_attention(std::span<const float> query, std::span<const float> key,
                        std::span<const float> value, std::size_t tokens, std::span<float> output,
-                       AttentionWorkspace &workspace) noexcept {
+                       AttentionWorkspace &workspace, SequenceOutput mode) noexcept {
     using namespace sequence_detail;
     if (workspace.storage_.size() == 0)
         return Error::invalid_state;
-    if (tokens == 0 || tokens > workspace.capacity_)
+    if ((mode != SequenceOutput::all && mode != SequenceOutput::last) || tokens == 0 ||
+        tokens > workspace.capacity_)
         return Error::shape_mismatch;
     const auto width = workspace.width_;
     const auto count = tokens * width;
+    const auto first_row = mode == SequenceOutput::last ? tokens - 1 : 0;
     if (query.size() != count || key.size() != count || value.size() != count ||
-        output.size() != count)
+        output.size() != (tokens - first_row) * width)
         return Error::shape_mismatch;
     if (overlaps(query, output) || overlaps(key, output) || overlaps(value, output))
         return Error::aliasing;
@@ -44,7 +46,7 @@ Error causal_attention(std::span<const float> query, std::span<const float> key,
     auto scratch = storage.subspan(offset + 2 * workspace.capacity_, workspace.capacity_);
     const auto head_width = width / workspace.heads_;
     const double inverse_scale = 1.0 / std::sqrt(static_cast<double>(head_width));
-    for (std::size_t t = 0; t < tokens; ++t) {
+    for (std::size_t t = first_row; t < tokens; ++t) {
         const auto active = t + 1;
         for (std::size_t head = 0; head < workspace.heads_; ++head) {
             const auto channel = head * head_width;
@@ -88,7 +90,8 @@ Error causal_attention(std::span<const float> query, std::span<const float> key,
             }
         }
     }
-    std::copy(candidate.begin(), candidate.end(), output.begin());
+    std::copy(candidate.begin() + static_cast<std::ptrdiff_t>(first_row * width), candidate.end(),
+              output.begin());
     return Error::ok;
 }
 } // namespace stealth::numeric

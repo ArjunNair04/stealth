@@ -8,6 +8,8 @@ inline constexpr std::size_t max_hidden = 2048;
 
 // Both kernels preserve FP64 accumulation order; tiled groups independent channels.
 enum class AttentionKernel { reference, tiled };
+// The last query still reads all keys/values; only unused output rows are skipped.
+enum class SequenceOutput { all, last };
 
 class AttentionWorkspace {
   public:
@@ -18,16 +20,17 @@ class AttentionWorkspace {
   private:
     friend Error causal_attention(std::span<const float>, std::span<const float>,
                                   std::span<const float>, std::size_t, std::span<float>,
-                                  AttentionWorkspace &) noexcept;
+                                  AttentionWorkspace &, SequenceOutput) noexcept;
     std::size_t capacity_, width_, heads_;
     AttentionKernel kernel_;
     AlignedBuffer storage_;
 };
 
 // Q, K, V and output are row-major [tokens,width]. Contiguous channel groups are heads.
-// Each row includes itself and earlier rows. The whole output is unchanged on error.
+// Last mode requires width outputs; all mode requires tokens*width.
+// Each computed row includes itself and earlier rows. Output is unchanged on error.
 [[nodiscard]] Error causal_attention(std::span<const float> query, std::span<const float> key,
                                      std::span<const float> value, std::size_t tokens,
-                                     std::span<float> output,
-                                     AttentionWorkspace &workspace) noexcept;
+                                     std::span<float> output, AttentionWorkspace &workspace,
+                                     SequenceOutput mode = SequenceOutput::all) noexcept;
 } // namespace stealth::numeric

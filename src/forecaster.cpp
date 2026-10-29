@@ -83,13 +83,17 @@ std::size_t ForecastModel::parameter_bytes() const noexcept {
            (scaler_.size() + final_norm_.size()) * sizeof(float);
 }
 Error ForecastModel::forward(std::span<const float> input, std::size_t tokens,
-                             std::span<float> output, ForecastWorkspace &ws) const noexcept {
+                             std::span<float> output, ForecastWorkspace &ws,
+                             SequenceOutput mode) const noexcept {
     const auto c = config_;
     if (scaler_.size() != 2 * c.features || final_norm_.size() != 2 * c.width ||
         positions_.size() != c.context * c.width || ws.storage_.size() == 0)
         return Error::invalid_state;
-    if (tokens == 0 || tokens > c.context || ws.config_ != c ||
-        input.size() != tokens * c.features || output.size() != tokens)
+    if ((mode != SequenceOutput::all && mode != SequenceOutput::last) || tokens == 0 ||
+        tokens > c.context || ws.config_ != c || input.size() != tokens * c.features)
+        return Error::shape_mismatch;
+    const auto first_row = mode == SequenceOutput::last ? tokens - 1 : 0;
+    if (output.size() != tokens - first_row)
         return Error::shape_mismatch;
     if (sequence_detail::overlaps(input, output))
         return Error::aliasing;
@@ -98,7 +102,7 @@ Error ForecastModel::forward(std::span<const float> input, std::size_t tokens,
     auto storage = ws.storage_.span();
     const auto capacity = c.context * c.width;
     auto embedded = storage.subspan(0, tokens * c.width);
-    auto transformed = storage.subspan(capacity, tokens * c.width);
+    auto transformed = storage.subspan(capacity, (tokens - first_row) * c.width);
     auto candidate = storage.subspan(2 * capacity, tokens);
     const auto offset = 2 * capacity + c.context;
     auto features = storage.subspan(offset, c.features);
@@ -123,13 +127,13 @@ Error ForecastModel::forward(std::span<const float> input, std::size_t tokens,
                                                 embedding[j]))
                 return Error::numerical_error;
     }
-    auto status = block_.forward(embedded, tokens, transformed, ws.block_);
+    auto status = block_.forward(embedded, tokens, transformed, ws.block_, mode);
     if (status != Error::ok)
         return status;
-    for (std::size_t t = 0; t < tokens; ++t) {
-        status =
-            layer_norm(transformed.subspan(t * c.width, c.width), final_norm_.span().first(c.width),
-                       final_norm_.span().subspan(c.width), c.epsilon, row, scratch);
+    for (std::size_t t = first_row; t < tokens; ++t) {
+        status = layer_norm(transformed.subspan((t - first_row) * c.width, c.width),
+                            final_norm_.span().first(c.width), final_norm_.span().subspan(c.width),
+                            c.epsilon, row, scratch);
         if (status != Error::ok)
             return status;
         status = head_.forward(row, readout, scratch);
@@ -142,7 +146,8 @@ Error ForecastModel::forward(std::span<const float> input, std::size_t tokens,
                 static_cast<double>(readout[0]) * scales[c.target] + anchor, candidate[t]))
             return Error::numerical_error;
     }
-    std::copy(candidate.begin(), candidate.end(), output.begin());
+    std::copy(candidate.begin() + static_cast<std::ptrdiff_t>(first_row), candidate.end(),
+              output.begin());
     return Error::ok;
 }
 } // namespace stealth::numeric

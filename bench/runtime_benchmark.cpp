@@ -96,14 +96,18 @@ int main(int argc, char **argv) {
             if (i + 1 >= argc || !args.emplace(argv[i], argv[i + 1]).second)
                 throw std::runtime_error("Expected unique option/value pairs");
         }
-        if (args.size() != 6 || !args.contains("--model") || !args.contains("--input") ||
-            !args.contains("--expected") || !args.contains("--batch") ||
-            !args.contains("--samples") || !args.contains("--warmup"))
+        if (args.size() != (args.contains("--output") ? 7U : 6U) || !args.contains("--model") ||
+            !args.contains("--input") || !args.contains("--expected") ||
+            !args.contains("--batch") || !args.contains("--samples") || !args.contains("--warmup"))
             throw std::runtime_error(
                 "Required: --model --input --expected --batch --samples --warmup");
         const auto batch = number(args.at("--batch"), 1024),
                    samples = number(args.at("--samples"), 1000000),
                    warmup = number(args.at("--warmup"), 100000);
+        const auto output_mode = args.contains("--output") ? args.at("--output") : "all";
+        if (output_mode != "all" && output_mode != "last")
+            throw std::runtime_error("Output must be all or last");
+        const auto mode = output_mode == "last" ? SequenceOutput::last : SequenceOutput::all;
         const auto setup_begin = Clock::now();
         const auto model = load_forecaster_file(args.at("--model"));
         const auto c = model->config();
@@ -120,7 +124,8 @@ int main(int argc, char **argv) {
             throw std::runtime_error("Invalid benchmark dimensions");
         const auto input = floats(bytes, 20, windows * tokens * features);
         const auto expected = floats(read(args.at("--expected")), 0, windows * tokens);
-        std::vector<float> output(batch * tokens);
+        const auto output_tokens = mode == SequenceOutput::last ? std::size_t{1} : tokens;
+        std::vector<float> output(batch * output_tokens);
         const auto setup_ns = elapsed(setup_begin);
         const auto setup_rss = peak_rss();
         const std::span<const float> inputs(input);
@@ -130,17 +135,18 @@ int main(int argc, char **argv) {
             for (std::size_t j = 0; j < batch; ++j)
                 check(model->forward(
                     inputs.subspan((group * batch + j) * tokens * features, tokens * features),
-                    tokens, outputs.subspan(j * tokens, tokens), workspace));
+                    tokens, outputs.subspan(j * output_tokens, output_tokens), workspace, mode));
         };
         const auto first_begin = Clock::now();
         forward(0);
         const double first_call_ns = elapsed(first_begin);
         double max_difference = 0;
-        // Every origin of every fixed window passes before any warm timings.
+        // Every requested output of every fixed window passes before warm timings.
         for (std::size_t group = 0; group < groups; ++group) {
             forward(group);
             for (std::size_t j = 0; j < output.size(); ++j) {
-                const double e = expected[group * batch * tokens + j], a = output[j];
+                const auto origin = mode == SequenceOutput::last ? j * tokens + tokens - 1 : j;
+                const double e = expected[group * batch * tokens + origin], a = output[j];
                 const double difference = std::abs(a - e);
                 if (!std::isfinite(a) ||
                     difference > absolute_tolerance + relative_tolerance * std::abs(e))
@@ -166,7 +172,8 @@ int main(int argc, char **argv) {
         if (!std::isfinite(checksum))
             throw std::runtime_error("Nonfinite checksum");
         std::cout << std::setprecision(17) << "{\"engine\":\"native_core\",\"batch\":" << batch
-                  << ",\"setup_ns\":" << setup_ns << ",\"first_call_ns\":" << first_call_ns
+                  << ",\"output_mode\":\"" << output_mode << "\",\"setup_ns\":" << setup_ns
+                  << ",\"first_call_ns\":" << first_call_ns
                   << ",\"max_abs_difference\":" << max_difference << ",\"checksum\":" << checksum
                   << ",\"parameter_bytes\":" << model->parameter_bytes()
                   << ",\"position_bytes\":" << model->position_bytes()

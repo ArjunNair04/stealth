@@ -34,6 +34,22 @@ class StandardRuntime(unittest.TestCase):
             np.testing.assert_allclose(y[:1].numpy(),m(x[:1]).numpy(),atol=5e-5,rtol=2e-4)
             z=x.clone();z[:,48:]+=100
             np.testing.assert_array_equal(y[:,:48].numpy(),m(z)[:,:48].numpy())
+    def test_latest_only_matches_full_trace_and_prefixes(self):
+        torch.set_num_threads(1)
+        for mode in ('level','correction'):
+            config=Config(7,64,4,256,96,4,6,output=mode)
+            source=Forecaster(config,[0]*7,[2]*7,seed=19)
+            with torch.no_grad():source.head_weight.copy_(torch.linspace(-.2,.3,64).reshape(1,64));source.head_bias.fill_(.1)
+            model=load_export(source.export_bytes(),standard=True)
+            x=torch.randn(3,96,7,generator=torch.Generator().manual_seed(7))
+            with torch.inference_mode():
+                full=model(x)
+                for n in (1,3,4,5,17,95,96):
+                    result=model(x[:,:n],latest_only=True)
+                    self.assertEqual(result.shape,(3,1))
+                    np.testing.assert_allclose(result.numpy(),full[:,n-1:n].numpy(),atol=5e-5,rtol=2e-4)
+                np.testing.assert_allclose(model(x,latest_only=True).numpy(),source(x)[:,-1:].numpy(),atol=5e-5,rtol=2e-4)
+
     def test_loader_rejects_hash_version_shape_trailing_and_nonfinite(self):
         m=Forecaster(Config(2,4,2,5,3,1,1),[0,0],[1,1]);blob=m.export_bytes()
         for bad in (b'',blob[:-1],blob+b'x',b'bad'+blob[3:]):
@@ -62,6 +78,11 @@ class StandardRuntime(unittest.TestCase):
                 proc=subprocess.run(args,capture_output=True,text=True,env=env);self.assertEqual(proc.returncode,0,proc.stderr)
                 result=json.loads(proc.stdout);self.assertEqual(len(result['times_ns']),2);self.assertEqual(result['max_abs_difference'],0)
                 if engine!='native_python': self.assertTrue(result['versions']['inference_mode'])
+                latest=subprocess.run(args+['--output','last'],capture_output=True,text=True,env=env)
+                self.assertEqual(latest.returncode,0,latest.stderr)
+                point=json.loads(latest.stdout)
+                self.assertEqual(point['output_mode'],'last');self.assertEqual(point['checksum'],16)
+
                 (tmp/'expected').write_bytes(struct.pack('<6f',*[v+1e-6 for v in (1,3,5,7,9,11)]))
                 near=subprocess.run(args,capture_output=True,text=True,env=env);self.assertEqual(near.returncode,0,near.stderr)
                 self.assertGreater(json.loads(near.stdout)['max_abs_difference'],0)

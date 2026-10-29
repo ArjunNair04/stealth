@@ -55,14 +55,32 @@ class NativeRunner(unittest.TestCase):
         self.x=[float(i)/10 for i in range(24)]
         (self.root/'input').write_bytes(common.input_bytes(self.x,4,3,2))
         (self.root/'expected').write_bytes(struct.pack('<12f',*self.x[1::2]))
-    def run_native(self,batch='1',samples='3',warmup='2'):
-        return subprocess.run([str(self.binary),'--model',str(self.root/'model'),'--input',str(self.root/'input'),'--expected',str(self.root/'expected'),'--batch',batch,'--samples',samples,'--warmup',warmup],capture_output=True,text=True)
+    def run_native(self,batch='1',samples='3',warmup='2',output=None):
+        extra=[] if output is None else ['--output',output]
+        return subprocess.run([str(self.binary),'--model',str(self.root/'model'),'--input',str(self.root/'input'),'--expected',str(self.root/'expected'),'--batch',batch,'--samples',samples,'--warmup',warmup]+extra,capture_output=True,text=True)
     def test_valid_batch_and_consumed_outputs(self):
         for batch in ('1','2','4'):
             p=self.run_native(batch);self.assertEqual(p.returncode,0,p.stderr)
             r=json.loads(p.stdout);self.assertEqual(len(r['times_ns']),3)
             self.assertEqual(r['max_abs_difference'],0)
             self.assertGreater(r['checksum'],0);self.assertGreater(r['workspace_bytes'],0)
+    def test_latest_mode_selects_each_last_origin(self):
+        for batch in (1,2,4):
+            proc=self.run_native(str(batch),output='last');self.assertEqual(proc.returncode,0,proc.stderr)
+            result=json.loads(proc.stdout);self.assertEqual(result['output_mode'],'last')
+            values=struct.unpack('<24f',struct.pack('<24f',*self.x))
+            expected=sum(values[(((i%(4//batch))*batch+i%batch)*3+2)*2+1] for i in range(3))
+            self.assertEqual(result['checksum'],expected)
+        self.assertNotEqual(self.run_native(output='unknown').returncode,0)
+    def test_latest_parity_uses_only_requested_origins(self):
+        expected=self.x[1::2];expected[0]=99
+        (self.root/'expected').write_bytes(struct.pack('<12f',*expected))
+        self.assertEqual(self.run_native(output='last').returncode,0)
+        self.assertNotEqual(self.run_native().returncode,0)
+        expected[2]=99
+        (self.root/'expected').write_bytes(struct.pack('<12f',*expected))
+        proc=self.run_native(output='last');self.assertNotEqual(proc.returncode,0);self.assertEqual(proc.stdout,'')
+
     def test_parity_must_fail_before_measurement(self):
         (self.root/'expected').write_bytes(struct.pack('<12f',*[99]*12))
         p=self.run_native();self.assertNotEqual(p.returncode,0);self.assertEqual(p.stdout,'')

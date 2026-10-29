@@ -55,15 +55,17 @@ std::size_t TransformerBlock::parameter_bytes() const noexcept {
            feed_forward_.parameter_bytes() + (scale_.size() + shift_.size()) * sizeof(float);
 }
 Error TransformerBlock::forward(std::span<const float> input, std::size_t tokens,
-                                std::span<float> output,
-                                TransformerWorkspace &workspace) const noexcept {
+                                std::span<float> output, TransformerWorkspace &workspace,
+                                SequenceOutput mode) const noexcept {
     if (scale_.size() != width_ || shift_.size() != width_ || workspace.storage_.size() == 0)
         return Error::invalid_state;
-    if (tokens == 0 || tokens > workspace.capacity_ || workspace.width_ != width_ ||
-        workspace.heads_ != heads_ || workspace.hidden_ != hidden_)
+    if ((mode != SequenceOutput::all && mode != SequenceOutput::last) || tokens == 0 ||
+        tokens > workspace.capacity_ || workspace.width_ != width_ || workspace.heads_ != heads_ ||
+        workspace.hidden_ != hidden_)
         return Error::shape_mismatch;
     const auto count = tokens * width_;
-    if (input.size() != count || output.size() != count)
+    const auto first_row = mode == SequenceOutput::last ? tokens - 1 : 0;
+    if (input.size() != count || output.size() != (tokens - first_row) * width_)
         return Error::shape_mismatch;
     if (sequence_detail::overlaps(input, output))
         return Error::aliasing;
@@ -107,10 +109,11 @@ Error TransformerBlock::forward(std::span<const float> input, std::size_t tokens
                         value.begin() + destination);
         }
     }
-    auto status = causal_attention(query, key, value, tokens, context, workspace.attention_);
+    auto status = causal_attention(query, key, value, tokens, context.subspan(first_row * width_),
+                                   workspace.attention_, mode);
     if (status != Error::ok)
         return status;
-    for (std::size_t t = 0; t < tokens; t += tile) {
+    for (std::size_t t = first_row; t < tokens; t += tile) {
         const auto rows = std::min(tile, tokens - t);
         const auto elements = rows * width_;
         status = projection_.forward_rows(context.subspan(t * width_, elements), rows,
@@ -127,7 +130,8 @@ Error TransformerBlock::forward(std::span<const float> input, std::size_t tokens
         if (status != Error::ok)
             return status;
     }
-    std::copy(candidate.begin(), candidate.end(), output.begin());
+    std::copy(candidate.begin() + static_cast<std::ptrdiff_t>(first_row * width_), candidate.end(),
+              output.begin());
     return Error::ok;
 }
 } // namespace stealth::numeric

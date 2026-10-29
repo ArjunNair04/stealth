@@ -33,10 +33,11 @@ class ForecastModel {
     [[nodiscard]] std::size_t position_bytes() const noexcept {
         return positions_.size() * sizeof(float);
     }
-    // Each output is one point forecast at that row's origin. Benchmark uses last.
+    // All mode returns per-origin forecasts; last mode requires one output.
+    // Latest-only skips unused diagnostic calculations in this one-block model.
     [[nodiscard]] Error forward(std::span<const float> input, std::size_t tokens,
-                                std::span<float> output,
-                                ForecastWorkspace &workspace) const noexcept;
+                                std::span<float> output, ForecastWorkspace &workspace,
+                                SequenceOutput mode = SequenceOutput::all) const noexcept;
 
   private:
     ForecastConfig config_;

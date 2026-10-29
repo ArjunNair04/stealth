@@ -11,7 +11,7 @@ from torch.nn import functional as F
 from torch_forecaster import Config,Forecaster
 
 class StandardForecaster(Forecaster):
-    def forward(self,raw):
+    def forward(self,raw,*,latest_only=False):
         c=self.config
         if (raw.device.type!='cpu' or raw.dtype!=torch.float32 or raw.ndim!=3
                 or not 1<=raw.shape[0]<=1024 or not 1<=raw.shape[1]<=c.context
@@ -25,15 +25,20 @@ class StandardForecaster(Forecaster):
         z=F.layer_norm(x,(c.width,),self.attn_scale,self.attn_shift,c.epsilon)
         q,k,v=F.linear(z,self.qkv_weights,self.qkv_bias).chunk(3,dim=-1)
         def split(a): return a.reshape(batch,tokens,c.heads,c.width//c.heads).transpose(1,2)
-        a=F.scaled_dot_product_attention(split(q),split(k),split(v),dropout_p=0.,is_causal=True)
-        a=a.transpose(1,2).contiguous().reshape(batch,tokens,c.width)
+        query=split(q)
+        if latest_only:
+            query=query[:,:,-1:,:]
+            x=x[:,-1:,:]
+        output_tokens=1 if latest_only else tokens
+        a=F.scaled_dot_product_attention(query,split(k),split(v),dropout_p=0.,is_causal=not latest_only)
+        a=a.transpose(1,2).contiguous().reshape(batch,output_tokens,c.width)
         x=x+F.linear(a,self.projection_weights,self.projection_bias)
         z=F.layer_norm(x,(c.width,),self.ff_scale,self.ff_shift,c.epsilon)
         z=F.gelu(F.linear(z,self.up_weights,self.up_bias),approximate='none')
         x=x+F.linear(z,self.down_weights,self.down_bias)
         z=F.layer_norm(x,(c.width,),self.final_scale,self.final_shift,c.epsilon)
         y=F.linear(z,self.head_weight,self.head_bias).squeeze(-1)
-        anchor=raw[:,:,c.target].double() if c.output=='correction' else self.mean[c.target].double()
+        anchor=raw[:,-output_tokens:,c.target].double() if c.output=='correction' else self.mean[c.target].double()
         y=(y.double()*self.scale[c.target].double()+anchor).float()
         if not bool(torch.isfinite(y).all()): raise FloatingPointError('Nonfinite model output')
         return y

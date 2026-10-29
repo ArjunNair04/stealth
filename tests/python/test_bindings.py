@@ -117,6 +117,26 @@ class Models(unittest.TestCase):
         model = s.ForecastModel(s.ForecastConfig(7,64,4,256,96,4,6), np.array(p,dtype=np.float32))
         np.testing.assert_allclose(model.session().predict(np.array(x,dtype=np.float32).reshape(96,7)), y, atol=5e-5,rtol=2e-4)
 
+    def test_latest_prefixes_batches_and_failures(self):
+        session=self.m.session();full=session.predict(self.x)
+        for n in range(1,len(self.x)+1):
+            self.assertEqual(session.predict_last(self.x[:n]),float(full[n-1]))
+        batch=np.stack([self.x,self.x+1]).astype(np.float32)
+        expected=session.predict_batch(batch)[:,-1]
+        actual=session.predict_last_batch(batch)
+        self.assertEqual(actual.shape,(2,));self.assertTrue(actual.flags.owndata)
+        np.testing.assert_array_equal(actual,expected)
+        for method,bad in ((session.predict_last,self.x.astype(np.float64)),
+                           (session.predict_last,self.x[:0]),
+                           (session.predict_last_batch,batch[:,:,::2]),
+                           (session.predict_last_batch,batch.astype(np.float64))):
+            with self.assertRaises((ValueError,TypeError)):method(bad)
+            self.assertFalse(session.busy)
+        broken=self.x.copy();broken[0,0]=np.nan
+        with self.assertRaises(ValueError):session.predict_last(broken)
+        self.assertEqual(session.predict_last(self.x),float(full[-1]))
+        np.testing.assert_array_equal(session.predict(self.x),full)
+
     def test_readonly_configuration(self):
         with self.assertRaises(AttributeError): self.c.width = 16
         for args in [(0,4,2,7,5,4,6), (7,4,3,7,5,4,6), (7,4,2,7,1025,4,6)]:

@@ -194,6 +194,23 @@ int main() {
                 test::near(value, 1.0);
         }
         namespace ff = forecast_fixture;
+        {
+            auto model = load_forecaster(std::as_bytes(std::span(ff::artifact)));
+            ForecastWorkspace ws(model->config());
+            std::array<float, 1> point{};
+            allocations = 0;
+            tracking = true;
+            bool failed = false;
+            for (int i = 0; i < 200; ++i)
+                if (model->forward(ff::input, ff::tokens, point, ws, SequenceOutput::last) !=
+                    Error::ok)
+                    failed = true;
+            tracking = false;
+            CHECK(!failed);
+            CHECK(allocations == 0);
+            test::near(point[0], ff::expected.back(), 5e-5, 2e-4);
+        }
+
         for (auto kernel : {DenseKernel::reference, DenseKernel::packed}) {
             auto model = load_forecaster(std::as_bytes(std::span(ff::artifact)), kernel);
             ForecastWorkspace workspace(model->config());

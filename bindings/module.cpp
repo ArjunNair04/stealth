@@ -91,7 +91,32 @@ struct Session {
         check(status);
         return output;
     }
+    float predict_last(const py::object &object) {
+        BusyGuard guard(busy);
+        auto a = array(object, 2);
+        const auto c = model->config();
+        if (a.shape(1) != static_cast<py::ssize_t>(c.features) ||
+            a.shape(0) > static_cast<py::ssize_t>(c.context))
+            throw py::value_error("Expected [tokens,features] within model context");
+        const auto tokens = static_cast<std::size_t>(a.shape(0));
+        std::copy(values(a).begin(), values(a).end(), input.span().begin());
+        float output = 0;
+        Error status;
+        {
+            py::gil_scoped_release release;
+            status = model->forward(input.span().first(tokens * c.features), tokens,
+                                    std::span<float>(&output, 1), workspace, SequenceOutput::last);
+        }
+        check(status);
+        return output;
+    }
     py::array_t<float> predict_batch(const py::object &object) {
+        return batch(object, SequenceOutput::all);
+    }
+    py::array_t<float> predict_last_batch(const py::object &object) {
+        return batch(object, SequenceOutput::last);
+    }
+    py::array_t<float> batch(const py::object &object, SequenceOutput mode) {
         BusyGuard guard(busy);
         auto a = array(object, 3);
         const auto c = model->config();
@@ -101,11 +126,14 @@ struct Session {
         const auto tokens = static_cast<std::size_t>(a.shape(1));
         const auto batch = static_cast<std::size_t>(a.shape(0));
         const auto count = static_cast<std::size_t>(a.size());
-        if (batch * tokens > max_elements - count)
+        const auto output_tokens = mode == SequenceOutput::last ? std::size_t{1} : tokens;
+        if (batch * output_tokens > max_elements - count)
             throw py::value_error("Combined batch input/output exceeds element limit");
         AlignedBuffer snapshot(count);
         std::copy(values(a).begin(), values(a).end(), snapshot.span().begin());
-        py::array_t<float> output({a.shape(0), a.shape(1)});
+        py::array_t<float> output = mode == SequenceOutput::last
+                                        ? py::array_t<float>(a.shape(0))
+                                        : py::array_t<float>({a.shape(0), a.shape(1)});
         auto out = values(output);
         Error status = Error::ok;
         {
@@ -113,7 +141,7 @@ struct Session {
             for (std::size_t i = 0; i < batch; ++i) {
                 status = model->forward(
                     snapshot.span().subspan(i * tokens * c.features, tokens * c.features), tokens,
-                    out.subspan(i * tokens, tokens), workspace);
+                    out.subspan(i * output_tokens, output_tokens), workspace, mode);
                 if (status != Error::ok)
                     break;
             }
@@ -311,6 +339,8 @@ PYBIND11_MODULE(_core, m) {
         .def(py::init<const Model &>())
         .def("predict", &Session::predict)
         .def("predict_batch", &Session::predict_batch)
+        .def("predict_last", &Session::predict_last)
+        .def("predict_last_batch", &Session::predict_last_batch)
         .def_property_readonly(
             "busy", [](const Session &s) { return s.busy.load(std::memory_order_acquire); })
         .def_property_readonly("workspace_bytes", [](const Session &s) {
