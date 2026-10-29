@@ -20,6 +20,12 @@ Total number in stack
         self.assertEqual(r['samples'],100);self.assertEqual(r['counts']['attention_including_softmax'],40)
         self.assertEqual(r['counts']['other'],20);self.assertEqual(r['counts']['softmax_subset'],10)
         self.assertNotIn('private',str(r))
+    def test_row_kernel_and_wrapper_are_counted_once(self):
+        text = "Call graph:\n    100 Thread_1\n      40 Dense::forward(x)  (in app)\n        30 Dense::forward_rows(x)  (in app)\n      20 Dense::forward_rows(x)  (in app)\nTotal number in stack"
+        result = summarize_profile(text)
+        self.assertEqual(result['counts']['dense'], 60)
+        self.assertEqual(result['counts']['other'], 40)
+
     def test_unrecognised_or_inconsistent_profile_fails(self):
         for text in ('', 'Call graph:\n  10 Thread_1\n  20 stealth::numeric::gelu(x)  (in app)\nTotal number in stack'):
             with self.assertRaises(ValueError): summarize_profile(text)

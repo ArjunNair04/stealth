@@ -1,7 +1,7 @@
 """Summarize optional macOS samples and audit a fixed native A/B experiment.
 
-Sampling is attribution, never latency evidence. Known primitive frames are
-nonrecursive; softmax is reported as a subset of attention, not added twice.
+Sampling is attribution, never latency evidence. Count the outermost matching
+primitive frame; softmax remains a subset of attention, not an extra bucket.
 """
 import itertools
 import math
@@ -17,14 +17,20 @@ def summarize_profile(text):
     if len(threads)!=1 or int(threads[0])<=0:
         raise ValueError('Expected one sampled inference thread')
     total=int(threads[0])
-    needles=dict(dense='Dense::forward(',attention_including_softmax='::causal_attention(',
-                 softmax_subset='::softmax(',gelu='::gelu(',layer_norm='::layer_norm(',residual_add='::residual_add(')
-    counts={k:0 for k in needles}
+    needles=dict(dense=('Dense::forward(', 'Dense::forward_rows('),
+                 attention_including_softmax=('::causal_attention(',),
+                 softmax_subset=('::softmax(',),gelu=('::gelu(',),
+                 layer_norm=('::layer_norm(',),residual_add=('::residual_add(',))
+    counts={k:0 for k in needles};ancestors=[]
     for line in graph.splitlines():
-        match=re.match(r'^[ +!:|]*(\d+) (.+?)  \(in ',line)
+        match=re.match(r'^([ +!:|]*)(\d+) (.+?)  \(in ',line)
         if not match: continue
-        for key,needle in needles.items():
-            if needle in match[2]: counts[key]+=int(match[1])
+        depth=len(match[1])
+        while ancestors and ancestors[-1][0]>=depth: ancestors.pop()
+        matched={key for key,names in needles.items() if any(name in match[3] for name in names)}
+        for key in matched:
+            if not any(key in keys for _,keys in ancestors): counts[key]+=int(match[2])
+        ancestors.append((depth,matched))
     primary=sum(v for k,v in counts.items() if k!='softmax_subset')
     if primary>total or primary==0 or counts['softmax_subset']>counts['attention_including_softmax']:
         raise ValueError('Inconsistent or recursive primitive attribution')

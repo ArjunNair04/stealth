@@ -181,32 +181,54 @@ Error Dense::forward_rows(std::span<const float> input, std::size_t rows, std::s
                 scratch[row * outputs_ + o] = accumulator;
             }
     } else {
-        // Fixed row tiles expose independent sums and reuse each packed weight.
-        // Each individual sum keeps the original FP32 product/add order.
-        const auto tile_rows = [&]<std::size_t Rows>(std::size_t row) {
-            for (std::size_t start = 0; start < outputs_; start += lanes) {
-                std::array<std::array<float, lanes>, Rows> accumulator{};
-                const auto count = std::min(lanes, outputs_ - start);
-                for (std::size_t r = 0; r < Rows; ++r)
-                    for (std::size_t lane = 0; lane < count; ++lane)
-                        accumulator[r][lane] = bias[start + lane];
-                const float *tile = weights.data() + (start / lanes) * inputs_ * lanes;
-                for (std::size_t i = 0; i < inputs_; ++i)
-                    for (std::size_t r = 0; r < Rows; ++r) {
-                        const float value = input[(row + r) * inputs_ + i];
-                        for (std::size_t lane = 0; lane < lanes; ++lane)
-                            accumulator[r][lane] += tile[i * lanes + lane] * value;
-                    }
-                for (std::size_t r = 0; r < Rows; ++r)
-                    for (std::size_t lane = 0; lane < count; ++lane)
-                        scratch[(row + r) * outputs_ + start + lane] = accumulator[r][lane];
-            }
-        };
+        // Four named vectors make the independent columns explicit to SLP
+        // vectorizers. Nested row/channel accumulator loops can scalarize.
         std::size_t row = 0;
-        for (; row + 4 <= rows; row += 4)
-            tile_rows.template operator()<4>(row);
-        for (; row < rows; ++row)
-            tile_rows.template operator()<1>(row);
+        for (; row + 4 <= rows; row += 4) {
+            for (std::size_t start = 0; start < outputs_; start += lanes) {
+                std::array<float, lanes> a{}, b{}, c{}, d{};
+                const auto count = std::min(lanes, outputs_ - start);
+                for (std::size_t lane = 0; lane < count; ++lane)
+                    a[lane] = b[lane] = c[lane] = d[lane] = bias[start + lane];
+                const float *tile = weights.data() + (start / lanes) * inputs_ * lanes;
+                for (std::size_t i = 0; i < inputs_; ++i) {
+                    const float x0 = input[row * inputs_ + i];
+                    const float x1 = input[(row + 1) * inputs_ + i];
+                    const float x2 = input[(row + 2) * inputs_ + i];
+                    const float x3 = input[(row + 3) * inputs_ + i];
+                    for (std::size_t lane = 0; lane < lanes; ++lane) {
+                        const float weight = tile[i * lanes + lane];
+                        a[lane] += weight * x0;
+                        b[lane] += weight * x1;
+                        c[lane] += weight * x2;
+                        d[lane] += weight * x3;
+                    }
+                }
+                for (std::size_t lane = 0; lane < count; ++lane) {
+                    scratch[row * outputs_ + start + lane] = a[lane];
+                    scratch[(row + 1) * outputs_ + start + lane] = b[lane];
+                    scratch[(row + 2) * outputs_ + start + lane] = c[lane];
+                    scratch[(row + 3) * outputs_ + start + lane] = d[lane];
+                }
+            }
+        }
+        // Original single-row packing for small calls and incomplete row tiles.
+        for (; row < rows; ++row) {
+            for (std::size_t start = 0; start < outputs_; start += lanes) {
+                std::array<float, lanes> accumulator{};
+                const auto count = std::min(lanes, outputs_ - start);
+                for (std::size_t lane = 0; lane < count; ++lane)
+                    accumulator[lane] = bias[start + lane];
+                const float *tile = weights.data() + (start / lanes) * inputs_ * lanes;
+                for (std::size_t i = 0; i < inputs_; ++i) {
+                    const float value = input[row * inputs_ + i];
+                    for (std::size_t lane = 0; lane < lanes; ++lane)
+                        accumulator[lane] += tile[i * lanes + lane] * value;
+                }
+                for (std::size_t lane = 0; lane < count; ++lane)
+                    scratch[row * outputs_ + start + lane] = accumulator[lane];
+            }
+        }
     }
     return publish(scratch, output);
 }
