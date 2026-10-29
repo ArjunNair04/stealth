@@ -6,9 +6,13 @@ inline constexpr std::size_t max_context = 1024;
 inline constexpr std::size_t max_width = 512;
 inline constexpr std::size_t max_hidden = 2048;
 
+// Both kernels preserve FP64 accumulation order; tiled groups independent channels.
+enum class AttentionKernel { reference, tiled };
+
 class AttentionWorkspace {
   public:
-    AttentionWorkspace(std::size_t capacity, std::size_t width, std::size_t heads);
+    AttentionWorkspace(std::size_t capacity, std::size_t width, std::size_t heads,
+                       AttentionKernel kernel = AttentionKernel::tiled);
     [[nodiscard]] std::size_t bytes() const noexcept { return storage_.size() * sizeof(float); }
 
   private:
@@ -16,6 +20,7 @@ class AttentionWorkspace {
                                   std::span<const float>, std::size_t, std::span<float>,
                                   AttentionWorkspace &) noexcept;
     std::size_t capacity_, width_, heads_;
+    AttentionKernel kernel_;
     AlignedBuffer storage_;
 };
 

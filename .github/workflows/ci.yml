@@ -73,6 +73,8 @@ jobs:
         run: ./build/release/stealth_bench --samples 100
       - name: Runtime benchmark contracts (offline; no latency gate)
         run: python -m unittest discover -s tests -p test_runtime_benchmark.py -v
+      - name: Profile attribution and performance-gate contracts
+        run: python -m unittest discover -s tests -p test_native_profile.py -v
       - name: Sanitizer configure
         if: matrix.name == 'Linux Clang'
         run: cmake --preset sanitize -DSTEALTH_BUILD_BENCHMARKS=ON

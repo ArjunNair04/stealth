@@ -1,0 +1,99 @@
+{
+  "interpretation": "Inclusive nonrecursive primitive samples; softmax is a subset of attention, not an additional bucket; sampling overhead means these are attribution estimates, not latency measurements",
+  "profiles": {
+    "19": {
+      "counts": {
+        "attention_including_softmax": 1478,
+        "dense": 1272,
+        "gelu": 735,
+        "layer_norm": 217,
+        "other": 55,
+        "residual_add": 55,
+        "softmax_subset": 511
+      },
+      "percent": {
+        "attention_including_softmax": 38.772298006295905,
+        "dense": 33.36831059811123,
+        "gelu": 19.281217208814272,
+        "layer_norm": 5.6925498426023085,
+        "other": 1.4428121720881426,
+        "residual_add": 1.4428121720881426,
+        "softmax_subset": 13.405036726128017
+      },
+      "samples": 3812
+    },
+    "43": {
+      "counts": {
+        "attention_including_softmax": 1460,
+        "dense": 1214,
+        "gelu": 755,
+        "layer_norm": 210,
+        "other": 45,
+        "residual_add": 60,
+        "softmax_subset": 463
+      },
+      "percent": {
+        "attention_including_softmax": 38.995726495726494,
+        "dense": 32.425213675213676,
+        "gelu": 20.16559829059829,
+        "layer_norm": 5.608974358974359,
+        "other": 1.2019230769230769,
+        "residual_add": 1.6025641025641026,
+        "softmax_subset": 12.366452991452991
+      },
+      "samples": 3744
+    },
+    "7": {
+      "counts": {
+        "attention_including_softmax": 1567,
+        "dense": 1376,
+        "gelu": 677,
+        "layer_norm": 216,
+        "other": 73,
+        "residual_add": 66,
+        "softmax_subset": 499
+      },
+      "percent": {
+        "attention_including_softmax": 39.42138364779874,
+        "dense": 34.61635220125786,
+        "gelu": 17.031446540880502,
+        "layer_norm": 5.433962264150943,
+        "other": 1.8364779874213837,
+        "residual_add": 1.6603773584905661,
+        "softmax_subset": 12.553459119496855
+      },
+      "samples": 3975
+    }
+  },
+  "protocol": {
+    "baseline_commit": "425f3e6fb149f01798ae8419baafe5caa142f7cf",
+    "batch": 1,
+    "duration_seconds": 5,
+    "experiment_id": "native_profile_v1",
+    "forward_samples": 10000,
+    "input_sha256": "3ed32af0b79ef537e2f2d9a0fa9afda122335689be2aeabf4add7013e85e3595",
+    "interval_milliseconds": 1,
+    "model_sha256": {
+      "19": "237910f530e7c337227f2150da2f78da2518e996ee817c4f40e4ef4a78a1a080",
+      "43": "6400f2cb9a94237e8cd0e5a8083fd501c75fb9bfe60a7871675e12ccacdbca6a",
+      "7": "48d3433c9be2e2c411a06fdf981a78332d6f34af0767608d6d11ef9ca978e87d"
+    },
+    "native_binary_sha256": "f48f04ce0c95995530c997df042786764275a91cb3886dab5c643b3b64d30820",
+    "profiler": "/usr/bin/sample",
+    "purpose": "Locate dominant native call stacks before selecting one arithmetic-preserving optimization",
+    "schema_version": 1,
+    "seeds": [
+      7,
+      19,
+      43
+    ],
+    "timing_policy": "Sampled runs are attribution only; do not use their timings as uninstrumented latency evidence",
+    "warmup_calls": 64
+  },
+  "schema_version": 1,
+  "trace_sha256": {
+    "19": "e1cbcd462db41aa529cae63d4b0725d0cc35c6b22f91a8e8d8113fc2ae54eb73",
+    "43": "0a571be28507d3fc1ef939d33ae6423ecd8cf9f63aab72bcd9af95df16e4d4b0",
+    "7": "b1a2770b8c16774ee760b0ce10d3443fd527ecb4c26216091e62f63586534b06"
+  }
+}

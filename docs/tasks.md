@@ -96,7 +96,9 @@ the local Intel Mac, ordinary eager Torch takes about 0.490 ms per batch-one
 window versus C++ core 1.942 ms; native process memory is much smaller. See
 [all results and limits](runtime-results-v1.md). No speed advantage is claimed.
 
-Next, profile native computation before changing kernels. Current-platform,
+Native stack sampling is complete and identifies attention as the largest
+sampled component (~39%). An arithmetic-preserving eight-channel value loop is
+under test; see [its contract](attention-tiling-v1.md). Current-platform,
 compiled-Torch/independent-runtime, streaming, full cold-start, sustained-load
 and end-to-end comparisons remain pending. Issue #5 stays open.
 

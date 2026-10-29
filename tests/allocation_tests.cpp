@@ -152,6 +152,24 @@ int main() {
             for (std::size_t i = 0; i < output.size(); ++i)
                 test::near(output[i], f::expected[i], 3e-5, 1e-4);
         }
+        for (auto kernel : {AttentionKernel::reference, AttentionKernel::tiled}) {
+            // Exercise complete eight-channel tiles AND a per-head scalar tail.
+            constexpr std::size_t tokens = 17, width = 36, heads = 4;
+            AttentionWorkspace ws(tokens, width, heads, kernel);
+            std::array<float, tokens * width> q{}, k{}, v{}, out{};
+            v.fill(1.0F);
+            allocations = 0;
+            tracking = true;
+            bool failed = false;
+            for (int i = 0; i < 200; ++i)
+                if (causal_attention(q, k, v, tokens, out, ws) != Error::ok)
+                    failed = true;
+            tracking = false;
+            CHECK(!failed);
+            CHECK(allocations == 0);
+            for (auto value : out)
+                test::near(value, 1.0);
+        }
         namespace ff = forecast_fixture;
         for (auto kernel : {DenseKernel::reference, DenseKernel::packed}) {
             auto model = load_forecaster(std::as_bytes(std::span(ff::artifact)), kernel);

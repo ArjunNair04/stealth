@@ -2,6 +2,8 @@
 #include "test_support.hpp"
 #include <algorithm>
 #include <array>
+#include <bit>
+#include <cstdint>
 #include <limits>
 #include <string_view>
 #include <vector>
@@ -144,6 +146,72 @@ void generated() {
             }
         }
 }
+void tiled() {
+    test::throws<std::invalid_argument>(
+        [] { AttentionWorkspace bad(1, 8, 1, static_cast<AttentionKernel>(99)); });
+    test::Random random;
+    const auto compare = [&](std::size_t tokens, std::size_t width, std::size_t heads) {
+        AttentionWorkspace reference(tokens, width, heads, AttentionKernel::reference);
+        AttentionWorkspace optimized(tokens, width, heads, AttentionKernel::tiled);
+        AttentionWorkspace automatic(tokens, width, heads);
+        CHECK(reference.bytes() == optimized.bytes());
+        std::vector<float> q(tokens * width), k(tokens * width), v(tokens * width);
+        std::vector<float> expected(tokens * width), actual(tokens * width),
+            default_output(tokens * width);
+        for (auto *values : {&q, &k, &v})
+            for (auto &value : *values)
+                value = random.next() * 3.0F;
+        CHECK(causal_attention(q, k, v, tokens, expected, reference) == Error::ok);
+        CHECK(causal_attention(q, k, v, tokens, actual, optimized) == Error::ok);
+        CHECK(causal_attention(q, k, v, tokens, default_output, automatic) == Error::ok);
+        for (std::size_t i = 0; i < actual.size(); ++i) {
+            CHECK(std::bit_cast<std::uint32_t>(actual[i]) ==
+                  std::bit_cast<std::uint32_t>(expected[i]));
+            CHECK(std::bit_cast<std::uint32_t>(default_output[i]) ==
+                  std::bit_cast<std::uint32_t>(expected[i]));
+        }
+        // Future changes cannot alter earlier rows, including tile/tail boundaries.
+        if (tokens > 1) {
+            auto changed = v;
+            for (std::size_t i = width; i < changed.size(); ++i)
+                changed[i] += 100;
+            CHECK(causal_attention(q, k, changed, tokens, actual, optimized) == Error::ok);
+            for (std::size_t i = 0; i < width; ++i)
+                CHECK(actual[i] == expected[i]);
+        }
+        // Distinctive head/channel values independently expose cross-head loads.
+        std::fill(q.begin(), q.end(), 0);
+        std::fill(k.begin(), k.end(), 0);
+        for (std::size_t t = 0; t < tokens; ++t)
+            for (std::size_t c = 0; c < width; ++c)
+                v[t * width + c] = static_cast<float>(c + 1);
+        CHECK(causal_attention(q, k, v, tokens, actual, optimized) == Error::ok);
+        for (std::size_t i = 0; i < actual.size(); ++i)
+            test::near(actual[i], static_cast<double>(i % width + 1), 2e-5, 5e-5);
+        for (auto kernel : {AttentionKernel::reference, AttentionKernel::tiled}) {
+            AttentionWorkspace ws(tokens, width, heads, kernel);
+            std::fill(actual.begin(), actual.end(), 123.0F);
+            auto bad = q;
+            bad.back() = std::numeric_limits<float>::infinity();
+            CHECK(causal_attention(bad, k, v, tokens, actual, ws) == Error::non_finite);
+            test::unchanged(actual);
+            std::fill(q.begin(), q.end(), std::numeric_limits<float>::max());
+            std::fill(k.begin(), k.end(), std::numeric_limits<float>::max());
+            CHECK(causal_attention(q, k, v, tokens, actual, ws) == Error::numerical_error);
+            test::unchanged(actual);
+            std::fill(q.begin(), q.end(), 0);
+            std::fill(k.begin(), k.end(), 0);
+        }
+    };
+    for (std::size_t head_width : {1U, 3U, 7U, 8U, 9U, 15U, 16U, 17U, 31U, 32U, 63U, 64U, 65U, 127U,
+                                   128U, 255U, 256U, 511U, 512U})
+        for (std::size_t heads : {1U, 3U, 4U})
+            if (head_width * heads <= max_width)
+                for (std::size_t tokens : {1U, 5U, 17U})
+                    compare(tokens, head_width * heads, heads);
+    compare(96, 64, 4);
+    compare(max_context, 8, 1);
+}
 } // namespace
 int main(int argc, char *argv[]) {
     try {
@@ -158,6 +226,8 @@ int main(int argc, char *argv[]) {
             causality();
         else if (group == "generated")
             generated();
+        else if (group == "tiled")
+            tiled();
         else
             throw std::runtime_error("Unknown test group");
         std::cout << group << ": " << test::checks << " checks passed\n";
