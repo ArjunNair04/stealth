@@ -1,0 +1,153 @@
+{
+  "artifact_hashes": {
+    "bundle/manifest.json": "be20a4395f8e4bea0488a47af41a4675ba792d3a2c5d33ec5931d7a4decace53",
+    "bundle/model.stlf": "8b5fa7c7751ec3a1849e81c847a06df0f6d088b0d9059298b776dc9383053897",
+    "decisions.jsonl": "1be65cff87b3a20dc7fc33b513f3966e50e658cee877b456706f28101a0baf22",
+    "protocol.json": "bb26e3740f1c44b6d7a4eb0fc7c73eea8419d092a12397daf8da0288d7ea4648",
+    "scaler.json": "7090518d13644cba7a13f0b446dd3349f8918db143dfe1e3825e03343a188340",
+    "scores.json": "efdd7e9a5bad3d780211ec1731653064968ad67441c9aad28a19d9d96f1f568f",
+    "started.json": "9b6ec5e428ee21a761450da2a20967d76ea580bb8016297c3f3c7b24b3863837",
+    "task.json": "ba2c958bb03ec27a1b3b77c0ca26c172a3f988e40f7beaf163cedbdbed7881f6",
+    "training/complete.json": "c9ae9bfafffc1d3fd0386660899e22ec95c70d82d6bd8a11f7d91ea8c2fd67e2",
+    "training/epoch-001/arrays.npz": "0f3a30bcdc710017dfa60c552e362bcecc071deb8b13bcf249481b92e380948b",
+    "training/epoch-001/manifest.json": "95f4d9a65e0a0a55ab8d39efc6f1f908f6eadfc43ae91d818e4024b8de777e0c",
+    "training/epoch-002/arrays.npz": "9964048b02f855176e26020a0dc5e20b480af6f556346bd84bf6ae3fc29acb19",
+    "training/epoch-002/manifest.json": "1b97b614f464695568c693451f0c09d739d20255ce78c883abd1f1feee45686e",
+    "training/export.json": "b306c34dfca6b142103ac09554df8c61b3476eea5e9ab4cab548280372238d07",
+    "training/model.stlf": "8b5fa7c7751ec3a1849e81c847a06df0f6d088b0d9059298b776dc9383053897",
+    "training/result.json": "1c9de5b08dedf7349d4cd12d3efa744c25e8ec24b6895ddc4a0142c36b072751",
+    "training/started.json": "48decdc48e2699434fd072cc29ef63aeb7ebfb9914f01e2a3c1d1040289efc84"
+  },
+  "binding": {
+    "code_commit": "9c96d88628ee599b0ae92c3af01d44fbeba27eee",
+    "data_sha256": "6ce1759b1a18e3328421d5d75fadcb316c449fcd7cec32820c8dafda71986c9e",
+    "protocol_sha256": "bb26e3740f1c44b6d7a4eb0fc7c73eea8419d092a12397daf8da0288d7ea4648",
+    "scaler_sha256": "7090518d13644cba7a13f0b446dd3349f8918db143dfe1e3825e03343a188340",
+    "task_sha256": "05fc3e766108353e815086d1d385cd2677382c042d7d71e8b230fca151204c2f"
+  },
+  "bundle_id": "be20a4395f8e4bea0488a47af41a4675ba792d3a2c5d33ec5931d7a4decace53",
+  "elapsed_seconds": {
+    "total": 19.388331615016796,
+    "training_and_setup": 17.377116483985446
+  },
+  "environment": {
+    "deterministic": true,
+    "machine": "x86_64",
+    "numpy": "1.26.4",
+    "python": "3.10.6",
+    "system": "Darwin",
+    "threads": 1,
+    "torch": "2.2.2",
+    "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+  },
+  "fresh_process_replay": {
+    "byte_identical": true,
+    "ledger_sha256": "1be65cff87b3a20dc7fc33b513f3966e50e658cee877b456706f28101a0baf22"
+  },
+  "isolated_faults_caught": [
+    "gap reset disabled",
+    "failed row committed",
+    "manifest binding bypassed"
+  ],
+  "limitations": [
+    "Small engineering demo on previously developmental ETTm1 rows",
+    "Synthetic availability clocks; source timezone and historical release clocks unknown",
+    "Primary MAE is 3.021 percent worse than persistence",
+    "No deployment, financial, unseen-data or runtime-frontier claim"
+  ],
+  "local_tests": {
+    "new_tests": 20,
+    "offline": 66,
+    "python_wrapper": 24,
+    "torch_training_reference": 67
+  },
+  "native": {
+    "build_info": {
+      "architecture": "x86_64",
+      "compiler": "AppleClang 16.0.0.16000026",
+      "configuration": "Release",
+      "operating_system": "Darwin",
+      "source_fingerprint": "bd6803db3aae724ca8aa767a6f2bb8e65cef53e01e26d15435873c8936b5caea",
+      "version": "0.1.0"
+    },
+    "extension_sha256": "ed13b1809c6921a7338c3ca9b3189223d717939d856316730a3532ab66fbd600"
+  },
+  "purpose": "engineering_demonstration",
+  "recorded_date": "2026-10-30",
+  "replay": {
+    "clock_domain": "synthetic",
+    "direct_native_exact": true,
+    "forecasts": 509,
+    "max_torch_native_absolute_error": 3.814697265625e-06,
+    "warming_up": 95
+  },
+  "schema_version": 1,
+  "scores": {
+    "last_observation": {
+      "count": 509,
+      "mae": 0.8633300766261013,
+      "rmse": 1.353474940295744
+    },
+    "native": {
+      "count": 509,
+      "mae": 0.8894113042265587,
+      "rmse": 1.3300519295713182
+    },
+    "previous_day": {
+      "count": 509,
+      "mae": 2.0419664963757826,
+      "rmse": 2.6626948353938475
+    },
+    "torch": {
+      "count": 509,
+      "mae": 0.8894112892375714,
+      "rmse": 1.3300519252428635
+    }
+  },
+  "selected_epoch": 2,
+  "timing_is_benchmark": false,
+  "training_history": [
+    {
+      "epoch": 1,
+      "training_standardized_mse": 0.12802213427346446,
+      "validation": {
+        "count": 509,
+        "mae": 1.0412143639824947,
+        "rmse": 1.3886906904205303
+      }
+    },
+    {
+      "epoch": 2,
+      "training_standardized_mse": 0.12479770880836655,
+      "validation": {
+        "count": 509,
+        "mae": 0.9847464870610265,
+        "rmse": 1.2943643066574722
+      }
+    }
+  ],
+  "training_validation_parity": {
+    "train": {
+      "absolute_tolerance": 5e-05,
+      "kernels": [
+        "reference",
+        "packed"
+      ],
+      "max_absolute_error": 3.814697265625e-06,
+      "origins_per_window": 96,
+      "relative_tolerance": 0.0002,
+      "windows": 8
+    },
+    "validation": {
+      "absolute_tolerance": 5e-05,
+      "kernels": [
+        "reference",
+        "packed"
+      ],
+      "max_absolute_error": 3.814697265625e-06,
+      "origins_per_window": 96,
+      "relative_tolerance": 0.0002,
+      "windows": 8
+    }
+  }
+}

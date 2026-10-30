@@ -29,7 +29,10 @@ existing latest-only native session and keeps one bounded raw window.
 The new two-epoch, one-seed [ETTm1 demo protocol](../benchmarks/ettm1/bundle_demo_v1.json)
 uses only the first 3,072 observations for fitting and scoring. It is an engineering
 demonstration of training/export/replay, with invented availability clocks, not a
-new predictive study. The original six-epoch studies and reserved tail stay intact.
+new predictive study. The original six-epoch studies and reserved tail stay intact. The [completed demo](bundle-demo-results-v1.md)
+produced 509 native forecasts and byte-identical fresh-process replay; primary MAE
+was 3.02% worse than persistence. This completes the requested integration demo,
+not the search for a useful predictor.
 
 ## Next local implementation
 

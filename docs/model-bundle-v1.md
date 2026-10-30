@@ -135,4 +135,4 @@ python3 -m unittest discover -s tests -v
 
 The demo is pipeline evidence on an already developmental slice. It does not
 establish useful predictions, financial alpha, current-runtime superiority or
-deployment readiness. Results are recorded separately after the frozen run.
+deployment readiness. [The completed run and its limits](bundle-demo-results-v1.md) are recorded separately.
