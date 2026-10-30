@@ -1,0 +1,21 @@
+{
+  "fresh_process_evaluation_predictions": 37458,
+  "latest_comparisons": 72594,
+  "latest_comparisons_outside_tolerance": 1,
+  "native_code_changed": false,
+  "notes": [
+    "Local correctness only; final GitHub CI status reported separately",
+    "The original nine-model study failed its numerical gate; diagnostic analysis completion is not admission"
+  ],
+  "optional_linux_tests_skipped": 3,
+  "original_failure_preserved": true,
+  "original_recipe_commit": "e2143542da2de8f9d0cd2002440dadd0ba2c7934",
+  "plot_visually_checked": true,
+  "plotting_source_sha256": "05a0af56e41ce709389f3406de5b6ceecacb8a9d69386f96ff9417200ca1f4dd",
+  "replay_byte_identical": true,
+  "sizing_tests": 7,
+  "tolerances_relaxed": false,
+  "training_log_sha256": "9f639bbba4abff413e753f0b4e00fe4e1ddcbedbf0877ecac5ba72f58eb70b10",
+  "training_tests_passed": 114,
+  "training_tests_run": 117
+}

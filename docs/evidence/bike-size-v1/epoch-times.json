@@ -1,0 +1,497 @@
+{
+  "note": "Each logged epoch includes validation and checkpoint I/O. Excludes preparation, post-selection parity and evaluation. Parent total-study wall summaries were not sealed after failure.",
+  "widths": {
+    "128": [
+      {
+        "epoch": 0,
+        "seconds": 4.053,
+        "seed": 7,
+        "validation_mae_rentals": 74.97566598360656
+      },
+      {
+        "epoch": 1,
+        "seconds": 23.684,
+        "seed": 7,
+        "validation_mae_rentals": 50.9073497131047
+      },
+      {
+        "epoch": 2,
+        "seconds": 24.021,
+        "seed": 7,
+        "validation_mae_rentals": 36.77284662665124
+      },
+      {
+        "epoch": 3,
+        "seconds": 28.448,
+        "seed": 7,
+        "validation_mae_rentals": 39.39699227805989
+      },
+      {
+        "epoch": 4,
+        "seconds": 27.855,
+        "seed": 7,
+        "validation_mae_rentals": 33.78584824249026
+      },
+      {
+        "epoch": 5,
+        "seconds": 28.338,
+        "seed": 7,
+        "validation_mae_rentals": 34.54363900649809
+      },
+      {
+        "epoch": 6,
+        "seconds": 28.102,
+        "seed": 7,
+        "validation_mae_rentals": 38.018194961697475
+      },
+      {
+        "epoch": 7,
+        "seconds": 27.97,
+        "seed": 7,
+        "validation_mae_rentals": 34.428096744136695
+      },
+      {
+        "epoch": 8,
+        "seconds": 27.94,
+        "seed": 7,
+        "validation_mae_rentals": 32.24033511985622
+      },
+      {
+        "epoch": 0,
+        "seconds": 3.955,
+        "seed": 19,
+        "validation_mae_rentals": 74.97566598360656
+      },
+      {
+        "epoch": 1,
+        "seconds": 23.649,
+        "seed": 19,
+        "validation_mae_rentals": 40.93698603553782
+      },
+      {
+        "epoch": 2,
+        "seconds": 23.728,
+        "seed": 19,
+        "validation_mae_rentals": 38.71802871748037
+      },
+      {
+        "epoch": 3,
+        "seconds": 24.042,
+        "seed": 19,
+        "validation_mae_rentals": 32.1645609256221
+      },
+      {
+        "epoch": 4,
+        "seconds": 23.71,
+        "seed": 19,
+        "validation_mae_rentals": 32.824287062844824
+      },
+      {
+        "epoch": 5,
+        "seconds": 23.689,
+        "seed": 19,
+        "validation_mae_rentals": 34.70550349076397
+      },
+      {
+        "epoch": 6,
+        "seconds": 28.598,
+        "seed": 19,
+        "validation_mae_rentals": 34.483888213550884
+      },
+      {
+        "epoch": 7,
+        "seconds": 27.866,
+        "seed": 19,
+        "validation_mae_rentals": 37.745185423401935
+      },
+      {
+        "epoch": 8,
+        "seconds": 27.707,
+        "seed": 19,
+        "validation_mae_rentals": 32.761083856074244
+      },
+      {
+        "epoch": 0,
+        "seconds": 4.841,
+        "seed": 43,
+        "validation_mae_rentals": 74.97566598360656
+      },
+      {
+        "epoch": 1,
+        "seconds": 24.648,
+        "seed": 43,
+        "validation_mae_rentals": 44.25712553023174
+      },
+      {
+        "epoch": 2,
+        "seconds": 23.736,
+        "seed": 43,
+        "validation_mae_rentals": 37.44483515597712
+      },
+      {
+        "epoch": 3,
+        "seconds": 23.589,
+        "seed": 43,
+        "validation_mae_rentals": 34.71505649024468
+      },
+      {
+        "epoch": 4,
+        "seconds": 23.601,
+        "seed": 43,
+        "validation_mae_rentals": 36.20220541022718
+      },
+      {
+        "epoch": 5,
+        "seconds": 23.699,
+        "seed": 43,
+        "validation_mae_rentals": 36.393269808614235
+      },
+      {
+        "epoch": 6,
+        "seconds": 23.448,
+        "seed": 43,
+        "validation_mae_rentals": 38.072348252183104
+      },
+      {
+        "epoch": 7,
+        "seconds": 24.02,
+        "seed": 43,
+        "validation_mae_rentals": 33.71155573444018
+      },
+      {
+        "epoch": 8,
+        "seconds": 24.474,
+        "seed": 43,
+        "validation_mae_rentals": 33.8122652634963
+      }
+    ],
+    "256": [
+      {
+        "epoch": 0,
+        "seconds": 10.179,
+        "seed": 7,
+        "validation_mae_rentals": 74.97566598360656
+      },
+      {
+        "epoch": 1,
+        "seconds": 58.638,
+        "seed": 7,
+        "validation_mae_rentals": 47.36059738622719
+      },
+      {
+        "epoch": 2,
+        "seconds": 60.23,
+        "seed": 7,
+        "validation_mae_rentals": 44.805209835310905
+      },
+      {
+        "epoch": 3,
+        "seconds": 63.336,
+        "seed": 7,
+        "validation_mae_rentals": 44.10955330909642
+      },
+      {
+        "epoch": 4,
+        "seconds": 61.171,
+        "seed": 7,
+        "validation_mae_rentals": 40.2292769947465
+      },
+      {
+        "epoch": 5,
+        "seconds": 64.582,
+        "seed": 7,
+        "validation_mae_rentals": 36.466401593354114
+      },
+      {
+        "epoch": 6,
+        "seconds": 63.159,
+        "seed": 7,
+        "validation_mae_rentals": 39.86308748480772
+      },
+      {
+        "epoch": 7,
+        "seconds": 63.348,
+        "seed": 7,
+        "validation_mae_rentals": 40.154609348729906
+      },
+      {
+        "epoch": 8,
+        "seconds": 63.49,
+        "seed": 7,
+        "validation_mae_rentals": 36.42552608848391
+      },
+      {
+        "epoch": 0,
+        "seconds": 10.251,
+        "seed": 19,
+        "validation_mae_rentals": 74.97566598360656
+      },
+      {
+        "epoch": 1,
+        "seconds": 68.183,
+        "seed": 19,
+        "validation_mae_rentals": 52.82931970449331
+      },
+      {
+        "epoch": 2,
+        "seconds": 64.43,
+        "seed": 19,
+        "validation_mae_rentals": 42.65992784965211
+      },
+      {
+        "epoch": 3,
+        "seconds": 66.091,
+        "seed": 19,
+        "validation_mae_rentals": 45.84943027568401
+      },
+      {
+        "epoch": 4,
+        "seconds": 63.103,
+        "seed": 19,
+        "validation_mae_rentals": 37.583550242518854
+      },
+      {
+        "epoch": 5,
+        "seconds": 68.437,
+        "seed": 19,
+        "validation_mae_rentals": 37.588503212520095
+      },
+      {
+        "epoch": 6,
+        "seconds": 67.672,
+        "seed": 19,
+        "validation_mae_rentals": 33.79669030479797
+      },
+      {
+        "epoch": 7,
+        "seconds": 70.539,
+        "seed": 19,
+        "validation_mae_rentals": 42.83754491486294
+      },
+      {
+        "epoch": 8,
+        "seconds": 70.454,
+        "seed": 19,
+        "validation_mae_rentals": 41.69982725534527
+      },
+      {
+        "epoch": 0,
+        "seconds": 9.095,
+        "seed": 43,
+        "validation_mae_rentals": 74.97566598360656
+      },
+      {
+        "epoch": 1,
+        "seconds": 56.202,
+        "seed": 43,
+        "validation_mae_rentals": 46.48401616586238
+      },
+      {
+        "epoch": 2,
+        "seconds": 56.971,
+        "seed": 43,
+        "validation_mae_rentals": 43.80292540566698
+      },
+      {
+        "epoch": 3,
+        "seconds": 57.701,
+        "seed": 43,
+        "validation_mae_rentals": 52.03684576468821
+      },
+      {
+        "epoch": 4,
+        "seconds": 59.344,
+        "seed": 43,
+        "validation_mae_rentals": 45.91905428713462
+      },
+      {
+        "epoch": 5,
+        "seconds": 62.141,
+        "seed": 43,
+        "validation_mae_rentals": 38.48247960847363
+      },
+      {
+        "epoch": 6,
+        "seconds": 61.998,
+        "seed": 43,
+        "validation_mae_rentals": 41.59022996241807
+      },
+      {
+        "epoch": 7,
+        "seconds": 60.018,
+        "seed": 43,
+        "validation_mae_rentals": 38.00693989897979
+      },
+      {
+        "epoch": 8,
+        "seconds": 70.29,
+        "seed": 43,
+        "validation_mae_rentals": 34.38561887466125
+      }
+    ],
+    "64": [
+      {
+        "epoch": 0,
+        "seconds": 2.032,
+        "seed": 7,
+        "validation_mae_rentals": 74.97566598360656
+      },
+      {
+        "epoch": 1,
+        "seconds": 11.199,
+        "seed": 7,
+        "validation_mae_rentals": 48.068414425395325
+      },
+      {
+        "epoch": 2,
+        "seconds": 11.014,
+        "seed": 7,
+        "validation_mae_rentals": 40.34156805525225
+      },
+      {
+        "epoch": 3,
+        "seconds": 11.12,
+        "seed": 7,
+        "validation_mae_rentals": 38.85097212019972
+      },
+      {
+        "epoch": 4,
+        "seconds": 11.065,
+        "seed": 7,
+        "validation_mae_rentals": 36.87372736762026
+      },
+      {
+        "epoch": 5,
+        "seconds": 11.181,
+        "seed": 7,
+        "validation_mae_rentals": 33.80623447632734
+      },
+      {
+        "epoch": 6,
+        "seconds": 11.044,
+        "seed": 7,
+        "validation_mae_rentals": 37.09570552431931
+      },
+      {
+        "epoch": 7,
+        "seconds": 11.043,
+        "seed": 7,
+        "validation_mae_rentals": 35.11479078142328
+      },
+      {
+        "epoch": 8,
+        "seconds": 10.979,
+        "seed": 7,
+        "validation_mae_rentals": 32.343719875836
+      },
+      {
+        "epoch": 0,
+        "seconds": 1.888,
+        "seed": 19,
+        "validation_mae_rentals": 74.97566598360656
+      },
+      {
+        "epoch": 1,
+        "seconds": 10.933,
+        "seed": 19,
+        "validation_mae_rentals": 49.08388617499846
+      },
+      {
+        "epoch": 2,
+        "seconds": 11.038,
+        "seed": 19,
+        "validation_mae_rentals": 42.46979925837311
+      },
+      {
+        "epoch": 3,
+        "seconds": 11.065,
+        "seed": 19,
+        "validation_mae_rentals": 37.53617010127465
+      },
+      {
+        "epoch": 4,
+        "seconds": 11.145,
+        "seed": 19,
+        "validation_mae_rentals": 36.42428440588849
+      },
+      {
+        "epoch": 5,
+        "seconds": 11.212,
+        "seed": 19,
+        "validation_mae_rentals": 35.09984035773554
+      },
+      {
+        "epoch": 6,
+        "seconds": 11.035,
+        "seed": 19,
+        "validation_mae_rentals": 34.014538750443684
+      },
+      {
+        "epoch": 7,
+        "seconds": 11.037,
+        "seed": 19,
+        "validation_mae_rentals": 34.46558469508729
+      },
+      {
+        "epoch": 8,
+        "seconds": 10.972,
+        "seed": 19,
+        "validation_mae_rentals": 34.5557569325434
+      },
+      {
+        "epoch": 0,
+        "seconds": 1.894,
+        "seed": 43,
+        "validation_mae_rentals": 74.97566598360656
+      },
+      {
+        "epoch": 1,
+        "seconds": 13.166,
+        "seed": 43,
+        "validation_mae_rentals": 43.095469611419816
+      },
+      {
+        "epoch": 2,
+        "seconds": 12.778,
+        "seed": 43,
+        "validation_mae_rentals": 37.431026354955975
+      },
+      {
+        "epoch": 3,
+        "seconds": 13.766,
+        "seed": 43,
+        "validation_mae_rentals": 38.86019572292464
+      },
+      {
+        "epoch": 4,
+        "seconds": 13.26,
+        "seed": 43,
+        "validation_mae_rentals": 34.77123409336742
+      },
+      {
+        "epoch": 5,
+        "seconds": 13.488,
+        "seed": 43,
+        "validation_mae_rentals": 35.41639992191273
+      },
+      {
+        "epoch": 6,
+        "seconds": 13.109,
+        "seed": 43,
+        "validation_mae_rentals": 36.50481015861704
+      },
+      {
+        "epoch": 7,
+        "seconds": 13.322,
+        "seed": 43,
+        "validation_mae_rentals": 34.80685468200073
+      },
+      {
+        "epoch": 8,
+        "seconds": 13.68,
+        "seed": 43,
+        "validation_mae_rentals": 37.63804924671219
+      }
+    ]
+  }
+}

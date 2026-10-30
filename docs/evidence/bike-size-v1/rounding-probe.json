@@ -1,0 +1,14 @@
+{
+  "dense_change": "FP32 bias-first ordered multiply then add, matching the native dense contract; every other Torch operation unchanged",
+  "index": 2974,
+  "input_sha256": "7f3df353e3d305e8c624314ada6ac8c12a0e44fc94a7153dfb7a475848f115e7",
+  "model_sha256": "a8c0f3cb67eb33bd4bb2bad0ebdb1b22fd91c0233158c261c34ad919e62584de",
+  "native": {
+    "packed": 0.04672963544726372,
+    "reference": 0.04672963544726372
+  },
+  "ordered_dense_equals_native": true,
+  "source_sha256": "f272d1796355b760899eda5c5fd9022c061301eb33454c60016918d0214c2a3a",
+  "torch_ordered_dense": 0.04672963544726372,
+  "torch_standard": 0.046630971133708954
+}

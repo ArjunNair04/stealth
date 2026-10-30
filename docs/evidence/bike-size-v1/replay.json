@@ -1,0 +1,33 @@
+{
+  "analysis_sha256": "97b4ef23d39a7e488115a52085d0ddef2527c8fccda30068d5accaa92bbaffd2",
+  "native": {
+    "build_info": {
+      "architecture": "x86_64",
+      "compiler": "AppleClang 16.0.0.16000026",
+      "configuration": "Release",
+      "operating_system": "Darwin",
+      "source_fingerprint": "d3fe8695dda918a14669c34769578d2bfaf03d1a6dd37e82344850d690e5e6ce",
+      "version": "0.1.0"
+    },
+    "extension_sha256": "9dc1fa2d6505b9774b0c89da55f1a53648217de979e723ab364e846132896b47"
+  },
+  "source_sha256": "a63503500805d1ff35d477a3a2778e5f96feee64ee8e4dcfaeda55b4bf2804d0",
+  "status": "diagnostic_replay_identical_original_gate_failed",
+  "widths": {
+    "128": {
+      "byte_identical": true,
+      "predictions": 12486,
+      "sha256": "438fc56c3b6ff763c4f26a8c432e0ceed0e527cc14fd4a6706c3eb603408881e"
+    },
+    "256": {
+      "byte_identical": true,
+      "predictions": 12486,
+      "sha256": "4177305ca33344e536a46b13cf78da4bd79d8b508da16e38591f8f002f5064d4"
+    },
+    "64": {
+      "byte_identical": true,
+      "predictions": 12486,
+      "sha256": "437cdde17b27ea5d98eec8295a4173115261af77f1f1405fb59dc4b2c1e6652c"
+    }
+  }
+}

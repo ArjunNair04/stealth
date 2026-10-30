@@ -24,7 +24,7 @@ jobs:
             cxx: clang++
             python: "3.12"
           - name: macOS ARM
-            os: macos-14
+            os: macos-15
             cxx: clang++
             python: "3.12"
           - name: macOS Intel

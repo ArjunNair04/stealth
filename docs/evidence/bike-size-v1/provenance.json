@@ -1,0 +1,29 @@
+{
+  "binary_sha256": "8deb9a65f88ccec8dfff67ec07446d3fb9b586dfd8f7ea56566a513270c3bcd9",
+  "build": {
+    "cli_sha256": "f92ec83065c2c68f3ba3f733e0f41b1134d323271f024ab77684f94298e75cff",
+    "info": "version: 0.1.0\ncompiler: AppleClang 16.0.0.16000026\noperating_system: Darwin\narchitecture: x86_64\nconfiguration: Release\nsource_fingerprint: d3fe8695dda918a14669c34769578d2bfaf03d1a6dd37e82344850d690e5e6ce\ncxx_standard: 20\n"
+  },
+  "code_commit": "e2143542da2de8f9d0cd2002440dadd0ba2c7934",
+  "completed_width_replays": {
+    "128": true,
+    "64": true
+  },
+  "input_sha256": "b2bafd161d7cf42fea9db193974244ed5e89f27c886de470db448969be5fe93d",
+  "native": {
+    "build_info": {
+      "architecture": "x86_64",
+      "compiler": "AppleClang 16.0.0.16000026",
+      "configuration": "Release",
+      "operating_system": "Darwin",
+      "source_fingerprint": "d3fe8695dda918a14669c34769578d2bfaf03d1a6dd37e82344850d690e5e6ce",
+      "version": "0.1.0"
+    },
+    "extension_sha256": "9dc1fa2d6505b9774b0c89da55f1a53648217de979e723ab364e846132896b47"
+  },
+  "original_study_status": "failed_numerical_gate",
+  "protocol_sha256": "bc1adc0168382f2ecead3d2dedc8e01e3ac0383542cd57b7b51623b97c88857a",
+  "source_inventory_sha256": "a74df56ecc7c65952dae9cd30843b6dca22d2a8988b4a7c7956a22f1892a9100",
+  "source_sha256": "069cf7c8879b36fcc78f0cac7fb3ddc62ce4ff07d1fe56b4683f356c6d452a1f",
+  "status": "diagnostic_only"
+}
