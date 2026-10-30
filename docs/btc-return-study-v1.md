@@ -1,5 +1,8 @@
 # BTC next-hour return: frozen exploratory study v1
 
+Completed: see the [recorded results](btc-return-results-v1.md). The primary
+forecast-improvement gate failed; native parity and deterministic replay passed.
+
 The user selected the next-hour BTC return on 2026-10-30. The question is whether
 Bitcoin's own recent price and volume history helps predict its price change
 over the next hour. This uses the existing one-block model and the previously

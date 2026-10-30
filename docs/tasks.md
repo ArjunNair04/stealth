@@ -43,7 +43,7 @@ trading-universe mapping and production model activation are separate work.
 The user deferred Beaker access and requested a useful forecasting application
 next. The [hourly-data admission and study proposal](forecast-study-intake-v1.md)
 now provide a checked local candidate and a concrete target choice. The user chose BTC next-hour return. The [frozen return study](btc-return-study-v1.md)
-uses the current one-block model, fixed seeds and chronological evaluation. Current-runtime
+is now complete with a negative predictive result and successful native replay. Current-runtime
 adapters remain the parallel performance gate; no new kernel tuning is justified
 by the integration demo or by data admission.
 
@@ -58,14 +58,21 @@ Keep Stealth in a separate checkout/environment. Shared login-node or noisy CI
 measurements cannot establish the latency frontier. Preserve failures and partial
 runs; do not tune kernels or rerun poor performance into a favourable result.
 
-## Then: one useful predictive experiment
+## First financial forecasting experiment: completed
 
-Discuss a single target, horizon and target universe with the user. Use simple
-baselines, chronological splits, validation-only choices and a protected final
-evaluation. The saved ETTm1 correction models still miss persistence on primary
-old-test error; the old test is exploratory, and 12,080 reserved tail rows remain
-unused for model selection/scoring. Financial work must pass QTS data and timing
-gates and starts as research, with no live order execution.
+The user selected BTC next-hour return. The [frozen study](btc-return-study-v1.md)
+trained all three seeds for three epochs, selected on validation only, and scored
+5,160 evaluation hours. The [recorded result](btc-return-results-v1.md) fails its
+forecast-improvement gate: the primary learned model's MSE is 0.036% worse than
+zero return, and the other two seeds selected the initial constant. All 28,512
+validation/evaluation latest predictions passed native/Torch parity, and the saved
+ledger replayed byte-for-byte in a fresh process. No alpha or trading result.
+
+The next research decision is one additional signal family with an explicit
+availability contract and a new frozen experiment. Preserve this result and avoid
+using the same evaluation period as independent confirmation. Model expansion
+needs evidence from that research; runtime tuning still waits for the controlled
+Linux comparison. The ETTm1 reserved tail remains unused.
 
 ## Tracking
 
