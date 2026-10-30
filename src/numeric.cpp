@@ -1,5 +1,6 @@
 #include "stealth/numeric.hpp"
 #include "fp_policy.hpp"
+#include "finite.hpp"
 
 #include <algorithm>
 #include <array>
@@ -70,13 +71,7 @@ std::size_t product(std::size_t rows, std::size_t columns) {
     return rows * columns;
 }
 
-bool finite(std::span<const float> input) noexcept {
-    for (float value : input) {
-        if (!std::isfinite(value))
-            return false;
-    }
-    return true;
-}
+using numeric_detail::finite;
 
 bool overlaps(std::span<const float> a, std::span<const float> b) noexcept {
     if (a.empty() || b.empty())
