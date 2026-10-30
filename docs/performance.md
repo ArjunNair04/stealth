@@ -1,5 +1,12 @@
 # How the first latency improvements work
 
+The latest [assembly-guided audit](assembly-latency-v1.md) adds runtime-guarded AVX
+dense tiles: 136.617 → 97.141 µs on the fixed local Intel workload (29.43% median
+paired reduction), exact predictions and unchanged owned workspace. Narrow
+products retain the portable path. A separate exponential-cache candidate was
+rejected. Remaining targets are independent output tiles for single-row dense
+calls, row-wise normalization and Python conversion; Linux timing stays deferred.
+
 This page retains the earlier measurements. The latest [local latency audit](local-latency-v1.md)
 records full-tile specialization, SIMD validation/normalization and immutable
 feature-provenance reuse, including rejected candidates and tail regressions.

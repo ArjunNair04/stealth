@@ -1,0 +1,6132 @@
+{
+  "avx_initial": {
+    "commit": "a5192908c6f1c906d8c82fd5c5fd7961714eac33",
+    "dirty": false,
+    "files": {
+      "local/assembly-latency-v1/avx-runtime": "78e9b9fd7613c3a290669ea9d5d68d974011bac27ade2d5e1fe68826a74258ec",
+      "local/assembly-latency-v1/baseline-runtime": "e381c54c259f11353380af24c8ca6fd9ca1ca48e25f0c24815a25ecee1cea5c7",
+      "local/ettm1-correction-v1/seed19/model.stlf": "237910f530e7c337227f2150da2f78da2518e996ee817c4f40e4ef4a78a1a080",
+      "local/ettm1-correction-v1/seed43/model.stlf": "6400f2cb9a94237e8cd0e5a8083fd501c75fb9bfe60a7871675e12ccacdbca6a",
+      "local/ettm1-correction-v1/seed7/model.stlf": "48d3433c9be2e2c411a06fdf981a78332d6f34af0767608d6d11ef9ca978e87d",
+      "local/runtime-latest-v1/expected-19.bin": "0fc9501064f7ee77d5bae723756f2af88b74619371ab752c0753606a77ae6143",
+      "local/runtime-latest-v1/expected-43.bin": "f4c91957e0d3db550ef510d8720b3affcc995f19842d1d5054132a7e4bd64005",
+      "local/runtime-latest-v1/expected-7.bin": "89cec65b26ed7b3aa03816daa02a899c6d6823a79a3d106a82ae431b79fdd87f"
+    },
+    "gate": {
+      "accepted": true,
+      "median_p50_reduction": 0.2815808355175494,
+      "median_p99_increase": -0.28516459818464657,
+      "per_seed_median_reduction": {
+        "19": 0.2769129142353848,
+        "43": 0.2815808355175494,
+        "7": 0.28253062717132926
+      }
+    },
+    "input_sha256": "3ed32af0b79ef537e2f2d9a0fa9afda122335689be2aeabf4add7013e85e3595",
+    "protocol": {
+      "absolute_tolerance": 5e-05,
+      "assembly": "Compare inner loops, vector width, spills, calls, branches, and multiplication/addition counts. No microarchitectural cycle claim without measurement.",
+      "baseline_commit": "82ee5ae488b85298364998c106f5c16556dc6b02",
+      "batches": [
+        1,
+        8
+      ],
+      "candidates": [
+        "Runtime-guarded AVX dense tiles: independent output lanes, same ordered multiplies/adds, no FMA; portable fallback",
+        "Memoize attention exponentials in FP64 scratch; identical reduction and division, bounded workspace increase"
+      ],
+      "gate": "Median paired last/batch1 p50 improvement >=5%; each seed improves; median paired p99 regression <=10%; batch8 and full-trace median paired p50 regressions <=5%; report all cells and outliers",
+      "id": "assembly_latency_v1",
+      "inputs": "Unchanged 32 validation windows and saved models from latest_v1",
+      "limitations": [
+        "Local Intel Mac, uncontrolled OS/cache/frequency; no hard deadline or current-runtime frontier claim",
+        "Profile samples identify work; only separate uninstrumented runs establish measured latency",
+        "Development candidates may be rejected; all trials and failed candidates retained"
+      ],
+      "modes": [
+        "last",
+        "all"
+      ],
+      "numerical": "Existing outputs and failure semantics unchanged. Bitwise saved full traces and every prefix; unchanged independent-reference tolerance. No fast-math, quantization or model change.",
+      "order": "Fresh serial process per cell; alternate baseline/candidate by trial, seed, batch and mode; no simultaneous benchmarking",
+      "purpose": "Assembly-guided incremental optimization on the local Intel Mac; Linux performance deferred",
+      "relative_tolerance": 0.0002,
+      "samples": {
+        "all": {
+          "1": 200,
+          "8": 64
+        },
+        "last": {
+          "1": 1000,
+          "8": 200
+        }
+      },
+      "schema_version": 1,
+      "seeds": [
+        7,
+        19,
+        43
+      ],
+      "selection": "Evaluate each candidate separately. Retain only candidates passing the unchanged >=5% primary end-to-end gate, parity and safety checks. Report rejection as well as acceptance.",
+      "trials": 3,
+      "warmup": 64
+    },
+    "protocol_sha256": "38f3e0f8e9c97668c6a287e7c7ecf3c457a6eb85c1e5dcc453f97aa31bf33cc0",
+    "records": [
+      {
+        "batch": 1,
+        "checksum": 15291.249966144562,
+        "clock": {
+          "count": 1000,
+          "max_ns": 64,
+          "mean_ns": 34.602,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 36,
+          "p99_ns": 37
+        },
+        "engine": "native_core",
+        "first_call_ns": 261083,
+        "implementation": "baseline",
+        "latency": {
+          "count": 1000,
+          "max_ns": 313956,
+          "mean_ns": 160296.519,
+          "min_ns": 135809,
+          "p50_ns": 141320,
+          "p95_ns": 236314,
+          "p99_ns": 273862
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 532480,
+          "final": 1605632,
+          "setup": 1572864
+        },
+        "position_bytes": 24576,
+        "record_sha256": "c6b7021619e35f2f526011c5288dc0e686f52b3912a55c2f7f9979595d684d3f",
+        "seed": 7,
+        "setup_ns": 2654645,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15291.249966144562,
+        "clock": {
+          "count": 1000,
+          "max_ns": 125,
+          "mean_ns": 35.003,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 36,
+          "p99_ns": 37
+        },
+        "engine": "native_core",
+        "first_call_ns": 115669,
+        "implementation": "candidate",
+        "latency": {
+          "count": 1000,
+          "max_ns": 192956,
+          "mean_ns": 103580.294,
+          "min_ns": 97442,
+          "p50_ns": 100897,
+          "p95_ns": 128041,
+          "p99_ns": 163872
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "48bb69ae22110721ed2b30591bd6dfcbaa8020aeb9aaf56453e82005a49758d0",
+        "seed": 7,
+        "setup_ns": 1912727,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3146.053388118744,
+        "clock": {
+          "count": 1000,
+          "max_ns": 49,
+          "mean_ns": 34.187,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1214045,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1618693,
+          "mean_ns": 1232321.445,
+          "min_ns": 1135562,
+          "p50_ns": 1220829,
+          "p95_ns": 1383994,
+          "p99_ns": 1567768
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1552384,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "e9f42018fbcde72dadea09b3beced6ad2845f84572434d3214401e186855d646",
+        "seed": 7,
+        "setup_ns": 1790932,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3146.053388118744,
+        "clock": {
+          "count": 1000,
+          "max_ns": 49,
+          "mean_ns": 33.783,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1318866,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1733009,
+          "mean_ns": 1357368.26,
+          "min_ns": 1270029,
+          "p50_ns": 1326341,
+          "p95_ns": 1543194,
+          "p99_ns": 1680530
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1564672,
+          "setup": 1544192
+        },
+        "position_bytes": 24576,
+        "record_sha256": "654c8083047b9b20a245cbaf1b84e828d7477470f1dba7911859480c7c15eac1",
+        "seed": 7,
+        "setup_ns": 1830382,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 2995.949649810791,
+        "clock": {
+          "count": 1000,
+          "max_ns": 62,
+          "mean_ns": 34.58,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 890876,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1250023,
+          "mean_ns": 827567.4,
+          "min_ns": 772224,
+          "p50_ns": 794397,
+          "p95_ns": 957990,
+          "p99_ns": 1082673
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "3b324e17dd42e24787857c082e241c8c3e172cb288bcd5eb847a38e2034e84ea",
+        "seed": 7,
+        "setup_ns": 2186629,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 2995.949649810791,
+        "clock": {
+          "count": 1000,
+          "max_ns": 58,
+          "mean_ns": 33.659,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1328069,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1466899,
+          "mean_ns": 1130262.265,
+          "min_ns": 1066796,
+          "p50_ns": 1103450,
+          "p95_ns": 1232858,
+          "p99_ns": 1330063
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1568768,
+          "setup": 1544192
+        },
+        "position_bytes": 24576,
+        "record_sha256": "29becee424d688d2fd29404aeb96bebf20f39cb5665014be8a8029218dcf6a13",
+        "seed": 7,
+        "setup_ns": 2085144,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1139.9696426391602,
+        "clock": {
+          "count": 1000,
+          "max_ns": 51,
+          "mean_ns": 32.43,
+          "min_ns": 31,
+          "p50_ns": 32,
+          "p95_ns": 33,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 10635106,
+        "implementation": "baseline",
+        "latency": {
+          "count": 64,
+          "max_ns": 11459174,
+          "mean_ns": 10557856.140625,
+          "min_ns": 10235574,
+          "p50_ns": 10517268,
+          "p95_ns": 10857584,
+          "p99_ns": 11459174
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1556480,
+          "setup": 1519616
+        },
+        "position_bytes": 24576,
+        "record_sha256": "f5b3908629d1b033f08602f7049244b44bd93c31fc27b63e6eccfed074a3dff5",
+        "seed": 7,
+        "setup_ns": 1826532,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1139.9696426391602,
+        "clock": {
+          "count": 1000,
+          "max_ns": 49,
+          "mean_ns": 33.782,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 10410868,
+        "implementation": "candidate",
+        "latency": {
+          "count": 64,
+          "max_ns": 10686950,
+          "mean_ns": 9466801.65625,
+          "min_ns": 9148932,
+          "p50_ns": 9388530,
+          "p95_ns": 10142412,
+          "p99_ns": 10686950
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1544192,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "7b4529d49f8bb1938f1a855765f86094df28848820234c9573973385ea19a51e",
+        "seed": 7,
+        "setup_ns": 1726496,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15194.458088874817,
+        "clock": {
+          "count": 1000,
+          "max_ns": 135,
+          "mean_ns": 34.162,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 37
+        },
+        "engine": "native_core",
+        "first_call_ns": 110882,
+        "implementation": "candidate",
+        "latency": {
+          "count": 1000,
+          "max_ns": 172155,
+          "mean_ns": 100659.517,
+          "min_ns": 97597,
+          "p50_ns": 98517,
+          "p95_ns": 105922,
+          "p99_ns": 147507
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1560576,
+          "setup": 1540096
+        },
+        "position_bytes": 24576,
+        "record_sha256": "51bf3f39905ad305457b674f94ba5f3f09e3c4b4c1c6f059330ac7811a9839f5",
+        "seed": 19,
+        "setup_ns": 1802438,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15194.458088874817,
+        "clock": {
+          "count": 1000,
+          "max_ns": 44,
+          "mean_ns": 34.593,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 150258,
+        "implementation": "baseline",
+        "latency": {
+          "count": 1000,
+          "max_ns": 259964,
+          "mean_ns": 139444.088,
+          "min_ns": 133190,
+          "p50_ns": 136245,
+          "p95_ns": 157296,
+          "p99_ns": 206351
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 532480,
+          "final": 1589248,
+          "setup": 1564672
+        },
+        "position_bytes": 24576,
+        "record_sha256": "8babd1e53dc5424518879a57ae0fd36811d61c8a32d692e808f5290d938aea2f",
+        "seed": 19,
+        "setup_ns": 1855110,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3172.1858263015747,
+        "clock": {
+          "count": 1000,
+          "max_ns": 55,
+          "mean_ns": 33.654,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1333389,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 2146735,
+          "mean_ns": 1363446.705,
+          "min_ns": 1250332,
+          "p50_ns": 1323308,
+          "p95_ns": 1648355,
+          "p99_ns": 1804459
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 532480,
+          "final": 1552384,
+          "setup": 1536000
+        },
+        "position_bytes": 24576,
+        "record_sha256": "d0a93161fb29c7a5fce7196799406fbabb99941f1c1eaa80b4eccc819c661358",
+        "seed": 19,
+        "setup_ns": 1767262,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3172.1858263015747,
+        "clock": {
+          "count": 1000,
+          "max_ns": 64,
+          "mean_ns": 35.117,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 36,
+          "p99_ns": 37
+        },
+        "engine": "native_core",
+        "first_call_ns": 1244513,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1652447,
+          "mean_ns": 1186874.485,
+          "min_ns": 1113473,
+          "p50_ns": 1158711,
+          "p95_ns": 1294194,
+          "p99_ns": 1437845
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1560576,
+          "setup": 1536000
+        },
+        "position_bytes": 24576,
+        "record_sha256": "999532eb8d41ba985b7c87493b9c94756f8a11f8bbf294eda12b24414d8ff156",
+        "seed": 19,
+        "setup_ns": 1864947,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 2969.6991205215454,
+        "clock": {
+          "count": 1000,
+          "max_ns": 55,
+          "mean_ns": 34.54,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 1102076,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1531716,
+          "mean_ns": 1140209.795,
+          "min_ns": 1074676,
+          "p50_ns": 1124716,
+          "p95_ns": 1310973,
+          "p99_ns": 1446114
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1568768,
+          "setup": 1544192
+        },
+        "position_bytes": 24576,
+        "record_sha256": "251d2c0c3ce6c36ddc6a09f6fad51249ef065a5d2866ab684a2e2cf95da4cd03",
+        "seed": 19,
+        "setup_ns": 1808317,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 2969.6991205215454,
+        "clock": {
+          "count": 1000,
+          "max_ns": 138,
+          "mean_ns": 35.408,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 39,
+          "p99_ns": 49
+        },
+        "engine": "native_core",
+        "first_call_ns": 797815,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 916526,
+          "mean_ns": 792651.84,
+          "min_ns": 770675,
+          "p50_ns": 789537,
+          "p95_ns": 846912,
+          "p99_ns": 875712
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1552384,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "b2457a17b14910a7e5e9d1496883f8779c9655ef3b2a194eabc7d2009ee5852c",
+        "seed": 19,
+        "setup_ns": 1948604,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1154.5809135437012,
+        "clock": {
+          "count": 1000,
+          "max_ns": 53,
+          "mean_ns": 32.974,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 9489588,
+        "implementation": "candidate",
+        "latency": {
+          "count": 64,
+          "max_ns": 11581045,
+          "mean_ns": 9677191.0,
+          "min_ns": 8927908,
+          "p50_ns": 9462870,
+          "p95_ns": 10589218,
+          "p99_ns": 11581045
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1536000
+        },
+        "position_bytes": 24576,
+        "record_sha256": "79012fd1bd0bbb0eb878b8f8c5d261a7d0a8b1f296dced05e4b347f4136275af",
+        "seed": 19,
+        "setup_ns": 1734195,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1154.5809135437012,
+        "clock": {
+          "count": 1000,
+          "max_ns": 60,
+          "mean_ns": 32.955,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 10729610,
+        "implementation": "baseline",
+        "latency": {
+          "count": 64,
+          "max_ns": 12383203,
+          "mean_ns": 10626092.96875,
+          "min_ns": 10279715,
+          "p50_ns": 10503159,
+          "p95_ns": 11687015,
+          "p99_ns": 12383203
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1556480,
+          "setup": 1519616
+        },
+        "position_bytes": 24576,
+        "record_sha256": "35bf194fa5602d2ff7a5299bddb12c4132303e590556c74f34384740721f3925",
+        "seed": 19,
+        "setup_ns": 1773158,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15348.330393791199,
+        "clock": {
+          "count": 1000,
+          "max_ns": 38,
+          "mean_ns": 35.301,
+          "min_ns": 34,
+          "p50_ns": 35,
+          "p95_ns": 36,
+          "p99_ns": 37
+        },
+        "engine": "native_core",
+        "first_call_ns": 148961,
+        "implementation": "baseline",
+        "latency": {
+          "count": 1000,
+          "max_ns": 276294,
+          "mean_ns": 140743.095,
+          "min_ns": 133114,
+          "p50_ns": 136649,
+          "p95_ns": 167337,
+          "p99_ns": 228199
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1564672,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "43faf98a3d4b22bf09ff302b62524461ab6ecbeb8b042d930e5e39b197289f09",
+        "seed": 43,
+        "setup_ns": 1873346,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15348.330393791199,
+        "clock": {
+          "count": 1000,
+          "max_ns": 57,
+          "mean_ns": 33.671,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 110565,
+        "implementation": "candidate",
+        "latency": {
+          "count": 1000,
+          "max_ns": 367606,
+          "mean_ns": 102250.078,
+          "min_ns": 95685,
+          "p50_ns": 98651,
+          "p95_ns": 128580,
+          "p99_ns": 171904
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1585152,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "920839a0c3d343a3863043b58a2ec872f5fc998e865509febd41a3a9b650a467",
+        "seed": 43,
+        "setup_ns": 1799650,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3192.336157798767,
+        "clock": {
+          "count": 1000,
+          "max_ns": 46,
+          "mean_ns": 33.601,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1182488,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1517720,
+          "mean_ns": 1220712.145,
+          "min_ns": 1151222,
+          "p50_ns": 1206923,
+          "p95_ns": 1336365,
+          "p99_ns": 1446454
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "8cd8fdf00a59ff15fd0a8eeab0e8794cd8327f9d3cf7cb1e94edbadf6b9efb8a",
+        "seed": 43,
+        "setup_ns": 1802062,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3192.336157798767,
+        "clock": {
+          "count": 1000,
+          "max_ns": 37,
+          "mean_ns": 33.839,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1324821,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 2326962,
+          "mean_ns": 1428328.845,
+          "min_ns": 1291548,
+          "p50_ns": 1377566,
+          "p95_ns": 1683937,
+          "p99_ns": 2152335
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1560576,
+          "setup": 1544192
+        },
+        "position_bytes": 24576,
+        "record_sha256": "914cabf934117351c658ded202b0a57a7e9d08dc13b93f10c86449db289ad8f2",
+        "seed": 43,
+        "setup_ns": 1814064,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 3005.4574966430664,
+        "clock": {
+          "count": 1000,
+          "max_ns": 68,
+          "mean_ns": 34.626,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 36,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 823166,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1277085,
+          "mean_ns": 798592.105,
+          "min_ns": 752779,
+          "p50_ns": 787760,
+          "p95_ns": 911248,
+          "p99_ns": 1095782
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1552384,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "a00db65f7b47eab5dd6cf40054eaeaa9d6ae28e2a2d5cb29f4c4f528a605314f",
+        "seed": 43,
+        "setup_ns": 1820711,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 3005.4574966430664,
+        "clock": {
+          "count": 1000,
+          "max_ns": 58,
+          "mean_ns": 32.924,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 1085365,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1511153,
+          "mean_ns": 1148196.54,
+          "min_ns": 1089056,
+          "p50_ns": 1118804,
+          "p95_ns": 1318776,
+          "p99_ns": 1468695
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1585152,
+          "setup": 1568768
+        },
+        "position_bytes": 24576,
+        "record_sha256": "d6eb1a586815ff2e478f2cc884c532516cc8f5a0faf027859bc7cc16d727f6f5",
+        "seed": 43,
+        "setup_ns": 1843814,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1156.778902053833,
+        "clock": {
+          "count": 1000,
+          "max_ns": 46,
+          "mean_ns": 34.33,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 11086447,
+        "implementation": "baseline",
+        "latency": {
+          "count": 64,
+          "max_ns": 12305572,
+          "mean_ns": 10559416.953125,
+          "min_ns": 10035910,
+          "p50_ns": 10495338,
+          "p95_ns": 11447781,
+          "p99_ns": 12305572
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1568768,
+          "setup": 1552384
+        },
+        "position_bytes": 24576,
+        "record_sha256": "dc9d37905623caf95dfab080f14a02d6ed5660571828c009548d1abcd51be6cd",
+        "seed": 43,
+        "setup_ns": 1892167,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1156.778902053833,
+        "clock": {
+          "count": 1000,
+          "max_ns": 54,
+          "mean_ns": 33.797,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 11204148,
+        "implementation": "candidate",
+        "latency": {
+          "count": 64,
+          "max_ns": 11269994,
+          "mean_ns": 9533967.375,
+          "min_ns": 8983023,
+          "p50_ns": 9469300,
+          "p95_ns": 10220866,
+          "p99_ns": 11269994
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1589248,
+          "setup": 1568768
+        },
+        "position_bytes": 24576,
+        "record_sha256": "f05d92de94b558fd5e42e334c27ad3c0fa3dc93eb31e3dff0316cf6a0837673f",
+        "seed": 43,
+        "setup_ns": 1936573,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15291.249966144562,
+        "clock": {
+          "count": 1000,
+          "max_ns": 52,
+          "mean_ns": 34.417,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 108955,
+        "implementation": "candidate",
+        "latency": {
+          "count": 1000,
+          "max_ns": 229587,
+          "mean_ns": 99181.285,
+          "min_ns": 95184,
+          "p50_ns": 97750,
+          "p95_ns": 102401,
+          "p99_ns": 145730
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "103aaac72136d906e5aca6f0178b3babd9f54506cfd44db55e6c6ed634d12912",
+        "seed": 7,
+        "setup_ns": 1788953,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15291.249966144562,
+        "clock": {
+          "count": 1000,
+          "max_ns": 42,
+          "mean_ns": 34.747,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 36,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 148656,
+        "implementation": "baseline",
+        "latency": {
+          "count": 1000,
+          "max_ns": 275799,
+          "mean_ns": 136699.02,
+          "min_ns": 132639,
+          "p50_ns": 133564,
+          "p95_ns": 142453,
+          "p99_ns": 208606
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1597440,
+          "setup": 1564672
+        },
+        "position_bytes": 24576,
+        "record_sha256": "de2bb4e6729a055a790dfc27245f3d5f483c2eb4940ca355dc1cd4a0d3a06320",
+        "seed": 7,
+        "setup_ns": 1846272,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3146.053388118744,
+        "clock": {
+          "count": 1000,
+          "max_ns": 50,
+          "mean_ns": 34.773,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 36,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 1312935,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1809678,
+          "mean_ns": 1300201.995,
+          "min_ns": 1234497,
+          "p50_ns": 1299163,
+          "p95_ns": 1367106,
+          "p99_ns": 1456454
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 532480,
+          "final": 1589248,
+          "setup": 1572864
+        },
+        "position_bytes": 24576,
+        "record_sha256": "8c58ff098eae5cf1038a0a0923a95079e93cfce451f54dcaf988020ed76e768d",
+        "seed": 7,
+        "setup_ns": 1904293,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3146.053388118744,
+        "clock": {
+          "count": 1000,
+          "max_ns": 45,
+          "mean_ns": 32.637,
+          "min_ns": 31,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 1103924,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 2031740,
+          "mean_ns": 1224779.05,
+          "min_ns": 1103128,
+          "p50_ns": 1177454,
+          "p95_ns": 1523339,
+          "p99_ns": 1946670
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1560576,
+          "setup": 1536000
+        },
+        "position_bytes": 24576,
+        "record_sha256": "7ed2cfb939aeffbdad52e82edb4533e35ac68c0d1792ef02006b9dfde9e4859e",
+        "seed": 7,
+        "setup_ns": 1802825,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 2995.949649810791,
+        "clock": {
+          "count": 1000,
+          "max_ns": 55,
+          "mean_ns": 34.759,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 36,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 1106752,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1637073,
+          "mean_ns": 1110930.45,
+          "min_ns": 1042531,
+          "p50_ns": 1089006,
+          "p95_ns": 1247716,
+          "p99_ns": 1486098
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1564672,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "a1396cc46045560edfad6a279bb820a9d74c46a085207612c2847d37f7b8a8c4",
+        "seed": 7,
+        "setup_ns": 1776515,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 2995.949649810791,
+        "clock": {
+          "count": 1000,
+          "max_ns": 70,
+          "mean_ns": 33.934,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 809100,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1251349,
+          "mean_ns": 786653.17,
+          "min_ns": 760691,
+          "p50_ns": 773407,
+          "p95_ns": 854130,
+          "p99_ns": 1098967
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1568768,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "10c6320a3171453420d290b3ab9e4f842147a66880849ee1e47493a53116b491",
+        "seed": 7,
+        "setup_ns": 1784827,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1139.9696426391602,
+        "clock": {
+          "count": 1000,
+          "max_ns": 61,
+          "mean_ns": 32.915,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 10105518,
+        "implementation": "candidate",
+        "latency": {
+          "count": 64,
+          "max_ns": 11313468,
+          "mean_ns": 9324342.171875,
+          "min_ns": 8738359,
+          "p50_ns": 9228944,
+          "p95_ns": 10378718,
+          "p99_ns": 11313468
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1589248,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "263a1a763dcdd79528395de36bdd340ac381432ea21ff5bb0ca6343b2fcbc705",
+        "seed": 7,
+        "setup_ns": 1820449,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1139.9696426391602,
+        "clock": {
+          "count": 1000,
+          "max_ns": 52,
+          "mean_ns": 33.062,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 11353051,
+        "implementation": "baseline",
+        "latency": {
+          "count": 64,
+          "max_ns": 12368091,
+          "mean_ns": 10428836.625,
+          "min_ns": 9893221,
+          "p50_ns": 10318134,
+          "p95_ns": 11270446,
+          "p99_ns": 12368091
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1560576,
+          "setup": 1544192
+        },
+        "position_bytes": 24576,
+        "record_sha256": "3a7e95a4db3c143bbe1aaebac91fd50e53f5acb742773491df88aa11842188ad",
+        "seed": 7,
+        "setup_ns": 1820796,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15194.458088874817,
+        "clock": {
+          "count": 1000,
+          "max_ns": 53,
+          "mean_ns": 32.707,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 240330,
+        "implementation": "baseline",
+        "latency": {
+          "count": 1000,
+          "max_ns": 252418,
+          "mean_ns": 136076.756,
+          "min_ns": 127534,
+          "p50_ns": 133478,
+          "p95_ns": 162676,
+          "p99_ns": 165889
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 532480,
+          "final": 1568768,
+          "setup": 1536000
+        },
+        "position_bytes": 24576,
+        "record_sha256": "e852ca55fa94d12b3af4a6fbedf86af25bce48c2c1fc50d1fe0abd1858642735",
+        "seed": 19,
+        "setup_ns": 1843542,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15194.458088874817,
+        "clock": {
+          "count": 1000,
+          "max_ns": 61,
+          "mean_ns": 34.33,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 111601,
+        "implementation": "candidate",
+        "latency": {
+          "count": 1000,
+          "max_ns": 203417,
+          "mean_ns": 102238.343,
+          "min_ns": 91621,
+          "p50_ns": 98834,
+          "p95_ns": 132907,
+          "p99_ns": 178342
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1572864,
+          "setup": 1536000
+        },
+        "position_bytes": 24576,
+        "record_sha256": "e860fe0b126681413cc5366091cb2a4cb07814895b48b59932bca1edd67fa939",
+        "seed": 19,
+        "setup_ns": 2118508,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3172.1858263015747,
+        "clock": {
+          "count": 1000,
+          "max_ns": 62,
+          "mean_ns": 33.655,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1199790,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1649529,
+          "mean_ns": 1161732.33,
+          "min_ns": 1090747,
+          "p50_ns": 1150069,
+          "p95_ns": 1317229,
+          "p99_ns": 1448055
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1552384,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "6650a1d5c54b2fc7a0de1b9011cf19deeb95a7d450002b0d7f350e2a397a8172",
+        "seed": 19,
+        "setup_ns": 1724672,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3172.1858263015747,
+        "clock": {
+          "count": 1000,
+          "max_ns": 54,
+          "mean_ns": 34.48,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 1307163,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 2123424,
+          "mean_ns": 1388273.335,
+          "min_ns": 1281981,
+          "p50_ns": 1360744,
+          "p95_ns": 1642950,
+          "p99_ns": 1907055
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 532480,
+          "final": 1564672,
+          "setup": 1540096
+        },
+        "position_bytes": 24576,
+        "record_sha256": "1cb49a677c0bd01c787297afa3acd05188bfd071e42a96babad08373cd54e4b9",
+        "seed": 19,
+        "setup_ns": 1752224,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 2969.6991205215454,
+        "clock": {
+          "count": 1000,
+          "max_ns": 54,
+          "mean_ns": 34.565,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 832826,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1253452,
+          "mean_ns": 815399.46,
+          "min_ns": 769940,
+          "p50_ns": 807526,
+          "p95_ns": 878061,
+          "p99_ns": 1118700
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1589248,
+          "setup": 1568768
+        },
+        "position_bytes": 24576,
+        "record_sha256": "ae0d27de823929a3c2e5b34cc11e637ecfff5d173e8cef805aff04c138ff1d57",
+        "seed": 19,
+        "setup_ns": 2173603,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 2969.6991205215454,
+        "clock": {
+          "count": 1000,
+          "max_ns": 53,
+          "mean_ns": 33.871,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1123374,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 2112276,
+          "mean_ns": 1188874.57,
+          "min_ns": 1070184,
+          "p50_ns": 1123754,
+          "p95_ns": 1531776,
+          "p99_ns": 1960153
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 532480,
+          "final": 1576960,
+          "setup": 1560576
+        },
+        "position_bytes": 24576,
+        "record_sha256": "b4ef9c6ca7f2134c248f07de4cf31720f85f7d55c1b26d67c36781a222c412cb",
+        "seed": 19,
+        "setup_ns": 1872308,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1154.5809135437012,
+        "clock": {
+          "count": 1000,
+          "max_ns": 57,
+          "mean_ns": 32.203,
+          "min_ns": 31,
+          "p50_ns": 32,
+          "p95_ns": 33,
+          "p99_ns": 33
+        },
+        "engine": "native_core",
+        "first_call_ns": 11324894,
+        "implementation": "baseline",
+        "latency": {
+          "count": 64,
+          "max_ns": 11791881,
+          "mean_ns": 10153098.828125,
+          "min_ns": 9858172,
+          "p50_ns": 10100620,
+          "p95_ns": 10483096,
+          "p99_ns": 11791881
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 532480,
+          "final": 1576960,
+          "setup": 1560576
+        },
+        "position_bytes": 24576,
+        "record_sha256": "6bc5521860553082fca69766dbc25d6af52f477a3612f0bc06e11446d2f9226f",
+        "seed": 19,
+        "setup_ns": 2000513,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1154.5809135437012,
+        "clock": {
+          "count": 1000,
+          "max_ns": 52,
+          "mean_ns": 31.641,
+          "min_ns": 30,
+          "p50_ns": 32,
+          "p95_ns": 32,
+          "p99_ns": 33
+        },
+        "engine": "native_core",
+        "first_call_ns": 10205186,
+        "implementation": "candidate",
+        "latency": {
+          "count": 64,
+          "max_ns": 10621157,
+          "mean_ns": 9287994.515625,
+          "min_ns": 8824551,
+          "p50_ns": 9237514,
+          "p95_ns": 10079199,
+          "p99_ns": 10621157
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1589248,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "373595e0aa343c5947fe16230caa93dc013ae212d1c403071c05334fbe7bc38c",
+        "seed": 19,
+        "setup_ns": 1723724,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15348.330393791199,
+        "clock": {
+          "count": 1000,
+          "max_ns": 43,
+          "mean_ns": 35.481,
+          "min_ns": 34,
+          "p50_ns": 35,
+          "p95_ns": 37,
+          "p99_ns": 37
+        },
+        "engine": "native_core",
+        "first_call_ns": 115026,
+        "implementation": "candidate",
+        "latency": {
+          "count": 1000,
+          "max_ns": 209842,
+          "mean_ns": 99374.922,
+          "min_ns": 96014,
+          "p50_ns": 98404,
+          "p95_ns": 99888,
+          "p99_ns": 135221
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1544192,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "57881fa46523daca5b5eb5184212b11ad91e80ffba7aac319885cb50529ea5d0",
+        "seed": 43,
+        "setup_ns": 1857192,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15348.330393791199,
+        "clock": {
+          "count": 1000,
+          "max_ns": 51,
+          "mean_ns": 34.559,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 36,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 151945,
+        "implementation": "baseline",
+        "latency": {
+          "count": 1000,
+          "max_ns": 273008,
+          "mean_ns": 143141.753,
+          "min_ns": 132022,
+          "p50_ns": 139947,
+          "p95_ns": 167297,
+          "p99_ns": 246418
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1536000,
+          "setup": 1519616
+        },
+        "position_bytes": 24576,
+        "record_sha256": "9d4183cced35688533293e78de61b6b624ed1a540ad3ec334960d67e18c8f716",
+        "seed": 43,
+        "setup_ns": 1816004,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3192.336157798767,
+        "clock": {
+          "count": 1000,
+          "max_ns": 61,
+          "mean_ns": 33.471,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1383918,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1671745,
+          "mean_ns": 1323042.725,
+          "min_ns": 1264855,
+          "p50_ns": 1307466,
+          "p95_ns": 1388009,
+          "p99_ns": 1495255
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1556480,
+          "setup": 1531904
+        },
+        "position_bytes": 24576,
+        "record_sha256": "6d396f99e7ed9438942eaae23313c0b62f1ff777e4b04d94b240033f1ff35ef6",
+        "seed": 43,
+        "setup_ns": 1859219,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3192.336157798767,
+        "clock": {
+          "count": 1000,
+          "max_ns": 64,
+          "mean_ns": 35.091,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 36,
+          "p99_ns": 37
+        },
+        "engine": "native_core",
+        "first_call_ns": 1240200,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1630607,
+          "mean_ns": 1225881.775,
+          "min_ns": 1153080,
+          "p50_ns": 1216475,
+          "p95_ns": 1294277,
+          "p99_ns": 1467794
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1581056,
+          "setup": 1552384
+        },
+        "position_bytes": 24576,
+        "record_sha256": "776281d4ffdf341391fcf56c4ce5199204d024d20bcf0a663219de4dbac62c70",
+        "seed": 43,
+        "setup_ns": 1780234,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 3005.4574966430664,
+        "clock": {
+          "count": 1000,
+          "max_ns": 65,
+          "mean_ns": 33.648,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1079780,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1854132,
+          "mean_ns": 1111630.955,
+          "min_ns": 1025990,
+          "p50_ns": 1073261,
+          "p95_ns": 1308807,
+          "p99_ns": 1451503
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1564672,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "f9f53c5cc811a1b684083f87c7889e51741c4edebfd9da61cc22c7c5e923eb38",
+        "seed": 43,
+        "setup_ns": 1801928,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 3005.4574966430664,
+        "clock": {
+          "count": 1000,
+          "max_ns": 37,
+          "mean_ns": 34.063,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 776455,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1372188,
+          "mean_ns": 788691.075,
+          "min_ns": 736489,
+          "p50_ns": 786089,
+          "p95_ns": 871875,
+          "p99_ns": 1153772
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1601536,
+          "setup": 1572864
+        },
+        "position_bytes": 24576,
+        "record_sha256": "73828a6b1fea98b9ae75f5f59f1b5d32634fcd259ab7f5bf8cd5695d60aaa262",
+        "seed": 43,
+        "setup_ns": 2053889,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1156.778902053833,
+        "clock": {
+          "count": 1000,
+          "max_ns": 62,
+          "mean_ns": 31.991,
+          "min_ns": 31,
+          "p50_ns": 32,
+          "p95_ns": 33,
+          "p99_ns": 33
+        },
+        "engine": "native_core",
+        "first_call_ns": 9668446,
+        "implementation": "candidate",
+        "latency": {
+          "count": 64,
+          "max_ns": 13371157,
+          "mean_ns": 9629782.625,
+          "min_ns": 8970542,
+          "p50_ns": 9497854,
+          "p95_ns": 10657771,
+          "p99_ns": 13371157
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1560576,
+          "setup": 1540096
+        },
+        "position_bytes": 24576,
+        "record_sha256": "f963d75b194d28b7f54f3719428aa10a24d1d3ae389ae11f2862ec6840d65faa",
+        "seed": 43,
+        "setup_ns": 1870229,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1156.778902053833,
+        "clock": {
+          "count": 1000,
+          "max_ns": 65,
+          "mean_ns": 33.176,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 12231929,
+        "implementation": "baseline",
+        "latency": {
+          "count": 64,
+          "max_ns": 11837571,
+          "mean_ns": 10740355.609375,
+          "min_ns": 10238991,
+          "p50_ns": 10703570,
+          "p95_ns": 11352236,
+          "p99_ns": 11837571
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1589248,
+          "setup": 1552384
+        },
+        "position_bytes": 24576,
+        "record_sha256": "624050a267403d5366b78be3490305c54cc548d2575a1c6dbb991aadf2ddfeb4",
+        "seed": 43,
+        "setup_ns": 1832751,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15291.249966144562,
+        "clock": {
+          "count": 1000,
+          "max_ns": 37,
+          "mean_ns": 33.657,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 143336,
+        "implementation": "baseline",
+        "latency": {
+          "count": 1000,
+          "max_ns": 312123,
+          "mean_ns": 141680.85,
+          "min_ns": 133313,
+          "p50_ns": 136725,
+          "p95_ns": 174121,
+          "p99_ns": 225548
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1536000,
+          "setup": 1519616
+        },
+        "position_bytes": 24576,
+        "record_sha256": "e2fa0932d12171404658edee7cac41da8e11fad75d229a9325d4fdd0a4674c09",
+        "seed": 7,
+        "setup_ns": 1721297,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15291.249966144562,
+        "clock": {
+          "count": 1000,
+          "max_ns": 46,
+          "mean_ns": 33.888,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 111698,
+        "implementation": "candidate",
+        "latency": {
+          "count": 1000,
+          "max_ns": 220241,
+          "mean_ns": 103525.33,
+          "min_ns": 95252,
+          "p50_ns": 98096,
+          "p95_ns": 142695,
+          "p99_ns": 174912
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1593344,
+          "setup": 1564672
+        },
+        "position_bytes": 24576,
+        "record_sha256": "9a7648728b9f6ef6c3a0c4015e83a94745ec6ac2e37cd84c0ebe6a933e8e60ef",
+        "seed": 7,
+        "setup_ns": 1827455,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3146.053388118744,
+        "clock": {
+          "count": 1000,
+          "max_ns": 55,
+          "mean_ns": 34.535,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 1237138,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1851967,
+          "mean_ns": 1173682.455,
+          "min_ns": 1080398,
+          "p50_ns": 1173994,
+          "p95_ns": 1264228,
+          "p99_ns": 1444054
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "2926230c7e601e6b8291691d09e394cd9111f85df9e11f8d87f4cdd7fe310f1c",
+        "seed": 7,
+        "setup_ns": 1874719,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3146.053388118744,
+        "clock": {
+          "count": 1000,
+          "max_ns": 54,
+          "mean_ns": 33.824,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 1234763,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 2310232,
+          "mean_ns": 1375229.58,
+          "min_ns": 1291730,
+          "p50_ns": 1321651,
+          "p95_ns": 1632105,
+          "p99_ns": 2249562
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1581056,
+          "setup": 1556480
+        },
+        "position_bytes": 24576,
+        "record_sha256": "f80c23947f14a71900fc7ec71b6a16649391315621ff2af687bf016970767d60",
+        "seed": 7,
+        "setup_ns": 1868237,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 2995.949649810791,
+        "clock": {
+          "count": 1000,
+          "max_ns": 38,
+          "mean_ns": 34.64,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 36,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 797028,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1152493,
+          "mean_ns": 781764.905,
+          "min_ns": 731626,
+          "p50_ns": 781119,
+          "p95_ns": 880603,
+          "p99_ns": 1112838
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1568768,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "40f312394cc50458ba5e0177e4f1f2ed3c4eddd18adc7004d6e452e7e0e82bd0",
+        "seed": 7,
+        "setup_ns": 1790014,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 2995.949649810791,
+        "clock": {
+          "count": 1000,
+          "max_ns": 40,
+          "mean_ns": 33.763,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1088359,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1634067,
+          "mean_ns": 1133035.355,
+          "min_ns": 1066717,
+          "p50_ns": 1097649,
+          "p95_ns": 1355655,
+          "p99_ns": 1593116
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1564672,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "4005bb8692bdd9d885b8586d0e3d5eff593c322c0f84c2bc88b018c72866fbc9",
+        "seed": 7,
+        "setup_ns": 2008225,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1139.9696426391602,
+        "clock": {
+          "count": 1000,
+          "max_ns": 51,
+          "mean_ns": 32.349,
+          "min_ns": 31,
+          "p50_ns": 32,
+          "p95_ns": 33,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 10658307,
+        "implementation": "baseline",
+        "latency": {
+          "count": 64,
+          "max_ns": 11575921,
+          "mean_ns": 10275374.8125,
+          "min_ns": 9804509,
+          "p50_ns": 10168692,
+          "p95_ns": 11040743,
+          "p99_ns": 11575921
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1568768,
+          "setup": 1531904
+        },
+        "position_bytes": 24576,
+        "record_sha256": "35bb7330b7ba489a3e5e2b8f8cd5a1912db2d4c947d43ea321729238b6ec84c1",
+        "seed": 7,
+        "setup_ns": 1789585,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1139.9696426391602,
+        "clock": {
+          "count": 1000,
+          "max_ns": 51,
+          "mean_ns": 31.594,
+          "min_ns": 30,
+          "p50_ns": 32,
+          "p95_ns": 32,
+          "p99_ns": 33
+        },
+        "engine": "native_core",
+        "first_call_ns": 10855169,
+        "implementation": "candidate",
+        "latency": {
+          "count": 64,
+          "max_ns": 10760712,
+          "mean_ns": 9248049.59375,
+          "min_ns": 8741021,
+          "p50_ns": 9190772,
+          "p95_ns": 10200792,
+          "p99_ns": 10760712
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1536000
+        },
+        "position_bytes": 24576,
+        "record_sha256": "f4e867914c4b6d906a3384ff0e525cf57872da2aa0afee0b452f566670dcfc83",
+        "seed": 7,
+        "setup_ns": 1836474,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15194.458088874817,
+        "clock": {
+          "count": 1000,
+          "max_ns": 36,
+          "mean_ns": 33.78,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 110977,
+        "implementation": "candidate",
+        "latency": {
+          "count": 1000,
+          "max_ns": 171661,
+          "mean_ns": 96266.63,
+          "min_ns": 95177,
+          "p50_ns": 95728,
+          "p95_ns": 97125,
+          "p99_ns": 100967
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "a5825f2eaebcf3d5bf4af3a1effc27a1658958eea51fba12075988e5ffe15807",
+        "seed": 19,
+        "setup_ns": 1820038,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15194.458088874817,
+        "clock": {
+          "count": 1000,
+          "max_ns": 38,
+          "mean_ns": 33.785,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 143390,
+        "implementation": "baseline",
+        "latency": {
+          "count": 1000,
+          "max_ns": 308074,
+          "mean_ns": 139998.113,
+          "min_ns": 130470,
+          "p50_ns": 133815,
+          "p95_ns": 170380,
+          "p99_ns": 223037
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1560576,
+          "setup": 1544192
+        },
+        "position_bytes": 24576,
+        "record_sha256": "452a5ff052d4ca21af83164441f84b23c61b86b984f290482720f6a97d93bc76",
+        "seed": 19,
+        "setup_ns": 1767899,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3172.1858263015747,
+        "clock": {
+          "count": 1000,
+          "max_ns": 52,
+          "mean_ns": 33.143,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1396198,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1823146,
+          "mean_ns": 1331591.565,
+          "min_ns": 1245748,
+          "p50_ns": 1315359,
+          "p95_ns": 1501490,
+          "p99_ns": 1725230
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1581056,
+          "setup": 1556480
+        },
+        "position_bytes": 24576,
+        "record_sha256": "68f04f4c7192b9951fa6589906fa4c4aad2352b1a2df970936441e4567d24c18",
+        "seed": 19,
+        "setup_ns": 1947481,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3172.1858263015747,
+        "clock": {
+          "count": 1000,
+          "max_ns": 59,
+          "mean_ns": 33.802,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1172022,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 2073907,
+          "mean_ns": 1243891.845,
+          "min_ns": 1143080,
+          "p50_ns": 1202407,
+          "p95_ns": 1475975,
+          "p99_ns": 1869443
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1585152,
+          "setup": 1556480
+        },
+        "position_bytes": 24576,
+        "record_sha256": "ccbd425800093c7c891356cb26ab5d42320de6085ceb3a9990cd6405f4af5be7",
+        "seed": 19,
+        "setup_ns": 1834658,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 2969.6991205215454,
+        "clock": {
+          "count": 1000,
+          "max_ns": 47,
+          "mean_ns": 33.788,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1127164,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1352693,
+          "mean_ns": 1099132.34,
+          "min_ns": 1065140,
+          "p50_ns": 1089892,
+          "p95_ns": 1167689,
+          "p99_ns": 1261091
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1601536,
+          "setup": 1576960
+        },
+        "position_bytes": 24576,
+        "record_sha256": "6fc8a20ce0e71b2d732a14ed8f97e8258e0b5d8d32ab15694f107ddaf1b34376",
+        "seed": 19,
+        "setup_ns": 1872331,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 2969.6991205215454,
+        "clock": {
+          "count": 1000,
+          "max_ns": 52,
+          "mean_ns": 32.446,
+          "min_ns": 31,
+          "p50_ns": 32,
+          "p95_ns": 33,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 762203,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1318338,
+          "mean_ns": 828176.02,
+          "min_ns": 748507,
+          "p50_ns": 801122,
+          "p95_ns": 1040726,
+          "p99_ns": 1236708
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1568768,
+          "setup": 1540096
+        },
+        "position_bytes": 24576,
+        "record_sha256": "2f13314081d783a813bea2fac092ba33204c68deb22a8c65afb6ceb6c5e26732",
+        "seed": 19,
+        "setup_ns": 1900152,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1154.5809135437012,
+        "clock": {
+          "count": 1000,
+          "max_ns": 53,
+          "mean_ns": 31.488,
+          "min_ns": 30,
+          "p50_ns": 31,
+          "p95_ns": 32,
+          "p99_ns": 33
+        },
+        "engine": "native_core",
+        "first_call_ns": 9644670,
+        "implementation": "candidate",
+        "latency": {
+          "count": 64,
+          "max_ns": 10084839,
+          "mean_ns": 9136952.0625,
+          "min_ns": 8727510,
+          "p50_ns": 9043385,
+          "p95_ns": 9704501,
+          "p99_ns": 10084839
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1589248,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "aaf4bd418250afe9eb5c7fcd727ac439da4314654395a16b501f3eb8d0dc80c0",
+        "seed": 19,
+        "setup_ns": 1878526,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1154.5809135437012,
+        "clock": {
+          "count": 1000,
+          "max_ns": 52,
+          "mean_ns": 31.759,
+          "min_ns": 31,
+          "p50_ns": 32,
+          "p95_ns": 32,
+          "p99_ns": 33
+        },
+        "engine": "native_core",
+        "first_call_ns": 11568744,
+        "implementation": "baseline",
+        "latency": {
+          "count": 64,
+          "max_ns": 11947077,
+          "mean_ns": 10607521.328125,
+          "min_ns": 10284184,
+          "p50_ns": 10510504,
+          "p95_ns": 11275381,
+          "p99_ns": 11947077
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 532480,
+          "final": 1576960,
+          "setup": 1540096
+        },
+        "position_bytes": 24576,
+        "record_sha256": "344837f9037ceea28a8831064879207791377599c3ff2cb2ae36433c24026f24",
+        "seed": 19,
+        "setup_ns": 1793519,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15348.330393791199,
+        "clock": {
+          "count": 1000,
+          "max_ns": 40,
+          "mean_ns": 33.677,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 146508,
+        "implementation": "baseline",
+        "latency": {
+          "count": 1000,
+          "max_ns": 252237,
+          "mean_ns": 137103.722,
+          "min_ns": 132960,
+          "p50_ns": 136586,
+          "p95_ns": 138164,
+          "p99_ns": 175443
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1568768,
+          "setup": 1544192
+        },
+        "position_bytes": 24576,
+        "record_sha256": "2a3b57b7bf08e779c143e0de566330f2ebfbb2275d880cdeb83fa2d928776d83",
+        "seed": 43,
+        "setup_ns": 1831014,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15348.330393791199,
+        "clock": {
+          "count": 1000,
+          "max_ns": 36,
+          "mean_ns": 33.812,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 110462,
+        "implementation": "candidate",
+        "latency": {
+          "count": 1000,
+          "max_ns": 196953,
+          "mean_ns": 101659.54,
+          "min_ns": 95580,
+          "p50_ns": 98126,
+          "p95_ns": 126421,
+          "p99_ns": 171667
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1556480,
+          "setup": 1536000
+        },
+        "position_bytes": 24576,
+        "record_sha256": "419093dbf2d7948812ec803dde901037950977bdf49f7e6ad2c03fa76c3b52c1",
+        "seed": 43,
+        "setup_ns": 1785713,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3192.336157798767,
+        "clock": {
+          "count": 1000,
+          "max_ns": 62,
+          "mean_ns": 33.67,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1186285,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1666660,
+          "mean_ns": 1237881.195,
+          "min_ns": 1142865,
+          "p50_ns": 1204736,
+          "p95_ns": 1418238,
+          "p99_ns": 1559591
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "84587d24a9cd39d34b16eb113e54a12cf7e7f79a42895543823b9e1d2af60114",
+        "seed": 43,
+        "setup_ns": 1787097,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3192.336157798767,
+        "clock": {
+          "count": 1000,
+          "max_ns": 42,
+          "mean_ns": 33.599,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1865057,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 2109768,
+          "mean_ns": 1371290.145,
+          "min_ns": 1266452,
+          "p50_ns": 1343369,
+          "p95_ns": 1594464,
+          "p99_ns": 1782380
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 532480,
+          "final": 1585152,
+          "setup": 1560576
+        },
+        "position_bytes": 24576,
+        "record_sha256": "f4ca06a02b35f27a14349db64b558b9abcecfb68c650cc8df3615a3671db7835",
+        "seed": 43,
+        "setup_ns": 1769808,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 3005.4574966430664,
+        "clock": {
+          "count": 1000,
+          "max_ns": 41,
+          "mean_ns": 34.53,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 796084,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1098190,
+          "mean_ns": 801185.59,
+          "min_ns": 753514,
+          "p50_ns": 787540,
+          "p95_ns": 884869,
+          "p99_ns": 1057114
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1552384,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "e24a7382b694b193d36ec8f7d2957b2c874e3f4b7d35ea90b80d8f27ea1e2b08",
+        "seed": 43,
+        "setup_ns": 1877182,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 3005.4574966430664,
+        "clock": {
+          "count": 1000,
+          "max_ns": 43,
+          "mean_ns": 33.415,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1054803,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1663880,
+          "mean_ns": 1113261.425,
+          "min_ns": 1044247,
+          "p50_ns": 1094654,
+          "p95_ns": 1306441,
+          "p99_ns": 1510654
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 524288,
+          "final": 1581056,
+          "setup": 1564672
+        },
+        "position_bytes": 24576,
+        "record_sha256": "d58c695990d9d14b3e5efe9a86d58ea929ba2f0477c2473800dc44a4bfb84871",
+        "seed": 43,
+        "setup_ns": 1879255,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1156.778902053833,
+        "clock": {
+          "count": 1000,
+          "max_ns": 49,
+          "mean_ns": 31.613,
+          "min_ns": 30,
+          "p50_ns": 32,
+          "p95_ns": 32,
+          "p99_ns": 33
+        },
+        "engine": "native_core",
+        "first_call_ns": 10860830,
+        "implementation": "baseline",
+        "latency": {
+          "count": 64,
+          "max_ns": 11973241,
+          "mean_ns": 10765678.921875,
+          "min_ns": 10171121,
+          "p50_ns": 10656094,
+          "p95_ns": 11566241,
+          "p99_ns": 11973241
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 532480,
+          "final": 1572864,
+          "setup": 1552384
+        },
+        "position_bytes": 24576,
+        "record_sha256": "be9276197c71184e90cdd42f0c1c5c5a06bee4f41bbef8cd20cfa42b31a78e3e",
+        "seed": 43,
+        "setup_ns": 1770354,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1156.778902053833,
+        "clock": {
+          "count": 1000,
+          "max_ns": 52,
+          "mean_ns": 34.148,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 10838945,
+        "implementation": "candidate",
+        "latency": {
+          "count": 64,
+          "max_ns": 10246971,
+          "mean_ns": 9363865.859375,
+          "min_ns": 8958515,
+          "p50_ns": 9327287,
+          "p95_ns": 9944665,
+          "p99_ns": 10246971
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1581056,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "48e2f31c9a8c128f3140cdb646a7b0dab247ce47dbabcaf7f22ff698cf5a724c",
+        "seed": 43,
+        "setup_ns": 1964377,
+        "trial": 3,
+        "workspace_bytes": 222240
+      }
+    ],
+    "source_sha256": "8953be3a160f2416ba834dd0ebc30e13518dd0bbfec383a66aae861b04931b87",
+    "workloads": {
+      "all_batch1": {
+        "median_p50_ratio": 0.8968019955797699,
+        "median_p99_ratio": 0.8750047689044985,
+        "p50_ratios": [
+          0.9204488136912001,
+          0.9063173751099747,
+          0.8882783730349388,
+          0.8756170143307529,
+          0.8451766092666952,
+          0.9141283862428432,
+          0.8761271692245598,
+          0.9304066033074665,
+          0.8968019955797699
+        ],
+        "p99_ratios": [
+          0.9329009300637299,
+          1.336581862523636,
+          0.6419267395164037,
+          0.7968288556293049,
+          0.7593147549493853,
+          1.083590593717939,
+          0.6720394362401764,
+          0.9816345706919556,
+          0.8750047689044985
+        ]
+      },
+      "all_batch8": {
+        "median_p50_ratio": 0.8944392464761555,
+        "median_p99_ratio": 0.9158447896611389,
+        "p50_ratios": [
+          0.8926776421405255,
+          0.8944392464761555,
+          0.9038303058053091,
+          0.9009546556421739,
+          0.9145492058903315,
+          0.8604140201078845,
+          0.9022386892161072,
+          0.887353845492672,
+          0.8753007434056044
+        ],
+        "p99_ratios": [
+          0.9326108496127208,
+          0.9147303330805053,
+          0.9295771800792352,
+          0.9352220907627857,
+          0.900717790486522,
+          0.8441260569426312,
+          0.9158447896611389,
+          1.1295524225366842,
+          0.8558226632204263
+        ]
+      },
+      "last_batch1": {
+        "median_p50_ratio": 0.7184191644824506,
+        "median_p99_ratio": 0.7148354018153534,
+        "p50_ratios": [
+          0.7139612227568638,
+          0.7318588841304543,
+          0.7174693728286707,
+          0.7230870857646152,
+          0.7404516100031466,
+          0.7153757052647312,
+          0.7219299080124991,
+          0.7031519075078423,
+          0.7184191644824506
+        ],
+        "p99_ratios": [
+          0.598374363730638,
+          0.6985896858191998,
+          0.7754978984517708,
+          0.7148354018153534,
+          1.0750682685410125,
+          0.4526917058604626,
+          0.7533074202779153,
+          0.5487464389776721,
+          0.9784773402187605
+        ]
+      },
+      "last_batch8": {
+        "median_p50_ratio": 0.7185967747389553,
+        "median_p99_ratio": 0.7394983372563586,
+        "p50_ratios": [
+          0.7199211563731932,
+          0.7101953524590314,
+          0.711629127343987,
+          0.7019878796069408,
+          0.7185967747389553,
+          0.7350471422856577,
+          0.704109030714942,
+          0.732430415341655,
+          0.7194419423854478
+        ],
+        "p99_ratios": [
+          0.8140012916681391,
+          0.7394983372563586,
+          0.6985291717615039,
+          0.6055622170866197,
+          0.5707207549614749,
+          0.98066515421964,
+          0.7460922792002423,
+          0.7948808924266777,
+          0.6997724164500938
+        ]
+      }
+    }
+  },
+  "decisions": {
+    "avx_initial": "Retain, then narrow dispatch after shape diagnostic",
+    "exp_candidate": "Reject: 2.04% primary median saving, seed7 regression, +768 workspace bytes. Preserve full-trace secondary improvement."
+  },
+  "exp_candidate": {
+    "commit": "a5192908c6f1c906d8c82fd5c5fd7961714eac33",
+    "dirty": true,
+    "files": {
+      "local/assembly-latency-v1/avx-runtime": "78e9b9fd7613c3a290669ea9d5d68d974011bac27ade2d5e1fe68826a74258ec",
+      "local/assembly-latency-v1/exp-runtime": "172fbbe15433641c99ca89dd95c9b9a295ceda687bd74d52a632feaf22807739",
+      "local/ettm1-correction-v1/seed19/model.stlf": "237910f530e7c337227f2150da2f78da2518e996ee817c4f40e4ef4a78a1a080",
+      "local/ettm1-correction-v1/seed43/model.stlf": "6400f2cb9a94237e8cd0e5a8083fd501c75fb9bfe60a7871675e12ccacdbca6a",
+      "local/ettm1-correction-v1/seed7/model.stlf": "48d3433c9be2e2c411a06fdf981a78332d6f34af0767608d6d11ef9ca978e87d",
+      "local/runtime-latest-v1/expected-19.bin": "0fc9501064f7ee77d5bae723756f2af88b74619371ab752c0753606a77ae6143",
+      "local/runtime-latest-v1/expected-43.bin": "f4c91957e0d3db550ef510d8720b3affcc995f19842d1d5054132a7e4bd64005",
+      "local/runtime-latest-v1/expected-7.bin": "89cec65b26ed7b3aa03816daa02a899c6d6823a79a3d106a82ae431b79fdd87f"
+    },
+    "gate": {
+      "accepted": false,
+      "median_p50_reduction": 0.020413955279855678,
+      "median_p99_increase": -0.07135148099292477,
+      "per_seed_median_reduction": {
+        "19": 0.02689080891560225,
+        "43": 0.0218959840683699,
+        "7": -0.005671733142915469
+      }
+    },
+    "input_sha256": "3ed32af0b79ef537e2f2d9a0fa9afda122335689be2aeabf4add7013e85e3595",
+    "protocol": {
+      "absolute_tolerance": 5e-05,
+      "assembly": "Compare inner loops, vector width, spills, calls, branches, and multiplication/addition counts. No microarchitectural cycle claim without measurement.",
+      "baseline_commit": "82ee5ae488b85298364998c106f5c16556dc6b02",
+      "batches": [
+        1,
+        8
+      ],
+      "candidates": [
+        "Runtime-guarded AVX dense tiles: independent output lanes, same ordered multiplies/adds, no FMA; portable fallback",
+        "Memoize attention exponentials in FP64 scratch; identical reduction and division, bounded workspace increase"
+      ],
+      "gate": "Median paired last/batch1 p50 improvement >=5%; each seed improves; median paired p99 regression <=10%; batch8 and full-trace median paired p50 regressions <=5%; report all cells and outliers",
+      "id": "assembly_latency_v1",
+      "inputs": "Unchanged 32 validation windows and saved models from latest_v1",
+      "limitations": [
+        "Local Intel Mac, uncontrolled OS/cache/frequency; no hard deadline or current-runtime frontier claim",
+        "Profile samples identify work; only separate uninstrumented runs establish measured latency",
+        "Development candidates may be rejected; all trials and failed candidates retained"
+      ],
+      "modes": [
+        "last",
+        "all"
+      ],
+      "numerical": "Existing outputs and failure semantics unchanged. Bitwise saved full traces and every prefix; unchanged independent-reference tolerance. No fast-math, quantization or model change.",
+      "order": "Fresh serial process per cell; alternate baseline/candidate by trial, seed, batch and mode; no simultaneous benchmarking",
+      "purpose": "Assembly-guided incremental optimization on the local Intel Mac; Linux performance deferred",
+      "relative_tolerance": 0.0002,
+      "samples": {
+        "all": {
+          "1": 200,
+          "8": 64
+        },
+        "last": {
+          "1": 1000,
+          "8": 200
+        }
+      },
+      "schema_version": 1,
+      "seeds": [
+        7,
+        19,
+        43
+      ],
+      "selection": "Evaluate each candidate separately. Retain only candidates passing the unchanged >=5% primary end-to-end gate, parity and safety checks. Report rejection as well as acceptance.",
+      "trials": 3,
+      "warmup": 64
+    },
+    "protocol_sha256": "38f3e0f8e9c97668c6a287e7c7ecf3c457a6eb85c1e5dcc453f97aa31bf33cc0",
+    "records": [
+      {
+        "batch": 1,
+        "checksum": 15291.249966144562,
+        "clock": {
+          "count": 1000,
+          "max_ns": 37,
+          "mean_ns": 33.994,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 113641,
+        "implementation": "baseline",
+        "latency": {
+          "count": 1000,
+          "max_ns": 182810,
+          "mean_ns": 97657.342,
+          "min_ns": 95046,
+          "p50_ns": 96798,
+          "p95_ns": 99324,
+          "p99_ns": 133232
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1593344,
+          "setup": 1564672
+        },
+        "position_bytes": 24576,
+        "record_sha256": "01843840af72e5d335ee29e95d5482593a5e5bef5eb7979b23164788618a9ffb",
+        "seed": 7,
+        "setup_ns": 1817112,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15291.249966144562,
+        "clock": {
+          "count": 1000,
+          "max_ns": 37,
+          "mean_ns": 34.0,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 109015,
+        "implementation": "candidate",
+        "latency": {
+          "count": 1000,
+          "max_ns": 225187,
+          "mean_ns": 95713.665,
+          "min_ns": 94424,
+          "p50_ns": 95444,
+          "p95_ns": 96011,
+          "p99_ns": 97633
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1544192,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "70a5cef37bc4d2bbded5817f5111c22d40d96c89f1b8d7ea857266a9af90c4b2",
+        "seed": 7,
+        "setup_ns": 1813607,
+        "trial": 1,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 1,
+        "checksum": 3146.053388118744,
+        "clock": {
+          "count": 1000,
+          "max_ns": 66,
+          "mean_ns": 33.639,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1069270,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1503430,
+          "mean_ns": 1116702.275,
+          "min_ns": 1052638,
+          "p50_ns": 1098052,
+          "p95_ns": 1218421,
+          "p99_ns": 1365544
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1572864,
+          "setup": 1544192
+        },
+        "position_bytes": 24576,
+        "record_sha256": "d697bc309cad93367346a535f4c4cc3b6648a16a63964a4c9a7ba9c6584ad917",
+        "seed": 7,
+        "setup_ns": 1800692,
+        "trial": 1,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 1,
+        "checksum": 3146.053388118744,
+        "clock": {
+          "count": 1000,
+          "max_ns": 47,
+          "mean_ns": 33.899,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1181410,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1253994,
+          "mean_ns": 1146500.79,
+          "min_ns": 1072322,
+          "p50_ns": 1147607,
+          "p95_ns": 1195947,
+          "p99_ns": 1219379
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1581056,
+          "setup": 1560576
+        },
+        "position_bytes": 24576,
+        "record_sha256": "010fd25aaa63c6ba0da2050d14124b36dd71d73478c3a7ee67a89882ff8c3321",
+        "seed": 7,
+        "setup_ns": 1873373,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 2995.949649810791,
+        "clock": {
+          "count": 1000,
+          "max_ns": 45,
+          "mean_ns": 33.788,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1072313,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1351438,
+          "mean_ns": 818050.055,
+          "min_ns": 751830,
+          "p50_ns": 789944,
+          "p95_ns": 956765,
+          "p99_ns": 1301547
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1548288,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "867a89de928e0e57bbcf0f0396825f5f477072bdefa466902474b8a62dd2753d",
+        "seed": 7,
+        "setup_ns": 2010038,
+        "trial": 1,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 8,
+        "checksum": 2995.949649810791,
+        "clock": {
+          "count": 1000,
+          "max_ns": 38,
+          "mean_ns": 34.6,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 795898,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1285602,
+          "mean_ns": 786593.61,
+          "min_ns": 766328,
+          "p50_ns": 768736,
+          "p95_ns": 843349,
+          "p99_ns": 979652
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1581056,
+          "setup": 1560576
+        },
+        "position_bytes": 24576,
+        "record_sha256": "b1b77d9c8c6765db4192d9bed26df072db8619050f349ca080749a2f21558cfa",
+        "seed": 7,
+        "setup_ns": 1849940,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1139.9696426391602,
+        "clock": {
+          "count": 1000,
+          "max_ns": 54,
+          "mean_ns": 33.569,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 9341071,
+        "implementation": "baseline",
+        "latency": {
+          "count": 64,
+          "max_ns": 11196252,
+          "mean_ns": 9278046.875,
+          "min_ns": 8735672,
+          "p50_ns": 9161985,
+          "p95_ns": 10140708,
+          "p99_ns": 11196252
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1617920,
+          "setup": 1576960
+        },
+        "position_bytes": 24576,
+        "record_sha256": "8af2801a458ed25ac3f0cd99111c629434c851b5949454f211592ec5dc4103c2",
+        "seed": 7,
+        "setup_ns": 1803284,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1139.9696426391602,
+        "clock": {
+          "count": 1000,
+          "max_ns": 60,
+          "mean_ns": 33.824,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 9452643,
+        "implementation": "candidate",
+        "latency": {
+          "count": 64,
+          "max_ns": 9099206,
+          "mean_ns": 8286811.53125,
+          "min_ns": 7945825,
+          "p50_ns": 8187175,
+          "p95_ns": 8766922,
+          "p99_ns": 9099206
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1564672,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "286e19bc313e65dddebfccf12c27eb5221f63ba30f88bec1faa76b4c28197853",
+        "seed": 7,
+        "setup_ns": 1820346,
+        "trial": 1,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 1,
+        "checksum": 15194.458088874817,
+        "clock": {
+          "count": 1000,
+          "max_ns": 52,
+          "mean_ns": 32.484,
+          "min_ns": 31,
+          "p50_ns": 32,
+          "p95_ns": 33,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 104642,
+        "implementation": "candidate",
+        "latency": {
+          "count": 1000,
+          "max_ns": 207054,
+          "mean_ns": 96230.798,
+          "min_ns": 91674,
+          "p50_ns": 92266,
+          "p95_ns": 115272,
+          "p99_ns": 163859
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1589248,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "c3659d58b08aa3e3476fb8d537e78c8c1d080fa78045fd6e98a9cfeb21a3bee5",
+        "seed": 19,
+        "setup_ns": 1796838,
+        "trial": 1,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 1,
+        "checksum": 15194.458088874817,
+        "clock": {
+          "count": 1000,
+          "max_ns": 60,
+          "mean_ns": 33.707,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 111932,
+        "implementation": "baseline",
+        "latency": {
+          "count": 1000,
+          "max_ns": 163300,
+          "mean_ns": 96796.516,
+          "min_ns": 95039,
+          "p50_ns": 95994,
+          "p95_ns": 97800,
+          "p99_ns": 109679
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1560576,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "eeb5fc3a8f71c341271a3cd782a1ad968ce55fdd563cf76484e5a3f105d6eb9f",
+        "seed": 19,
+        "setup_ns": 1693397,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3172.1858263015747,
+        "clock": {
+          "count": 1000,
+          "max_ns": 59,
+          "mean_ns": 33.887,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1174772,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1626085,
+          "mean_ns": 1206784.965,
+          "min_ns": 1135543,
+          "p50_ns": 1180424,
+          "p95_ns": 1394826,
+          "p99_ns": 1574080
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "0e413687d7c2571c0cea4925cedb059e227d53c34bdd782d0612b45874780945",
+        "seed": 19,
+        "setup_ns": 1868619,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3172.1858263015747,
+        "clock": {
+          "count": 1000,
+          "max_ns": 14293,
+          "mean_ns": 75.548,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 1117893,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1693488,
+          "mean_ns": 1059514.765,
+          "min_ns": 1013615,
+          "p50_ns": 1046235,
+          "p95_ns": 1137875,
+          "p99_ns": 1263365
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1548288,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "ae61e287d3db2beb580266fbc7849ba0288199c630cd189e603ea93972ef9b55",
+        "seed": 19,
+        "setup_ns": 1756069,
+        "trial": 1,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 8,
+        "checksum": 2969.6991205215454,
+        "clock": {
+          "count": 1000,
+          "max_ns": 50,
+          "mean_ns": 33.783,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 783219,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1335030,
+          "mean_ns": 815681.61,
+          "min_ns": 764952,
+          "p50_ns": 784433,
+          "p95_ns": 971797,
+          "p99_ns": 1240447
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1576960,
+          "setup": 1556480
+        },
+        "position_bytes": 24576,
+        "record_sha256": "6064e1d40ce6694ef70eb8c2bd4d4c4e7da63f56da3314987eac3d123a78dd72",
+        "seed": 19,
+        "setup_ns": 1813525,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 2969.6991205215454,
+        "clock": {
+          "count": 1000,
+          "max_ns": 78,
+          "mean_ns": 35.438,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 36,
+          "p99_ns": 37
+        },
+        "engine": "native_core",
+        "first_call_ns": 804443,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 889604,
+          "mean_ns": 784533.785,
+          "min_ns": 766890,
+          "p50_ns": 787078,
+          "p95_ns": 804283,
+          "p99_ns": 832043
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1548288,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "05df4da5c55d1b478d7fda0f41903984d5079d95c3fb3bb4d51a32646b69ec56",
+        "seed": 19,
+        "setup_ns": 1841662,
+        "trial": 1,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 8,
+        "checksum": 1154.5809135437012,
+        "clock": {
+          "count": 1000,
+          "max_ns": 40,
+          "mean_ns": 33.762,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 8797910,
+        "implementation": "candidate",
+        "latency": {
+          "count": 64,
+          "max_ns": 9466553,
+          "mean_ns": 8318363.46875,
+          "min_ns": 7988070,
+          "p50_ns": 8174741,
+          "p95_ns": 9086198,
+          "p99_ns": 9466553
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1581056,
+          "setup": 1540096
+        },
+        "position_bytes": 24576,
+        "record_sha256": "707f5e08f3fe8a5918054ff4667860cd82051364ac7df281d3269f8829700e30",
+        "seed": 19,
+        "setup_ns": 1837258,
+        "trial": 1,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 8,
+        "checksum": 1154.5809135437012,
+        "clock": {
+          "count": 1000,
+          "max_ns": 55,
+          "mean_ns": 34.396,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 10711747,
+        "implementation": "baseline",
+        "latency": {
+          "count": 64,
+          "max_ns": 11417050,
+          "mean_ns": 9479807.65625,
+          "min_ns": 8825057,
+          "p50_ns": 9448546,
+          "p95_ns": 10805386,
+          "p99_ns": 11417050
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1585152,
+          "setup": 1544192
+        },
+        "position_bytes": 24576,
+        "record_sha256": "6ab672fc2d4052f11fb84769f67584a3473919270aff8e269989c98c47184b2f",
+        "seed": 19,
+        "setup_ns": 1955649,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15348.330393791199,
+        "clock": {
+          "count": 1000,
+          "max_ns": 2109,
+          "mean_ns": 36.557,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 111282,
+        "implementation": "baseline",
+        "latency": {
+          "count": 1000,
+          "max_ns": 259807,
+          "mean_ns": 101920.317,
+          "min_ns": 98932,
+          "p50_ns": 99927,
+          "p95_ns": 103900,
+          "p99_ns": 150894
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1572864,
+          "setup": 1552384
+        },
+        "position_bytes": 24576,
+        "record_sha256": "f0c0f06199f3497d53d7c923a0802e97965ac43788d209d9edde9309ab22bf37",
+        "seed": 43,
+        "setup_ns": 1871927,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15348.330393791199,
+        "clock": {
+          "count": 1000,
+          "max_ns": 37,
+          "mean_ns": 34.532,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 109927,
+        "implementation": "candidate",
+        "latency": {
+          "count": 1000,
+          "max_ns": 195356,
+          "mean_ns": 99664.496,
+          "min_ns": 94425,
+          "p50_ns": 97739,
+          "p95_ns": 114385,
+          "p99_ns": 141343
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1593344,
+          "setup": 1564672
+        },
+        "position_bytes": 24576,
+        "record_sha256": "0a61aec702d2083b2f0160a3966a31c4c4a47c44fe72176089e57c2bfd7626f9",
+        "seed": 43,
+        "setup_ns": 1827695,
+        "trial": 1,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 1,
+        "checksum": 3192.336157798767,
+        "clock": {
+          "count": 1000,
+          "max_ns": 45,
+          "mean_ns": 34.529,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 1084306,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 2096967,
+          "mean_ns": 1214627.345,
+          "min_ns": 1062643,
+          "p50_ns": 1135645,
+          "p95_ns": 1703172,
+          "p99_ns": 1851128
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "0e3670ca5c9c7441740828a375a7140b8fd6455362d7c20751600fc1d91c19a6",
+        "seed": 43,
+        "setup_ns": 1703505,
+        "trial": 1,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 1,
+        "checksum": 3192.336157798767,
+        "clock": {
+          "count": 1000,
+          "max_ns": 54,
+          "mean_ns": 34.757,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 36,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 1901154,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1411496,
+          "mean_ns": 1165592.265,
+          "min_ns": 1104579,
+          "p50_ns": 1148310,
+          "p95_ns": 1223752,
+          "p99_ns": 1294096
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1548288,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "c32302e2beae5e8e22ffdf6d41d564226ef438b82ccfc2ea090fedcd82b5b11d",
+        "seed": 43,
+        "setup_ns": 2317079,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 3005.4574966430664,
+        "clock": {
+          "count": 1000,
+          "max_ns": 40,
+          "mean_ns": 33.757,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 746997,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1495862,
+          "mean_ns": 883680.095,
+          "min_ns": 770102,
+          "p50_ns": 804960,
+          "p95_ns": 1340640,
+          "p99_ns": 1419534
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1568768,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "e97bd3d3091b3b4e79e962550f42f602f9702a97adfba602483a85496234b2d4",
+        "seed": 43,
+        "setup_ns": 1915156,
+        "trial": 1,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 8,
+        "checksum": 3005.4574966430664,
+        "clock": {
+          "count": 1000,
+          "max_ns": 37,
+          "mean_ns": 34.619,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 36,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 824298,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1183912,
+          "mean_ns": 795768.33,
+          "min_ns": 754422,
+          "p50_ns": 788341,
+          "p95_ns": 856437,
+          "p99_ns": 1087343
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1609728,
+          "setup": 1589248
+        },
+        "position_bytes": 24576,
+        "record_sha256": "2c9bb2111af6e69b34966d5d2a043bf1f373ef29692ee1bcadd3d56c384a05b0",
+        "seed": 43,
+        "setup_ns": 1912505,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1156.778902053833,
+        "clock": {
+          "count": 1000,
+          "max_ns": 51,
+          "mean_ns": 32.223,
+          "min_ns": 31,
+          "p50_ns": 32,
+          "p95_ns": 33,
+          "p99_ns": 33
+        },
+        "engine": "native_core",
+        "first_call_ns": 9518734,
+        "implementation": "baseline",
+        "latency": {
+          "count": 64,
+          "max_ns": 14759955,
+          "mean_ns": 9473981.34375,
+          "min_ns": 8939593,
+          "p50_ns": 9293593,
+          "p95_ns": 10217529,
+          "p99_ns": 14759955
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1536000
+        },
+        "position_bytes": 24576,
+        "record_sha256": "bcbeffeb8514b5740327185d6d06768059003e3fd88f58bf2fb053773ad4b3be",
+        "seed": 43,
+        "setup_ns": 1761679,
+        "trial": 1,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1156.778902053833,
+        "clock": {
+          "count": 1000,
+          "max_ns": 48,
+          "mean_ns": 34.608,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 9415713,
+        "implementation": "candidate",
+        "latency": {
+          "count": 64,
+          "max_ns": 14720777,
+          "mean_ns": 9256386.109375,
+          "min_ns": 8352627,
+          "p50_ns": 9026863,
+          "p95_ns": 10423480,
+          "p99_ns": 14720777
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1536000
+        },
+        "position_bytes": 24576,
+        "record_sha256": "69030bd188472bb92db2480ae0e01d889875c6945003dcffe3971c3431e130d2",
+        "seed": 43,
+        "setup_ns": 1961001,
+        "trial": 1,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 1,
+        "checksum": 15291.249966144562,
+        "clock": {
+          "count": 1000,
+          "max_ns": 2032,
+          "mean_ns": 36.517,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 115263,
+        "implementation": "candidate",
+        "latency": {
+          "count": 1000,
+          "max_ns": 160626,
+          "mean_ns": 100007.501,
+          "min_ns": 95680,
+          "p50_ns": 98586,
+          "p95_ns": 103940,
+          "p99_ns": 139392
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "398961fa5928dd336d6c4a0c98f7e3779afa33f33bc677245c8df189dcfaec81",
+        "seed": 7,
+        "setup_ns": 1876456,
+        "trial": 2,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 1,
+        "checksum": 15291.249966144562,
+        "clock": {
+          "count": 1000,
+          "max_ns": 45,
+          "mean_ns": 34.404,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 114943,
+        "implementation": "baseline",
+        "latency": {
+          "count": 1000,
+          "max_ns": 188395,
+          "mean_ns": 105766.674,
+          "min_ns": 97328,
+          "p50_ns": 98030,
+          "p95_ns": 128540,
+          "p99_ns": 150102
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1601536,
+          "setup": 1581056
+        },
+        "position_bytes": 24576,
+        "record_sha256": "4ceaab908b4c7bcd656a50d7a1e30f6fa5a5e51fd0afe2c15eaa3083b0c1cc6a",
+        "seed": 7,
+        "setup_ns": 1848806,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3146.053388118744,
+        "clock": {
+          "count": 1000,
+          "max_ns": 67,
+          "mean_ns": 33.677,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1181896,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1763199,
+          "mean_ns": 1146167.77,
+          "min_ns": 1081469,
+          "p50_ns": 1125170,
+          "p95_ns": 1228305,
+          "p99_ns": 1465874
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1601536,
+          "setup": 1572864
+        },
+        "position_bytes": 24576,
+        "record_sha256": "225e863ca96ee774e9cbfa3397207e97fd30b53c7b679802136696f03997d071",
+        "seed": 7,
+        "setup_ns": 1840994,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3146.053388118744,
+        "clock": {
+          "count": 1000,
+          "max_ns": 50,
+          "mean_ns": 34.743,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 36,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 1096035,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1510194,
+          "mean_ns": 1148668.63,
+          "min_ns": 1024072,
+          "p50_ns": 1097152,
+          "p95_ns": 1489128,
+          "p99_ns": 1495469
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1552384,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "99a715011a5a30b9c273d4ef18dd9fc5d56bc6dd93168906d6216184321c7a83",
+        "seed": 7,
+        "setup_ns": 1779574,
+        "trial": 2,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 8,
+        "checksum": 2995.949649810791,
+        "clock": {
+          "count": 1000,
+          "max_ns": 36,
+          "mean_ns": 34.005,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 775837,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1121674,
+          "mean_ns": 790222.83,
+          "min_ns": 764356,
+          "p50_ns": 767175,
+          "p95_ns": 906395,
+          "p99_ns": 1022293
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1572864,
+          "setup": 1552384
+        },
+        "position_bytes": 24576,
+        "record_sha256": "0d251d9994fec0da1d67be9291bd5a2f952482b20b906b7e04c79280fbe46682",
+        "seed": 7,
+        "setup_ns": 1781774,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 2995.949649810791,
+        "clock": {
+          "count": 1000,
+          "max_ns": 54,
+          "mean_ns": 33.761,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 782566,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1198843,
+          "mean_ns": 811657.97,
+          "min_ns": 748189,
+          "p50_ns": 774439,
+          "p95_ns": 994727,
+          "p99_ns": 1090624
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1581056,
+          "setup": 1560576
+        },
+        "position_bytes": 24576,
+        "record_sha256": "494aa41b63bc2424ca5b19bcfecad6b6b29563348765f56ccfd30bec759ad356",
+        "seed": 7,
+        "setup_ns": 1837720,
+        "trial": 2,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 8,
+        "checksum": 1139.9696426391602,
+        "clock": {
+          "count": 1000,
+          "max_ns": 51,
+          "mean_ns": 32.844,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 8734262,
+        "implementation": "candidate",
+        "latency": {
+          "count": 64,
+          "max_ns": 10454597,
+          "mean_ns": 8620783.609375,
+          "min_ns": 8140725,
+          "p50_ns": 8538308,
+          "p95_ns": 9234520,
+          "p99_ns": 10454597
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1589248,
+          "setup": 1568768
+        },
+        "position_bytes": 24576,
+        "record_sha256": "f5cc043aa368d1369b4822678c501f6c7585cb18abcf92baab3d6fed0d4fbb00",
+        "seed": 7,
+        "setup_ns": 1987507,
+        "trial": 2,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 8,
+        "checksum": 1139.9696426391602,
+        "clock": {
+          "count": 1000,
+          "max_ns": 48,
+          "mean_ns": 32.334,
+          "min_ns": 31,
+          "p50_ns": 32,
+          "p95_ns": 33,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 11010025,
+        "implementation": "baseline",
+        "latency": {
+          "count": 64,
+          "max_ns": 10270978,
+          "mean_ns": 9325164.03125,
+          "min_ns": 8921855,
+          "p50_ns": 9231023,
+          "p95_ns": 9901046,
+          "p99_ns": 10270978
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1597440,
+          "setup": 1556480
+        },
+        "position_bytes": 24576,
+        "record_sha256": "5349f229ec9faac5f39faaaae4c9f76f257c555bc9537de1d34f5be0ac887a3e",
+        "seed": 7,
+        "setup_ns": 2083335,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15194.458088874817,
+        "clock": {
+          "count": 1000,
+          "max_ns": 37,
+          "mean_ns": 33.056,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 109837,
+        "implementation": "baseline",
+        "latency": {
+          "count": 1000,
+          "max_ns": 160107,
+          "mean_ns": 96026.093,
+          "min_ns": 95309,
+          "p50_ns": 95832,
+          "p95_ns": 96160,
+          "p99_ns": 97550
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1589248,
+          "setup": 1560576
+        },
+        "position_bytes": 24576,
+        "record_sha256": "216d894bc30b1e944558beec507d4459a97735935282da740a974129e1cce5a6",
+        "seed": 19,
+        "setup_ns": 1811177,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15194.458088874817,
+        "clock": {
+          "count": 1000,
+          "max_ns": 36,
+          "mean_ns": 33.166,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 105868,
+        "implementation": "candidate",
+        "latency": {
+          "count": 1000,
+          "max_ns": 215396,
+          "mean_ns": 95155.918,
+          "min_ns": 91693,
+          "p50_ns": 93255,
+          "p95_ns": 96723,
+          "p99_ns": 150274
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "f454d02cdaa5be3ad54c1bd52b0f8b5660e0b4acbaf24889a5d224361e7ba96d",
+        "seed": 19,
+        "setup_ns": 1750141,
+        "trial": 2,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 1,
+        "checksum": 3172.1858263015747,
+        "clock": {
+          "count": 1000,
+          "max_ns": 47,
+          "mean_ns": 33.962,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1187733,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1594855,
+          "mean_ns": 1101519.405,
+          "min_ns": 1058577,
+          "p50_ns": 1076981,
+          "p95_ns": 1203726,
+          "p99_ns": 1416462
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1581056,
+          "setup": 1552384
+        },
+        "position_bytes": 24576,
+        "record_sha256": "93f27b76e8bec223676ad69f73f074b78155bfa29460ad768dce583d8e766d54",
+        "seed": 19,
+        "setup_ns": 2418928,
+        "trial": 2,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 1,
+        "checksum": 3172.1858263015747,
+        "clock": {
+          "count": 1000,
+          "max_ns": 64,
+          "mean_ns": 33.792,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1199677,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1843237,
+          "mean_ns": 1152963.87,
+          "min_ns": 1088426,
+          "p50_ns": 1129450,
+          "p95_ns": 1235988,
+          "p99_ns": 1444351
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1560576,
+          "setup": 1536000
+        },
+        "position_bytes": 24576,
+        "record_sha256": "cbc0917e409cbef2c0a7c6c55ddfdc7b9e5b37ed5d69a833b60263f6443d5863",
+        "seed": 19,
+        "setup_ns": 1782785,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 2969.6991205215454,
+        "clock": {
+          "count": 1000,
+          "max_ns": 55,
+          "mean_ns": 33.076,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 767672,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1388146,
+          "mean_ns": 811946.575,
+          "min_ns": 751363,
+          "p50_ns": 772351,
+          "p95_ns": 986737,
+          "p99_ns": 1137441
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1589248,
+          "setup": 1568768
+        },
+        "position_bytes": 24576,
+        "record_sha256": "63d82e470a2c22ce28ddf044768930066163977eb019dc580e3d4fb89b2fe632",
+        "seed": 19,
+        "setup_ns": 1795681,
+        "trial": 2,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 8,
+        "checksum": 2969.6991205215454,
+        "clock": {
+          "count": 1000,
+          "max_ns": 40,
+          "mean_ns": 33.925,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 799791,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1101616,
+          "mean_ns": 796168.705,
+          "min_ns": 780860,
+          "p50_ns": 785448,
+          "p95_ns": 847670,
+          "p99_ns": 958842
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1593344,
+          "setup": 1564672
+        },
+        "position_bytes": 24576,
+        "record_sha256": "1803f1fdae6454c171eba3d243fb4effc3b8f479cb0461041b9f4429a1cf0964",
+        "seed": 19,
+        "setup_ns": 2056064,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1154.5809135437012,
+        "clock": {
+          "count": 1000,
+          "max_ns": 46,
+          "mean_ns": 32.483,
+          "min_ns": 31,
+          "p50_ns": 32,
+          "p95_ns": 33,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 9578753,
+        "implementation": "baseline",
+        "latency": {
+          "count": 64,
+          "max_ns": 10446664,
+          "mean_ns": 9143460.09375,
+          "min_ns": 8796957,
+          "p50_ns": 9114344,
+          "p95_ns": 9708473,
+          "p99_ns": 10446664
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1581056,
+          "setup": 1540096
+        },
+        "position_bytes": 24576,
+        "record_sha256": "558e989f64b75de2f0bcb263aff3caa8fb4822843408c4a05568472683881db4",
+        "seed": 19,
+        "setup_ns": 1786753,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1154.5809135437012,
+        "clock": {
+          "count": 1000,
+          "max_ns": 56,
+          "mean_ns": 32.175,
+          "min_ns": 31,
+          "p50_ns": 32,
+          "p95_ns": 33,
+          "p99_ns": 33
+        },
+        "engine": "native_core",
+        "first_call_ns": 9904639,
+        "implementation": "candidate",
+        "latency": {
+          "count": 64,
+          "max_ns": 10331490,
+          "mean_ns": 8499279.296875,
+          "min_ns": 8023731,
+          "p50_ns": 8422626,
+          "p95_ns": 9338490,
+          "p99_ns": 10331490
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1597440,
+          "setup": 1556480
+        },
+        "position_bytes": 24576,
+        "record_sha256": "57ef2cb75c5772d6cfe02cdde600bce0b0c52e24ddda828cc2ba8fccabf4a0ef",
+        "seed": 19,
+        "setup_ns": 1802881,
+        "trial": 2,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 1,
+        "checksum": 15348.330393791199,
+        "clock": {
+          "count": 1000,
+          "max_ns": 46,
+          "mean_ns": 33.748,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 106106,
+        "implementation": "candidate",
+        "latency": {
+          "count": 1000,
+          "max_ns": 224673,
+          "mean_ns": 97951.288,
+          "min_ns": 93679,
+          "p50_ns": 96644,
+          "p95_ns": 101083,
+          "p99_ns": 153634
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1597440,
+          "setup": 1568768
+        },
+        "position_bytes": 24576,
+        "record_sha256": "ca45f746ee20ebf743018670cb0c7ff2a68eddcec9d6719a839e7bafe344a511",
+        "seed": 43,
+        "setup_ns": 1898373,
+        "trial": 2,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 1,
+        "checksum": 15348.330393791199,
+        "clock": {
+          "count": 1000,
+          "max_ns": 1963,
+          "mean_ns": 36.189,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 112185,
+        "implementation": "baseline",
+        "latency": {
+          "count": 1000,
+          "max_ns": 198910,
+          "mean_ns": 101023.445,
+          "min_ns": 95534,
+          "p50_ns": 98658,
+          "p95_ns": 124236,
+          "p99_ns": 167250
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1581056,
+          "setup": 1552384
+        },
+        "position_bytes": 24576,
+        "record_sha256": "667eeba9bb29d557402e2cf1d0228c5a86d3c46b7ae26691254383c308c3dac2",
+        "seed": 43,
+        "setup_ns": 1908504,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3192.336157798767,
+        "clock": {
+          "count": 1000,
+          "max_ns": 52,
+          "mean_ns": 32.226,
+          "min_ns": 31,
+          "p50_ns": 32,
+          "p95_ns": 33,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 1251527,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1668467,
+          "mean_ns": 1206472.79,
+          "min_ns": 1113725,
+          "p50_ns": 1195963,
+          "p95_ns": 1368086,
+          "p99_ns": 1612790
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "5492f3a58f8b8677d2c0547c1381f913d3bf2568d99327ba2daa8a601b2e7709",
+        "seed": 43,
+        "setup_ns": 2002043,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3192.336157798767,
+        "clock": {
+          "count": 1000,
+          "max_ns": 36,
+          "mean_ns": 33.884,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 1040750,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1840237,
+          "mean_ns": 1122385.465,
+          "min_ns": 1004755,
+          "p50_ns": 1092304,
+          "p95_ns": 1342050,
+          "p99_ns": 1544196
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1572864,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "cb4755e9de30a106e80b2410bf5fd8e269ef716c25fbc1c8633e7652ebe0e4f8",
+        "seed": 43,
+        "setup_ns": 1936474,
+        "trial": 2,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 8,
+        "checksum": 3005.4574966430664,
+        "clock": {
+          "count": 1000,
+          "max_ns": 37,
+          "mean_ns": 34.314,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 810869,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1166764,
+          "mean_ns": 800336.875,
+          "min_ns": 750204,
+          "p50_ns": 785934,
+          "p95_ns": 869141,
+          "p99_ns": 953878
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1593344,
+          "setup": 1572864
+        },
+        "position_bytes": 24576,
+        "record_sha256": "4eb178512394fa4dfa1bb98df4dc4bd14cc1cb5ab3011d8169fa8ed5715f9a0f",
+        "seed": 43,
+        "setup_ns": 1837400,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 3005.4574966430664,
+        "clock": {
+          "count": 1000,
+          "max_ns": 69,
+          "mean_ns": 33.662,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 754486,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1152161,
+          "mean_ns": 770828.33,
+          "min_ns": 723799,
+          "p50_ns": 771492,
+          "p95_ns": 810356,
+          "p99_ns": 950416
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1556480
+        },
+        "position_bytes": 24576,
+        "record_sha256": "e5a242b97c0616fc67a4e3d31beed3364d24224a4e483565935dcfb3129581d9",
+        "seed": 43,
+        "setup_ns": 1837311,
+        "trial": 2,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 8,
+        "checksum": 1156.778902053833,
+        "clock": {
+          "count": 1000,
+          "max_ns": 36,
+          "mean_ns": 32.311,
+          "min_ns": 31,
+          "p50_ns": 32,
+          "p95_ns": 33,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 8529944,
+        "implementation": "candidate",
+        "latency": {
+          "count": 64,
+          "max_ns": 10407768,
+          "mean_ns": 8781307.640625,
+          "min_ns": 8327646,
+          "p50_ns": 8694063,
+          "p95_ns": 9527560,
+          "p99_ns": 10407768
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1589248,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "c0e9308f5ccf7255714b3a1f071cffa6c358c38ca73470b08ef600d877434536",
+        "seed": 43,
+        "setup_ns": 1975215,
+        "trial": 2,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 8,
+        "checksum": 1156.778902053833,
+        "clock": {
+          "count": 1000,
+          "max_ns": 56,
+          "mean_ns": 31.544,
+          "min_ns": 30,
+          "p50_ns": 32,
+          "p95_ns": 32,
+          "p99_ns": 33
+        },
+        "engine": "native_core",
+        "first_call_ns": 9282863,
+        "implementation": "baseline",
+        "latency": {
+          "count": 64,
+          "max_ns": 10503165,
+          "mean_ns": 9424866.09375,
+          "min_ns": 9020567,
+          "p50_ns": 9431825,
+          "p95_ns": 10014668,
+          "p99_ns": 10503165
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1581056,
+          "setup": 1540096
+        },
+        "position_bytes": 24576,
+        "record_sha256": "091746851c5f75959a18f0191f5f1ef2d72461996253b18c0d0352e4950ccda3",
+        "seed": 43,
+        "setup_ns": 1928481,
+        "trial": 2,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15291.249966144562,
+        "clock": {
+          "count": 1000,
+          "max_ns": 36,
+          "mean_ns": 32.224,
+          "min_ns": 31,
+          "p50_ns": 32,
+          "p95_ns": 33,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 104276,
+        "implementation": "baseline",
+        "latency": {
+          "count": 1000,
+          "max_ns": 244167,
+          "mean_ns": 99510.555,
+          "min_ns": 93149,
+          "p50_ns": 93761,
+          "p95_ns": 130210,
+          "p99_ns": 171317
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1589248,
+          "setup": 1560576
+        },
+        "position_bytes": 24576,
+        "record_sha256": "f53ba75cc020fc99055cb31153ec1afafa87f98a9df47977cb69450bc8c63057",
+        "seed": 7,
+        "setup_ns": 1880231,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15291.249966144562,
+        "clock": {
+          "count": 1000,
+          "max_ns": 63,
+          "mean_ns": 33.781,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 109443,
+        "implementation": "candidate",
+        "latency": {
+          "count": 1000,
+          "max_ns": 187125,
+          "mean_ns": 97543.191,
+          "min_ns": 93527,
+          "p50_ns": 95866,
+          "p95_ns": 99527,
+          "p99_ns": 144887
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1585152,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "60a91b4ee456726f38820cd4ad7df96b9bcf90aa4d1faf2bce1343c6ba93c7e4",
+        "seed": 7,
+        "setup_ns": 1795304,
+        "trial": 3,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 1,
+        "checksum": 3146.053388118744,
+        "clock": {
+          "count": 1000,
+          "max_ns": 48,
+          "mean_ns": 34.559,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 1126479,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1283775,
+          "mean_ns": 1070367.415,
+          "min_ns": 1001804,
+          "p50_ns": 1067831,
+          "p95_ns": 1161567,
+          "p99_ns": 1250890
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1589248,
+          "setup": 1560576
+        },
+        "position_bytes": 24576,
+        "record_sha256": "776257a1f0cad10dceda32e2b35ca59b5621ad6b45d199398a24bbcc77c56494",
+        "seed": 7,
+        "setup_ns": 1998565,
+        "trial": 3,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 1,
+        "checksum": 3146.053388118744,
+        "clock": {
+          "count": 1000,
+          "max_ns": 69,
+          "mean_ns": 32.913,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 1127041,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1688562,
+          "mean_ns": 1217551.665,
+          "min_ns": 1127539,
+          "p50_ns": 1175467,
+          "p95_ns": 1509816,
+          "p99_ns": 1605980
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1564672,
+          "setup": 1536000
+        },
+        "position_bytes": 24576,
+        "record_sha256": "0fcca9e723fbeabb2962a6d8528461d90eb406fbde075d5c87c9006f47b23241",
+        "seed": 7,
+        "setup_ns": 1739615,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 2995.949649810791,
+        "clock": {
+          "count": 1000,
+          "max_ns": 44,
+          "mean_ns": 33.434,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 783047,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 947737,
+          "mean_ns": 775536.495,
+          "min_ns": 751732,
+          "p50_ns": 768743,
+          "p95_ns": 825314,
+          "p99_ns": 936503
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1601536,
+          "setup": 1581056
+        },
+        "position_bytes": 24576,
+        "record_sha256": "2f2adb9bb4575350d95f69ad14b23fbb769a2d5e9faaf9026d7f7ed36c9f728b",
+        "seed": 7,
+        "setup_ns": 1869715,
+        "trial": 3,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 8,
+        "checksum": 2995.949649810791,
+        "clock": {
+          "count": 1000,
+          "max_ns": 57,
+          "mean_ns": 33.165,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 793339,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1102144,
+          "mean_ns": 795633.19,
+          "min_ns": 764843,
+          "p50_ns": 771019,
+          "p95_ns": 889335,
+          "p99_ns": 1076597
+        },
+        "max_abs_difference": 4.76837158203125e-07,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1585152,
+          "setup": 1564672
+        },
+        "position_bytes": 24576,
+        "record_sha256": "67a6203e4ed5874985be6f75cedc450026c3107486db23c7985d077e32982ea8",
+        "seed": 7,
+        "setup_ns": 1807915,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1139.9696426391602,
+        "clock": {
+          "count": 1000,
+          "max_ns": 57,
+          "mean_ns": 32.196,
+          "min_ns": 30,
+          "p50_ns": 32,
+          "p95_ns": 33,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 10387070,
+        "implementation": "baseline",
+        "latency": {
+          "count": 64,
+          "max_ns": 11056621,
+          "mean_ns": 9345011.203125,
+          "min_ns": 8768452,
+          "p50_ns": 9218980,
+          "p95_ns": 10253221,
+          "p99_ns": 11056621
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1597440,
+          "setup": 1556480
+        },
+        "position_bytes": 24576,
+        "record_sha256": "9bcbf1300b54c4542f6decc76ca0de515cab8e887fdab42db5182a3adbf7c418",
+        "seed": 7,
+        "setup_ns": 2079709,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1139.9696426391602,
+        "clock": {
+          "count": 1000,
+          "max_ns": 47,
+          "mean_ns": 33.868,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 8470842,
+        "implementation": "candidate",
+        "latency": {
+          "count": 64,
+          "max_ns": 9863858,
+          "mean_ns": 8378588.0,
+          "min_ns": 7954919,
+          "p50_ns": 8333114,
+          "p95_ns": 9004462,
+          "p99_ns": 9863858
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1564672,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "4d1f73412c8f4ae06dc7eb716cee395b98425c84f43f4dd26be0ea98cb64acba",
+        "seed": 7,
+        "setup_ns": 1743322,
+        "trial": 3,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 1,
+        "checksum": 15194.458088874817,
+        "clock": {
+          "count": 1000,
+          "max_ns": 41,
+          "mean_ns": 32.912,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 107933,
+        "implementation": "candidate",
+        "latency": {
+          "count": 1000,
+          "max_ns": 162118,
+          "mean_ns": 95747.265,
+          "min_ns": 94453,
+          "p50_ns": 95151,
+          "p95_ns": 95996,
+          "p99_ns": 124965
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1609728,
+          "setup": 1589248
+        },
+        "position_bytes": 24576,
+        "record_sha256": "7e88187276b0c34c73476fd230c489528ed3c6e3f2d6af976fbc026d3584d1a4",
+        "seed": 19,
+        "setup_ns": 1882745,
+        "trial": 3,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 1,
+        "checksum": 15194.458088874817,
+        "clock": {
+          "count": 1000,
+          "max_ns": 36,
+          "mean_ns": 33.785,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 108873,
+        "implementation": "baseline",
+        "latency": {
+          "count": 1000,
+          "max_ns": 210700,
+          "mean_ns": 97692.693,
+          "min_ns": 95460,
+          "p50_ns": 96010,
+          "p95_ns": 97005,
+          "p99_ns": 157263
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1593344,
+          "setup": 1572864
+        },
+        "position_bytes": 24576,
+        "record_sha256": "c4db9c27a54b6a0091ff2b04255253cfb9842a728d56cfedc2c05c12cb74c668",
+        "seed": 19,
+        "setup_ns": 1788607,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3172.1858263015747,
+        "clock": {
+          "count": 1000,
+          "max_ns": 48,
+          "mean_ns": 34.512,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 1257936,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1608250,
+          "mean_ns": 1187460.115,
+          "min_ns": 1143822,
+          "p50_ns": 1176503,
+          "p95_ns": 1270189,
+          "p99_ns": 1381126
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1552384,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "cf00706a7ff84f36fce7f6ba253d0f7e1bf0d67469c81dc5950eba32d8aa90bb",
+        "seed": 19,
+        "setup_ns": 1986279,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 3172.1858263015747,
+        "clock": {
+          "count": 1000,
+          "max_ns": 55,
+          "mean_ns": 34.539,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 1061066,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1938237,
+          "mean_ns": 1116204.885,
+          "min_ns": 1036823,
+          "p50_ns": 1077779,
+          "p95_ns": 1276210,
+          "p99_ns": 1778819
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1568768,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "3788ce4f72222f96f10127c225e1bbab56fe112879beceadd7fa4ced3d5e5f9e",
+        "seed": 19,
+        "setup_ns": 1844290,
+        "trial": 3,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 8,
+        "checksum": 2969.6991205215454,
+        "clock": {
+          "count": 1000,
+          "max_ns": 53,
+          "mean_ns": 34.536,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 35,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 813244,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1168632,
+          "mean_ns": 799556.125,
+          "min_ns": 778956,
+          "p50_ns": 784845,
+          "p95_ns": 877966,
+          "p99_ns": 1098827
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1552384,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "384d6070565b800a92b44c9f2cd29b00dac8d5909e4a41fc18628811afa91e3d",
+        "seed": 19,
+        "setup_ns": 1724941,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 2969.6991205215454,
+        "clock": {
+          "count": 1000,
+          "max_ns": 45,
+          "mean_ns": 32.415,
+          "min_ns": 31,
+          "p50_ns": 32,
+          "p95_ns": 33,
+          "p99_ns": 34
+        },
+        "engine": "native_core",
+        "first_call_ns": 749774,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1047205,
+          "mean_ns": 781524.28,
+          "min_ns": 734508,
+          "p50_ns": 770410,
+          "p95_ns": 883620,
+          "p99_ns": 998416
+        },
+        "max_abs_difference": 0,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1576960,
+          "setup": 1556480
+        },
+        "position_bytes": 24576,
+        "record_sha256": "270c59707dbe958782ba3a521fad94094da300212adc4dbad456524572bb3b3d",
+        "seed": 19,
+        "setup_ns": 1770433,
+        "trial": 3,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 8,
+        "checksum": 1154.5809135437012,
+        "clock": {
+          "count": 1000,
+          "max_ns": 143,
+          "mean_ns": 36.233,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 41,
+          "p99_ns": 49
+        },
+        "engine": "native_core",
+        "first_call_ns": 9376556,
+        "implementation": "candidate",
+        "latency": {
+          "count": 64,
+          "max_ns": 14275505,
+          "mean_ns": 9065000.65625,
+          "min_ns": 8090607,
+          "p50_ns": 8759930,
+          "p95_ns": 11489051,
+          "p99_ns": 14275505
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1605632,
+          "setup": 1564672
+        },
+        "position_bytes": 24576,
+        "record_sha256": "7f3954fea21a68dcb98c1b3dc29bc1b33edf7585f8836054d5150d409552de45",
+        "seed": 19,
+        "setup_ns": 1860059,
+        "trial": 3,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 8,
+        "checksum": 1154.5809135437012,
+        "clock": {
+          "count": 1000,
+          "max_ns": 57,
+          "mean_ns": 35.525,
+          "min_ns": 34,
+          "p50_ns": 35,
+          "p95_ns": 37,
+          "p99_ns": 37
+        },
+        "engine": "native_core",
+        "first_call_ns": 10638505,
+        "implementation": "baseline",
+        "latency": {
+          "count": 64,
+          "max_ns": 10657777,
+          "mean_ns": 9227014.921875,
+          "min_ns": 8811283,
+          "p50_ns": 9123075,
+          "p95_ns": 10278959,
+          "p99_ns": 10657777
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1601536,
+          "setup": 1560576
+        },
+        "position_bytes": 24576,
+        "record_sha256": "fead6a144735dd8e019368061b4fab1289d2a298217c96f40e2d2ae51412bef5",
+        "seed": 19,
+        "setup_ns": 2362978,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15348.330393791199,
+        "clock": {
+          "count": 1000,
+          "max_ns": 77,
+          "mean_ns": 33.502,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 108384,
+        "implementation": "baseline",
+        "latency": {
+          "count": 1000,
+          "max_ns": 215748,
+          "mean_ns": 100859.054,
+          "min_ns": 96171,
+          "p50_ns": 98946,
+          "p95_ns": 105628,
+          "p99_ns": 139409
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1585152,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "6079e0e63c14163a25f12af66bf22a2216fc801d67a8e6aef827f6bb40a9389b",
+        "seed": 43,
+        "setup_ns": 1807312,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 1,
+        "checksum": 15348.330393791199,
+        "clock": {
+          "count": 1000,
+          "max_ns": 52,
+          "mean_ns": 34.604,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 36,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 108575,
+        "implementation": "candidate",
+        "latency": {
+          "count": 1000,
+          "max_ns": 207486,
+          "mean_ns": 96846.313,
+          "min_ns": 93798,
+          "p50_ns": 94651,
+          "p95_ns": 101581,
+          "p99_ns": 143452
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1560576,
+          "setup": 1540096
+        },
+        "position_bytes": 24576,
+        "record_sha256": "5599ecb3228e904f906bdcdfecf3584fe7a4c72ccc45ac6ca5aa5d4fc8ff32a8",
+        "seed": 43,
+        "setup_ns": 1764755,
+        "trial": 3,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 1,
+        "checksum": 3192.336157798767,
+        "clock": {
+          "count": 1000,
+          "max_ns": 51,
+          "mean_ns": 31.719,
+          "min_ns": 30,
+          "p50_ns": 32,
+          "p95_ns": 33,
+          "p99_ns": 33
+        },
+        "engine": "native_core",
+        "first_call_ns": 1193506,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1518169,
+          "mean_ns": 1096895.11,
+          "min_ns": 999594,
+          "p50_ns": 1075231,
+          "p95_ns": 1248280,
+          "p99_ns": 1492716
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1552384,
+          "setup": 1523712
+        },
+        "position_bytes": 24576,
+        "record_sha256": "9abea9cc7b8a5cbba1bd7917c0809aad1f3b3f1be83286b1dd5946760de72bd0",
+        "seed": 43,
+        "setup_ns": 1779277,
+        "trial": 3,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 1,
+        "checksum": 3192.336157798767,
+        "clock": {
+          "count": 1000,
+          "max_ns": 40,
+          "mean_ns": 34.811,
+          "min_ns": 33,
+          "p50_ns": 35,
+          "p95_ns": 36,
+          "p99_ns": 36
+        },
+        "engine": "native_core",
+        "first_call_ns": 1345238,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1984602,
+          "mean_ns": 1190053.83,
+          "min_ns": 1129643,
+          "p50_ns": 1177524,
+          "p95_ns": 1245879,
+          "p99_ns": 1408749
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 544768,
+          "final": 1589248,
+          "setup": 1568768
+        },
+        "position_bytes": 24576,
+        "record_sha256": "982ece1fa576fa2a0cebcd8b241990a7be6be71b29178751e27f58d7403dc8bb",
+        "seed": 43,
+        "setup_ns": 2051680,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 3005.4574966430664,
+        "clock": {
+          "count": 1000,
+          "max_ns": 64,
+          "mean_ns": 34.027,
+          "min_ns": 33,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 775635,
+        "implementation": "candidate",
+        "latency": {
+          "count": 200,
+          "max_ns": 1241284,
+          "mean_ns": 788044.03,
+          "min_ns": 737968,
+          "p50_ns": 771625,
+          "p95_ns": 941021,
+          "p99_ns": 1045210
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "a253b12d209a1cf2ef013bd90640048b4db32bcb0cb103639c159d3d2e8daca0",
+        "seed": 43,
+        "setup_ns": 1803897,
+        "trial": 3,
+        "workspace_bytes": 223008
+      },
+      {
+        "batch": 8,
+        "checksum": 3005.4574966430664,
+        "clock": {
+          "count": 1000,
+          "max_ns": 13265,
+          "mean_ns": 46.367,
+          "min_ns": 32,
+          "p50_ns": 33,
+          "p95_ns": 34,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 834213,
+        "implementation": "baseline",
+        "latency": {
+          "count": 200,
+          "max_ns": 1086574,
+          "mean_ns": 807954.255,
+          "min_ns": 771071,
+          "p50_ns": 804645,
+          "p95_ns": 850321,
+          "p99_ns": 974626
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "last",
+        "output_mode": "last",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1548288
+        },
+        "position_bytes": 24576,
+        "record_sha256": "f13de544cbbea2553afe040c37a5cd4d765308d2930a7feaec468aa5d9f39ffa",
+        "seed": 43,
+        "setup_ns": 1871616,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1156.778902053833,
+        "clock": {
+          "count": 1000,
+          "max_ns": 41,
+          "mean_ns": 33.586,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 9800800,
+        "implementation": "baseline",
+        "latency": {
+          "count": 64,
+          "max_ns": 10791965,
+          "mean_ns": 9454354.03125,
+          "min_ns": 8960249,
+          "p50_ns": 9318222,
+          "p95_ns": 10207049,
+          "p99_ns": 10791965
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1593344,
+          "setup": 1560576
+        },
+        "position_bytes": 24576,
+        "record_sha256": "106113a1e89f28f138470129c441cefe65bc2b93ddd9a45dc66ab04b73e0a9fe",
+        "seed": 43,
+        "setup_ns": 1837116,
+        "trial": 3,
+        "workspace_bytes": 222240
+      },
+      {
+        "batch": 8,
+        "checksum": 1156.778902053833,
+        "clock": {
+          "count": 1000,
+          "max_ns": 46,
+          "mean_ns": 33.784,
+          "min_ns": 32,
+          "p50_ns": 34,
+          "p95_ns": 35,
+          "p99_ns": 35
+        },
+        "engine": "native_core",
+        "first_call_ns": 8888045,
+        "implementation": "candidate",
+        "latency": {
+          "count": 64,
+          "max_ns": 10114264,
+          "mean_ns": 8621550.5625,
+          "min_ns": 8149549,
+          "p50_ns": 8567520,
+          "p95_ns": 9338452,
+          "p99_ns": 10114264
+        },
+        "max_abs_difference": 1.9073486328125e-06,
+        "mode": "all",
+        "output_mode": "all",
+        "parameter_bytes": 204604,
+        "peak_rss_bytes": {
+          "baseline": 536576,
+          "final": 1576960,
+          "setup": 1536000
+        },
+        "position_bytes": 24576,
+        "record_sha256": "4bdfbaca424e251b688a1a503c419968c5425800e3754c4103cbb0c5e05c8b4b",
+        "seed": 43,
+        "setup_ns": 1740233,
+        "trial": 3,
+        "workspace_bytes": 223008
+      }
+    ],
+    "source_sha256": "8953be3a160f2416ba834dd0ebc30e13518dd0bbfec383a66aae861b04931b87",
+    "workloads": {
+      "all_batch1": {
+        "median_p50_ratio": 0.9160869118055798,
+        "median_p99_ratio": 1.0201893205009436,
+        "p50_ratios": [
+          0.9568188412932301,
+          0.9750988739479367,
+          0.9084312873096395,
+          0.8863213557162511,
+          0.9535446456239762,
+          0.9160869118055798,
+          0.9889707483170921,
+          0.9133259139287754,
+          0.9131287345311009
+        ],
+        "p99_ratios": [
+          1.119868392025777,
+          1.0201893205009436,
+          0.7788951294536669,
+          0.8026053313681643,
+          0.9806909816242728,
+          1.2879483841445314,
+          1.430441018286124,
+          0.9574687343051482,
+          1.059603946480175
+        ]
+      },
+      "all_batch8": {
+        "median_p50_ratio": 0.9217795071473442,
+        "median_p99_ratio": 0.9889750450478737,
+        "p50_ratios": [
+          0.8936027509322488,
+          0.9249579380313536,
+          0.9039084584194781,
+          0.86518507715367,
+          0.9241066608853035,
+          0.9601948904289398,
+          0.9712995824112375,
+          0.9217795071473442,
+          0.919437205939073
+        ],
+        "p99_ratios": [
+          0.8127010717515112,
+          1.0178774601600744,
+          0.892122285823128,
+          0.8291592837028829,
+          0.9889750450478737,
+          1.339444895497438,
+          0.9973456558641269,
+          0.9909173092110807,
+          0.9372031877419914
+        ]
+      },
+      "last_batch1": {
+        "median_p50_ratio": 0.9795860447201443,
+        "median_p99_ratio": 0.9286485190070752,
+        "p50_ratios": [
+          0.9860121076881754,
+          1.0056717331429155,
+          1.0224506991179703,
+          0.9611642394316311,
+          0.9731091910843978,
+          0.9910530153109051,
+          0.9781040159316301,
+          0.9795860447201443,
+          0.9565924847896833
+        ],
+        "p99_ratios": [
+          0.7328044313678396,
+          0.9286485190070752,
+          0.8457245924222349,
+          1.4939869984226697,
+          1.5404818042029729,
+          0.7946242917914577,
+          0.9367039113549909,
+          0.9185889387144992,
+          1.0290009970661866
+        ]
+      },
+      "last_batch8": {
+        "median_p50_ratio": 0.9970480623694098,
+        "median_p99_ratio": 1.0668409154713963,
+        "p50_ratios": [
+          1.0275881446946675,
+          1.009468504578486,
+          0.9970480623694098,
+          1.0033718622240522,
+          0.983325439749035,
+          0.9816078333938548,
+          1.021080978916484,
+          0.9816244112101016,
+          0.9589632695163706
+        ],
+        "p99_ratios": [
+          1.328580965485703,
+          1.0668409154713963,
+          0.8698733137840807,
+          0.6707606209696988,
+          1.1862653075272047,
+          0.9086198282350179,
+          1.3055070938976938,
+          0.9963706050459283,
+          1.0724216263469268
+        ]
+      }
+    }
+  }
+}

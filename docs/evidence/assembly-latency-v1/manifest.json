@@ -1,0 +1,31 @@
+{
+  "artifacts": {
+    "assembly.json": "43bde1c46c798270253b3fc573d5b4fea8472e4b615308e8ccfafd8b0bead9bf",
+    "capture_predictions.py": "82135fa19f880e6f6d0e47f1cbbb3bf7012a7abdeb739385be5f08283c4049eb",
+    "development.json": "e82921aa876405c34adcab2684700dcf866c6b96eb2029db04e4dba2e1b1f5bf",
+    "exp-candidate.patch": "ba8ab3dbe677f3895393c6208ed1221b01fd8b98b34d781ff3a5fc7ee4584db7",
+    "native.json": "0ccc089909063b599782da747d2b9c1f3eb9cbe127224dcb95b1a38cb1ebf2a2",
+    "parity.json": "4b92950d5d78f3cd20c29cb6d40f31c6a414314fcb9be829ea721533ae1c8869",
+    "profile.json": "2c5ccdb29b2d916025b9331b7890b0b2152d41d672dde48f50c896e2905b6bf3",
+    "shape-protocol.json": "0136d0de2800877048a3de80e7fafddc98fb555288a804e6a436477c4687327f",
+    "shape_probe.cpp": "1cb3b7804804b9f9cf1345bfa07d8b193f7934042bc7c128b5bb07a0d718601a",
+    "shapes.json": "51f074255f5c6aa242bca94ac8bff8d3a37309b37f38fb7c829f7e2e30a4e6e1",
+    "verification.json": "795551187720b3ad0c4e4623a3c1ecd58ec7a0be7c6254b2872e6b5f2e930f3b"
+  },
+  "baseline_commit": "82ee5ae488b85298364998c106f5c16556dc6b02",
+  "candidate_commit": "96e874c72728321e8c6c615482f3c0cda9979c1c",
+  "candidate_dirty": false,
+  "flags": "Release -O3; -ffp-contract=off; AVX only in guarded function family",
+  "id": "assembly_latency_v1",
+  "limits": [
+    "Warm local desktop, no affinity/frequency isolation; per-call tail variation retained",
+    "Shape timings group 16 calls; diagnostic throughput, not single-call latency",
+    "No Linux performance result, no current-engine frontier or deployment claim",
+    "Owned native parameter/position/workspace bytes unchanged; extra code and stack are not zero-cost",
+    "AVX guard uses compiler runtime usable-feature detection; forced-off fallback tested locally; no physical non-AVX x86 machine tested"
+  ],
+  "machine": "Intel Core i5-10600, macOS 14.8.7, AppleClang 16.0.0.16000026",
+  "protocol_sha256": "38f3e0f8e9c97668c6a287e7c7ecf3c457a6eb85c1e5dcc453f97aa31bf33cc0",
+  "schema_version": 1,
+  "threads": 1
+}

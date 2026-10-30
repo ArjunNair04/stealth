@@ -213,3 +213,13 @@ The subsequent FP32 feature-boundary regression raises installed-wrapper coverag
 to 34 passing tests under both NumPy 1.26.4 and 2.2.6, including a new isolated
 source-distribution build. It rejects values immediately outside the FP32 endpoints
 before inference and preserves replay history; the native code is unchanged.
+
+## AVX specialization checks
+
+The assembly audit adds `dense.avx_dispatch`: guarded direct-kernel and automatic
+path parity, unaligned spans, full/partial tiles, a hand-calculated FMA-sensitive
+case, signed zero, subnormal and FP32 endpoints. Existing failure/allocation tests
+exercise the same common publication checks. Build with `STEALTH_ENABLE_AVX=OFF`
+to exercise the portable path even on an AVX machine; the Linux GCC and Intel Mac
+CI entries also run that configuration. Other architectures/unsupported compilers
+compile the portable implementation. Shared CI asserts correctness, not latency.

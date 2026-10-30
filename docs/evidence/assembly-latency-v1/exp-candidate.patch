@@ -1,0 +1,84 @@
+diff --git a/include/stealth/attention.hpp b/include/stealth/attention.hpp
+index d5f45cb..00524b6 100644
+--- a/include/stealth/attention.hpp
++++ b/include/stealth/attention.hpp
+@@ -1,5 +1,6 @@
+ #pragma once
+ #include "stealth/numeric.hpp"
++#include <vector>
+ 
+ namespace stealth::numeric {
+ inline constexpr std::size_t max_context = 1024;
+@@ -15,7 +16,7 @@ class AttentionWorkspace {
+   public:
+     AttentionWorkspace(std::size_t capacity, std::size_t width, std::size_t heads,
+                        AttentionKernel kernel = AttentionKernel::tiled);
+-    [[nodiscard]] std::size_t bytes() const noexcept { return storage_.size() * sizeof(float); }
++    [[nodiscard]] std::size_t bytes() const noexcept { return storage_.size() * sizeof(float) + exponentials_.size() * sizeof(double); }
+ 
+   private:
+     friend Error causal_attention(std::span<const float>, std::span<const float>,
+@@ -24,6 +25,7 @@ class AttentionWorkspace {
+     std::size_t capacity_, width_, heads_;
+     AttentionKernel kernel_;
+     AlignedBuffer storage_;
++    std::vector<double> exponentials_;
+ };
+ 
+ // Q, K, V and output are row-major [tokens,width]. Contiguous channel groups are heads.
+diff --git a/src/attention.cpp b/src/attention.cpp
+index 5182492..55a9a7c 100644
+--- a/src/attention.cpp
++++ b/src/attention.cpp
+@@ -17,7 +17,7 @@ std::size_t workspace_elements(std::size_t capacity, std::size_t width, std::siz
+ AttentionWorkspace::AttentionWorkspace(std::size_t capacity, std::size_t width, std::size_t heads,
+                                        AttentionKernel kernel)
+     : capacity_(capacity), width_(width), heads_(heads), kernel_(kernel),
+-      storage_(workspace_elements(capacity, width, heads, kernel)) {}
++      storage_(workspace_elements(capacity, width, heads, kernel)), exponentials_(capacity) {}
+ 
+ Error causal_attention(std::span<const float> query, std::span<const float> key,
+                        std::span<const float> value, std::size_t tokens, std::span<float> output,
+@@ -58,10 +58,25 @@ Error causal_attention(std::span<const float> query, std::span<const float> key,
+                 if (!checked_float(dot * inverse_scale, scores[j]))
+                     return Error::numerical_error;
+             }
+-            const auto status =
+-                softmax(scores.first(active), active, probabilities.first(active), scratch);
+-            if (status != Error::ok)
+-                return status;
++            if (workspace.kernel_ == AttentionKernel::reference) {
++                const auto status =
++                    softmax(scores.first(active), active, probabilities.first(active), scratch);
++                if (status != Error::ok)
++                    return status;
++            } else {
++                // Scores passed checked_float above; all buffers are private,
++                // disjoint workspace. exp(score-max) lies in [0,1], with at
++                // least one exact 1. Keep the same FP64 sum and division order.
++                const double maximum = *std::max_element(scores.begin(),
++                    scores.begin() + static_cast<std::ptrdiff_t>(active));
++                double total = 0;
++                for (std::size_t j = 0; j < active; ++j) {
++                    workspace.exponentials_[j] = std::exp(static_cast<double>(scores[j]) - maximum);
++                    total += workspace.exponentials_[j];
++                }
++                for (std::size_t j = 0; j < active; ++j)
++                    probabilities[j] = static_cast<float>(workspace.exponentials_[j] / total);
++            }
+             std::size_t c = 0;
+             if (workspace.kernel_ == AttentionKernel::tiled) {
+                 constexpr std::size_t lanes = 8;
+diff --git a/tests/attention_tests.cpp b/tests/attention_tests.cpp
+index 23f9d79..52b8d11 100644
+--- a/tests/attention_tests.cpp
++++ b/tests/attention_tests.cpp
+@@ -17,7 +17,7 @@ void hand() {
+     const std::array<float, 8> expected{10, 2, 15, 3, 20, 14.0F / 3, 25, 6};
+     for (std::size_t i = 0; i < out.size(); ++i)
+         test::near(out[i], expected[i], 2e-5, 5e-5);
+-    CHECK(workspace.bytes() == (4 * 2 + 3 * 4) * sizeof(float));
++    CHECK(workspace.bytes() == (4 * 2 + 3 * 4) * sizeof(float) + 4 * sizeof(double));
+     // Unequal scores have a hand-derived 1:2 probability ratio at the second row.
+     AttentionWorkspace one_head(2, 1, 1);
+     std::array<float, 2> q{0, 1}, k{0, static_cast<float>(std::log(2.0))}, v{3, 9}, y{};
