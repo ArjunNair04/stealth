@@ -12,6 +12,11 @@ from model_bundle import ModelBundle
 from signal_timeline import SignalTimeline, Snapshot, MAX_TIME, _integer
 
 
+# A NumPy 2 scalar comparison can round a Python float down to this endpoint.
+# Keep the limit as a Python float so range admission precedes FP32 conversion.
+_FP32_MAX = float(np.finfo(np.float32).max)
+
+
 @dataclass(frozen=True)
 class ForecastDecision:
     bundle_id: str
@@ -85,7 +90,7 @@ class FeatureReplay:
             candidate, value, state, reason = (), None, 'unavailable', 'unavailable'
         else:
             row = snapshot.require_values(schema_id=bundle.schema_id)
-            if any(not math.isfinite(x) or abs(x) > np.finfo(np.float32).max for x in row):
+            if any(not math.isfinite(x) or abs(x) > _FP32_MAX for x in row):
                 raise ValueError('Feature value exceeds finite FP32 range')
             prior = () if gap else self._rows
             candidate = (prior + (row,))[-config.context:]

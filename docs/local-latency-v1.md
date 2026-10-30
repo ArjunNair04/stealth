@@ -149,3 +149,19 @@ small parity-capture script is preserved in the evidence directory; copy it to
 in each baseline/candidate Python environment. It uses the saved local paths above.
 Do not run timing alongside builds, tests or profilers. Fresh reruns are evidence
 about that environment, not an instruction to replace an inconvenient result.
+
+## Follow-up: consistent feature bounds under NumPy 2
+
+Final review found that comparing a Python float against a NumPy FP32 scalar
+could round a value just outside the FP32 range before the comparison under
+NumPy 2. The bridge now caches the exact endpoint as a Python float, so both
+NumPy versions reject that value before prediction and preserve replay state.
+This also removes repeated limit lookup from each row. The earlier timing records
+remain unchanged; they precede this follow-up and do not measure its extra effect.
+
+The new endpoint regression failed under NumPy 2.2.6 before the fix. Afterward,
+all 34 wrapper tests pass under both NumPy 1.26.4 and NumPy 2.2.6; the fresh
+source-distribution installation also passes all 34. All 107 training/integration
+tests pass with three optional Linux-engine skips. Native code is unchanged.
+The [follow-up record](evidence/local-latency-v1/fp32-boundary.json) preserves the
+code, package and test-log hashes without replacing the original audit.
