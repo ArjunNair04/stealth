@@ -1,0 +1,46 @@
+{
+  "log_sha256": {
+    "final-debug.log": "20cd1abaedd6e4afb535f15bdadcae85699b1649e3ba8a8c660ca6e5bf9f3f10",
+    "final-portable.log": "f84e36466829c6db48e0db9c904601d0dacec795785ab2d2a877935e9d32b24d",
+    "final-release-tests.log": "c22ae1ee799b42ead7c1a82e825002546cf2571c9028061a9a1f00b2c99d52e3",
+    "final-sanitize.log": "9249f00925781bdba0a1d31607ac4f80c678070bc7541bfced48be7d8979b9eb",
+    "offline-tests.log": "7f77c07c5eb63597472c7ecb7eb1ea714327e11830a39e705929b51ccc870f0c",
+    "package/tests.log": "fb8411cfcf496bb97bad3deec021fa3146297f0c75a674d0adb8e4b18cf8b29a",
+    "red-test.log": "4f1915a0eb3f41a1cdb0d66aa5d8d4c3e4616609cdc849668e02b5bc3dfa4100",
+    "training-tests.log": "59e94fc3f65ff74d5f2102990f8ebcf368138f1bd0bda4958a0d23f461e2b861",
+    "wrapper-numpy1-tests.log": "1a02c26091ba924e340c028fcea90a29b75c62762bc9a3875e0358772a9b8fcd"
+  },
+  "native": {
+    "debug_pass": 67,
+    "forced_portable_pass": 67,
+    "release_pass": 67,
+    "sanitize_pass": 66
+  },
+  "numpy1_wrapper_pass": 34,
+  "numpy2_wrapper_pass": 34,
+  "offline_pass": 84,
+  "package": {
+    "artifacts": {
+      "numpy-2.2.6-cp310-cp310-macosx_14_0_x86_64.whl": "5a6429d4be8ca66d889b7cf70f536a397dc45ba6faeb5f8c5427935d9592e9cf",
+      "stealth_cpu-0.1.0-cp310-cp310-macosx_14_0_x86_64.whl": "143c9c149c5ae0272ae49aa350416c52b167b88da10c325603a45abe9bff4f76",
+      "stealth_cpu-0.1.0.tar.gz": "6e6ea592c7937cd8983b22acfae8940d247c33a02e62c525737e9abc74959bc3"
+    },
+    "built_wheel_from_sdist": true,
+    "python": "3.10.6",
+    "runtime_dependencies": [
+      "numpy==2.2.6"
+    ],
+    "runtime_install_network": false,
+    "schema_version": 1,
+    "status": "passed",
+    "wheel_members": [
+      "stealth_cpu/__init__.py",
+      "stealth_cpu/_core.cpython-310-darwin.so",
+      "stealth_cpu-0.1.0.dist-info/METADATA",
+      "stealth_cpu-0.1.0.dist-info/WHEEL",
+      "stealth_cpu-0.1.0.dist-info/RECORD"
+    ]
+  },
+  "training_optional_skips": 3,
+  "training_pass": 107
+}

@@ -137,3 +137,17 @@ Next local performance candidates: benchmark broader shapes; specify a separate
 buffered feature adapter to avoid repeated tuple-to-NumPy conversion; then evaluate
 optional matrix backends from profiles. Keep the existing replay bridge as oracle.
 Linux/Beaker timing remains deferred until the user provides access.
+
+## Assembly-guided optimization: completed
+
+The [second local audit](assembly-latency-v1.md) accepts a runtime-guarded AVX dense
+specialization after assembly inspection, a 108-shape probe and exact parity.
+The final complete-model comparison reduces median paired latest latency by
+29.43% over the already optimized baseline; the portable fallback remains tested.
+Tiny products stay portable. Cached FP64 softmax exponentials failed the primary
+gate and were removed, with their evidence retained.
+
+Next focused experiment: group independent output tiles in single-row dense
+calls to shorten dependency stalls without changing accumulation order. Then
+measure normalization across independent rows. Keep public validation and the
+Python replay oracle intact. Controlled Linux/Beaker performance remains deferred.

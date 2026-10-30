@@ -75,6 +75,12 @@ jobs:
         run: cmake --build --preset release
       - name: Test release and package relocation
         run: ctest --preset release
+      - name: Forced portable backend correctness (no AVX)
+        if: matrix.name == 'Linux GCC' || matrix.name == 'macOS Intel'
+        run: |
+          cmake -S . -B build/portable -G Ninja -DCMAKE_BUILD_TYPE=Release -DSTEALTH_ENABLE_AVX=OFF -DSTEALTH_WARNINGS_AS_ERRORS=ON
+          cmake --build build/portable
+          ctest --test-dir build/portable --output-on-failure
       - name: Benchmark smoke (no latency gate)
         run: ./build/release/stealth_bench --samples 100
       - name: Runtime benchmark contracts (offline; no latency gate)

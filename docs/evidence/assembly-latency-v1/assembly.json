@@ -1,0 +1,114 @@
+{
+  "avx_four_rows_eight_outputs": {
+    "counts": {
+      "addq": 1,
+      "cmpq": 1,
+      "incq": 1,
+      "jne": 1,
+      "vaddps": 4,
+      "vbroadcastss": 4,
+      "vmovups": 1,
+      "vmulps": 4
+    },
+    "instructions": [
+      "\tvmovups\t(%rdx), %ymm4",
+      "\tvbroadcastss\t(%r15,%rsi,4), %ymm5",
+      "\tvmulps\t%ymm5, %ymm4, %ymm5",
+      "\tvaddps\t%ymm5, %ymm0, %ymm0",
+      "\tvbroadcastss\t(%r14,%rsi,4), %ymm5",
+      "\tvmulps\t%ymm5, %ymm4, %ymm5",
+      "\tvaddps\t%ymm5, %ymm3, %ymm3",
+      "\tvbroadcastss\t(%rbx,%rsi,4), %ymm5",
+      "\tvmulps\t%ymm5, %ymm4, %ymm5",
+      "\tvaddps\t%ymm5, %ymm2, %ymm2",
+      "\tvbroadcastss\t(%r13,%rsi,4), %ymm5",
+      "\tvmulps\t%ymm5, %ymm4, %ymm4",
+      "\tvaddps\t%ymm4, %ymm1, %ymm1",
+      "\tincq\t%rsi",
+      "\taddq\t$32, %rdx",
+      "\tcmpq\t%rsi, %r8",
+      "\tjne\tLBB2_15"
+    ],
+    "label": "LBB2_15"
+  },
+  "avx_fused_multiply_add_instructions": 0,
+  "baseline_four_rows_eight_outputs": {
+    "counts": {
+      "addps": 8,
+      "addq": 1,
+      "cmpq": 1,
+      "incq": 1,
+      "jne": 1,
+      "movaps": 3,
+      "movss": 4,
+      "movups": 2,
+      "mulps": 8,
+      "shufps": 4
+    },
+    "instructions": [
+      "\tmovups\t(%rsi), %xmm10",
+      "\tmovups\t16(%rsi), %xmm9",
+      "\tmovss\t(%r10,%r12,4), %xmm8",
+      "\tshufps\t$0, %xmm8, %xmm8",
+      "\tmovss\t(%rax,%r12,4), %xmm11",
+      "\tshufps\t$0, %xmm11, %xmm11",
+      "\tmovss\t(%rcx,%r12,4), %xmm12",
+      "\tshufps\t$0, %xmm12, %xmm12",
+      "\tmovss\t(%r13,%r12,4), %xmm13",
+      "\tshufps\t$0, %xmm13, %xmm13",
+      "\tmovaps\t%xmm13, %xmm14",
+      "\tmulps\t%xmm9, %xmm14",
+      "\taddps\t%xmm14, %xmm4",
+      "\tmulps\t%xmm10, %xmm13",
+      "\taddps\t%xmm13, %xmm7",
+      "\tmovaps\t%xmm12, %xmm13",
+      "\tmulps\t%xmm9, %xmm13",
+      "\taddps\t%xmm13, %xmm2",
+      "\tmulps\t%xmm10, %xmm12",
+      "\taddps\t%xmm12, %xmm6",
+      "\tmovaps\t%xmm11, %xmm12",
+      "\tmulps\t%xmm10, %xmm12",
+      "\taddps\t%xmm12, %xmm3",
+      "\tmulps\t%xmm9, %xmm11",
+      "\taddps\t%xmm11, %xmm0",
+      "\tmulps\t%xmm8, %xmm10",
+      "\taddps\t%xmm10, %xmm5",
+      "\tmulps\t%xmm9, %xmm8",
+      "\taddps\t%xmm8, %xmm1",
+      "\tincq\t%r12",
+      "\taddq\t$32, %rsi",
+      "\tcmpq\t%r12, %r15",
+      "\tjne\tLBB15_40"
+    ],
+    "label": "LBB15_40"
+  },
+  "files": {
+    "dense_avx-final.s": "23ad6b0dc4842f88288f96983532dadaab6fa1c295f1d66f8f54e27293fd3670",
+    "numeric-baseline.s": "8ba10628113cb501ad625335f2c69f4bd3052dbb60ad65b25eb19a6bdca615d8",
+    "numeric-final.s": "15597102c3b2dedffd745fb222fc015e2e2ee42b010827d6f67ecd1f22c82883"
+  },
+  "note": "Static assembly from the exact Release compile command; counts are per loop iteration, not measured cycles. Both four-row loops keep accumulators in registers. Weight/input byte traffic per input dimension is unchanged. The single-row loop is unrolled twice but both adds depend on the same accumulator.",
+  "remaining_single_row_chain": {
+    "counts": {
+      "addq": 2,
+      "cmpq": 1,
+      "jne": 1,
+      "vaddps": 2,
+      "vbroadcastss": 2,
+      "vmulps": 2
+    },
+    "instructions": [
+      "\tvbroadcastss\t-4(%rbx,%rsi,4), %ymm1",
+      "\tvmulps\t-32(%rdx), %ymm1, %ymm1",
+      "\tvaddps\t%ymm1, %ymm0, %ymm0",
+      "\tvbroadcastss\t(%rbx,%rsi,4), %ymm1",
+      "\tvmulps\t(%rdx), %ymm1, %ymm1",
+      "\tvaddps\t%ymm1, %ymm0, %ymm0",
+      "\taddq\t$2, %rsi",
+      "\taddq\t$64, %rdx",
+      "\tcmpq\t%rsi, %r12",
+      "\tjne\tLBB2_43"
+    ],
+    "label": "LBB2_43"
+  }
+}

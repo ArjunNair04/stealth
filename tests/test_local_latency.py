@@ -1,11 +1,24 @@
 import itertools
+import copy
+import json
 from pathlib import Path
 import sys
 import unittest
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools'))
-from compare_native_latency import aggregate
+from compare_native_latency import aggregate, validate_protocol
 
 class LocalLatency(unittest.TestCase):
+    def test_runner_rejects_protocol_it_cannot_execute(self):
+        root=Path(__file__).resolve().parents[1]
+        original=json.loads((root/'benchmarks/ettm1/local_latency_v1.json').read_text())
+        updated=json.loads((root/'benchmarks/ettm1/assembly_latency_v1.json').read_text())
+        validate_protocol(original);validate_protocol(updated)
+        for field,value in [('trials',4),('seeds',[7]),('modes',['last']),('batches',[1]),
+                            ('warmup',0),('absolute_tolerance',.1),('relative_tolerance',.1),
+                            ('samples',{'last':{'1':1}})]:
+            bad=copy.deepcopy(updated);bad[field]=value
+            with self.assertRaises(ValueError):validate_protocol(bad)
+
     def records(self):
         return [dict(seed=s,trial=t,batch=b,mode=m,implementation=i,checksum=12.,
                      latency=dict(p50_ns=100 if i=='baseline' else 90,p99_ns=200))
