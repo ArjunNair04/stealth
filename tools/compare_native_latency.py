@@ -42,13 +42,14 @@ def aggregate(records):
     return dict(gate=gate,workloads=summary)
 
 
-def run(baseline,candidate,inputs,models,output):
+def run(baseline,candidate,inputs,models,output,protocol=PROTOCOL):
     paths = {k:Path(v).resolve(strict=True) for k,v in
              dict(baseline=baseline,candidate=candidate,inputs=inputs,models=models).items()}
     output = Path(output).resolve()
     if not output.is_relative_to(ROOT/'local'):
         raise ValueError('Results belong under ignored local/')
-    protocol = json.loads(PROTOCOL.read_bytes())
+    protocol_path = Path(protocol).resolve(strict=True)
+    protocol = json.loads(protocol_path.read_bytes())
     # Do not silently accept a different model/data snapshot under the same protocol.
     previous = json.loads((ROOT/'docs/evidence/latest-v1/runtime.json').read_bytes())
     payload = bounded(paths['inputs']/'input.bin')
@@ -63,7 +64,7 @@ def run(baseline,candidate,inputs,models,output):
         expected=paths['inputs']/f'expected-{seed}.bin'
         files[str(expected)] = digest(bounded(expected))
     output.mkdir(parents=True,exist_ok=False)
-    started = dict(protocol=protocol,protocol_sha256=digest(PROTOCOL.read_bytes()),
+    started = dict(protocol=protocol,protocol_sha256=digest(protocol_path.read_bytes()),
                    source_sha256=digest(Path(__file__).read_bytes()),files=files,
                    input_sha256=digest(payload),
                    commit=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
@@ -109,6 +110,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('baseline','candidate','inputs','models','output'):
         p.add_argument('--'+name,type=Path,required=True)
+    p.add_argument('--protocol',type=Path,default=PROTOCOL)
     args=p.parse_args()
     result=run(**vars(args))
     print(json.dumps(result['gate']))

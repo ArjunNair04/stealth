@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "id": "assembly_latency_v1",
+  "purpose": "Assembly-guided incremental optimization on the local Intel Mac; Linux performance deferred",
+  "baseline_commit": "82ee5ae488b85298364998c106f5c16556dc6b02",
+  "seeds": [
+    7,
+    19,
+    43
+  ],
+  "trials": 3,
+  "batches": [
+    1,
+    8
+  ],
+  "modes": [
+    "last",
+    "all"
+  ],
+  "samples": {
+    "last": {
+      "1": 1000,
+      "8": 200
+    },
+    "all": {
+      "1": 200,
+      "8": 64
+    }
+  },
+  "warmup": 64,
+  "inputs": "Unchanged 32 validation windows and saved models from latest_v1",
+  "absolute_tolerance": 5e-05,
+  "relative_tolerance": 0.0002,
+  "order": "Fresh serial process per cell; alternate baseline/candidate by trial, seed, batch and mode; no simultaneous benchmarking",
+  "gate": "Median paired last/batch1 p50 improvement >=5%; each seed improves; median paired p99 regression <=10%; batch8 and full-trace median paired p50 regressions <=5%; report all cells and outliers",
+  "numerical": "Existing outputs and failure semantics unchanged. Bitwise saved full traces and every prefix; unchanged independent-reference tolerance. No fast-math, quantization or model change.",
+  "limitations": [
+    "Local Intel Mac, uncontrolled OS/cache/frequency; no hard deadline or current-runtime frontier claim",
+    "Profile samples identify work; only separate uninstrumented runs establish measured latency",
+    "Development candidates may be rejected; all trials and failed candidates retained"
+  ],
+  "candidates": [
+    "Runtime-guarded AVX dense tiles: independent output lanes, same ordered multiplies/adds, no FMA; portable fallback",
+    "Memoize attention exponentials in FP64 scratch; identical reduction and division, bounded workspace increase"
+  ],
+  "selection": "Evaluate each candidate separately. Retain only candidates passing the unchanged >=5% primary end-to-end gate, parity and safety checks. Report rejection as well as acceptance.",
+  "assembly": "Compare inner loops, vector width, spills, calls, branches, and multiplication/addition counts. No microarchitectural cycle claim without measurement."
+}
