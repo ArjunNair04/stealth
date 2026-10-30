@@ -20,7 +20,7 @@ or measured bottleneck before expanding the implementation.
 | --- | --- | --- | --- |
 | 1. Know what was available | Mixed-frequency feature snapshots with publication/receipt clocks, revisions, age, missingness and fixed order | Independent timing examples, future-information invariance, duplicate/conflict tests and deterministic replay | Offline reference and checked native replay implemented; no real connector |
 | 2. Bind features to inference | A versioned model bundle records feature schema, preprocessing and weights; replay feeds the existing session through a checked bridge | Wrong feature order/scaler/schema fails; unavailable inputs produce an explicit no-forecast outcome; gaps, restart and rejected rows preserve declared state | Implemented in tools/model_bundle.py and tools/feature_inference.py; small CPU demo completed with exact replay and documented accuracy limits |
-| 3. Reproduce one predictive study | One data snapshot, chronological experiment, simple baselines and saved prediction ledger | Frozen target/timing, leakage tests, reproducible train/export/replay and protected evaluation | Hourly market-data admission implemented and local archive checked; financial objective pending user choice; current ETTm1 result is still below persistence |
+| 3. Reproduce one predictive study | One data snapshot, chronological experiment, simple baselines and saved prediction ledger | Frozen target/timing, leakage tests, reproducible train/export/replay and protected evaluation | BTC return study completed with native replay; primary model misses zero baseline; reused history remains exploratory and independent evaluation remains open |
 | 4. Measure runtime value | Same outputs and inputs through native, eager/compiled Torch and ONNX CPU | Numerical parity, exact environment/host record, complete fixed comparison, preserved failures | Linux selected; compiled/ONNX adapters pass fixture CI; Beaker access, host lock and full timed comparison pending |
 | 5. Assess one financial hypothesis | One source/feature family, signal-to-trading-universe mapping and QTS evaluation | Point-in-time identities, realistic decision/fill timing, costs, simple baselines, uncertainty and an untouched evaluation | No alpha experiment started |
 
@@ -54,8 +54,9 @@ failure outcomes, and a chronological evaluation against simple baselines.
 Require evidence for that specific pipeline. Additional connectors and model
 architectures can then reuse the contracts without changing old experiments.
 
-The next discussion with the user will choose one source family, predicted
-quantity, horizon and target universe. Do not infer these from the availability
+The user selected BTC next-hour return and the first bounded study is complete.
+The next discussion will choose one additional signal family, with its timing
+contract, before a separately frozen study. Do not infer these from the availability
 of minute bars. QTS data remains in QTS and requires its existing clock, coverage,
 identity and licensing gates; no current-survivor snapshot becomes validated
 alpha simply because a new model consumes it.
