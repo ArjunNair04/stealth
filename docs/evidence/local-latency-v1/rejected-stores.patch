@@ -1,0 +1,25 @@
+diff --git a/src/numeric.cpp b/src/numeric.cpp
+index f200909..0d72af0 100644
+--- a/src/numeric.cpp
++++ b/src/numeric.cpp
+@@ -51,13 +51,17 @@ void packed_tile(const float *input, const float *weights, const float *bias,
+                 a[lane] += weights[i * lanes + lane] * x0;
+         }
+     }
+-    for (std::size_t lane = 0; lane < active; ++lane) {
++    // Store each row contiguously. Interleaved row stores can make compilers
++    // extract individual SIMD lanes even when the complete tile is available.
++    for (std::size_t lane = 0; lane < active; ++lane)
+         output[lane] = a[lane];
+-        if constexpr (Rows == 4) {
++    if constexpr (Rows == 4) {
++        for (std::size_t lane = 0; lane < active; ++lane)
+             output[outputs + lane] = b[lane];
++        for (std::size_t lane = 0; lane < active; ++lane)
+             output[2 * outputs + lane] = c[lane];
++        for (std::size_t lane = 0; lane < active; ++lane)
+             output[3 * outputs + lane] = d[lane];
+-        }
+     }
+ }
+ 

@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "id": "bridge_latency_v1",
+  "purpose": "Local exploratory Python adapter optimization; same optimized native core in both arms",
+  "baseline_adapter_sha256": "905c57d023d3084732c2a87be66187ba4ce1b299482b2d7f309d5261ce03db0d",
+  "model_sha256": "48d3433c9be2e2c411a06fdf981a78332d6f34af0767608d6d11ef9ca978e87d",
+  "samples": 1000,
+  "warmup": 96,
+  "records_per_channel": 1100,
+  "channels": 7,
+  "trials": 3,
+  "clock": "Invented grid: observations at 10*t, decisions at 10*t+1",
+  "values": "Embedded mean + scale * sin(t/37 + channel)",
+  "order": "Fresh serial worker per arm, alternate baseline/candidate by trial",
+  "gate": "All prediction bytes equal; each trial p50 improves; median paired p50 reduction >=5%; median paired p99 increase <=10%",
+  "timing": "FeatureReplay.advance including snapshot, conversion, native prediction, decision construction; exclude tape/model construction",
+  "limits": "One synthetic tape and one saved model on local Intel Mac; no live ingress or universal tail bound"
+}

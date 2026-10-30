@@ -1,5 +1,6 @@
 #include "stealth/numeric.hpp"
 #include "fp_policy.hpp"
+#include "finite.hpp"
 
 #include <algorithm>
 #include <array>
@@ -17,6 +18,49 @@ static_assert(sizeof(float) == 4 && std::numeric_limits<float>::is_iec559,
               "Stealth requires IEEE-754 FP32");
 constexpr std::size_t lanes = 8;
 
+// Full tiles have fixed-size loads/stores; only the final partial tile needs
+// a runtime bound. Keep four named vectors so SLP can vectorize across columns
+// without changing the ordered FP32 accumulation along each dot product.
+template <std::size_t Rows, bool Full>
+void packed_tile(const float *input, const float *weights, const float *bias,
+                 float *output, std::size_t inputs, std::size_t outputs,
+                 std::size_t count = lanes) noexcept {
+    static_assert(Rows == 1 || Rows == 4);
+    const auto active = Full ? lanes : count;
+    std::array<float, lanes> a{}, b{}, c{}, d{};
+    for (std::size_t lane = 0; lane < active; ++lane) {
+        a[lane] = bias[lane];
+        if constexpr (Rows == 4)
+            b[lane] = c[lane] = d[lane] = bias[lane];
+    }
+    for (std::size_t i = 0; i < inputs; ++i) {
+        const float x0 = input[i];
+        if constexpr (Rows == 4) {
+            const float x1 = input[inputs + i];
+            const float x2 = input[2 * inputs + i];
+            const float x3 = input[3 * inputs + i];
+            for (std::size_t lane = 0; lane < lanes; ++lane) {
+                const float weight = weights[i * lanes + lane];
+                a[lane] += weight * x0;
+                b[lane] += weight * x1;
+                c[lane] += weight * x2;
+                d[lane] += weight * x3;
+            }
+        } else {
+            for (std::size_t lane = 0; lane < lanes; ++lane)
+                a[lane] += weights[i * lanes + lane] * x0;
+        }
+    }
+    for (std::size_t lane = 0; lane < active; ++lane) {
+        output[lane] = a[lane];
+        if constexpr (Rows == 4) {
+            output[outputs + lane] = b[lane];
+            output[2 * outputs + lane] = c[lane];
+            output[3 * outputs + lane] = d[lane];
+        }
+    }
+}
+
 std::size_t product(std::size_t rows, std::size_t columns) {
     if (rows == 0 || columns == 0) {
         throw std::invalid_argument("Dimensions must be positive");
@@ -27,13 +71,7 @@ std::size_t product(std::size_t rows, std::size_t columns) {
     return rows * columns;
 }
 
-bool finite(std::span<const float> input) noexcept {
-    for (float value : input) {
-        if (!std::isfinite(value))
-            return false;
-    }
-    return true;
-}
+using numeric_detail::finite;
 
 bool overlaps(std::span<const float> a, std::span<const float> b) noexcept {
     if (a.empty() || b.empty())
@@ -181,53 +219,29 @@ Error Dense::forward_rows(std::span<const float> input, std::size_t rows, std::s
                 scratch[row * outputs_ + o] = accumulator;
             }
     } else {
-        // Four named vectors make the independent columns explicit to SLP
-        // vectorizers. Nested row/channel accumulator loops can scalarize.
+        const auto full_outputs = (outputs_ / lanes) * lanes;
         std::size_t row = 0;
         for (; row + 4 <= rows; row += 4) {
-            for (std::size_t start = 0; start < outputs_; start += lanes) {
-                std::array<float, lanes> a{}, b{}, c{}, d{};
-                const auto count = std::min(lanes, outputs_ - start);
-                for (std::size_t lane = 0; lane < count; ++lane)
-                    a[lane] = b[lane] = c[lane] = d[lane] = bias[start + lane];
-                const float *tile = weights.data() + (start / lanes) * inputs_ * lanes;
-                for (std::size_t i = 0; i < inputs_; ++i) {
-                    const float x0 = input[row * inputs_ + i];
-                    const float x1 = input[(row + 1) * inputs_ + i];
-                    const float x2 = input[(row + 2) * inputs_ + i];
-                    const float x3 = input[(row + 3) * inputs_ + i];
-                    for (std::size_t lane = 0; lane < lanes; ++lane) {
-                        const float weight = tile[i * lanes + lane];
-                        a[lane] += weight * x0;
-                        b[lane] += weight * x1;
-                        c[lane] += weight * x2;
-                        d[lane] += weight * x3;
-                    }
-                }
-                for (std::size_t lane = 0; lane < count; ++lane) {
-                    scratch[row * outputs_ + start + lane] = a[lane];
-                    scratch[(row + 1) * outputs_ + start + lane] = b[lane];
-                    scratch[(row + 2) * outputs_ + start + lane] = c[lane];
-                    scratch[(row + 3) * outputs_ + start + lane] = d[lane];
-                }
-            }
+            std::size_t start = 0;
+            for (; start < full_outputs; start += lanes)
+                packed_tile<4, true>(input.data() + row * inputs_,
+                    weights.data() + start * inputs_, bias.data() + start,
+                    scratch.data() + row * outputs_ + start, inputs_, outputs_);
+            if (start < outputs_)
+                packed_tile<4, false>(input.data() + row * inputs_,
+                    weights.data() + start * inputs_, bias.data() + start,
+                    scratch.data() + row * outputs_ + start, inputs_, outputs_, outputs_ - start);
         }
-        // Original single-row packing for small calls and incomplete row tiles.
         for (; row < rows; ++row) {
-            for (std::size_t start = 0; start < outputs_; start += lanes) {
-                std::array<float, lanes> accumulator{};
-                const auto count = std::min(lanes, outputs_ - start);
-                for (std::size_t lane = 0; lane < count; ++lane)
-                    accumulator[lane] = bias[start + lane];
-                const float *tile = weights.data() + (start / lanes) * inputs_ * lanes;
-                for (std::size_t i = 0; i < inputs_; ++i) {
-                    const float value = input[row * inputs_ + i];
-                    for (std::size_t lane = 0; lane < lanes; ++lane)
-                        accumulator[lane] += tile[i * lanes + lane] * value;
-                }
-                for (std::size_t lane = 0; lane < count; ++lane)
-                    scratch[row * outputs_ + start + lane] = accumulator[lane];
-            }
+            std::size_t start = 0;
+            for (; start < full_outputs; start += lanes)
+                packed_tile<1, true>(input.data() + row * inputs_,
+                    weights.data() + start * inputs_, bias.data() + start,
+                    scratch.data() + row * outputs_ + start, inputs_, outputs_);
+            if (start < outputs_)
+                packed_tile<1, false>(input.data() + row * inputs_,
+                    weights.data() + start * inputs_, bias.data() + start,
+                    scratch.data() + row * outputs_ + start, inputs_, outputs_, outputs_ - start);
         }
     }
     return publish(scratch, output);
@@ -273,11 +287,18 @@ Error layer_norm(std::span<const float> input, std::span<const float> scale,
     }
     variance /= static_cast<double>(input.size());
     const double inverse = 1.0 / std::sqrt(variance + epsilon);
+    bool representable = true;
     for (std::size_t i = 0; i < input.size(); ++i) {
         const double value = ((input[i] - mean) * inverse) * scale[i] + shift[i];
-        if (!checked_float(value, scratch[i]))
-            return Error::numerical_error;
+        const bool valid = std::abs(value) <= std::numeric_limits<float>::max();
+        // Mask before narrowing: out-of-range/NaN values are never converted.
+        // Scratch may change on failure, but output is published only if every
+        // channel passes. The reduction lets independent channels vectorize.
+        scratch[i] = static_cast<float>(valid ? value : 0.0);
+        representable &= valid;
     }
+    if (!representable)
+        return Error::numerical_error;
     return publish(scratch, output);
 }
 

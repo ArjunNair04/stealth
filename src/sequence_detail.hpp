@@ -1,5 +1,6 @@
 #pragma once
 #include "stealth/attention.hpp"
+#include "finite.hpp"
 #include <cmath>
 #include <cstdint>
 #include <limits>
@@ -14,12 +15,7 @@ inline void dimensions(std::size_t capacity, std::size_t width, std::size_t head
     if (heads > width || width % heads != 0)
         throw std::invalid_argument("Heads must divide width");
 }
-inline bool finite(std::span<const float> values) noexcept {
-    for (float value : values)
-        if (!std::isfinite(value))
-            return false;
-    return true;
-}
+using numeric_detail::finite;
 inline bool overlaps(std::span<const float> a, std::span<const float> b) noexcept {
     if (a.empty() || b.empty())
         return false;

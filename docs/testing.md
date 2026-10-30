@@ -198,3 +198,13 @@ executes actual Inductor and ONNX export, checks independent and deployed shapes
 and runs supervised admission. Regressions reject disabled compilation and
 preserve final-window mismatches and timeouts. No native or package change was
 made. Six saved-model/local-eager admission cells pass without any timing claim.
+
+## Local latency audit verification
+
+The [local audit](local-latency-v1.md) passes 66 Debug, 66 Release and 65 sanitizer
+native tests; 83 offline tests; 32 isolated wrapper tests; and 107 training/integration
+tests with three optional Linux tests skipped. Every saved-model output and prefix
+is bitwise unchanged. New regression cases cover full/partial tile cancellation,
+invalid scan values at every position, transactional normalization overflow, and
+query-time provenance reconstruction. Timing gates are exercised with fixtures in
+CI; measured wall-clock thresholds remain outside noisy shared CI.
