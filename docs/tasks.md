@@ -151,3 +151,12 @@ Next focused experiment: group independent output tiles in single-row dense
 calls to shorten dependency stalls without changing accumulation order. Then
 measure normalization across independent rows. Keep public validation and the
 Python replay oracle intact. Controlled Linux/Beaker performance remains deferred.
+
+## Model capacity comparison: frozen, execution next
+
+The user approved a controlled size curve. The [bike size study](bike-size-study-v1.md)
+keeps the 48-hour history and forecasting objective fixed, compares widths
+64/128/256 with the same three seeds and eight-epoch training budget, and measures
+native latency and owned memory after training. The previous evaluation period
+is already inspected, so all accuracy comparisons are exploratory. No model is
+automatically promoted. Linux performance remains deferred.

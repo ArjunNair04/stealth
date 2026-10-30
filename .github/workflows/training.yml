@@ -24,5 +24,9 @@ jobs:
           python -m pip install --index-url https://download.pytorch.org/whl/cpu 'torch==${{ matrix.torch }}'
           python -m pip install --no-build-isolation --no-deps .
           python -m pip check
+      - name: Build native worker for synthetic sizing integration (no speed gate)
+        run: |
+          cmake --preset release -DSTEALTH_BUILD_BENCHMARKS=ON
+          cmake --build --preset release --target stealth_cli stealth_runtime_bench
       - name: Component, gradient, checkpoint and end-to-end parity tests
         run: python -m unittest discover -s tests/training -v

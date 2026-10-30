@@ -1,0 +1,28 @@
+{
+  "base_protocol_sha256": "2c44c579f140ccfe9f26db478138f82dcdf557d93b46f088215a81d48fcf018f",
+  "comparison": "Report all seeds and median/range of evaluation MAE and RMSE, validation-selected epoch, negative forecasts, native latency, owned buffer bytes and total study wall time. Equal training steps, not equal compute or individually tuned models. No automatic deployment or accuracy promotion.",
+  "evidence": "exploratory_reuse_of_inspected_evaluation",
+  "experiment_id": "bike_size_v1",
+  "hidden_multiplier": 4,
+  "interpretation": "Keep the smallest model unless larger capacity gives useful repeatable accuracy benefit for its measured cost. This exploratory curve cannot establish fresh generalization, alpha or an open-source speed frontier. Linux benchmarking remains deferred.",
+  "latency": {
+    "absolute_tolerance": 5e-05,
+    "batch": 1,
+    "measurement": "Fresh serial native worker per cell, after all training and parity preparation. Preloaded FP32 inputs; model loading and Python feature conversion excluded. No concurrent builds, training or profiling. Record all raw samples; report median of nine worker p50/p99 values per width and ranges. Desktop tails are observations, not deadlines.",
+    "order": "Each trial and seed cyclically rotates widths; each width occupies each position once per seed over three trials",
+    "output": "last",
+    "relative_tolerance": 0.0002,
+    "samples": 1000,
+    "trials": 3,
+    "validation_windows": 32,
+    "warmup": 64,
+    "window_selection": "first consecutive eligible validation windows"
+  },
+  "schema_version": 1,
+  "training": "Fresh runs for every width; inherit eight epochs, three seeds, four heads, 48-hour context, all data/scaling/optimizer/selection/parity rules from demand_v1. Change only width, hidden width and child experiment id. No outcome-dependent extensions.",
+  "widths": [
+    64,
+    128,
+    256
+  ]
+}
