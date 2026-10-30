@@ -1,0 +1,28 @@
+{
+  "binding": {
+    "code_commit": "e2143542da2de8f9d0cd2002440dadd0ba2c7934",
+    "data_sha256": "e03de4ee4ef4dc376ac6e04bf829673c6269e8eba5c60fa121640fa2f829504f",
+    "protocol_sha256": "bc1adc0168382f2ecead3d2dedc8e01e3ac0383542cd57b7b51623b97c88857a"
+  },
+  "environment": {
+    "deterministic": true,
+    "machine": "x86_64",
+    "numpy": "1.26.4",
+    "python": "3.10.6",
+    "system": "Darwin",
+    "threads": 1,
+    "torch": "2.2.2",
+    "torch_build_sha256": "7ebd4f666d6736f92de677c8d6d126b9ae4e783f1b6d5664a65906358e35dd14"
+  },
+  "native": {
+    "build_info": {
+      "architecture": "x86_64",
+      "compiler": "AppleClang 16.0.0.16000026",
+      "configuration": "Release",
+      "operating_system": "Darwin",
+      "source_fingerprint": "d3fe8695dda918a14669c34769578d2bfaf03d1a6dd37e82344850d690e5e6ce",
+      "version": "0.1.0"
+    },
+    "extension_sha256": "9dc1fa2d6505b9774b0c89da55f1a53648217de979e723ab364e846132896b47"
+  }
+}

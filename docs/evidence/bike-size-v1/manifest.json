@@ -1,0 +1,39 @@
+{
+  "accepted_widths": [
+    64,
+    128
+  ],
+  "admission_scope": "Numerical study gate only; no deployment approval",
+  "artifacts": {
+    "capacity-curve.png": "7eda89a395ad5bdcbe867735b521c1670fa6be1e644cb61121507cab71b5b05a",
+    "capacity-curve.svg": "eb74a2a57d3de11aeb7af9693bb5ec7eba74c02f433d5b81866b970ad3b71020",
+    "control.json": "7d7f3b73d6e7bb53304cde73b4f1b3d41be4684525938c0e827b05e210c90b6a",
+    "diagnose_parity.py": "5d3074fa8fa3c1494d88185bc78a7c09fd3f3acbd92b08afdc2493eece11f867",
+    "diagnostic-violations.json": "58954be740d4a4f21ad299626124c05872a9f86a483c907b548f586ba77315c9",
+    "epoch-times.json": "3caf3d7092e80371395c010f1b62a1379f11216c0ec48c214fd596df9506d401",
+    "finish_diagnostic.py": "069cf7c8879b36fcc78f0cac7fb3ddc62ce4ff07d1fe56b4683f356c6d452a1f",
+    "latency.json": "eb39a68a6e5e88c33e1da31a630750287c440fa90c55abe13cc8e777d3b84c80",
+    "original-status.json": "abddb8669e9f6aa1e1b04be8f4b3e52aa9f5a335bdb2f28b4bf0a12b63eab1a9",
+    "provenance.json": "0c9d96094122d8a7bc25f4313bfa8ddfec351033ee8fd770e7b484fde5e4ee11",
+    "raw-latency.json": "e6d497b3251ddd504557f814b9790c7bae56d1e427cbba49a407d831589029c2",
+    "replay.json": "fa0e904125249342d8242cf26f27ec6645b66029c5f2be313846489214f2ee69",
+    "replay_diagnostic.py": "a63503500805d1ff35d477a3a2778e5f96feee64ee8e4dcfaeda55b4bf2804d0",
+    "rounding-probe.json": "38f94e3b128531b778a2fbe8d5b5d1252853b8b0fa1243da662c94d4b26ed5c2",
+    "rounding_probe.py": "f272d1796355b760899eda5c5fd9022c061301eb33454c60016918d0214c2a3a",
+    "source-inventory.json": "a74df56ecc7c65952dae9cd30843b6dca22d2a8988b4a7c7956a22f1892a9100",
+    "training-provenance.json": "d5478e85e18c7bdd39439bdda06b8187ec361b0f233a3fbd64098f93e10ea2cc",
+    "training.json": "e7facb593112d871bdf5fe7defcf260d2362e34984a80220e02769787e3f40f2",
+    "verification.json": "ead581cec02e2e622933c499d67b6b15b4ac5160df81b770881b3f74307d49ed"
+  },
+  "diagnostic_analysis_finished": true,
+  "evidence": "exploratory_reuse_of_inspected_evaluation",
+  "experiment_id": "bike_size_v1",
+  "machine": "Intel Core i5-10600; macOS 14.8.7; AppleClang 16; one native thread",
+  "original_status": "failed_numerical_gate",
+  "protocol_sha256": "bc1adc0168382f2ecead3d2dedc8e01e3ac0383542cd57b7b51623b97c88857a",
+  "rejected_family_widths": [
+    256
+  ],
+  "schema_version": 1,
+  "training_code_commit": "e2143542da2de8f9d0cd2002440dadd0ba2c7934"
+}

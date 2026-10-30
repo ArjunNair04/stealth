@@ -152,11 +152,25 @@ calls to shorten dependency stalls without changing accumulation order. Then
 measure normalization across independent rows. Keep public validation and the
 Python replay oracle intact. Controlled Linux/Beaker performance remains deferred.
 
-## Model capacity comparison: frozen, execution next
+## Model capacity comparison: analyzed; large-family numerical gate failed
 
-The user approved a controlled size curve. The [bike size study](bike-size-study-v1.md)
-keeps the 48-hour history and forecasting objective fixed, compares widths
-64/128/256 with the same three seeds and eight-epoch training budget, and measures
-native latency and owned memory after training. The previous evaluation period
-is already inspected, so all accuracy comparisons are exploratory. No model is
-automatically promoted. Linux performance remains deferred.
+The [completed diagnostic comparison](bike-size-results-v1.md) trained widths
+64/128/256 across three seeds under the frozen eight-epoch bike recipe. Native
+median p50 is 53.302/147.513/492.298 µs, with 0.340/1.071/3.715 MB of owned buffers.
+The medium model's median MAE improves only 2.56% for 2.77 times the inference
+cost; the largest family has a weaker median than the medium family.
+
+The small and medium children pass their numerical gates. One large-model
+near-zero output differs from standard Torch by 0.0000986643 rentals, exceeding
+the frozen allowance. Both native kernels agree exactly, and changing only
+Torch dense accumulation to the native order reproduces that result. The failed
+parent and child remain unsealed; no tolerance was relaxed. All 37,458 evaluation
+predictions replay byte-identically in a fresh process. The final local training
+suite passes 114 tests with three optional Linux skips, including a regression
+for preserving checkpoints and earlier results after a late parity failure.
+
+Keep width 64 as the efficient default for this inspected task. Next numerical
+work: specify an independently justified error budget for cross-runtime FP32
+accumulation and near-zero outputs, then validate it on new cases. Preserve this
+failure as evidence. Further predictive changes still need the user's input on
+outputs/loss and a new evaluation design. Linux performance remains deferred.

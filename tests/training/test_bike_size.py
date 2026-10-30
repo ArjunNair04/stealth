@@ -99,6 +99,29 @@ class Sizing(unittest.TestCase):
             with (root/'width-8/seed-7/model.stlf').open('ab') as out: out.write(b'x')
             with self.assertRaises(ValueError): sizing.verify(root, protocol, base)
 
+    def test_late_parity_failure_preserves_completed_width_and_checkpoints(self):
+        protocol, _ = sizing.read_recipe(); protocol['widths'] = [4, 8]
+        base = fixtures.Study().tiny(); base['model']['heads'] = 2; base['seeds'] = [7]
+        real_parity = bike.parity
+        def fail_evaluation(model, samples, recipe):
+            if model.config.width == 8 and len(samples.y) == 72:
+                raise ValueError('injected late evaluation parity failure')
+            return real_parity(model, samples, recipe)
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)/'run'
+            with patch.object(bike, 'parity', side_effect=fail_evaluation):
+                with self.assertRaisesRegex(ValueError, 'late evaluation'):
+                    sizing.train(root, fixtures.frame(), protocol, base, {'fixture': True})
+            self.assertEqual(bike.verify_run(root/'width-4')['status'], 'complete')
+            self.assertTrue((root/'width-8/selection.json').exists())
+            self.assertTrue((root/'width-8/seed-7/model.stlf').exists())
+            self.assertTrue((root/'width-8/seed-7/epoch-001/arrays.npz').exists())
+            self.assertTrue((root/'width-8/failure.json').exists())
+            self.assertTrue((root/'failure.json').exists())
+            self.assertFalse((root/'complete.json').exists())
+            self.assertFalse((root/'width-8/complete.json').exists())
+            with self.assertRaises(FileNotFoundError): sizing.verify(root, protocol, base)
+
     def test_failure_never_seals_partial_sweep(self):
         protocol, base = sizing.read_recipe()
         with tempfile.TemporaryDirectory() as tmp:

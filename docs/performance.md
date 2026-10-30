@@ -1,5 +1,12 @@
 # How the first latency improvements work
 
+The [model-size study](bike-size-results-v1.md) adds measurements for 50.6k,
+199.4k and 792.1k trainable parameters on the fixed 48-hour bike task. Native p50
+is 53.302/147.513/492.298 µs. Larger models give modest, inconsistent accuracy
+gains; the largest family fails one near-zero cross-runtime numerical check and
+remains diagnostic. These are different workloads from the 96-step ETTm1 audits,
+not another kernel speedup. The native implementation is unchanged.
+
 The latest [assembly-guided audit](assembly-latency-v1.md) adds runtime-guarded AVX
 dense tiles: 136.617 → 97.141 µs on the fixed local Intel workload (29.43% median
 paired reduction), exact predictions and unchanged owned workspace. Narrow

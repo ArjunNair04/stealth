@@ -102,6 +102,7 @@ The repository is public for review. No redistribution licence has been selected
 - [Native mixed-speed feature index and adversarial replay demo](docs/native-signal-index-v1.md)
 
 - [Bike-rental learning demonstration and forecast chart](docs/bike-demand-results-v1.md)
+- [Model capacity: accuracy, latency, memory and a numerical boundary finding](docs/bike-size-results-v1.md)
 
 - [Compiled Torch and ONNX CPU admission](docs/runtime-adapters-v1.md)
 

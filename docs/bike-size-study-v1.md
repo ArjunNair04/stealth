@@ -1,5 +1,10 @@
 # Does a larger forecaster earn its cost?
 
+Result: [the diagnostic comparison is finished](bike-size-results-v1.md). The
+small and medium sizes pass; the largest family fails one frozen numerical check.
+The original failed run is preserved and no tolerance was relaxed. The design
+below records what was specified before training.
+
 A wider model has more space to learn patterns, but it must do more arithmetic
 for every forecast. This study measures both sides on the existing next-hour
 bike-rental task. It changes width, not the forecasting question.
