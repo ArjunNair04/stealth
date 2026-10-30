@@ -28,7 +28,9 @@ observed point values, including period-end factors released later. It excludes
 announced future values, forecasts with a separate target time, interval events,
 unresolved local times and ambiguous clock ordering. An adapter must resolve
 source time zones, precision, calendars and licensing before creating records.
-No date-string conversion or market calendar is provided here.
+No date-string conversion or market calendar is provided here. The separately
+labelled ETTm1 engineering demo uses invented integer clocks in a synthetic domain;
+they must never be interpreted as historical availability evidence.
 
 ## Selection at one decision
 
@@ -60,8 +62,9 @@ Snapshots preserve schema order, selection provenance, observation/publication/
 receipt ages, and valid/stale/missing/withdrawn states. Non-valid values are None,
 not zeros or NaNs. A snapshot is ready only when every feature is valid.
 require_values(schema_id=...) rejects a mismatched expected schema or a non-ready
-snapshot. Model/feature-schema binding and float32 conversion remain a separate
-integration gate; equal feature counts do not establish matching semantics.
+snapshot. The [model bundle and replay bridge](model-bundle-v1.md) now enforce feature-schema
+binding and checked float32 conversion; equal feature counts alone do not establish
+matching semantics.
 
 The reference bounds features to 256 and caller-supplied records to at most
 100,000. The caller may choose a smaller max_records; duplicate deliveries count

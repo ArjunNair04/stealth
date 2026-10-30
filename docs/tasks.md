@@ -18,15 +18,27 @@ factors. Exact sources, freshness thresholds and prediction targets remain open.
   explicit readiness/age/provenance and schema order, with component and CLI demo
   checks. It is not a feed connector or part of the installed native package.
 
-## Next local task: feature-to-model contract
+## Feature-to-model contract and bounded CPU demo
 
-Specify and test a versioned bundle that binds feature order/schema, preprocessing
-and weights. Add a checked bridge to existing inference sessions and a replay
-ledger. Missing/stale/withdrawn inputs must produce an explicit no-forecast result.
-Define gap and reset behavior before sending rows to WindowStream; dropping a
-minute silently must not make a spaced window look contiguous. Use invented
-fixtures first and test component behavior before integration. Consult the user
-before changing model inputs, objective, architecture or missing-data treatment.
+The [versioned bundle and replay bridge](model-bundle-v1.md) bind feature order,
+preprocessing, model weights and the decision grid. Missing/stale/withdrawn inputs
+produce an explicit no-forecast outcome. A gap resets history; invalid calls and
+native arithmetic failures preserve history. The Python reference uses the
+existing latest-only native session and keeps one bounded raw window.
+
+The new two-epoch, one-seed [ETTm1 demo protocol](../benchmarks/ettm1/bundle_demo_v1.json)
+uses only the first 3,072 observations for fitting and scoring. It is an engineering
+demonstration of training/export/replay, with invented availability clocks, not a
+new predictive study. The original six-epoch studies and reserved tail stay intact.
+
+## Next local implementation
+
+Keep the feature bridge as the correctness reference. Before choosing a financial
+prediction task, agree the source, target, availability clocks, cadence/calendar
+and freshness policy with the user. Live ingestion, persistent crash recovery,
+trading-universe mapping and production model activation are separate work.
+Current-runtime adapters remain the next performance gate; no new kernel tuning
+is justified by this integration demo.
 
 ## Parallel gate: current-runtime comparison
 

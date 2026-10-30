@@ -1,0 +1,58 @@
+{
+  "accumulate": 2,
+  "baselines": [
+    "last_observation",
+    "target_time_minus_96_rows"
+  ],
+  "batch_size": 32,
+  "clip_norm": 1.0,
+  "clock_assumption": "Row i received at i*900000000000; decision at receipt+1. Source timezone and historical availability are unknown. These invented clocks only exercise the bridge.",
+  "clock_domain": "synthetic",
+  "comparison": "Report model and both baselines without a success threshold for predictive accuracy",
+  "cpu_threads": 1,
+  "deterministic_algorithms": true,
+  "epochs": 2,
+  "evaluation_batch_size": 32,
+  "experiment_id": "ettm1_bundle_demo_v1",
+  "initial_candidate": "Zero head implies persistence exactly in raw-output arithmetic; checkpoint selection still uses trained epochs 1..6 as in v1",
+  "initialization": "Same dedicated seeded Xavier body as v1; consume the same RNG draws, then zero scalar head weight and bias",
+  "limitations": [
+    "Engineering demonstration, not independent forecast validation or financial evidence",
+    "Only first 3072 rows used for fitting, predictions and scoring; complete source file hashed and structurally validated",
+    "Overlapping windows and previously inspected development data",
+    "No current-runtime latency comparison; Torch 2.2.2 is the available local reference"
+  ],
+  "loss": "mean_squared_error_of_standardized_last_origin_target",
+  "maximum_observation_end_exclusive": 3072,
+  "native_parity_windows_per_split": 8,
+  "optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "lr": 0.001,
+    "weight_decay": 0.01
+  },
+  "optimizer_name": "AdamW; all trainable parameters; foreach=false",
+  "output_mode": "correction",
+  "parity_absolute_tolerance": 5e-05,
+  "parity_relative_tolerance": 0.0002,
+  "primary_metric": "MAE in original OT units",
+  "purpose": "Bounded CPU training/export/feature-replay engineering demonstration; not a new predictive study",
+  "schema_version": 1,
+  "secondary_metric": "RMSE in original OT units",
+  "seeds": [
+    7
+  ],
+  "selection": "lowest validation MAE in original units; strict improvement; earliest epoch wins ties",
+  "shuffle": "one full permutation per epoch; dedicated CPU generator seeded seed+1000",
+  "split_ends": {
+    "test": 3072,
+    "train": 2048,
+    "validation": 2560
+  },
+  "stopping": "Exactly two epochs, one seed; select earliest lowest validation MAE; no outcome-dependent extension",
+  "task_id": "ettm1_one_hour_correction_v1",
+  "test_policy": "Demo evaluation in an already developmental early slice; reserved tail unused"
+}
