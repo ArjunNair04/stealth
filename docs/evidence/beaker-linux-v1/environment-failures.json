@@ -1,0 +1,62 @@
+{
+  "initial_queue_correction": "cpu.q does not match an explicit gpu=false request; removed only that request before execution, retaining the CPU queue and resource limits.",
+  "attempts": [
+    {
+      "attempt": "linux-v1",
+      "reason": "Compiler module exists on login host but not compute node; stopped before build.",
+      "timings_collected": 0,
+      "files": {
+        "scheduler.log": "bc3941ae9de3f511bce6fb92d4910363db67f29e13612bfe77d7274700ef84b1"
+      }
+    },
+    {
+      "attempt": "linux-v2",
+      "reason": "Compute-node GCC 4.8.5 rejects required C++20; stopped before build.",
+      "timings_collected": 0,
+      "files": {
+        "results/dev-configure.log": "76d701cd97d9b87637c373968a99a5dfe7b83bf8be9865e186c7876da4e9b866",
+        "results/environment.json": "1a8cfb45311cf61c6e8fc03c76a16dcd71b60c87177e209bd0e64cc422125392",
+        "results/failed.json": "4b4fa0b3e3fadc013d3959342fdc838f1c15d84aba373f7c61e67770f210c5b6",
+        "results/portable-configure.log": "76d701cd97d9b87637c373968a99a5dfe7b83bf8be9865e186c7876da4e9b866",
+        "results/python-environment.log": "bdbf255ee497e70466971829c10d3e95f5eec404d7ec1f868bb290b3173e522f",
+        "results/release-configure.log": "d2669a3b260f343b8845ad6633d3a03fdb6bd1d8c0e5ea4f172950bd588dd3d5",
+        "results/sanitize-configure.log": "76d701cd97d9b87637c373968a99a5dfe7b83bf8be9865e186c7876da4e9b866",
+        "results/steps.json": "37e7401b09bf32441307b41cb6baeebeeaaf54c0389d3f67c29d7edb1b796e61",
+        "results/toolchain.log": "5196087df8ed482fa7b81f05efc155bbcf8b57d6f239606eb3b14ffb19ae3b4f",
+        "results/validation.json": "916212ea8dd0b27c6d577cfe95292f5ca6951cacbf32c1de0284404b5e83409c",
+        "scheduler.log": "03ab0a044e0930ff7a144f0cf953153646ea3528feae121da7994d329370ce45"
+      }
+    },
+    {
+      "attempt": "linux-v3",
+      "reason": "Debug/Release/portable and Python suites pass; missing sanitizer link dependencies prevent timing.",
+      "timings_collected": 0,
+      "files": {
+        "results/dev-build.log": "9b4a20a259b7bb656ed3a08f072589182d261f621d927be48ef3f6c2e19282e3",
+        "results/dev-configure.log": "677b1d9d493a8ceeb4ba30bf0efda2373a8b02891ab93228cb5f8c5217eee43a",
+        "results/dev-test.log": "be14bb90c91dfc3842a5a8e00942cbb25f9962faf1fb4845a5e1169299b1ed46",
+        "results/environment.json": "18c8be6cd65696aed6af9804024dd7b1e86f9d46b9dfb8363e5a5a032a754058",
+        "results/failed.json": "6aa155f576b75b228b42bc5a8aa90cb4718e7662654274259a66dbd9b07585f4",
+        "results/identity.log": "82e87262150dba7be6c3f69424a585d291c275b660983daa958b7c29c6061f14",
+        "results/offline-tests.log": "d558d06ab00d934be6fcc78a06f0e3a423fec47edc8f4d226831109f8c65b5b6",
+        "results/portable-build.log": "3f3a796c47edca88b827187bcfdc1103cfae645a282f60990ea63c59ee2a034d",
+        "results/portable-configure.log": "64c760584c39e3bcc6b77523879a08c8191ed9c975df6856b63ba7350b2c1dc6",
+        "results/portable-test.log": "24c684b400e1c41c7ae74646f870fdfe5d28f0b88fa3ca98807ec81c3faaeae7",
+        "results/python-environment.log": "bdbf255ee497e70466971829c10d3e95f5eec404d7ec1f868bb290b3173e522f",
+        "results/release-build.log": "92a575ab44d98cc8280cc24b2fa3a1ef1fdb18a1dc731654afc3eb428b75b9b8",
+        "results/release-configure.log": "d67780409763246a9c6b6c2c208e73a0d7b8239e1cea80d75136fb74e1813718",
+        "results/release-test.log": "e197a7a075ff58a4be502a2a0484479347af6e77c7760d361c3e8d3d46a1ba7e",
+        "results/sanitize-build.log": "13f1df1ed9ff3bd787f13d79dccf837b4350768b2e927851cfb70c992bc357cf",
+        "results/sanitize-configure.log": "686e1f2376891a9d5a4b1159df4390d7abc67e6f1ea6ec4b3cb2d0d32faf9816",
+        "results/steps.json": "782f0827ae5484ce66894f4acebd0385a6c7519ffa8d285f68ee4fb09f8a4782",
+        "results/toolchain.log": "c92561840b9825441851150f5acb52cae6540cf8fad10d759479919710de349f",
+        "results/training-tests.log": "35a17f695f1533d3bf31ab9317de2345d8acd39a42f745a8092a5a5a037b151b",
+        "results/validation.json": "d1c6ef21af58c67651202e3658d41c4d1a613114b41001b996f541bd54f6d24b",
+        "results/wrapper-install.log": "b8ae452894fdc3346a3a11b85d2b9c83d0443f2b93f081fbe0917c67e4e0ec45",
+        "results/wrapper-tests.log": "e883f4cdaaa3449055f0e52e710838bf8bdc130de3fbd3baa97bf9aa87d8a39a",
+        "scheduler.log": "c56fc161c2c59b8073492aba12fa603d3a3bfd5f64fa33778a83a39a9724e11a"
+      }
+    }
+  ],
+  "repair": "Copied existing GCC11 into isolated shared workspace; unreadable unrelated tracing utility unused. Relocated its linker symlink. Extracted four exact official sanitizer packages into isolated directories, without system installation or alteration of retained Python environment. Final attempt reruns every gate and performs the sole timed run."
+}

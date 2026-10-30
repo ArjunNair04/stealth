@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "native_tests": {
+    "debug": 67,
+    "release": 67,
+    "portable": 67,
+    "address_and_undefined_behavior": 66
+  },
+  "offline_tests": 84,
+  "wrapper_tests": 34,
+  "training_tests": {
+    "run": 117,
+    "passed": 114,
+    "optional_skips": 3
+  },
+  "native_package_relocation": "passed in Debug, Release and portable configurations",
+  "source": "Every source member rechecked against the original Git archive before final validation; unchanged core and tolerances.",
+  "mirror": "Checksum dry-run showed no differences; all 169 completion-listed files verified locally.",
+  "independent_grid_verification": {
+    "cells": 72,
+    "timed_calls": 43200,
+    "unique_coordinates": 72,
+    "quantiles": "Every raw cell p50/p95/p99 independently reconstructed; all eight aggregate rows match.",
+    "maximum_absolute_difference": 1.9073486328125e-06,
+    "absolute_tolerance": 5e-05,
+    "relative_tolerance": 0.0002
+  },
+  "known_unresolved": "The separate 792k bike-family numerical rejection remains unchanged; these tests do not admit that family."
+}

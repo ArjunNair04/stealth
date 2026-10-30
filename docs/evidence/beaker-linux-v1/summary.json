@@ -1,0 +1,54 @@
+{
+  "status": "compatibility_measurement_complete",
+  "summary": [
+    {
+      "engine": "native_avx",
+      "batch": 1,
+      "p50_us": 206.972,
+      "p99_us": 212.387
+    },
+    {
+      "engine": "native_portable",
+      "batch": 1,
+      "p50_us": 504.698,
+      "p99_us": 536.181
+    },
+    {
+      "engine": "native_python",
+      "batch": 1,
+      "p50_us": 205.786,
+      "p99_us": 212.753
+    },
+    {
+      "engine": "torch_standard",
+      "batch": 1,
+      "p50_us": 502.962,
+      "p99_us": 523.678
+    },
+    {
+      "engine": "native_avx",
+      "batch": 8,
+      "p50_us": 1656.781,
+      "p99_us": 1707.831
+    },
+    {
+      "engine": "native_portable",
+      "batch": 8,
+      "p50_us": 4033.825,
+      "p99_us": 4126.473
+    },
+    {
+      "engine": "native_python",
+      "batch": 8,
+      "p50_us": 1638.584,
+      "p99_us": 1655.752
+    },
+    {
+      "engine": "torch_standard",
+      "batch": 8,
+      "p50_us": 928.392,
+      "p99_us": 971.009
+    }
+  ],
+  "limitations": "Existing saved ETT correction models and 32 validation windows only. Linux portability and legacy runtime compatibility; no current-runtime frontier, cross-host software advantage, retraining, alpha or production claim."
+}

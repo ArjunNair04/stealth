@@ -1,0 +1,1298 @@
+[
+  {
+    "name": "trial1-seed7-batch1-native_avx",
+    "trial": 1,
+    "seed": 7,
+    "batch": 1,
+    "engine": "native_avx",
+    "latency": {
+      "count": 1000,
+      "min_ns": 205857,
+      "max_ns": 218275,
+      "p50_ns": 206620,
+      "p95_ns": 209857,
+      "p99_ns": 211912,
+      "mean_ns": 207489.502
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "81d041fef1ccd14ac2b44b86887ef419a0524b740f4d1639bf7d8db0e667963a"
+  },
+  {
+    "name": "trial1-seed7-batch1-native_portable",
+    "trial": 1,
+    "seed": 7,
+    "batch": 1,
+    "engine": "native_portable",
+    "latency": {
+      "count": 1000,
+      "min_ns": 501890,
+      "max_ns": 618715,
+      "p50_ns": 504567,
+      "p95_ns": 508166,
+      "p99_ns": 535661,
+      "mean_ns": 505461.379
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "026f7efabbb71d5fc8d9b18525842210e9837679c7db8fede5acb4dc87082939"
+  },
+  {
+    "name": "trial1-seed7-batch1-native_python",
+    "trial": 1,
+    "seed": 7,
+    "batch": 1,
+    "engine": "native_python",
+    "latency": {
+      "count": 1000,
+      "min_ns": 204582,
+      "max_ns": 1666017,
+      "p50_ns": 205318,
+      "p95_ns": 209533,
+      "p99_ns": 212753,
+      "mean_ns": 207805.856
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "a5782fa434a9c5f472ccf3144e860c959e4561093912c770e17852900fb17c23"
+  },
+  {
+    "name": "trial1-seed7-batch1-torch_standard",
+    "trial": 1,
+    "seed": 7,
+    "batch": 1,
+    "engine": "torch_standard",
+    "latency": {
+      "count": 1000,
+      "min_ns": 501106,
+      "max_ns": 2031865,
+      "p50_ns": 511733,
+      "p95_ns": 524030,
+      "p99_ns": 532158,
+      "mean_ns": 514202.918
+    },
+    "max_abs_difference": 0.0,
+    "sha256": "bf5b569d311ed9b601480adc28c6e28ef47e23add59a3c63f529ec237466f4d3"
+  },
+  {
+    "name": "trial1-seed7-batch8-native_portable",
+    "trial": 1,
+    "seed": 7,
+    "batch": 8,
+    "engine": "native_portable",
+    "latency": {
+      "count": 200,
+      "min_ns": 4022399,
+      "max_ns": 4352887,
+      "p50_ns": 4031661,
+      "p95_ns": 4077319,
+      "p99_ns": 4150241,
+      "mean_ns": 4039941.735
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "1f496c11af6c45b61a8f8724c096d17b04fc8e517c5b394aa2d30badb089e515"
+  },
+  {
+    "name": "trial1-seed7-batch8-native_python",
+    "trial": 1,
+    "seed": 7,
+    "batch": 8,
+    "engine": "native_python",
+    "latency": {
+      "count": 200,
+      "min_ns": 1628463,
+      "max_ns": 1675648,
+      "p50_ns": 1635601,
+      "p95_ns": 1645074,
+      "p99_ns": 1652178,
+      "mean_ns": 1636434.635
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "c79918cb3a6e5e3f555ce7c00dffd820acdf048844dec15fa20d0180012632f5"
+  },
+  {
+    "name": "trial1-seed7-batch8-torch_standard",
+    "trial": 1,
+    "seed": 7,
+    "batch": 8,
+    "engine": "torch_standard",
+    "latency": {
+      "count": 200,
+      "min_ns": 927436,
+      "max_ns": 1284094,
+      "p50_ns": 940431,
+      "p95_ns": 955673,
+      "p99_ns": 990405,
+      "mean_ns": 943541.26
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "07aa5907648c309b3d462057414e65bdf6440d73fa7661dc3364fac85c98a3e2"
+  },
+  {
+    "name": "trial1-seed7-batch8-native_avx",
+    "trial": 1,
+    "seed": 7,
+    "batch": 8,
+    "engine": "native_avx",
+    "latency": {
+      "count": 200,
+      "min_ns": 1648055,
+      "max_ns": 1695081,
+      "p50_ns": 1654123,
+      "p95_ns": 1664135,
+      "p99_ns": 1672607,
+      "mean_ns": 1655220.35
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "13c9cf91ada70db19423b3ff3e2a7f92ee13bf3a6973b085f7f4042b42263110"
+  },
+  {
+    "name": "trial1-seed19-batch1-native_portable",
+    "trial": 1,
+    "seed": 19,
+    "batch": 1,
+    "engine": "native_portable",
+    "latency": {
+      "count": 1000,
+      "min_ns": 502593,
+      "max_ns": 606224,
+      "p50_ns": 505309,
+      "p95_ns": 509372,
+      "p99_ns": 538330,
+      "mean_ns": 506313.902
+    },
+    "max_abs_difference": 0,
+    "sha256": "f0375c8e637673f8096e465fd363b75b24ab89e3a98de1e697db7851a455c84b"
+  },
+  {
+    "name": "trial1-seed19-batch1-native_python",
+    "trial": 1,
+    "seed": 19,
+    "batch": 1,
+    "engine": "native_python",
+    "latency": {
+      "count": 1000,
+      "min_ns": 204598,
+      "max_ns": 231039,
+      "p50_ns": 205786,
+      "p95_ns": 211372,
+      "p99_ns": 214187,
+      "mean_ns": 206884.278
+    },
+    "max_abs_difference": 0.0,
+    "sha256": "2579bd4fd7914bb1e10ff37ec18c8257b5f75dea7722da3fabc367af90738f13"
+  },
+  {
+    "name": "trial1-seed19-batch1-torch_standard",
+    "trial": 1,
+    "seed": 19,
+    "batch": 1,
+    "engine": "torch_standard",
+    "latency": {
+      "count": 1000,
+      "min_ns": 487095,
+      "max_ns": 1974193,
+      "p50_ns": 498092,
+      "p95_ns": 511380,
+      "p99_ns": 518097,
+      "mean_ns": 500354.836
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "c270a070f69c031f6a0db6c8b45481f699584df06414b6213e822013efceecfe"
+  },
+  {
+    "name": "trial1-seed19-batch1-native_avx",
+    "trial": 1,
+    "seed": 19,
+    "batch": 1,
+    "engine": "native_avx",
+    "latency": {
+      "count": 1000,
+      "min_ns": 205947,
+      "max_ns": 258874,
+      "p50_ns": 206738,
+      "p95_ns": 210383,
+      "p99_ns": 213012,
+      "mean_ns": 207684.707
+    },
+    "max_abs_difference": 0,
+    "sha256": "9714cb6c4aec21a83f1e77ab94266314914e66ad5ff641d0496b427f421666e6"
+  },
+  {
+    "name": "trial1-seed19-batch8-native_python",
+    "trial": 1,
+    "seed": 19,
+    "batch": 8,
+    "engine": "native_python",
+    "latency": {
+      "count": 200,
+      "min_ns": 1632462,
+      "max_ns": 1672631,
+      "p50_ns": 1638584,
+      "p95_ns": 1647649,
+      "p99_ns": 1654823,
+      "mean_ns": 1639383.75
+    },
+    "max_abs_difference": 0.0,
+    "sha256": "40c8faa1281b8adfc73dce0b3b77e9e498a947fdd3af2d5ac5244a37e0e3ce3a"
+  },
+  {
+    "name": "trial1-seed19-batch8-torch_standard",
+    "trial": 1,
+    "seed": 19,
+    "batch": 8,
+    "engine": "torch_standard",
+    "latency": {
+      "count": 200,
+      "min_ns": 908286,
+      "max_ns": 1338157,
+      "p50_ns": 923236,
+      "p95_ns": 939648,
+      "p99_ns": 943227,
+      "mean_ns": 925526.225
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "6dacee7d41309ff4cd752a8033eef886cd076003f859efcb2b9cf157f9e7c2b7"
+  },
+  {
+    "name": "trial1-seed19-batch8-native_avx",
+    "trial": 1,
+    "seed": 19,
+    "batch": 8,
+    "engine": "native_avx",
+    "latency": {
+      "count": 200,
+      "min_ns": 1649324,
+      "max_ns": 1713022,
+      "p50_ns": 1657085,
+      "p95_ns": 1705744,
+      "p99_ns": 1707831,
+      "mean_ns": 1663328.335
+    },
+    "max_abs_difference": 0,
+    "sha256": "f9daebd9b4c63cfa5c4a88d1742657aa93ea22dc76130c08f6a69131288e71d2"
+  },
+  {
+    "name": "trial1-seed19-batch8-native_portable",
+    "trial": 1,
+    "seed": 19,
+    "batch": 8,
+    "engine": "native_portable",
+    "latency": {
+      "count": 200,
+      "min_ns": 4018053,
+      "max_ns": 5594713,
+      "p50_ns": 4033825,
+      "p95_ns": 4138317,
+      "p99_ns": 4698107,
+      "mean_ns": 4071970.595
+    },
+    "max_abs_difference": 0,
+    "sha256": "ef298a76b9b2f253a630869d97ae6a2425bc8b17e46191771568df5f03549569"
+  },
+  {
+    "name": "trial1-seed43-batch1-native_python",
+    "trial": 1,
+    "seed": 43,
+    "batch": 1,
+    "engine": "native_python",
+    "latency": {
+      "count": 1000,
+      "min_ns": 205465,
+      "max_ns": 229255,
+      "p50_ns": 206554,
+      "p95_ns": 210575,
+      "p99_ns": 213006,
+      "mean_ns": 207516.685
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "f10e8ed9e60d37b8b5e3a4a497204ce85393f6a377e7fcd788195f79c465dda2"
+  },
+  {
+    "name": "trial1-seed43-batch1-torch_standard",
+    "trial": 1,
+    "seed": 43,
+    "batch": 1,
+    "engine": "torch_standard",
+    "latency": {
+      "count": 1000,
+      "min_ns": 492637,
+      "max_ns": 1962427,
+      "p50_ns": 502962,
+      "p95_ns": 516007,
+      "p99_ns": 525072,
+      "mean_ns": 505415.762
+    },
+    "max_abs_difference": 9.5367431640625e-07,
+    "sha256": "058a2237e77934b78460a7588dc44538f8de75759e35b743fa7c912b66f94853"
+  },
+  {
+    "name": "trial1-seed43-batch1-native_avx",
+    "trial": 1,
+    "seed": 43,
+    "batch": 1,
+    "engine": "native_avx",
+    "latency": {
+      "count": 1000,
+      "min_ns": 206510,
+      "max_ns": 226653,
+      "p50_ns": 207529,
+      "p95_ns": 210638,
+      "p99_ns": 212125,
+      "mean_ns": 208275.738
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "8f4317585d5a29cc3c5eac3236092f74d8fb685c5377c6dfbf17ab55a01eb67a"
+  },
+  {
+    "name": "trial1-seed43-batch1-native_portable",
+    "trial": 1,
+    "seed": 43,
+    "batch": 1,
+    "engine": "native_portable",
+    "latency": {
+      "count": 1000,
+      "min_ns": 502972,
+      "max_ns": 619036,
+      "p50_ns": 505582,
+      "p95_ns": 509544,
+      "p99_ns": 536181,
+      "mean_ns": 506480.372
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "1e8d30b2b2eb612f53917f678108940c672a36aa9aef3ab2433a567cd54ebbb6"
+  },
+  {
+    "name": "trial1-seed43-batch8-torch_standard",
+    "trial": 1,
+    "seed": 43,
+    "batch": 8,
+    "engine": "torch_standard",
+    "latency": {
+      "count": 200,
+      "min_ns": 906521,
+      "max_ns": 1332556,
+      "p50_ns": 920114,
+      "p95_ns": 942240,
+      "p99_ns": 973467,
+      "mean_ns": 924642.115
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "fd407f6bee38c29e6e33e78466f02a0680a3a0da2b418f372e04c3c5af2daf04"
+  },
+  {
+    "name": "trial1-seed43-batch8-native_avx",
+    "trial": 1,
+    "seed": 43,
+    "batch": 8,
+    "engine": "native_avx",
+    "latency": {
+      "count": 200,
+      "min_ns": 1653244,
+      "max_ns": 1715488,
+      "p50_ns": 1660036,
+      "p95_ns": 1704264,
+      "p99_ns": 1713011,
+      "mean_ns": 1663661.31
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "96b4d4c26ba7333484eb8a5ab16bae2bd8a73b0a46189a23d0e15ea243dab00b"
+  },
+  {
+    "name": "trial1-seed43-batch8-native_portable",
+    "trial": 1,
+    "seed": 43,
+    "batch": 8,
+    "engine": "native_portable",
+    "latency": {
+      "count": 200,
+      "min_ns": 4028896,
+      "max_ns": 4317621,
+      "p50_ns": 4038921,
+      "p95_ns": 4076256,
+      "p99_ns": 4115290,
+      "mean_ns": 4044135.37
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "3746d2ae0aecb198521688a5dacfc37169d99d4f46a98a54a7af59bb75d1b9f3"
+  },
+  {
+    "name": "trial1-seed43-batch8-native_python",
+    "trial": 1,
+    "seed": 43,
+    "batch": 8,
+    "engine": "native_python",
+    "latency": {
+      "count": 200,
+      "min_ns": 1635940,
+      "max_ns": 1671010,
+      "p50_ns": 1643290,
+      "p95_ns": 1652946,
+      "p99_ns": 1658313,
+      "mean_ns": 1643830.815
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "eb74253b35cdb5419e6dff9426dab445feef2cd72fbd521f114219d28923c3b0"
+  },
+  {
+    "name": "trial2-seed7-batch1-native_portable",
+    "trial": 2,
+    "seed": 7,
+    "batch": 1,
+    "engine": "native_portable",
+    "latency": {
+      "count": 1000,
+      "min_ns": 501899,
+      "max_ns": 624342,
+      "p50_ns": 504484,
+      "p95_ns": 509823,
+      "p99_ns": 536258,
+      "mean_ns": 505686.056
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "4513340888715e3fd0b78bcae161a193779f13b771fb731b4db19d6546deb41b"
+  },
+  {
+    "name": "trial2-seed7-batch1-native_python",
+    "trial": 2,
+    "seed": 7,
+    "batch": 1,
+    "engine": "native_python",
+    "latency": {
+      "count": 1000,
+      "min_ns": 204669,
+      "max_ns": 265648,
+      "p50_ns": 205502,
+      "p95_ns": 209621,
+      "p99_ns": 212068,
+      "mean_ns": 206589.24
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "37377ca6f104ee912c0f1a8c77b022d112d932b105af5a2b7f735faa5f22f7b1"
+  },
+  {
+    "name": "trial2-seed7-batch1-torch_standard",
+    "trial": 2,
+    "seed": 7,
+    "batch": 1,
+    "engine": "torch_standard",
+    "latency": {
+      "count": 1000,
+      "min_ns": 483566,
+      "max_ns": 813171,
+      "p50_ns": 494448,
+      "p95_ns": 507073,
+      "p99_ns": 515228,
+      "mean_ns": 495339.763
+    },
+    "max_abs_difference": 0.0,
+    "sha256": "6f31a2d945669e582090ddd76c4fc98859e20d4bd67f2867c68a6039b579faff"
+  },
+  {
+    "name": "trial2-seed7-batch1-native_avx",
+    "trial": 2,
+    "seed": 7,
+    "batch": 1,
+    "engine": "native_avx",
+    "latency": {
+      "count": 1000,
+      "min_ns": 205715,
+      "max_ns": 1664820,
+      "p50_ns": 206511,
+      "p95_ns": 210401,
+      "p99_ns": 211844,
+      "mean_ns": 208885.785
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "758d13d57df91a6a4cec3b4156761939964e96265b7f499f6e5aeef63f7b9ca3"
+  },
+  {
+    "name": "trial2-seed7-batch8-native_python",
+    "trial": 2,
+    "seed": 7,
+    "batch": 8,
+    "engine": "native_python",
+    "latency": {
+      "count": 200,
+      "min_ns": 1627568,
+      "max_ns": 1665868,
+      "p50_ns": 1633887,
+      "p95_ns": 1644621,
+      "p99_ns": 1650268,
+      "mean_ns": 1634864.3
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "024779e06f58740887244b525026c113ba3216dc702349692f6d59f381d64943"
+  },
+  {
+    "name": "trial2-seed7-batch8-torch_standard",
+    "trial": 2,
+    "seed": 7,
+    "batch": 8,
+    "engine": "torch_standard",
+    "latency": {
+      "count": 200,
+      "min_ns": 915723,
+      "max_ns": 1342132,
+      "p50_ns": 928392,
+      "p95_ns": 947280,
+      "p99_ns": 954888,
+      "mean_ns": 932554.175
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "8c59efb8e3ea3a781e7f335b739db820190e5ea47ac60f107b0cc53674fb8da5"
+  },
+  {
+    "name": "trial2-seed7-batch8-native_avx",
+    "trial": 2,
+    "seed": 7,
+    "batch": 8,
+    "engine": "native_avx",
+    "latency": {
+      "count": 200,
+      "min_ns": 1647781,
+      "max_ns": 1668409,
+      "p50_ns": 1654039,
+      "p95_ns": 1661817,
+      "p99_ns": 1666169,
+      "mean_ns": 1654733.85
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "91a8bf8f18663910528c42d14fa2d53aa3dc9eed40bc98daf45caab7de69c6e0"
+  },
+  {
+    "name": "trial2-seed7-batch8-native_portable",
+    "trial": 2,
+    "seed": 7,
+    "batch": 8,
+    "engine": "native_portable",
+    "latency": {
+      "count": 200,
+      "min_ns": 4015373,
+      "max_ns": 5416908,
+      "p50_ns": 4027615,
+      "p95_ns": 4067881,
+      "p99_ns": 4074044,
+      "mean_ns": 4037980.88
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "eeacff7834174034dffb46cd39ce194ed70f1c4708def99d12ed332fe1116e05"
+  },
+  {
+    "name": "trial2-seed19-batch1-native_python",
+    "trial": 2,
+    "seed": 19,
+    "batch": 1,
+    "engine": "native_python",
+    "latency": {
+      "count": 1000,
+      "min_ns": 204558,
+      "max_ns": 256702,
+      "p50_ns": 205362,
+      "p95_ns": 209583,
+      "p99_ns": 211116,
+      "mean_ns": 206392.037
+    },
+    "max_abs_difference": 0.0,
+    "sha256": "96f929afb9f87a83a8f7aabb47c200a45b2e405668821f8acd585688ea71d74d"
+  },
+  {
+    "name": "trial2-seed19-batch1-torch_standard",
+    "trial": 2,
+    "seed": 19,
+    "batch": 1,
+    "engine": "torch_standard",
+    "latency": {
+      "count": 1000,
+      "min_ns": 500103,
+      "max_ns": 788942,
+      "p50_ns": 510818,
+      "p95_ns": 526550,
+      "p99_ns": 532711,
+      "mean_ns": 512332.348
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "46cd56bcd6e080d0d64f356fdd934b1aaac8b88e53f76bf6243c942b189b1451"
+  },
+  {
+    "name": "trial2-seed19-batch1-native_avx",
+    "trial": 2,
+    "seed": 19,
+    "batch": 1,
+    "engine": "native_avx",
+    "latency": {
+      "count": 1000,
+      "min_ns": 206252,
+      "max_ns": 220600,
+      "p50_ns": 206972,
+      "p95_ns": 210265,
+      "p99_ns": 212387,
+      "mean_ns": 207789.085
+    },
+    "max_abs_difference": 0,
+    "sha256": "a55fe2a109e025cc09b4488ad72d7ec7b4e19090d8c14668380535522e55382e"
+  },
+  {
+    "name": "trial2-seed19-batch1-native_portable",
+    "trial": 2,
+    "seed": 19,
+    "batch": 1,
+    "engine": "native_portable",
+    "latency": {
+      "count": 1000,
+      "min_ns": 501960,
+      "max_ns": 2042689,
+      "p50_ns": 504698,
+      "p95_ns": 510825,
+      "p99_ns": 564998,
+      "mean_ns": 508207.755
+    },
+    "max_abs_difference": 0,
+    "sha256": "1e08d3bb0d5dc2452cb51d43574a68505c762eaa950787d5840f1953f78ab545"
+  },
+  {
+    "name": "trial2-seed19-batch8-torch_standard",
+    "trial": 2,
+    "seed": 19,
+    "batch": 8,
+    "engine": "torch_standard",
+    "latency": {
+      "count": 200,
+      "min_ns": 923760,
+      "max_ns": 1259073,
+      "p50_ns": 940451,
+      "p95_ns": 959428,
+      "p99_ns": 971009,
+      "mean_ns": 943041.25
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "32cfbc6e60f240d2d8b27c407f254063678b2e854b7ab9b6247869d543d6d4f7"
+  },
+  {
+    "name": "trial2-seed19-batch8-native_avx",
+    "trial": 2,
+    "seed": 19,
+    "batch": 8,
+    "engine": "native_avx",
+    "latency": {
+      "count": 200,
+      "min_ns": 1647609,
+      "max_ns": 1712796,
+      "p50_ns": 1653700,
+      "p95_ns": 1675228,
+      "p99_ns": 1706314,
+      "mean_ns": 1656753.115
+    },
+    "max_abs_difference": 0,
+    "sha256": "888c732b8d1b4956d42337dde9a944b9dbd75e9b546cf890b0239f699de0b897"
+  },
+  {
+    "name": "trial2-seed19-batch8-native_portable",
+    "trial": 2,
+    "seed": 19,
+    "batch": 8,
+    "engine": "native_portable",
+    "latency": {
+      "count": 200,
+      "min_ns": 4041297,
+      "max_ns": 5551966,
+      "p50_ns": 4051639,
+      "p95_ns": 4101157,
+      "p99_ns": 4164945,
+      "mean_ns": 4065417.75
+    },
+    "max_abs_difference": 0,
+    "sha256": "2c06adf388ac59a22d2c27d19b2fa35bd9522e64077d2edd9d11e4a988b4d164"
+  },
+  {
+    "name": "trial2-seed19-batch8-native_python",
+    "trial": 2,
+    "seed": 19,
+    "batch": 8,
+    "engine": "native_python",
+    "latency": {
+      "count": 200,
+      "min_ns": 1630732,
+      "max_ns": 1684755,
+      "p50_ns": 1637668,
+      "p95_ns": 1648649,
+      "p99_ns": 1655752,
+      "mean_ns": 1639008.31
+    },
+    "max_abs_difference": 0.0,
+    "sha256": "59b0107bff0352ae3f0fca387e59c862b493c84d1dc4dcf6ff104ba874fd42f1"
+  },
+  {
+    "name": "trial2-seed43-batch1-torch_standard",
+    "trial": 2,
+    "seed": 43,
+    "batch": 1,
+    "engine": "torch_standard",
+    "latency": {
+      "count": 1000,
+      "min_ns": 488754,
+      "max_ns": 846854,
+      "p50_ns": 499902,
+      "p95_ns": 513610,
+      "p99_ns": 523678,
+      "mean_ns": 500939.96
+    },
+    "max_abs_difference": 9.5367431640625e-07,
+    "sha256": "cf94331e877e16f1b68b2c8d1ad31aa4cc70d4a0b4a5d2145340f01503296273"
+  },
+  {
+    "name": "trial2-seed43-batch1-native_avx",
+    "trial": 2,
+    "seed": 43,
+    "batch": 1,
+    "engine": "native_avx",
+    "latency": {
+      "count": 1000,
+      "min_ns": 206936,
+      "max_ns": 218234,
+      "p50_ns": 207992,
+      "p95_ns": 211620,
+      "p99_ns": 212912,
+      "mean_ns": 208753.142
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "8483605e3e2167b93e4b4ce4fc17eee7b43f23212433f26fd29ab0b3da2c3fef"
+  },
+  {
+    "name": "trial2-seed43-batch1-native_portable",
+    "trial": 2,
+    "seed": 43,
+    "batch": 1,
+    "engine": "native_portable",
+    "latency": {
+      "count": 1000,
+      "min_ns": 502123,
+      "max_ns": 596243,
+      "p50_ns": 504802,
+      "p95_ns": 508524,
+      "p99_ns": 527033,
+      "mean_ns": 505316.061
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "f28887f4f9b2eaa89dba0ce59f3192ad526ef6664bccbed38fa5b982120dbae4"
+  },
+  {
+    "name": "trial2-seed43-batch1-native_python",
+    "trial": 2,
+    "seed": 43,
+    "batch": 1,
+    "engine": "native_python",
+    "latency": {
+      "count": 1000,
+      "min_ns": 205423,
+      "max_ns": 234248,
+      "p50_ns": 206535,
+      "p95_ns": 209754,
+      "p99_ns": 212818,
+      "mean_ns": 207247.526
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "2d24c51f8a03afe999d27d5c4c9cbb571a0288de2cd2611454cad3955f1be699"
+  },
+  {
+    "name": "trial2-seed43-batch8-native_avx",
+    "trial": 2,
+    "seed": 43,
+    "batch": 8,
+    "engine": "native_avx",
+    "latency": {
+      "count": 200,
+      "min_ns": 1654018,
+      "max_ns": 2875785,
+      "p50_ns": 1662159,
+      "p95_ns": 1724734,
+      "p99_ns": 2676613,
+      "mean_ns": 1688567.71
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "0a33ac9a907434d4a036a757ba5fabdfc90046bb961d3a9839f70a7b4936d766"
+  },
+  {
+    "name": "trial2-seed43-batch8-native_portable",
+    "trial": 2,
+    "seed": 43,
+    "batch": 8,
+    "engine": "native_portable",
+    "latency": {
+      "count": 200,
+      "min_ns": 4023993,
+      "max_ns": 5585981,
+      "p50_ns": 4034137,
+      "p95_ns": 4063000,
+      "p99_ns": 4120404,
+      "mean_ns": 4045434.11
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "a59ac8e7e3498b65cf71466906c08530aaef7b7b51afff35b51681dc23fcb946"
+  },
+  {
+    "name": "trial2-seed43-batch8-native_python",
+    "trial": 2,
+    "seed": 43,
+    "batch": 8,
+    "engine": "native_python",
+    "latency": {
+      "count": 200,
+      "min_ns": 1635375,
+      "max_ns": 1662882,
+      "p50_ns": 1642216,
+      "p95_ns": 1654217,
+      "p99_ns": 1661643,
+      "mean_ns": 1643582.92
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "14962c5dbf2aef3de08e9cfcf64519cf06de5227f0638516bb25d3377cb0036d"
+  },
+  {
+    "name": "trial2-seed43-batch8-torch_standard",
+    "trial": 2,
+    "seed": 43,
+    "batch": 8,
+    "engine": "torch_standard",
+    "latency": {
+      "count": 200,
+      "min_ns": 909008,
+      "max_ns": 1319016,
+      "p50_ns": 923579,
+      "p95_ns": 944259,
+      "p99_ns": 972215,
+      "mean_ns": 927282.83
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "460149d9f442a77bf780c4a83ab82ef6652734fd6250607c116e7ec95d0ae465"
+  },
+  {
+    "name": "trial3-seed7-batch1-native_python",
+    "trial": 3,
+    "seed": 7,
+    "batch": 1,
+    "engine": "native_python",
+    "latency": {
+      "count": 1000,
+      "min_ns": 204814,
+      "max_ns": 244190,
+      "p50_ns": 205932,
+      "p95_ns": 210578,
+      "p99_ns": 211723,
+      "mean_ns": 207000.024
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "ff074bf121d370b0b47b3b478906011b39215d27705adda70ac0389a5a25882e"
+  },
+  {
+    "name": "trial3-seed7-batch1-torch_standard",
+    "trial": 3,
+    "seed": 7,
+    "batch": 1,
+    "engine": "torch_standard",
+    "latency": {
+      "count": 1000,
+      "min_ns": 493382,
+      "max_ns": 1870750,
+      "p50_ns": 504271,
+      "p95_ns": 516005,
+      "p99_ns": 523335,
+      "mean_ns": 506137.412
+    },
+    "max_abs_difference": 0.0,
+    "sha256": "86375303eaead5922449d504c01ddbe50ddee5bead13df4586110a18b0a5841d"
+  },
+  {
+    "name": "trial3-seed7-batch1-native_avx",
+    "trial": 3,
+    "seed": 7,
+    "batch": 1,
+    "engine": "native_avx",
+    "latency": {
+      "count": 1000,
+      "min_ns": 205790,
+      "max_ns": 223469,
+      "p50_ns": 206510,
+      "p95_ns": 209551,
+      "p99_ns": 211347,
+      "mean_ns": 207335.377
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "bb4c0fa0da03b2c3d021b9719aa0ee4bc07e0826c73193f41af37ec56094723c"
+  },
+  {
+    "name": "trial3-seed7-batch1-native_portable",
+    "trial": 3,
+    "seed": 7,
+    "batch": 1,
+    "engine": "native_portable",
+    "latency": {
+      "count": 1000,
+      "min_ns": 501526,
+      "max_ns": 592654,
+      "p50_ns": 504192,
+      "p95_ns": 509215,
+      "p99_ns": 526034,
+      "mean_ns": 505021.579
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "4fe6e1b21f2bb13da21b3e35ee88d0fc464030b42da2115e6d8554da98970331"
+  },
+  {
+    "name": "trial3-seed7-batch8-torch_standard",
+    "trial": 3,
+    "seed": 7,
+    "batch": 8,
+    "engine": "torch_standard",
+    "latency": {
+      "count": 200,
+      "min_ns": 917251,
+      "max_ns": 1355428,
+      "p50_ns": 927332,
+      "p95_ns": 944369,
+      "p99_ns": 961109,
+      "mean_ns": 932332.43
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "3970d98d8e1a95541ebfc9650f230ee59f800f0d1344fe285c342ddecd733530"
+  },
+  {
+    "name": "trial3-seed7-batch8-native_avx",
+    "trial": 3,
+    "seed": 7,
+    "batch": 8,
+    "engine": "native_avx",
+    "latency": {
+      "count": 200,
+      "min_ns": 1649961,
+      "max_ns": 1726019,
+      "p50_ns": 1656781,
+      "p95_ns": 1707345,
+      "p99_ns": 1715206,
+      "mean_ns": 1663030.925
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "28361eed2156de10ffbc9c3735bf9ac2ebe961450f4dac8f91411c9c5dace18a"
+  },
+  {
+    "name": "trial3-seed7-batch8-native_portable",
+    "trial": 3,
+    "seed": 7,
+    "batch": 8,
+    "engine": "native_portable",
+    "latency": {
+      "count": 200,
+      "min_ns": 4021805,
+      "max_ns": 4232769,
+      "p50_ns": 4033460,
+      "p95_ns": 4062810,
+      "p99_ns": 4166340,
+      "mean_ns": 4038790.98
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "63b7301eb8559e6700603e61d50c6ad7c263a83a7e3d403a575e2ca598457e15"
+  },
+  {
+    "name": "trial3-seed7-batch8-native_python",
+    "trial": 3,
+    "seed": 7,
+    "batch": 8,
+    "engine": "native_python",
+    "latency": {
+      "count": 200,
+      "min_ns": 1627665,
+      "max_ns": 1679145,
+      "p50_ns": 1634860,
+      "p95_ns": 1647026,
+      "p99_ns": 1655983,
+      "mean_ns": 1636113.93
+    },
+    "max_abs_difference": 4.76837158203125e-07,
+    "sha256": "609897fcfd93d794b6b6eb6a9e760722363125bc0bd95adc09ad9292890e4493"
+  },
+  {
+    "name": "trial3-seed19-batch1-torch_standard",
+    "trial": 3,
+    "seed": 19,
+    "batch": 1,
+    "engine": "torch_standard",
+    "latency": {
+      "count": 1000,
+      "min_ns": 490865,
+      "max_ns": 783295,
+      "p50_ns": 501731,
+      "p95_ns": 513982,
+      "p99_ns": 520915,
+      "mean_ns": 502517.575
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "6bad06dc140ac664d514d52092f195a04ae6934966340d9ef12cf019180fbd09"
+  },
+  {
+    "name": "trial3-seed19-batch1-native_avx",
+    "trial": 3,
+    "seed": 19,
+    "batch": 1,
+    "engine": "native_avx",
+    "latency": {
+      "count": 1000,
+      "min_ns": 205974,
+      "max_ns": 222075,
+      "p50_ns": 207083,
+      "p95_ns": 212770,
+      "p99_ns": 215242,
+      "mean_ns": 208308.206
+    },
+    "max_abs_difference": 0,
+    "sha256": "5c68578f27a817ca38e3454106f85e82fe04a59d26b691e0d4329dd9d6571bf9"
+  },
+  {
+    "name": "trial3-seed19-batch1-native_portable",
+    "trial": 3,
+    "seed": 19,
+    "batch": 1,
+    "engine": "native_portable",
+    "latency": {
+      "count": 1000,
+      "min_ns": 501938,
+      "max_ns": 639263,
+      "p50_ns": 504559,
+      "p95_ns": 508274,
+      "p99_ns": 535111,
+      "mean_ns": 505312.851
+    },
+    "max_abs_difference": 0,
+    "sha256": "5f057513f527506e0a447ec29be8ffc962c098b6e93113c17bd255714af4204a"
+  },
+  {
+    "name": "trial3-seed19-batch1-native_python",
+    "trial": 3,
+    "seed": 19,
+    "batch": 1,
+    "engine": "native_python",
+    "latency": {
+      "count": 1000,
+      "min_ns": 204837,
+      "max_ns": 231729,
+      "p50_ns": 205740,
+      "p95_ns": 209235,
+      "p99_ns": 211158,
+      "mean_ns": 206584.383
+    },
+    "max_abs_difference": 0.0,
+    "sha256": "dfce7743fc146189f14d7d15df0b7f2eb5cc9f9d905301a27c76abd00e5d9fc8"
+  },
+  {
+    "name": "trial3-seed19-batch8-native_avx",
+    "trial": 3,
+    "seed": 19,
+    "batch": 8,
+    "engine": "native_avx",
+    "latency": {
+      "count": 200,
+      "min_ns": 1648365,
+      "max_ns": 1719847,
+      "p50_ns": 1655142,
+      "p95_ns": 1703368,
+      "p99_ns": 1708492,
+      "mean_ns": 1662557.42
+    },
+    "max_abs_difference": 0,
+    "sha256": "058641ff9eb22f7b4ade85b071abd3348b9556ea9899f856327ab978f0894af8"
+  },
+  {
+    "name": "trial3-seed19-batch8-native_portable",
+    "trial": 3,
+    "seed": 19,
+    "batch": 8,
+    "engine": "native_portable",
+    "latency": {
+      "count": 200,
+      "min_ns": 4018652,
+      "max_ns": 4252597,
+      "p50_ns": 4028542,
+      "p95_ns": 4062665,
+      "p99_ns": 4104858,
+      "mean_ns": 4032991.3
+    },
+    "max_abs_difference": 0,
+    "sha256": "65a4b46d2755ac0665f20dab6e0aab9527620be45d7c05d3ae61ef5750da6a3d"
+  },
+  {
+    "name": "trial3-seed19-batch8-native_python",
+    "trial": 3,
+    "seed": 19,
+    "batch": 8,
+    "engine": "native_python",
+    "latency": {
+      "count": 200,
+      "min_ns": 1632451,
+      "max_ns": 1669416,
+      "p50_ns": 1638649,
+      "p95_ns": 1649454,
+      "p99_ns": 1653280,
+      "mean_ns": 1639684.045
+    },
+    "max_abs_difference": 0.0,
+    "sha256": "d7d7567ed990f91e5829f6856e4a3389ff34b4699eed3a3bcb7145aef4e590a6"
+  },
+  {
+    "name": "trial3-seed19-batch8-torch_standard",
+    "trial": 3,
+    "seed": 19,
+    "batch": 8,
+    "engine": "torch_standard",
+    "latency": {
+      "count": 200,
+      "min_ns": 926374,
+      "max_ns": 1326270,
+      "p50_ns": 939219,
+      "p95_ns": 955207,
+      "p99_ns": 963250,
+      "mean_ns": 942782.71
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "57e69395052887df377486ab8e9c72e01e4c46763aed48da84ab8952278dca6b"
+  },
+  {
+    "name": "trial3-seed43-batch1-native_avx",
+    "trial": 3,
+    "seed": 43,
+    "batch": 1,
+    "engine": "native_avx",
+    "latency": {
+      "count": 1000,
+      "min_ns": 206492,
+      "max_ns": 238563,
+      "p50_ns": 207658,
+      "p95_ns": 211070,
+      "p99_ns": 212968,
+      "mean_ns": 208495.498
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "e91fdb5cc6b780f60d28a42a2262ea3d72a6fb04cbde27fc430735277519b23f"
+  },
+  {
+    "name": "trial3-seed43-batch1-native_portable",
+    "trial": 3,
+    "seed": 43,
+    "batch": 1,
+    "engine": "native_portable",
+    "latency": {
+      "count": 1000,
+      "min_ns": 502133,
+      "max_ns": 2026026,
+      "p50_ns": 504921,
+      "p95_ns": 520997,
+      "p99_ns": 543726,
+      "mean_ns": 507988.214
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "479920e37fdf20166be85a221f4686846af6d7513e4b9b93709882d82116da3b"
+  },
+  {
+    "name": "trial3-seed43-batch1-native_python",
+    "trial": 3,
+    "seed": 43,
+    "batch": 1,
+    "engine": "native_python",
+    "latency": {
+      "count": 1000,
+      "min_ns": 205292,
+      "max_ns": 231850,
+      "p50_ns": 206481,
+      "p95_ns": 210206,
+      "p99_ns": 212763,
+      "mean_ns": 207320.417
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "b998f442547a8b25a06e09da4fdd46ff8cb1860d847728e10b7dd5501e94e72d"
+  },
+  {
+    "name": "trial3-seed43-batch1-torch_standard",
+    "trial": 3,
+    "seed": 43,
+    "batch": 1,
+    "engine": "torch_standard",
+    "latency": {
+      "count": 1000,
+      "min_ns": 500059,
+      "max_ns": 1878838,
+      "p50_ns": 512396,
+      "p95_ns": 525443,
+      "p99_ns": 533070,
+      "mean_ns": 514574.052
+    },
+    "max_abs_difference": 9.5367431640625e-07,
+    "sha256": "71aa62864520aa13e544528841aa6ed17868963307b1d132974342436a920ca7"
+  },
+  {
+    "name": "trial3-seed43-batch8-native_portable",
+    "trial": 3,
+    "seed": 43,
+    "batch": 8,
+    "engine": "native_portable",
+    "latency": {
+      "count": 200,
+      "min_ns": 4025505,
+      "max_ns": 4160050,
+      "p50_ns": 4037058,
+      "p95_ns": 4076119,
+      "p99_ns": 4126473,
+      "mean_ns": 4041854.395
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "dcfc37f80edb465e1aed9063930fbcfe03e7dcce61d7d42a51be024f97c04cb0"
+  },
+  {
+    "name": "trial3-seed43-batch8-native_python",
+    "trial": 3,
+    "seed": 43,
+    "batch": 8,
+    "engine": "native_python",
+    "latency": {
+      "count": 200,
+      "min_ns": 1635366,
+      "max_ns": 3043663,
+      "p50_ns": 1642254,
+      "p95_ns": 1658402,
+      "p99_ns": 1669461,
+      "mean_ns": 1650826.91
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "4d8cb0d70a89b7014efe9f5cfd67cce03fbef152ab6bfcb83189480ecaaab2e3"
+  },
+  {
+    "name": "trial3-seed43-batch8-torch_standard",
+    "trial": 3,
+    "seed": 43,
+    "batch": 8,
+    "engine": "torch_standard",
+    "latency": {
+      "count": 200,
+      "min_ns": 917798,
+      "max_ns": 2317988,
+      "p50_ns": 931879,
+      "p95_ns": 953971,
+      "p99_ns": 1034287,
+      "mean_ns": 942243.74
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "f373048ad8cba0527132a4d0d59b559f5a8708faeabd7a8f156fa883a1889577"
+  },
+  {
+    "name": "trial3-seed43-batch8-native_avx",
+    "trial": 3,
+    "seed": 43,
+    "batch": 8,
+    "engine": "native_avx",
+    "latency": {
+      "count": 200,
+      "min_ns": 1655560,
+      "max_ns": 1678023,
+      "p50_ns": 1661568,
+      "p95_ns": 1669805,
+      "p99_ns": 1677069,
+      "mean_ns": 1662485.805
+    },
+    "max_abs_difference": 1.9073486328125e-06,
+    "sha256": "dc4c18169f74cc4e310f5be0b4dd26b010264f4584d54b2edb469c3886ee3e9a"
+  }
+]

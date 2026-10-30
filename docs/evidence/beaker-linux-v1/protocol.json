@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "id": "beaker_linux_compatibility_v1",
+  "source_commit": "a65ba9f229e360cfea92b70438c98c89e19a5416",
+  "seeds": [
+    7,
+    19,
+    43
+  ],
+  "trials": 3,
+  "batches": [
+    1,
+    8
+  ],
+  "samples": {
+    "1": 1000,
+    "8": 200
+  },
+  "warmup": 64,
+  "output": "last",
+  "engines": [
+    "native_avx",
+    "native_portable",
+    "native_python",
+    "torch_standard"
+  ],
+  "order": "Rotate engine order by trial, seed and batch. Fresh serial workers. One scheduler bound core; no concurrent build or testing.",
+  "atol": 5e-05,
+  "rtol": 0.0002,
+  "scope": "Existing saved ETT correction models and 32 validation windows only. Linux portability and legacy runtime compatibility; no current-runtime frontier, cross-host software advantage, retraining, alpha or production claim.",
+  "memory": "Owned buffers separately from process RSS",
+  "failures": "Retain all failures and original failed outputs. No weakening numerical gates or favourable reruns.",
+  "limits": "Shared node and uncontrolled clock/cache; CPU pinning is not exclusive node ownership. Report all workers, raw observations, versions and affinity."
+}

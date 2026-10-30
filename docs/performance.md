@@ -1,5 +1,11 @@
 # How the first latency improvements work
 
+The [Beaker Linux run](beaker-linux-v1.md) validates the unchanged core and records
+206.972 µs native versus 502.962 µs eager Torch 2.6 for single ETTm1 forecasts.
+Torch wins for eight-item batches. The forced portable build takes 504.698 µs
+for one forecast, showing the existing AVX specialization matters on this host.
+Current compiled/ONNX comparisons remain open.
+
 The [model-size study](bike-size-results-v1.md) adds measurements for 50.6k,
 199.4k and 792.1k trainable parameters on the fixed 48-hour bike task. Native p50
 is 53.302/147.513/492.298 µs. Larger models give modest, inconsistent accuracy
@@ -12,7 +18,8 @@ dense tiles: 136.617 → 97.141 µs on the fixed local Intel workload (29.43% me
 paired reduction), exact predictions and unchanged owned workspace. Narrow
 products retain the portable path. A separate exponential-cache candidate was
 rejected. Remaining targets are independent output tiles for single-row dense
-calls, row-wise normalization and Python conversion; Linux timing stays deferred.
+calls, row-wise normalization and Python conversion. The separate Beaker result
+above supplies Linux compatibility timings, without changing this historical audit.
 
 This page retains the earlier measurements. The latest [local latency audit](local-latency-v1.md)
 records full-tile specialization, SIMD validation/normalization and immutable

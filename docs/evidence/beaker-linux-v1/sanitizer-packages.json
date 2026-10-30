@@ -1,0 +1,26 @@
+[
+  {
+    "file": "devtoolset-11-libasan-devel-11.2.1-9.el7.x86_64.rpm",
+    "url": "https://yum.oracle.com/repo/OracleLinux/OL7/SoftwareCollections/x86_64/getPackage/devtoolset-11-libasan-devel-11.2.1-9.el7.x86_64.rpm",
+    "sha256": "b9130d5512ce303d19084fbbe4afe4d2fd26c3896538840903aa3cd71350b027",
+    "bytes": 472508
+  },
+  {
+    "file": "devtoolset-11-libubsan-devel-11.2.1-9.el7.x86_64.rpm",
+    "url": "https://yum.oracle.com/repo/OracleLinux/OL7/SoftwareCollections/x86_64/getPackage/devtoolset-11-libubsan-devel-11.2.1-9.el7.x86_64.rpm",
+    "sha256": "917ee00c94017e6cca41a033b6ba368d137676a10bd553b9f01781a6f25f2ea5",
+    "bytes": 228116
+  },
+  {
+    "file": "libasan6-11.2.1-9.el7.x86_64.rpm",
+    "url": "https://yum.oracle.com/repo/OracleLinux/OL7/SoftwareCollections/x86_64/getPackage/libasan6-11.2.1-9.el7.x86_64.rpm",
+    "sha256": "18b9ebe68c36c6b288a3b9e2ba368e7a6a2c8ac0d2d9c2ffb3f3945d774b2d8c",
+    "bytes": 406228
+  },
+  {
+    "file": "libubsan1-11.2.1-9.el7.x86_64.rpm",
+    "url": "https://yum.oracle.com/repo/OracleLinux/OL7/SoftwareCollections/x86_64/getPackage/libubsan1-11.2.1-9.el7.x86_64.rpm",
+    "sha256": "679c6e5691663a67bffbdff68e3048fc6682113568224178c0667dfd17df7064",
+    "bytes": 176240
+  }
+]
