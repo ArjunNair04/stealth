@@ -18,6 +18,7 @@ observations to one trustworthy prediction pipeline.
 | Dense/MLP, multihead attention, layer norm, exact GELU and one-block forecasts | This is a specific inference architecture; dropout and new depth are not implemented |
 | Torch training, checkpoints, native export and checked loading | Saved ETTm1 models still lose to the last-value baseline on primary old-test error |
 | Full traces, latest-only sessions, sequential batches and bounded raw streams | Streams recompute the full window; market-clock integration remains open |
+| Receipt-aware native feature index and checked replay | Finite tapes only; live ingestion and crash recovery remain open |
 | Measured native optimizations | Latest-only local p50: 0.181 ms C++ versus 0.287 ms eager Torch 2.2.2; Torch wins at batch eight |
 
 The local latency result covers one Intel Mac and the saved one-block workload.
@@ -97,6 +98,8 @@ docs/            Contracts, measured evidence, setup and work queue
 The repository is public for review. No redistribution licence has been selected.
 
 ## Run and evaluate
+
+- [Native mixed-speed feature index and adversarial replay demo](docs/native-signal-index-v1.md)
 
 - [Bike-rental learning demonstration and forecast chart](docs/bike-demand-results-v1.md)
 

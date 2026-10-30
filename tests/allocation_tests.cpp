@@ -5,6 +5,7 @@
 #include "stealth/model_file.hpp"
 #include "stealth/transformer_block.hpp"
 #include "stealth/window_stream.hpp"
+#include "stealth/signal_index.hpp"
 #include "test_support.hpp"
 
 #include <array>
@@ -311,6 +312,52 @@ int main() {
             }
             std::cout << "Zero allocations in 5,000 stream/error/reset cycles; " << cold
                       << " stream construction allocation failures preserved the existing stream\n";
+        }
+
+        {
+            using namespace stealth::temporal;
+            const std::array<SignalLimits, 2> limits{{{100, 100}, {200, 200}}};
+            const std::array<SignalRecord, 3> records{{
+                {0, 1, 0, 0, 0, 1, 2.0}, {0, 1, 1, 0, 10, 20, std::nullopt},
+                {1, 1, 0, 0, 0, 2, 3.0}}};
+            const SignalIndex index(limits, records);
+            std::array<SignalFeature, 2> out;
+            allocations = 0;
+            bool failed = false;
+            tracking = true;
+            for (std::int64_t t = 0; t < 10000; ++t)
+                if (index.snapshot(t, out) != SnapshotError::ok ||
+                    index.snapshot(-1, out) != SnapshotError::invalid_time ||
+                    index.snapshot(t, {}) != SnapshotError::output_size)
+                    failed = true;
+            tracking = false;
+            CHECK(!failed);
+            CHECK(allocations == 0);
+            allocations = 0;
+            tracking = true;
+            auto candidate = std::make_unique<SignalIndex>(limits, records);
+            tracking = false;
+            const auto cold = allocations;
+            candidate.reset();
+            CHECK(cold > 1);
+            for (std::size_t i = 0; i < cold; ++i) {
+                fail_index = i;
+                attempt = 0;
+                inject_failure = true;
+                bool caught = false;
+                try {
+                    candidate = std::make_unique<SignalIndex>(limits, records);
+                } catch (const std::bad_alloc &) {
+                    caught = true;
+                }
+                inject_failure = false;
+                CHECK(caught);
+                CHECK(!candidate);
+                CHECK(index.snapshot(3, out) == SnapshotError::ok);
+                CHECK(out[0].value == 2.0);
+            }
+            std::cout << "Zero allocations in 10,000 snapshot/error cycles; " << cold
+                      << " index construction allocation failures preserved the old index\n";
         }
         std::cout << "No intercepted C++ heap allocations in 4,000 forecaster/error-path cycles\n";
         std::cout << "No intercepted C++ heap allocations in 4,000 "

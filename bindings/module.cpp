@@ -12,6 +12,7 @@
 #include <string>
 
 namespace py = pybind11;
+void bind_signal_index(py::module_ &m);
 using namespace stealth::numeric;
 namespace {
 py::array array(const py::object &object, int dimensions) {
@@ -381,4 +382,5 @@ PYBIND11_MODULE(_core, m) {
         .def_property_readonly("workspace_bytes", [](const Stream &s) {
             return s.core.bytes() + s.input.size() * sizeof(float);
         });
+    bind_signal_index(m);
 }

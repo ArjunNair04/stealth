@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "id": "temporal-conformance-v1",
+  "purpose": "finite synthetic tape correctness, not forecast quality or latency",
+  "fixture": "generate_forecast_fixture.py, level output, existing 7x4x2x7 model",
+  "decision_interval_ns": 10,
+  "grid_origin_ns": 1,
+  "context": 5,
+  "horizon": 4,
+  "absolute_tolerance": 0.00005,
+  "relative_tolerance": 0.0002,
+  "cases": ["mixed cadences", "strict receipt cutoff", "delayed revisions",
+            "late older event", "duplicate", "missing", "stale", "withdrawal",
+            "restoration", "decision gap", "fresh process reconstruction"]
+}

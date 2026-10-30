@@ -18,9 +18,9 @@ or measured bottleneck before expanding the implementation.
 
 | Stage | Concrete deliverable | Gate before advancing | Current state |
 | --- | --- | --- | --- |
-| 1. Know what was available | Mixed-frequency feature snapshots with publication/receipt clocks, revisions, age, missingness and fixed order | Independent timing examples, future-information invariance, duplicate/conflict tests and deterministic replay | Offline reference and checked native replay implemented; no real connector |
+| 1. Know what was available | Mixed-frequency feature snapshots with publication/receipt clocks, revisions, age, missingness and fixed order | Independent timing examples, future-information invariance, duplicate/conflict tests and deterministic replay | Offline scan oracle, native finite index and checked inference replay implemented; no real connector |
 | 2. Bind features to inference | A versioned model bundle records feature schema, preprocessing and weights; replay feeds the existing session through a checked bridge | Wrong feature order/scaler/schema fails; unavailable inputs produce an explicit no-forecast outcome; gaps, restart and rejected rows preserve declared state | Implemented in tools/model_bundle.py and tools/feature_inference.py; small CPU demo completed with exact replay and documented accuracy limits |
-| 3. Reproduce one predictive study | One data snapshot, chronological experiment, simple baselines and saved prediction ledger | Frozen target/timing, leakage tests, reproducible train/export/replay and protected evaluation | BTC return study completed with native replay; primary model misses zero baseline; reused history remains exploratory and independent evaluation remains open |
+| 3. Reproduce one predictive study | One data snapshot, chronological experiment, simple baselines and saved prediction ledger | Frozen target/timing, leakage tests, reproducible train/export/replay and protected evaluation | BTC return study fails its forecast gate; subsequent bike-demand study beats persistence and ridge on MAE, with ridge better on RMSE; both preserve native replay evidence |
 | 4. Measure runtime value | Same outputs and inputs through native, eager/compiled Torch and ONNX CPU | Numerical parity, exact environment/host record, complete fixed comparison, preserved failures | Linux selected; compiled/ONNX adapters pass fixture CI; Beaker access, host lock and full timed comparison pending |
 | 5. Assess one financial hypothesis | One source/feature family, signal-to-trading-universe mapping and QTS evaluation | Point-in-time identities, realistic decision/fill timing, costs, simple baselines, uncertainty and an untouched evaluation | No alpha experiment started |
 
@@ -69,3 +69,32 @@ covers the new offline component. [The Linux protocol](frontier-linux.md) separa
 prepared acceptance rules from measurements still to be made. Passing component
 tests establishes their stated behavior, not infallibility, forecast usefulness,
 research novelty or deployability.
+
+## Focus for the next contribution
+
+The proposed contribution is a compact CPU forecasting path for feeds that update
+at different speeds, with precise availability, revision, readiness and replay
+rules. A minute bar and a monthly factor can share a decision row without
+pretending they arrived together. The
+[native finite index and conformance workload](native-signal-index-v1.md) are the
+first implemented step. The working name remains Stealth; Stride is already used
+by a [streaming time-series inference project](https://github.com/PranavSubbaraman/STRIDE).
+
+This is a candidate niche, not an established novelty claim. Relevant comparisons
+include [timeseries.cpp](https://github.com/liodon-ai/timeseries.cpp) for native
+forecasting, [RTNeural](https://github.com/jatinchowdhury18/RTNeural) for real-time
+C++ inference, [Feast](https://docs.feast.dev/getting-started/concepts/point-in-time-joins)
+for historical feature joins, [OpenSTEF](https://openstef.github.io/openstef/v4/tutorials/datasets.html)
+for availability-aware forecasting data, and
+[Feldera](https://docs.feldera.com/use_cases/model_scoring/) for live features and
+external model scoring. Availability filtering and late-data handling already
+exist elsewhere; integration in C++ alone does not establish a research gap.
+
+Next, complete a reproducible end-to-end comparison: the same delayed/corrected
+tape, schema, weights and decision outcomes through a thin feature adapter plus
+eager/compiled Torch and ONNX CPU, alongside the native path. Measure feature
+assembly, input conversion and inference separately and together, including setup,
+memory and p50/p99 variability. Use a controlled Linux CPU allocation. Retain
+failures and accept a standard-runtime solution if it matches the useful behavior
+and cost. Live append/eviction, crash-durable recovery and new data connectors
+follow explicit contracts and demonstrated need.
