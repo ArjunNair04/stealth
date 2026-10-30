@@ -1,0 +1,33 @@
+{
+  "experiment_id": "bike_hourly_demand_v1",
+  "fresh_process_replay_byte_identical": true,
+  "full_trace_kernels": [
+    "reference",
+    "packed"
+  ],
+  "full_trace_windows_per_seed_per_split": 16,
+  "latest_parity_predictions": 24198,
+  "max_absolute_parity_error_rentals": 0.000152587890625,
+  "model_bytes_each": 202380,
+  "native_source_fingerprint": "bd6803db3aae724ca8aa767a6f2bb8e65cef53e01e26d15435873c8936b5caea",
+  "offline_tests": {
+    "passed": 79,
+    "run": 79
+  },
+  "optional_skips": "Linux-only compiled Torch and ONNX runtime admission on this macOS host",
+  "predictions_sha256": "437cdde17b27ea5d98eec8295a4173115261af77f1f1405fb59dc4b2c1e6652c",
+  "schema_version": 1,
+  "sealed_artifacts": 67,
+  "source_attribution": "Hadi Fanaee-T (2013), UCI Bike Sharing, DOI 10.24432/C5W894, CC BY 4.0",
+  "training_binding": {
+    "code_commit": "086d9fdd59d6442bdbcb3e622237ca446b1df7a0",
+    "data_sha256": "e03de4ee4ef4dc376ac6e04bf829673c6269e8eba5c60fa121640fa2f829504f",
+    "protocol_sha256": "2c44c579f140ccfe9f26db478138f82dcdf557d93b46f088215a81d48fcf018f",
+    "scaler_sha256": "429941009f3262f977f67db1aaa5edd09dd95266be668dad8bc2106ff9748881"
+  },
+  "training_tests": {
+    "passed": 101,
+    "run": 103,
+    "skipped": 2
+  }
+}

@@ -81,3 +81,19 @@ Linux comparison. The ETTm1 reserved tail remains unused.
 - [Model/reference issue #3](https://github.com/ArjunNair04/stealth/issues/3)
 - [Python interface issue #4](https://github.com/ArjunNair04/stealth/issues/4)
 - [Historical tasks and preserved outcomes](tasks-history.md)
+
+## Structured public learning demonstration: completed
+
+The user requested a simpler task after BTC. The [bike-demand study](bike-demand-study-v1.md)
+trained the existing one-block model to predict next-hour rentals from 48 observed
+hours and known calendar information. [All three seeds passed the frozen learning
+gate](bike-demand-results-v1.md). Primary MAE is 43.82 rentals versus 87.15 for the
+latest count and 47.90 for ridge; ridge has the better RMSE. Native/Torch parity
+passes on 24,198 latest predictions, and fresh-process replay is byte-identical.
+The first-week plot and all results are public with UCI attribution.
+
+The primary model still gives 292 negative forecasts and misses some demand peaks.
+Before further model changes, discuss a count-aware output/loss and which kind of
+error matters most. Any follow-up needs a new frozen protocol; the existing test
+months are now inspected. Controlled Linux runtime benchmarking remains the
+separate performance priority when Beaker access becomes available.

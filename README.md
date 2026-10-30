@@ -98,6 +98,8 @@ The repository is public for review. No redistribution licence has been selected
 
 ## Run and evaluate
 
+- [Bike-rental learning demonstration and forecast chart](docs/bike-demand-results-v1.md)
+
 - [Compiled Torch and ONNX CPU admission](docs/runtime-adapters-v1.md)
 
 - [Feature/model bundles and CPU training demo](docs/model-bundle-v1.md)
