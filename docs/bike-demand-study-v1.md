@@ -108,3 +108,8 @@ Public summaries and figures credit the source; private environment reports and
 raw datasets are not committed. This experiment checks useful learning and the
 Python-to-C++ route. The controlled Linux runtime comparison remains a separate
 performance gate.
+
+The optional `tools/plot_bike_demand.py --run local/bike-demand-v1 --output
+local/bike-demand-v1-figures` command renders PNG, SVG and PDF from sealed outputs.
+It requires an already installed Matplotlib environment, independently of Torch;
+it verifies the plotted artifact hashes and inserts gaps for missing forecasts.
