@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-30",
+  "fresh_process_audit_byte_identical": true,
+  "native_code_changed": false,
+  "new_test_methods": 13,
+  "normalized_audit_sha256": "35a3aef04e4cfcc51a4ad79da4a580d38141260936e4051423e395617e34ed39",
+  "offline_suite_tests_passed": 79,
+  "provider_zip_checksum_pairs": 62,
+  "schema_version": 1,
+  "scientific_evidence_ceiling": "E0",
+  "scope": "external normalized hourly artifact admission; no forecast study",
+  "source_integrity_mismatches": 0,
+  "source_manifest_artifact_hash_checks": 132,
+  "source_manifest_sha256": "405148943dec824db7876cc03d2bf1f548a6143fbb67b3ef5e9ebc48988a3803",
+  "target_choice_pending": true,
+  "training_or_scoring_run": false
+}

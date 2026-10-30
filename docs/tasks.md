@@ -40,8 +40,12 @@ Keep the feature bridge as the correctness reference. Before choosing a financia
 prediction task, agree the source, target, availability clocks, cadence/calendar
 and freshness policy with the user. Live ingestion, persistent crash recovery,
 trading-universe mapping and production model activation are separate work.
-Current-runtime adapters remain the next performance gate; no new kernel tuning
-is justified by this integration demo.
+The user deferred Beaker access and requested a useful forecasting application
+next. The [hourly-data admission and study proposal](forecast-study-intake-v1.md)
+now provide a checked local candidate and a concrete target choice. The target
+question remains open; no financial model has been fitted or scored. Current-runtime
+adapters remain the parallel performance gate; no new kernel tuning is justified
+by the integration demo or by data admission.
 
 ## Parallel gate: current-runtime comparison
 
