@@ -4,6 +4,7 @@ Validation surrounds the pure tensor graph and remains inside every run() call.
 No silent fallback, dependency installation, training or dynamic shape support.
 """
 import inspect
+import os
 from pathlib import Path
 import time
 import numpy as np
@@ -41,6 +42,11 @@ class TorchAdapter:
         self.shape=fixed_shape(self.model.config,batch,tokens)
         graph=LatestGraph(self.model).eval().requires_grad_(False)
         settings=dict(backend='inductor',fullgraph=True,dynamic=False,mode='default')
+        if compiled:
+            import torch._dynamo.config as dynamo_config
+            if (dynamo_config.disable or dynamo_config.suppress_errors or
+                    os.environ.get('TORCHDYNAMO_DISABLE')=='1'):
+                raise RuntimeError('Compilation disablement or error suppression is forbidden')
         # Compilation is lazy; the supervisor separately bounds the first call.
         self.graph=torch.compile(graph,**settings) if compiled else graph
         self.metadata=dict(engine='torch_compiled_inductor' if compiled else 'torch_eager',

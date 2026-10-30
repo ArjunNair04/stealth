@@ -78,6 +78,17 @@ class AdapterContracts(unittest.TestCase):
         for batch,tokens in ((0,5),(True,5),(1,6),(2048,5)):
             with self.assertRaises(ValueError): TorchAdapter(m.export_bytes(),batch=batch,tokens=tokens,compiled=False)
 
+    def test_disabled_compilation_or_suppressed_errors_is_rejected(self):
+        import torch._dynamo.config as config
+        m,_=model_and_inputs()
+        for field in ('disable','suppress_errors'):
+            with config.patch(**{field:True}):
+                with self.assertRaises(RuntimeError):
+                    TorchAdapter(m.export_bytes(),batch=1,tokens=5,compiled=True)
+        with patch.dict(os.environ,{'TORCHDYNAMO_DISABLE':'1'}):
+            with self.assertRaises(RuntimeError):
+                TorchAdapter(m.export_bytes(),batch=1,tokens=5,compiled=True)
+
     def test_tensor_graph_has_no_data_dependent_python_checks(self):
         # Dynamo's eager backend checks graph capture on the legacy local Torch.
         # This is not an Inductor performance/admission result.
@@ -109,6 +120,26 @@ class ActualEngines(unittest.TestCase):
             x=rng.normal(size=(batch,96,7)).astype(np.float32)
             with torch.inference_mode(): expected=source(torch.from_numpy(x)).numpy()[:,-1:]
             self.check_engines(source,x,expected)
+
+    def test_supervised_compiler_and_export_cells(self):
+        from admit_runtime import run_cell
+        from runtime_common import input_bytes
+        m,x=model_and_inputs(batch=2)
+        with torch.inference_mode(): expected=m(torch.from_numpy(x)).numpy().astype('<f4')
+        with tempfile.TemporaryDirectory() as tmp:
+            path=Path(tmp)
+            (path/'model').write_bytes(m.export_bytes())
+            (path/'input').write_bytes(input_bytes(x.reshape(-1).tolist(),2,5,7))
+            (path/'expected').write_bytes(expected.tobytes())
+            for engine in ('torch_eager','torch_compiled_inductor','onnxruntime_cpu'):
+                # The supervisor must not inherit settings that silently disable compilation.
+                with patch.dict(os.environ,{'TORCH_COMPILE_DISABLE':'1','TORCHDYNAMO_SUPPRESS_ERRORS':'1'}):
+                    result=run_cell(path/engine,engine=engine,batch=1,model=path/'model',
+                                    inputs=path/'input',expected=path/'expected')
+                self.assertEqual(result['windows_checked'],2)
+                if engine=='torch_compiled_inductor':
+                    self.assertGreater(result['adapter']['generated_kernel_count'],0)
+                print(json.dumps({'admitted_engine':engine,'max_abs_difference':result['max_abs_difference']}))
 
     def check_engines(self,source,x,expected):
         with tempfile.TemporaryDirectory() as tmp,torch.inference_mode():

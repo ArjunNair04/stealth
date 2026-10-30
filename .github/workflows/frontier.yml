@@ -30,4 +30,6 @@ jobs:
           python -m pip check
           python -m pip freeze --all
       - name: Actual compiled and ONNX parity at fixture and deployed shapes
-        run: python -m unittest discover -s tests/training -p test_runtime_adapters.py -v
+        run: |
+          python -m unittest discover -s tests/training -p test_runtime_adapters.py -v
+          python -m unittest discover -s tests/training -p test_runtime_admission.py -v
