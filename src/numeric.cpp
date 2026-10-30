@@ -219,8 +219,11 @@ Error Dense::forward_rows(std::span<const float> input, std::size_t rows, std::s
                     accumulator += weights[o * inputs_ + i] * input[row * inputs_ + i];
                 scratch[row * outputs_ + o] = accumulator;
             }
-    } else if (outputs_ >= lanes && numeric_detail::try_dense_avx(
+    } else if (outputs_ >= lanes && (outputs_ >= 2 * lanes || rows >= 4) &&
+               numeric_detail::try_dense_avx(
                    input.data(), weights.data(), bias.data(), scratch.data(), inputs_, outputs_, rows)) {
+        // Keep narrow single-row products on the portable path: one AVX
+        // accumulator offers little instruction parallelism for the dispatch cost.
         // The specialization writes only disposable scratch. Validation and
         // transactional publication remain common to every backend.
     } else {

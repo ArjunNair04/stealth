@@ -1,7 +1,8 @@
 #include "dense_avx.hpp"
 #include "fp_policy.hpp"
 
-#if STEALTH_ENABLE_AVX && defined(__x86_64__) && (defined(__GNUC__) || defined(__clang__)) && !defined(_MSC_VER)
+#if STEALTH_ENABLE_AVX && defined(__x86_64__) && (defined(__GNUC__) || defined(__clang__)) &&      \
+    !defined(_MSC_VER)
 #define STEALTH_HAS_AVX_TARGET 1
 #include <algorithm>
 #include <immintrin.h>
@@ -24,9 +25,9 @@ namespace {
 // Only this function family may contain AVX instructions. No -march=native or
 // whole-library AVX flag: the dispatcher and portable kernel remain baseline ISA.
 template <std::size_t Rows, bool Full>
-__attribute__((target("avx")))
-void tile(const float *input, const float *weights, const float *bias, float *output,
-          std::size_t inputs, std::size_t outputs, std::size_t count = 8) noexcept {
+__attribute__((target("avx"))) void tile(const float *input, const float *weights,
+                                         const float *bias, float *output, std::size_t inputs,
+                                         std::size_t outputs, std::size_t count = 8) noexcept {
     __m256 a;
     if constexpr (Full) {
         a = _mm256_loadu_ps(bias);
@@ -68,9 +69,9 @@ void tile(const float *input, const float *weights, const float *bias, float *ou
         }
     }
 }
-__attribute__((target("avx")))
-void forward(const float *input, const float *weights, const float *bias, float *scratch,
-             std::size_t inputs, std::size_t outputs, std::size_t rows) noexcept {
+__attribute__((target("avx"))) void forward(const float *input, const float *weights,
+                                            const float *bias, float *scratch, std::size_t inputs,
+                                            std::size_t outputs, std::size_t rows) noexcept {
     const auto full = (outputs / 8) * 8;
     std::size_t row = 0;
     for (; row + 4 <= rows; row += 4) {
@@ -103,8 +104,13 @@ bool try_dense_avx(const float *input, const float *weights, const float *bias, 
         return true;
     }
 #else
-    (void)input; (void)weights; (void)bias; (void)scratch;
-    (void)inputs; (void)outputs; (void)rows;
+    (void)input;
+    (void)weights;
+    (void)bias;
+    (void)scratch;
+    (void)inputs;
+    (void)outputs;
+    (void)rows;
 #endif
     return false;
 }
