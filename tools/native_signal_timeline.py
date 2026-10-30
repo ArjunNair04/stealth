@@ -5,16 +5,17 @@ in C++. Queries use the native index. Python result conversion allocates; only t
 C++ caller-buffer API promises allocation-free queries. No live append/journal.
 """
 from dataclasses import dataclass, field
+from types import MappingProxyType
 from stealth_cpu._core import _SignalIndex
 from signal_timeline import (
-    SignalTimeline, Observation, Feature, Snapshot, MAX_RECORDS, _integer,
+    SignalTimeline, Feature, Snapshot, MAX_RECORDS, _integer,
 )
 
 
 @dataclass(frozen=True, init=False, eq=False)
 class NativeSignalTimeline(SignalTimeline):
     _index: object = field(repr=False)
-    _event_names: tuple[str, ...] = field(repr=False)
+    _observations: object = field(repr=False)
 
     def __init__(self, specs, records, *, max_records=MAX_RECORDS):
         # Retain the existing strict schema/identifier boundary and canonical tape.
@@ -27,7 +28,11 @@ class NativeSignalTimeline(SignalTimeline):
                  r.effective_at_ns, r.available_at_ns, r.received_at_ns, r.value)
                 for r in self._records]
         object.__setattr__(self, '_index', _SignalIndex(limits, rows))
-        object.__setattr__(self, '_event_names', tuple(key[-1] for key in events))
+        # Canonical records are already validated and immutable. Retain a
+        # read-only lookup rather than reconstructing provenance on every query.
+        # Its size is bounded by record_count; no mutable per-query cache.
+        object.__setattr__(self, '_observations', MappingProxyType({
+            (identities[(*r.key, r.event_id)], r.revision): r for r in self._records}))
 
     @property
     def index_entry_count(self):
@@ -41,9 +46,8 @@ class NativeSignalTimeline(SignalTimeline):
             if raw is None:
                 features.append(Feature(spec, state, None, None, None, None, None))
                 continue
-            event, revision, effective, available, received, value = raw
-            record = Observation(*spec.key, self._event_names[event], revision,
-                                 effective, available, received, value)
+            event, revision, _, _, _, value = raw
+            record = self._observations[event, revision]
             features.append(Feature(spec, state, value if state == 'valid' else None,
                                     record, observed_age, published_age, receipt_age))
         return Snapshot(decision_at_ns, self.schema_id, tuple(features))

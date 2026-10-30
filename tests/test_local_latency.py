@@ -33,3 +33,14 @@ class LocalLatency(unittest.TestCase):
             record=next(x for x in r if x['mode']=='all' and x['batch']==8)
             record['latency'][metric]=value
             with self.assertRaises(ValueError):aggregate(r)
+
+class BridgeLatency(unittest.TestCase):
+    def test_requires_complete_matching_comparison(self):
+        from benchmark_feature_bridge import aggregate as bridge_gate
+        records=[dict(trial=t,implementation=i,latency=dict(p50_ns=100 if i=='baseline' else 80,p99_ns=200),
+                      output_sha256='same',model_sha256='model',build={'same':'build'})
+                 for t,i in itertools.product((1,2,3),('baseline','candidate'))]
+        self.assertTrue(bridge_gate(records)['accepted'])
+        with self.assertRaises(ValueError):bridge_gate(records[:-1])
+        records[0]['output_sha256']='different'
+        with self.assertRaises(ValueError):bridge_gate(records)
