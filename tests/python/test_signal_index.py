@@ -108,6 +108,17 @@ class SignalIndexTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 _SignalIndex(ages, records)
 
+    def test_native_queries_reuse_prevalidated_provenance(self):
+        from unittest.mock import patch
+        specs, records = fixtures()
+        native = NativeSignalTimeline(specs, records)
+        oracle = SignalTimeline(specs, records)
+        expected = [oracle.snapshot(t) for t in range(400)]
+        # Validation belongs at construction; immutable canonical observations
+        # should not be reconstructed and revalidated on each query.
+        with patch.object(Observation, '__post_init__', side_effect=RuntimeError('query revalidation')):
+            self.assertEqual([native.snapshot(t) for t in range(400)], expected)
+
     def test_native_adapter_does_not_scan_at_query_or_import_torch(self):
         from unittest.mock import patch
         specs, records = fixtures()
