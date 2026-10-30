@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "id": "local_latency_v1",
+  "purpose": "User-authorized local optimization; controlled Linux frontier remains deferred",
+  "baseline_commit": "57ea560ebe9d63a1555e6d592314fd79cbe39426",
+  "seeds": [
+    7,
+    19,
+    43
+  ],
+  "trials": 3,
+  "batches": [
+    1,
+    8
+  ],
+  "modes": [
+    "last",
+    "all"
+  ],
+  "samples": {
+    "last": {
+      "1": 1000,
+      "8": 200
+    },
+    "all": {
+      "1": 200,
+      "8": 64
+    }
+  },
+  "warmup": 64,
+  "inputs": "Unchanged 32 validation windows and saved models from latest_v1",
+  "absolute_tolerance": 0.00005,
+  "relative_tolerance": 0.0002,
+  "order": "Fresh serial process per cell; alternate baseline/candidate by trial, seed, batch and mode; no simultaneous benchmarking",
+  "gate": "Median paired last/batch1 p50 improvement >=5%; each seed improves; median paired p99 regression <=10%; batch8 and full-trace median paired p50 regressions <=5%; report all cells and outliers",
+  "numerical": "Existing outputs and failure semantics unchanged. Bitwise saved full traces and every prefix; unchanged independent-reference tolerance. No fast-math, quantization or model change.",
+  "limitations": [
+    "Local Intel Mac, uncontrolled OS/cache/frequency; no hard deadline or current-runtime frontier claim",
+    "Profile samples identify work; only separate uninstrumented runs establish measured latency",
+    "Development candidates may be rejected; all trials and failed candidates retained"
+  ]
+}
