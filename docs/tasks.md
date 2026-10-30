@@ -3,6 +3,8 @@
 [Direction and exit gates](direction.md) define the shortest path to a trustworthy
 mixed-frequency prediction pipeline. The user selected Linux for the next runtime
 comparison and UCL Beaker as the candidate host; interactive login is deferred.
+The user subsequently authorized a separate local latency audit, now completed
+in [local-latency-v1.md](local-latency-v1.md); controlled Linux work remains deferred.
 The user expects minute bars alongside daily, weekly and potentially monthly
 factors. Exact sources, freshness thresholds and prediction targets remain open.
 
@@ -56,7 +58,8 @@ access resumes, inspect CPU queue/toolchain compatibility and obtain a permitted
 CPU allocation, then lock the environment and execute the [fixed comparison](frontier-linux.md).
 Keep Stealth in a separate checkout/environment. Shared login-node or noisy CI
 measurements cannot establish the latency frontier. Preserve failures and partial
-runs; do not tune kernels or rerun poor performance into a favourable result.
+runs. The separately authorized local audit has its own frozen baseline and gates;
+do not rerun poor performance into a favourable result.
 
 ## First financial forecasting experiment: completed
 
@@ -71,8 +74,9 @@ ledger replayed byte-for-byte in a fresh process. No alpha or trading result.
 The next research decision is one additional signal family with an explicit
 availability contract and a new frozen experiment. Preserve this result and avoid
 using the same evaluation period as independent confirmation. Model expansion
-needs evidence from that research; runtime tuning still waits for the controlled
-Linux comparison. The ETTm1 reserved tail remains unused.
+needs evidence from that research. The later local audit changes execution only;
+current-runtime frontier claims still require the controlled Linux comparison.
+The ETTm1 reserved tail remains unused.
 
 ## Tracking
 
@@ -119,3 +123,17 @@ The feature adapter used by standard runtimes must receive the same clocks,
 corrections, warm-up and gap rules. Live ingestion, bounded eviction and persistent
 recovery remain separate unimplemented components. No new neural kernel tuning,
 model architecture or financial objective is implied by this milestone.
+
+## Local latency audit: completed
+
+Three portable native changes reduce paired single-forecast median latency by
+27.65% on the fixed Intel Mac workload, with unchanged native owned memory and
+bitwise predictions. Immutable provenance reuse separately reduces the full Python
+feature-to-forecast probe by 11.74% using the same optimized native core. Two
+marginal candidates were removed. All local correctness, sanitizer, wrapper and
+integration gates pass; [full evidence and limits](local-latency-v1.md) are recorded.
+
+Next local performance candidates: benchmark broader shapes; specify a separate
+buffered feature adapter to avoid repeated tuple-to-NumPy conversion; then evaluate
+optional matrix backends from profiles. Keep the existing replay bridge as oracle.
+Linux/Beaker timing remains deferred until the user provides access.

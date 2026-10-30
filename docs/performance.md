@@ -1,5 +1,9 @@
 # How the first latency improvements work
 
+This page retains the earlier measurements. The latest [local latency audit](local-latency-v1.md)
+records full-tile specialization, SIMD validation/normalization and immutable
+feature-provenance reuse, including rejected candidates and tail regressions.
+
 For subsequent full-sequence attention/block measurements, see [attention v1](attention-v1.md).
 
 Think of inference as cooking the same recipe repeatedly. We prepare the
