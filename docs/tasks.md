@@ -42,8 +42,8 @@ and freshness policy with the user. Live ingestion, persistent crash recovery,
 trading-universe mapping and production model activation are separate work.
 The user deferred Beaker access and requested a useful forecasting application
 next. The [hourly-data admission and study proposal](forecast-study-intake-v1.md)
-now provide a checked local candidate and a concrete target choice. The target
-question remains open; no financial model has been fitted or scored. Current-runtime
+now provide a checked local candidate and a concrete target choice. The user chose BTC next-hour return. The [frozen return study](btc-return-study-v1.md)
+uses the current one-block model, fixed seeds and chronological evaluation. Current-runtime
 adapters remain the parallel performance gate; no new kernel tuning is justified
 by the integration demo or by data admission.
 

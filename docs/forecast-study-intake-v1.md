@@ -2,8 +2,9 @@
 
 Status on 2026-10-30: the framework can run a bounded offline forecasting study.
 The user requested useful forecasting work while UCL Beaker access is deferred.
-The target choice is pending; the design below is a proposal, not a frozen
-experiment. No financial model, forecast score or trade result has been produced.
+The user subsequently chose BTC next-hour return. The original volatility proposal
+below is retained as unexecuted design history. The accepted task and frozen
+protocol are recorded in [BTC return study v1](btc-return-study-v1.md).
 
 ## A small, tangible question
 
