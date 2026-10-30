@@ -7,7 +7,7 @@
     "latency.json": "37584ee17d0a8b318f86145e05d81942dcecbecfcf89f234a1d3039f657712a6",
     "protocol.json": "ca887af12dbaa5b6a00aab934cda7c850fe2063a9817caf68e89cb353e0e2b8e",
     "provenance.json": "3e924f658fc76193d6b25e8adbac7f5344f2e347c6733dc48e6d165df196b7a2",
-    "raw-latency.json": "ec2c97186c8f5b9d9f4f59cc92efed05ad4b593f34e9ca31cf1e94c168c96352",
+    "raw-latency.json": "5a9e7b034652c4eb3163c24bd5a19b3f76a894b1b572bcda97b0111ef87bc470",
     "run.sh": "ec7be5831d3b8df28370d824433abbe1ca360c6aa41c051e23f60a7506f9655a",
     "run_validation.py": "e1cd19777794f1e02892af685a7d914669463170c63a95eb32ae93b1a73fcac8",
     "sanitizer-packages.json": "f2892bba67616b217e40e9f1bfb9671ff53adef22fe7e2c977b052c99d474073",
