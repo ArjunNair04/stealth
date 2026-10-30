@@ -1,0 +1,92 @@
+{
+  "initial_actual_engine_ci": {
+    "code_commit": "f89f05f37fbd21190aa269d7b87f768c9e44c490",
+    "environment": {
+      "numpy": "1.26.4",
+      "onnx": "1.23.2",
+      "onnxruntime": "1.31.1",
+      "onnxscript": "0.7.2",
+      "python": "3.12.15",
+      "torch": "2.15.0+cpu"
+    },
+    "result": "success",
+    "scope": "real Inductor and ONNX fixture level/correction and deployed 96x7 shapes, batch 1/8",
+    "tests_passed": 6,
+    "tests_skipped": 0,
+    "url": "https://github.com/ArjunNair04/stealth/actions/runs/41037853593/job/124003028400"
+  },
+  "limits": [
+    "Current compiled/ONNX saved-trained-model admission still requires the chosen Linux host",
+    "The local saved-model checks use eager Torch 2.2.2, not current-runtime performance",
+    "No latency acceptance run, host wheel-hash lock, financial experiment or kernel optimization",
+    "Final supervised-engine CI status is tracked on PR 21"
+  ],
+  "local_admission": {
+    "code_commit": "9d684d1a9e1cd76f3fdb731d58067c6af359d497",
+    "current_compiled_onnx_saved_model_admission": false,
+    "protocol_sha256": "606a25000f3b7b853023e46e0a01a433f62e009b44f5e185fafd6716d011f649",
+    "records": [
+      {
+        "batch": 1,
+        "cell": "seed7-batch1-torch-eager",
+        "complete_sha256": "7ee2bd695fc2441fccc57731f5314308fef125be4cbe7f49af764f27f3b876be",
+        "maximum_absolute_error": 4.76837158203125e-07,
+        "seed": 7,
+        "windows": 32
+      },
+      {
+        "batch": 8,
+        "cell": "seed7-batch8-torch-eager",
+        "complete_sha256": "1417f6a486f8d22f3458c2b3dd30452240e1ffdc475a23038d1c9252f6e377c8",
+        "maximum_absolute_error": 4.76837158203125e-07,
+        "seed": 7,
+        "windows": 32
+      },
+      {
+        "batch": 1,
+        "cell": "seed19-batch1-torch-eager",
+        "complete_sha256": "6177d65dfb1c4957750eb951c2d9b9f1f8bc565fa619579a0bf27978ecc84218",
+        "maximum_absolute_error": 1.9073486328125e-06,
+        "seed": 19,
+        "windows": 32
+      },
+      {
+        "batch": 8,
+        "cell": "seed19-batch8-torch-eager",
+        "complete_sha256": "e67bb6d5fc8fc4c82e19076c22c2370ee35249af4c1287cd844a725649dae70e",
+        "maximum_absolute_error": 1.9073486328125e-06,
+        "seed": 19,
+        "windows": 32
+      },
+      {
+        "batch": 1,
+        "cell": "seed43-batch1-torch-eager",
+        "complete_sha256": "7db098df25f3ab0a17bd00bba00fb5271bad14810c4e56f9d57e38357b6a163a",
+        "maximum_absolute_error": 9.5367431640625e-07,
+        "seed": 43,
+        "windows": 32
+      },
+      {
+        "batch": 8,
+        "cell": "seed43-batch8-torch-eager",
+        "complete_sha256": "869abfd7805d90c6e46bc096f8797ce176719ff813d9882539f935ff8b6dc7ff",
+        "maximum_absolute_error": 1.9073486328125e-06,
+        "seed": 43,
+        "windows": 32
+      }
+    ],
+    "scope": "legacy_local_eager_correctness_only",
+    "timings_are_acceptance_measurements": false
+  },
+  "recorded_date": "2026-10-30",
+  "schema_version": 1,
+  "tests": {
+    "local_training_reference": {
+      "optional_linux_skipped": 2,
+      "passed": 78,
+      "total": 80
+    },
+    "offline_passed": 66,
+    "wrapper_passed": 24
+  }
+}

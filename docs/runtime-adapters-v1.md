@@ -96,6 +96,23 @@ The legacy local environment can check shared equations and eager admission
 without installing anything. Its real compiler/export tests are explicitly
 skipped; only the optional Linux job supplies that evidence.
 
+## Recorded evidence
+
+The [portable verification record](evidence/runtime-adapters-v1/verification.json)
+binds the initial passing real-engine Linux CI job and six local saved-model
+admission cells. Each of the three saved trained models passed all 32 frozen
+validation windows at batches 1 and 8 under the local eager Torch 2.2.2 adapter.
+Maximum absolute difference from the saved independent reference was
+`0.0000019073486328125`. The copied input/model/reference hashes matched the frozen
+frontier inputs and previously committed reference preparation hashes.
+
+The local full reference/training suite has 80 tests: 78 pass and two optional
+real-engine tests are reserved for Linux CI. All 66 offline tests and 24 wrapper
+tests pass. The compiler-disablement regression failed before its guard was added;
+malformed final-window references and actual process-group timeouts are retained
+as deliberate failure tests. The final Linux supervised-path checks are tracked
+on [PR #21](https://github.com/ArjunNair04/stealth/pull/21).
+
 ## Remaining performance gate
 
 The adapter milestone does not complete the 90-cell frontier comparison. The

@@ -188,3 +188,13 @@ assertions. A genuine native arithmetic error also preserves warm-up state.
 No native kernel, memory ownership or packaging code changed in this phase.
 See [the contract](model-bundle-v1.md) for clock and restart limits; real-data
 results are separate from these acceptance checks.
+
+## Optional current-runtime adapters
+
+The [compiler/export admission milestone](runtime-adapters-v1.md) adds 13 tests.
+The local training suite now has 80 tests (78 passing, two optional Linux tests
+skipped); 66 offline and 24 wrapper tests pass. A separate declared Linux job
+executes actual Inductor and ONNX export, checks independent and deployed shapes,
+and runs supervised admission. Regressions reject disabled compilation and
+preserve final-window mismatches and timeouts. No native or package change was
+made. Six saved-model/local-eager admission cells pass without any timing claim.
