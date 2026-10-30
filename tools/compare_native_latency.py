@@ -12,6 +12,17 @@ ROOT = Path(__file__).resolve().parents[1]
 PROTOCOL = ROOT/'benchmarks/ettm1/local_latency_v1.json'
 
 
+def validate_protocol(protocol):
+    # The aggregator/worker enforce this exact grid and numeric contract. A new
+    # descriptive protocol may change the baseline/candidates, not silently
+    # report a different grid or tolerance from the one actually executed.
+    fixed = dict(seeds=[7,19,43],trials=3,batches=[1,8],modes=['last','all'],warmup=64,
+                 samples={'last':{'1':1000,'8':200},'all':{'1':200,'8':64}},
+                 absolute_tolerance=5e-5,relative_tolerance=2e-4)
+    if any(protocol.get(key) != value for key,value in fixed.items()):
+        raise ValueError('Protocol differs from the supported comparison grid/contract')
+
+
 def aggregate(records):
     keys = [(r['seed'],r['trial'],r['batch'],r['mode'],r['implementation']) for r in records]
     expected = set(itertools.product((7,19,43),(1,2,3),(1,8),('last','all'),('baseline','candidate')))
@@ -50,6 +61,7 @@ def run(baseline,candidate,inputs,models,output,protocol=PROTOCOL):
         raise ValueError('Results belong under ignored local/')
     protocol_path = Path(protocol).resolve(strict=True)
     protocol = json.loads(protocol_path.read_bytes())
+    validate_protocol(protocol)
     # Do not silently accept a different model/data snapshot under the same protocol.
     previous = json.loads((ROOT/'docs/evidence/latest-v1/runtime.json').read_bytes())
     payload = bounded(paths['inputs']/'input.bin')
