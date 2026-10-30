@@ -145,6 +145,13 @@ and native timing, tampering, and failures. The added late-failure regression pr
 that earlier completed sizes and later saved checkpoints survive, while the parent
 and failed child remain unsealed. No new native behavior was implemented.
 
+The first remote ARM jobs were cancelled by GitHub's scheduled macOS 14 image
+brownout, before executing project tests. The ARM job was migrated to the
+supported `macos-15` image following the
+[provider's migration notice](https://github.com/actions/runner-images/issues/13518).
+The replacement CI run is separate from the local results above; it is not
+claimed passed here.
+
 [Evidence manifest](evidence/bike-size-v1/manifest.json),
 [all accuracy results](evidence/bike-size-v1/training.json),
 [latency summaries](evidence/bike-size-v1/latency.json),
