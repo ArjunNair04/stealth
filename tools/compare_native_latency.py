@@ -2,10 +2,9 @@
 import argparse
 import itertools
 import json
-import os
+import math
 from pathlib import Path
 import subprocess
-import time
 from runtime_common import bounded, canonical, digest, summarize
 from native_profile import accept_comparison
 
@@ -20,6 +19,11 @@ def aggregate(records):
         raise ValueError('Incomplete or duplicated latency comparison')
     import statistics
     by_key = dict(zip(keys,records))
+    for record in records:
+        timing = record['latency']
+        if (not all(math.isfinite(timing[k]) and timing[k] > 0 for k in ('p50_ns','p99_ns'))
+                or timing['p99_ns'] < timing['p50_ns'] or not math.isfinite(record['checksum'])):
+            raise ValueError('Invalid latency or output checksum')
     summary = {}
     for mode,batch in itertools.product(('last','all'),(1,8)):
         ratios, tails = [], []

@@ -26,3 +26,10 @@ class LocalLatency(unittest.TestCase):
                 if cell['implementation']=='candidate' and cell['mode']==mode and cell['batch']==batch:
                     cell['latency'][metric]=value
             self.assertFalse(aggregate(r)['gate']['accepted'])
+    def test_invalid_secondary_timings_fail_closed(self):
+        for metric,value in (('p50_ns',float('nan')),('p99_ns',float('inf')),
+                             ('p50_ns',0),('p99_ns',1)):
+            r=self.records()
+            record=next(x for x in r if x['mode']=='all' and x['batch']==8)
+            record['latency'][metric]=value
+            with self.assertRaises(ValueError):aggregate(r)
