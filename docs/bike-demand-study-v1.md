@@ -37,7 +37,7 @@ clock, not from inspecting a future row. Two values let the model understand tha
 ## Frozen design
 
 [The machine-readable recipe](../benchmarks/bike/demand_v1.json) controls the run.
-The existing one-block model reads 48 observed hours, uses width64/four heads/a
+The existing one-block model reads 48 observed hours, uses width 64/four heads/a
 256-unit GELU MLP and predicts one count. Its initial output repeats the latest
 count; learning adjusts that starting guess. No native architecture changes.
 
@@ -50,7 +50,7 @@ to intact stretches and may exclude difficult periods; no missing count is inven
 - Validation labels: January–June 2012. Select the earliest minimum validation
   mean absolute error (MAE), including the untrained persistence candidate.
 - Evaluation labels: July–December 2012. Input context may precede a split boundary.
-- Seeds7,19,43; eight epochs each; CPU AdamW, one thread, deterministic algorithms.
+- Seeds 7, 19, 43; eight epochs each; CPU AdamW, one thread, deterministic algorithms.
   Training minimizes squared error; selection and the primary score use MAE.
 - Baselines: latest count, same hour yesterday, training weekday/hour average,
   and ridge regression on exactly the same flattened 48x5 inputs. Select the
@@ -58,15 +58,15 @@ to intact stretches and may exclude difficult periods; no missing count is inven
   back to the training label mean.
 
 MAE means "how many rentals the prediction missed by, on average." The
-preregistered learning gate requires every seed to reduce MAE at least10% versus
-repeating the latest count, plus a negative upper bound for seed7's paired
-absolute-error difference interval. Resample whole calendar days2000 times for
+preregistered learning gate requires every seed to reduce MAE at least 10% versus
+repeating the latest count, plus a negative upper bound for seed 7's paired
+absolute-error difference interval. Resample whole calendar days 2000 times for
 that interval. It is approximate: longer seasonal dependence is not represented.
 Report all baselines and seeds even when that gate passes. Passing does not imply
 best-in-class forecasting or improvement over ridge.
 
 No output clipping or rounding. Report negative forecasts as a model limitation.
-The visual example is fixed to the first evaluation week, July1–7, before scoring;
+The visual example is fixed to the first evaluation week, July 1–7, before scoring;
 it is not selected for looking good. Keep absent predictions as gaps in the plot.
 No additional epochs, feature search or architecture changes after evaluation.
 
