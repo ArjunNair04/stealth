@@ -1,6 +1,6 @@
 # Test-first development and initial objectives
 
-Updated: 2026-10-29. These acceptance requirements distinguish completed checks
+Updated: 2026-10-30. These acceptance requirements distinguish completed checks
 from open work. Primitive, attention/block, model loading, Torch training/export,
 Python wrapper and raw-window stream tests are implemented. The measured attention
 and [four-row execution](dense-rows-v1.md) changes add exact native parity,
@@ -175,3 +175,16 @@ replace these gates or authorize live orders.
 
 - [PyTorch numerical accuracy](https://docs.pytorch.org/docs/2.14/notes/numerical_accuracy.html)
 - [PyTorch reproducibility](https://docs.pytorch.org/docs/2.14/notes/randomness.html)
+
+## Feature bundle and checked replay
+
+The versioned feature/scaler/model bundle and replay bridge add 20 component and
+integration tests, including a miniature CPU training run. Local validation at
+the frozen demo implementation: 67 Torch/reference/training tests, 66 offline
+tests and 24 wrapper tests pass. Both new modules initially failed import tests
+before implementation. In-memory faults that disabled gap resets, committed a
+failed row, or bypassed manifest/model comparison were caught by regression
+assertions. A genuine native arithmetic error also preserves warm-up state.
+No native kernel, memory ownership or packaging code changed in this phase.
+See [the contract](model-bundle-v1.md) for clock and restart limits; real-data
+results are separate from these acceptance checks.

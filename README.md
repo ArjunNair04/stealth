@@ -98,6 +98,7 @@ The repository is public for review. No redistribution licence has been selected
 
 ## Run and evaluate
 
+- [Feature/model bundles and CPU training demo](docs/model-bundle-v1.md)
 - [Mixed-frequency signal timing reference](docs/signal-timeline-v1.md)
 
 - [Model walkthrough and native example](docs/forecast-v1.md)
