@@ -1,0 +1,9 @@
+# Explicit optional Linux/Python 3.12 correctness-admission environment.
+# Install torch==2.15.0+cpu from the official CPU index separately.
+# This is a top-level pin set, not the future measurement host's wheel lock.
+-r requirements-training-common.txt
+onnx==1.23.2
+onnxruntime==1.31.1
+onnxscript==0.7.2
+scikit-build-core==0.11.6
+pybind11==3.0.1

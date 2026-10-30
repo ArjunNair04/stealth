@@ -19,6 +19,13 @@ class StandardForecaster(Forecaster):
                 or raw.shape[0]*raw.shape[1]*max(c.width,c.hidden)>16*1024*1024
                 or not bool(torch.isfinite(raw).all())):
             raise ValueError('Expected finite bounded CPU FP32 input')
+        y=self.tensor_forward(raw,latest_only=latest_only)
+        if not bool(torch.isfinite(y).all()): raise FloatingPointError('Nonfinite model output')
+        return y
+
+    def tensor_forward(self,raw,*,latest_only=False):
+        """Pure tensor graph. Public callers must retain forward's validation."""
+        c=self.config
         batch,tokens,_=raw.shape
         x=((raw.double()-self.mean.double())/self.scale.double()).float()
         x=F.linear(x,self.input_weight,self.input_bias)+self.positions[:tokens]
@@ -40,7 +47,6 @@ class StandardForecaster(Forecaster):
         y=F.linear(z,self.head_weight,self.head_bias).squeeze(-1)
         anchor=raw[:,-output_tokens:,c.target].double() if c.output=='correction' else self.mean[c.target].double()
         y=(y.double()*self.scale[c.target].double()+anchor).float()
-        if not bool(torch.isfinite(y).all()): raise FloatingPointError('Nonfinite model output')
         return y
 
 def load_export(blob,*,standard=False):
