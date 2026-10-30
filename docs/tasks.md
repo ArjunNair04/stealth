@@ -81,3 +81,12 @@ Linux comparison. The ETTm1 reserved tail remains unused.
 - [Model/reference issue #3](https://github.com/ArjunNair04/stealth/issues/3)
 - [Python interface issue #4](https://github.com/ArjunNair04/stealth/issues/4)
 - [Historical tasks and preserved outcomes](tasks-history.md)
+
+## Structured public learning demonstration: in progress
+
+The user requested a simpler task after BTC. The [bike-demand study](bike-demand-study-v1.md)
+uses the existing one-block model for next-hour rentals from 48 observed hours and
+known calendar information. The frozen recipe, gap-aware source admission and
+component/integration tests precede real fitting. Next: complete all three CPU
+training seeds, check native export/replay, and record an interpretable first-week
+plot plus every baseline result. No architecture or kernel tuning in this study.
