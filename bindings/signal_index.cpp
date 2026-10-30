@@ -6,6 +6,10 @@
 namespace py = pybind11;
 using namespace stealth::temporal;
 namespace {
+void builtin_sequence(py::handle value) {
+    if (!PyList_CheckExact(value.ptr()) && !PyTuple_CheckExact(value.ptr()))
+        throw py::value_error("Expected a built-in list or tuple");
+}
 template <typename T> T integer(py::handle value) {
     if (!PyLong_CheckExact(value.ptr()))
         throw py::value_error("Expected an exact integer");
@@ -16,8 +20,7 @@ template <typename T> T integer(py::handle value) {
     }
 }
 py::sequence fields(py::handle value, py::ssize_t count) {
-    if (!py::isinstance<py::sequence>(value))
-        throw py::value_error("Expected a record sequence");
+    builtin_sequence(value);
     auto result = py::reinterpret_borrow<py::sequence>(value);
     if (result.size() != static_cast<py::size_t>(count))
         throw py::value_error("Wrong number of record fields");
@@ -37,6 +40,8 @@ void bind_signal_index(py::module_ &m) {
     // Internal numeric boundary; tools/native_signal_timeline.py preserves named schemas.
     py::class_<SignalIndex>(m, "_SignalIndex")
         .def(py::init([](const py::sequence &ages, const py::sequence &rows) {
+            builtin_sequence(ages);
+            builtin_sequence(rows);
             if (ages.size() == 0 || ages.size() > max_signal_features ||
                 rows.size() > max_signal_deliveries)
                 throw py::value_error("Signal index capacity exceeded or empty schema");

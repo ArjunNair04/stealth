@@ -77,7 +77,10 @@ FP32 checks and gap/warm-up rules. Its constructor shares the Python validator,
 then validates the numeric tape in C++; its queries never call the Python scan.
 Native validation is tested directly as well. The adapter retains the Python
 canonical tape and allocates Python results. It remains a repository tool; the
-installed wheel contains the internal numeric binding.
+installed wheel contains the internal numeric binding. That private boundary
+accepts exact built-in lists/tuples and numeric values, preventing custom container
+callbacks from changing the size between validation and copying. The named
+repository adapter still accepts bounded iterables through its existing validator.
 
 With the declared training dependencies and a rebuilt Release wheel:
 
@@ -115,7 +118,7 @@ runtime, nor a comparison of their total processing cost.
   tests include 100,000 distinct records and 100,000 duplicate deliveries.
 - Allocation interception records zero allocations for 10,000 native query/error
   cycles and injects failure at every index-construction allocation.
-- Six installed-wrapper tests compare complete native/Python snapshots and query
+- Seven installed-wrapper tests compare complete native/Python snapshots and query
   concurrency, validate bindings and prove queries bypass the Python scan.
 - Six local integration tests cover complete decisions, eager parity, independent
   process reconstruction and injected mismatch failures. One further test runs
@@ -124,7 +127,7 @@ runtime, nor a comparison of their total processing cost.
   consumer. The sanitizer suite has 64 tests because package relocation is
   excluded under instrumentation; all 64 pass after the fixture correction.
 - All 79 offline tests, 107 of 110 training/reference tests (three optional Linux
-  tests skipped), and all 30 installed-wrapper tests pass. The source distribution
+  tests skipped), and all 31 installed-wrapper tests pass. The source distribution
   builds a wheel and passes a fresh offline NumPy-only runtime installation.
 
 Two development failures are retained in the record. Initially the gap fixture
@@ -132,8 +135,9 @@ overlapped a stale-input interval, so it correctly produced an unavailable resul
 the gap was moved to a separately valid interval without relaxing its assertion.
 AddressSanitizer then caught a use-after-free in the test's own
 `vector.assign(count, records[0])` setup. The repeated value is now copied before
-resizing, and the sanitizer suite was rerun. No production tolerance or validation
-was weakened. Raw build/failure logs remain under ignored local output directories.
+resizing, and the sanitizer suite was rerun. A subsequent review added a failing-then-passing regression for custom Python
+containers and restricted the private binding to ordinary lists/tuples before any
+copy or allocation. No production tolerance or validation was weakened. Raw build/failure logs remain under ignored local output directories.
 
 Pinned local artifacts:
 - Tape SHA-256: `d935fa2629fbbe159661cc9b0f30c1f028875a5c8a4f36c95e52951d4e224790`.

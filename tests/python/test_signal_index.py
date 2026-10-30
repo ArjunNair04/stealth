@@ -96,6 +96,18 @@ class SignalIndexTests(unittest.TestCase):
         self.assertEqual(index.snapshot(1)[0][0], 'missing')
         self.assertEqual(index.snapshot(2)[0][0], 'valid')
 
+    def test_binding_rejects_custom_sequences_before_iteration(self):
+        class Deceptive(list):
+            def __len__(self):
+                return 1
+            def __getitem__(self, index):
+                raise AssertionError('Custom indexing must not run at the native boundary')
+        for ages, records in ((Deceptive([(10,10)]), []),
+                              ([(10,10)], Deceptive()),
+                              ([Deceptive([10,10])], [])):
+            with self.assertRaises(ValueError):
+                _SignalIndex(ages, records)
+
     def test_native_adapter_does_not_scan_at_query_or_import_torch(self):
         from unittest.mock import patch
         specs, records = fixtures()
