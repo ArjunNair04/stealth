@@ -19,12 +19,14 @@ observations to one trustworthy prediction pipeline.
 | Torch training, checkpoints, native export and checked loading | Saved ETTm1 models still lose to the last-value baseline on primary old-test error |
 | Full traces, latest-only sessions, sequential batches and bounded raw streams | Streams recompute the full window; market-clock integration remains open |
 | Receipt-aware native feature index and checked replay | Finite tapes only; live ingestion and crash recovery remain open |
-| Measured native optimizations | Latest-only local p50: 0.181 ms C++ versus 0.287 ms eager Torch 2.2.2; Torch wins at batch eight |
+| Measured native optimizations | Beaker p50: 0.207 ms C++ versus 0.503 ms eager Torch 2.6 for one forecast; Torch wins at batch eight |
 
-The local latency result covers one Intel Mac and the saved one-block workload.
+The [Beaker Linux validation](docs/beaker-linux-v1.md) passes native, sanitizer,
+Python and training/reference checks on a scheduled CPU node. Its timing result
+covers one Xeon host and the saved ETTm1 one-block workload.
 Current compiled and independent runtime comparisons, sustained-load testing,
 research novelty and financial usefulness remain unestablished. See
-[all latest-only measurements](docs/latest-results-v1.md) and
+[the earlier Intel Mac measurements](docs/latest-results-v1.md) and
 [all correction-model outcomes](docs/correction-results-v1.md).
 
 ## Start locally
@@ -99,6 +101,7 @@ The repository is public for review. No redistribution licence has been selected
 
 ## Run and evaluate
 
+- [Beaker Linux correctness and balanced CPU comparison](docs/beaker-linux-v1.md)
 - [Native mixed-speed feature index and adversarial replay demo](docs/native-signal-index-v1.md)
 
 - [Bike-rental learning demonstration and forecast chart](docs/bike-demand-results-v1.md)

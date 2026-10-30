@@ -1,0 +1,66 @@
+{
+  "source_commit": "a65ba9f229e360cfea92b70438c98c89e19a5416",
+  "source_fingerprint": "d3fe8695dda918a14669c34769578d2bfaf03d1a6dd37e82344850d690e5e6ce",
+  "transfer_manifest_sha256": "4ece1f7c86ecd2f944fb70fc9ced299b6e721c1f34828deeeb4fd0d93ec081af",
+  "transfer_files": {
+    "artifacts/expected-19.bin": "0fc9501064f7ee77d5bae723756f2af88b74619371ab752c0753606a77ae6143",
+    "artifacts/expected-43.bin": "f4c91957e0d3db550ef510d8720b3affcc995f19842d1d5054132a7e4bd64005",
+    "artifacts/expected-7.bin": "89cec65b26ed7b3aa03816daa02a899c6d6823a79a3d106a82ae431b79fdd87f",
+    "artifacts/input.bin": "3ed32af0b79ef537e2f2d9a0fa9afda122335689be2aeabf4add7013e85e3595",
+    "artifacts/model-19.stlf": "237910f530e7c337227f2150da2f78da2518e996ee817c4f40e4ef4a78a1a080",
+    "artifacts/model-43.stlf": "6400f2cb9a94237e8cd0e5a8083fd501c75fb9bfe60a7871675e12ccacdbca6a",
+    "artifacts/model-7.stlf": "48d3433c9be2e2c411a06fdf981a78332d6f34af0767608d6d11ef9ca978e87d",
+    "protocol.json": "ca887af12dbaa5b6a00aab934cda7c850fe2063a9817caf68e89cb353e0e2b8e",
+    "run.sh": "ec7be5831d3b8df28370d824433abbe1ca360c6aa41c051e23f60a7506f9655a",
+    "run_validation.py": "e1cd19777794f1e02892af685a7d914669463170c63a95eb32ae93b1a73fcac8",
+    "sanitizer-packages.json": "f2892bba67616b217e40e9f1bfb9671ff53adef22fe7e2c977b052c99d474073",
+    "source.tar.gz": "7deb217f7db5ed4e0fbf2df49b2770f11aa6941ee1f6980e87ac2b928a21bd18",
+    "toolchain-files.sha256": "ff726eb26ffda4cd5391c736fb1571eb23d0a9f15c5116ebcce350688607348b",
+    "wheels/pybind11-3.0.1-py3-none-any.whl": "aa8f0aa6e0a94d3b64adfc38f560f33f15e589be2175e103c0a33c6bce55ee89"
+  },
+  "original_completion_sha256": "63e9d0b17c73c5d1092e69bbdd763da4aa35af5e676c21f10c276a4b8c00127f",
+  "host": {
+    "cpu": "Intel Xeon E3-1240 v3 @ 3.40GHz",
+    "architecture": "x86_64",
+    "os": "CentOS Linux 7",
+    "kernel": "3.10.0-1160.114.2.el7.x86_64",
+    "glibc": "2.17",
+    "compiler": "GCC 11.2.1 (Red Hat 11.2.1-9)",
+    "cmake": "3.26.4",
+    "ninja": "1.10.0",
+    "python": "3.11.0",
+    "torch": "2.6.0+cu124 (CPU execution only)",
+    "numpy": "2.2.6",
+    "pybind11": "3.0.1",
+    "scheduler_slots": 1,
+    "binding": "one physical core; inherited affinity [0,4], each timed worker pinned to logical CPU 0",
+    "isolation": "shared node, no fixed frequency or exclusive node reservation"
+  },
+  "compiler_core_flags": "-O3 -DNDEBUG -std=c++20 -fPIC -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Werror -ffp-contract=off",
+  "native_binaries": {
+    "native_avx": "66bcbc26c5112e4780fb1e82a3cc6e049523fb639fba9d620e7807862b8e6723",
+    "native_portable": "b45795bf4fb29eb4b860e318e623b7fb7c7135e911b26aab608381ea5f7e1a38"
+  },
+  "compiler_and_sanitizer_sha256": {
+    "libasan.a": "eb7f9f37f8b666e2a0d048ddd46334caaab6793e2cd67c753903b739463643df",
+    "libasan.so": "993601ff697e1ec3c0a74df5a0b46fc03888ecbb4951c8da6def191a07b68eca",
+    "libasan_preinit.o": "9634f77e5d9cbe456ea312c24a93c19779f3659416a5d44d4d9912604e672a8e",
+    "libubsan.a": "46c853de2bb7d2f14c29cf0a48e42fdfe78391c1c34ff7753bdb226ff2064f88",
+    "libubsan.so": "172f3cad7a4c2c4f0590ee589ca773f9fdc92a17fa354d5757c48d8e72e3a6b5",
+    "libasan.so.6.0.0": "aa319a08e5cc93706fc2cfc696e3d2e0ba10fc53fc182df4348cb2c5dcf06def",
+    "libubsan.so.1.0.0": "7f33ac267286e71e782327116b356e6a114af5f7587cba1602d57aee80750c65",
+    "g++": "017ff1cfd8e2a728eac965df6a36accdeac414ffd390ba7c9ee3f9a1c4d39852",
+    "ld.bfd": "3eba3748af4e2e20767d927b548e958f8bd778551bcd087fba5543571fbd1fc5",
+    "cc1plus": "e443cd8c0efc637f9b8cc6131bcd58df27c7e3dc3290dbe1b15a9f1f88d534b8"
+  },
+  "model_and_inputs": {
+    "artifacts/expected-19.bin": "0fc9501064f7ee77d5bae723756f2af88b74619371ab752c0753606a77ae6143",
+    "artifacts/expected-43.bin": "f4c91957e0d3db550ef510d8720b3affcc995f19842d1d5054132a7e4bd64005",
+    "artifacts/expected-7.bin": "89cec65b26ed7b3aa03816daa02a899c6d6823a79a3d106a82ae431b79fdd87f",
+    "artifacts/input.bin": "3ed32af0b79ef537e2f2d9a0fa9afda122335689be2aeabf4add7013e85e3595",
+    "artifacts/model-19.stlf": "237910f530e7c337227f2150da2f78da2518e996ee817c4f40e4ef4a78a1a080",
+    "artifacts/model-43.stlf": "6400f2cb9a94237e8cd0e5a8083fd501c75fb9bfe60a7871675e12ccacdbca6a",
+    "artifacts/model-7.stlf": "48d3433c9be2e2c411a06fdf981a78332d6f34af0767608d6d11ef9ca978e87d"
+  },
+  "raw_host_reports": "Retained locally; machine/account paths and full package inventory are not published."
+}

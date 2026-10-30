@@ -1,5 +1,11 @@
 # Prepare the next CPU comparison
 
+[Beaker native/Python validation and a Torch 2.6 compatibility comparison](beaker-linux-v1.md)
+are now complete on a scheduled CPU node. Single forecasts favor Stealth; eight-item
+batches favor Torch. Its CentOS 7/glibc 2.17 environment has not been admitted for
+the current runtime pins below. Singularity 3.8.5 is installed, but container
+bootstrap, compatibility and the complete modern-runtime comparison remain open.
+
 Status: environment and experiment specification, with [implemented adapters and
 bounded correctness admission](runtime-adapters-v1.md). Real Inductor/ONNX fixture
 and deployed-shape parity has passed Linux CI. No current-runtime acceptance

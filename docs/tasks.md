@@ -1,10 +1,10 @@
 # Active work queue
 
 [Direction and exit gates](direction.md) define the shortest path to a trustworthy
-mixed-frequency prediction pipeline. The user selected Linux for the next runtime
-comparison and UCL Beaker as the candidate host; interactive login is deferred.
-The user subsequently authorized a separate local latency audit, now completed
-in [local-latency-v1.md](local-latency-v1.md); controlled Linux work remains deferred.
+mixed-frequency prediction pipeline. The [Beaker Linux validation](beaker-linux-v1.md)
+now passes native, sanitizer, Python and training/reference gates. A scheduled,
+CPU-pinned comparison beats eager Torch 2.6 at batch one and loses at batch eight.
+The current compiled/ONNX comparison remains open; Linux access itself is resolved.
 The user expects minute bars alongside daily, weekly and potentially monthly
 factors. Exact sources, freshness thresholds and prediction targets remain open.
 
@@ -42,8 +42,8 @@ Keep the feature bridge as the correctness reference. Before choosing a financia
 prediction task, agree the source, target, availability clocks, cadence/calendar
 and freshness policy with the user. Live ingestion, persistent crash recovery,
 trading-universe mapping and production model activation are separate work.
-The user deferred Beaker access and requested a useful forecasting application
-next. The [hourly-data admission and study proposal](forecast-study-intake-v1.md)
+During the earlier Beaker deferral, the user requested a useful forecasting
+application. The [hourly-data admission and study proposal](forecast-study-intake-v1.md)
 now provide a checked local candidate and a concrete target choice. The user chose BTC next-hour return. The [frozen return study](btc-return-study-v1.md)
 is now complete with a negative predictive result and successful native replay. Current-runtime
 adapters remain the parallel performance gate; no new kernel tuning is justified
@@ -53,9 +53,10 @@ by the integration demo or by data admission.
 
 The [compiled Torch and ONNX CPU adapters](runtime-adapters-v1.md) now have real
 Linux CI parity checks and a bounded per-cell admission runner. The complete
-90-cell timed orchestrator and aggregate gate are still pending. After Beaker
-access resumes, inspect CPU queue/toolchain compatibility and obtain a permitted
-CPU allocation, then lock the environment and execute the [fixed comparison](frontier-linux.md).
+90-cell timed orchestrator and aggregate gate are still pending. Beaker CPU
+allocation and the native toolchain are now tested. Its CentOS 7 environment has
+only been admitted for the separate Torch 2.6 compatibility run. Inspect a modern
+container/runtime environment, lock it, then execute the [fixed comparison](frontier-linux.md).
 Keep Stealth in a separate checkout/environment. Shared login-node or noisy CI
 measurements cannot establish the latency frontier. Preserve failures and partial
 runs. The separately authorized local audit has its own frozen baseline and gates;
