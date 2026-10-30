@@ -52,6 +52,27 @@ void dense() {
                           std::span(actual).first((rows - 1) * outputs));
             }
         }
+    // Non-binary fractions and cancellation expose reordered accumulation that
+    // the small dyadic fixtures can miss. Cover both row and column tile edges.
+    for (std::size_t outputs : {7U, 8U, 9U, 15U, 16U, 17U}) {
+        constexpr std::size_t inputs = 37;
+        std::vector<float> w(inputs * outputs), bias(outputs);
+        for (auto &v : w)
+            v = rng.next() / 7.1F;
+        for (auto &v : bias)
+            v = rng.next() / 3.7F;
+        Dense scalar(inputs, outputs, w, bias, DenseKernel::reference);
+        Dense packed(inputs, outputs, w, bias);
+        for (std::size_t rows : {1U, 3U, 4U, 5U, 8U, 9U}) {
+            std::vector<float> in(rows * inputs), expected(rows * outputs),
+                actual(rows * outputs), temp(rows * outputs);
+            for (std::size_t i = 0; i < in.size(); ++i)
+                in[i] = rng.next() / 1.3F * (i % 3 == 0 ? 10000.0F : 0.001F);
+            CHECK(scalar.forward_rows(in, rows, expected, temp) == Error::ok);
+            CHECK(packed.forward_rows(in, rows, actual, temp) == Error::ok);
+            identical(expected, actual);
+        }
+    }
 }
 void failures() {
     for (auto kernel : {DenseKernel::reference, DenseKernel::packed}) {
@@ -87,6 +108,22 @@ void failures() {
         // Scratch's unused tail still aliases input and must be rejected.
         CHECK(moved.forward_rows(std::span(overlap).subspan(10, 5), 5, y,
                                  std::span(overlap).subspan(4)) == Error::aliasing);
+    }
+}
+void tile_failures() {
+    for (std::size_t outputs : {7U, 8U, 9U, 15U, 16U, 17U}) {
+        std::vector<float> weights(outputs * 2, 0.0F), bias(outputs, 0.0F);
+        weights[(outputs - 1) * 2] = 2.0F;
+        Dense model(2, outputs, weights, bias);
+        for (std::size_t rows : {1U, 3U, 4U, 5U, 8U, 9U}) {
+            std::vector<float> in(rows * 2, 1.0F), out(rows * outputs, 123.0F),
+                scratch(rows * outputs);
+            // A failure at the last output of the last row cannot publish any
+            // earlier successful tile, including a partial row/column tile.
+            in[(rows - 1) * 2] = std::numeric_limits<float>::max();
+            CHECK(model.forward_rows(in, rows, out, scratch) == Error::numerical_error);
+            test::unchanged(out);
+        }
     }
 }
 void feed_forward() {
@@ -145,8 +182,10 @@ int main(int argc, char *argv[]) {
         const std::string_view group(argv[1]);
         if (group == "dense")
             dense();
-        else if (group == "failures")
+        else if (group == "failures") {
             failures();
+            tile_failures();
+        }
         else if (group == "feed_forward")
             feed_forward();
         else

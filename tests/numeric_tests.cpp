@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <array>
+#include <bit>
 #include <cstdint>
 #include <limits>
 #include <numeric>
@@ -301,6 +302,36 @@ void residuals() {
     CHECK(y[2] == 0);
 }
 
+void finite_scans() {
+    // Every position around vector and tail boundaries must be examined. Include
+    // signed zero, subnormal and maximum finite values so a faster predicate
+    // cannot accidentally narrow the accepted FP32 domain.
+    constexpr std::array<float, 7> valid{0.0F, -0.0F, 1.0F, -1.0F, largest,
+        -largest, std::numeric_limits<float>::denorm_min()};
+    constexpr std::array<float, 5> invalid{nan, inf, -inf,
+        std::bit_cast<float>(std::uint32_t{0xffc00001}),
+        std::bit_cast<float>(std::uint32_t{0x7f800001})};
+    for (std::size_t size : {1U, 3U, 4U, 7U, 8U, 9U, 15U, 16U, 17U, 63U, 64U, 65U}) {
+        std::vector<float> input(size), zero(size, 0.0F), out(size), scratch(size);
+        for (std::size_t i = 0; i < size; ++i)
+            input[i] = valid[i % valid.size()];
+        CHECK(residual_add(input, zero, out, scratch) == Error::ok);
+        for (std::size_t i = 0; i < size; ++i)
+            CHECK(out[i] == input[i]);
+        for (std::size_t i = 0; i < size; ++i) {
+            const auto saved = input[i];
+            for (float bad : invalid) {
+                input[i] = bad;
+                std::fill(out.begin(), out.end(), 123.0F);
+                CHECK(residual_add(input, zero, out, scratch) == Error::non_finite);
+                test::unchanged(out);
+                CHECK(residual_add(zero, input, out, scratch) == Error::non_finite);
+                test::unchanged(out);
+            }
+            input[i] = saved;
+        }
+    }
+}
 void overlap_boundaries() {
     // Exact adjacency is legal; partial overlap in either address direction is not.
     std::array<float, 12> memory{};
@@ -340,6 +371,8 @@ int main(int argc, char *argv[]) {
             activation();
         else if (group == "residual")
             residuals();
+        else if (group == "finite")
+            finite_scans();
         else if (group == "overlap")
             overlap_boundaries();
         else
