@@ -98,6 +98,8 @@ The repository is public for review. No redistribution licence has been selected
 
 ## Run and evaluate
 
+- [Compiled Torch and ONNX CPU admission](docs/runtime-adapters-v1.md)
+
 - [Feature/model bundles and CPU training demo](docs/model-bundle-v1.md)
 - [Mixed-frequency signal timing reference](docs/signal-timeline-v1.md)
 

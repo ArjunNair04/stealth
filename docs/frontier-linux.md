@@ -1,8 +1,10 @@
 # Prepare the next CPU comparison
 
-Status: environment and experiment specification. No current-runtime timings,
-compiled runner or ONNX conversion result are claimed. A suitable machine and
-validated engine adapters are still required. The current Intel Mac benchmark
+Status: environment and experiment specification, with [implemented adapters and
+bounded correctness admission](runtime-adapters-v1.md). Real Inductor/ONNX fixture
+and deployed-shape parity has passed Linux CI. No current-runtime acceptance
+timings are claimed. A quiet machine, full host lock and timed orchestration
+are still required. The current Intel Mac benchmark
 remains a separate Torch 2.2.2 compatibility result.
 
 The default preparation target is Linux x86_64, Python 3.12, with a quiet CPU
@@ -30,7 +32,7 @@ executed here and is not yet a complete reproducible lock:
 ```sh
 python3.12 -m venv local/frontier-env
 local/frontier-env/bin/python -m pip install --index-url https://download.pytorch.org/whl/cpu 'torch==2.15.0+cpu'
-local/frontier-env/bin/python -m pip install numpy==1.26.4 onnxruntime==1.31.1 onnx==1.23.2 scikit-build-core==0.11.6 pybind11==3.0.1
+local/frontier-env/bin/python -m pip install -r requirements-frontier.txt
 local/frontier-env/bin/python -m pip install --no-build-isolation --no-deps .
 local/frontier-env/bin/python -m pip check
 local/frontier-env/bin/python tools/build_identity.py --check-extension
@@ -95,7 +97,8 @@ and new run. Change the budget in a new protocol before running if admission
 shows it is insufficient.
 
 The consolidated baseline provides existing native/eager execution and source
-identity checks. The compiled/ONNX adapters, host lock and timed comparison remain
+identity checks. The compiled/ONNX adapters and bounded per-cell correctness runner are now
+implemented. The host lock, fixed saved-model admission and timed comparison remain
 the next implementation milestone. Do not describe the existing compatibility
 runner as supporting these engines. If current runtimes remove the local advantage,
 use that evidence to decide whether integration, memory or specialized workloads

@@ -45,7 +45,9 @@ is justified by this integration demo.
 
 ## Parallel gate: current-runtime comparison
 
-Implement and validate the compiled Torch and ONNX CPU adapters. After Beaker
+The [compiled Torch and ONNX CPU adapters](runtime-adapters-v1.md) now have real
+Linux CI parity checks and a bounded per-cell admission runner. The complete
+90-cell timed orchestrator and aggregate gate are still pending. After Beaker
 access resumes, inspect CPU queue/toolchain compatibility and obtain a permitted
 CPU allocation, then lock the environment and execute the [fixed comparison](frontier-linux.md).
 Keep Stealth in a separate checkout/environment. Shared login-node or noisy CI
