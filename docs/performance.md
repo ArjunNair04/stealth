@@ -247,3 +247,19 @@ component shares cannot be reused as latest-only bottleneck evidence. Candidate
 work includes all-row QKV/input projections and effective batching; changing
 approximations or backends requires its own parity and performance gates. A second
 block needs earlier first-block states and changes what work can be skipped.
+
+
+## Native feature selection
+
+The [finite signal index](native-signal-index-v1.md) stores per-channel winner
+changes in receipt order and uses binary search at query time. This replaces an
+O(deliveries) scan with O(sum log(channel changes + 1)) lookup work. Zero heap
+allocations are verified for the native caller-buffer query API. Construction,
+Python result conversion and the existing Python replay bridge still allocate.
+This is an algorithmic/resource contract, not measured latency evidence.
+
+Before further optimization, compare a thin checked adapter plus the existing
+standard runtimes against the whole native path. Include cold setup, retained
+memory, conversion, p50/p99 and unavailable decisions. Preserve the current
+model/runtime comparison protocol separately from the new temporal workload;
+shared CI conformance does not establish performance superiority.

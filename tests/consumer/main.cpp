@@ -6,6 +6,7 @@
 #include <stealth/runtime.hpp>
 #include <stealth/transformer_block.hpp>
 #include <stealth/window_stream.hpp>
+#include <stealth/signal_index.hpp>
 #include <vector>
 
 int main() {
@@ -53,6 +54,13 @@ int main() {
         rejected = true;
     }
     if (!rejected)
+        return 1;
+    const std::array<stealth::temporal::SignalLimits, 1> limits{{{10, 10}}};
+    const std::array<stealth::temporal::SignalRecord, 1> records{{{0, 0, 0, 0, 0, 0, 7.0}}};
+    const stealth::temporal::SignalIndex index(limits, records);
+    std::array<stealth::temporal::SignalFeature, 1> features;
+    if (index.snapshot(1, features) != stealth::temporal::SnapshotError::ok ||
+        features[0].value != 7.0)
         return 1;
     return stealth::build_info().version.empty() ? 1 : 0;
 }

@@ -11,8 +11,8 @@ factors. Exact sources, freshness thresholds and prediction targets remain open.
 - Baseline PR #18 consolidates #6–#17; their commits and branches are preserved.
   The older PRs are closed as superseded. Independent review/merge remain open.
 - The numerical, model loading, Torch training/export and Python/raw-window
-  infrastructure pass their recorded checks. Forecast quality still trails
-  persistence; the local speed result is limited to its measured workload.
+  infrastructure pass their recorded checks. ETTm1 and BTC studies miss their forecast gates; the later bike study improves
+  MAE over persistence and ridge. Local speed evidence is workload-specific.
 - The [signal timeline reference](signal-timeline-v1.md) assembles bounded offline
   observations by receipt, publication, effective time and revision. It provides
   explicit readiness/age/provenance and schema order, with component and CLI demo
@@ -97,3 +97,25 @@ Before further model changes, discuss a count-aware output/loss and which kind o
 error matters most. Any follow-up needs a new frozen protocol; the existing test
 months are now inspected. Controlled Linux runtime benchmarking remains the
 separate performance priority when Beaker access becomes available.
+
+## Mixed-speed native feature milestone: implemented
+
+[SignalIndex and its frozen conformance workload](native-signal-index-v1.md)
+replace repeated full-tape scans with per-channel native receipt indexes while
+preserving the independent Python oracle. Snapshot queries use caller-owned
+memory; construction and Python conversion allocate. The finite index supports
+up to 256 channels and 100,000 deliveries, exact revision/provenance rules,
+arbitrary historical queries and concurrent readers.
+
+The adversarial diagnostic produces 98 identical native/oracle decisions:
+60 forecasts, 17 warm-up decisions and 21 unavailable decisions. All 60 forecasts
+match eager Torch within the existing tolerance; fresh-process ledgers are
+byte-identical. New direct native, binding, integration, allocation and failure
+tests accompany the implementation. Actual compiled/ONNX conformance is wired
+into the optional Linux job; its CI result is separate from local evidence.
+
+Next: finish the fair end-to-end runtime harness and controlled Linux measurement.
+The feature adapter used by standard runtimes must receive the same clocks,
+corrections, warm-up and gap rules. Live ingestion, bounded eviction and persistent
+recovery remain separate unimplemented components. No new neural kernel tuning,
+model architecture or financial objective is implied by this milestone.
