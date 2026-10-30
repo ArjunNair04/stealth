@@ -1,6 +1,7 @@
 #include "stealth/numeric.hpp"
 #include "fp_policy.hpp"
 #include "finite.hpp"
+#include "dense_avx.hpp"
 
 #include <algorithm>
 #include <array>
@@ -218,6 +219,10 @@ Error Dense::forward_rows(std::span<const float> input, std::size_t rows, std::s
                     accumulator += weights[o * inputs_ + i] * input[row * inputs_ + i];
                 scratch[row * outputs_ + o] = accumulator;
             }
+    } else if (outputs_ >= lanes && numeric_detail::try_dense_avx(
+                   input.data(), weights.data(), bias.data(), scratch.data(), inputs_, outputs_, rows)) {
+        // The specialization writes only disposable scratch. Validation and
+        // transactional publication remain common to every backend.
     } else {
         const auto full_outputs = (outputs_ / lanes) * lanes;
         std::size_t row = 0;
