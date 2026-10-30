@@ -287,11 +287,18 @@ Error layer_norm(std::span<const float> input, std::span<const float> scale,
     }
     variance /= static_cast<double>(input.size());
     const double inverse = 1.0 / std::sqrt(variance + epsilon);
+    bool representable = true;
     for (std::size_t i = 0; i < input.size(); ++i) {
         const double value = ((input[i] - mean) * inverse) * scale[i] + shift[i];
-        if (!checked_float(value, scratch[i]))
-            return Error::numerical_error;
+        const bool valid = std::abs(value) <= std::numeric_limits<float>::max();
+        // Mask before narrowing: out-of-range/NaN values are never converted.
+        // Scratch may change on failure, but output is published only if every
+        // channel passes. The reduction lets independent channels vectorize.
+        scratch[i] = static_cast<float>(valid ? value : 0.0);
+        representable &= valid;
     }
+    if (!representable)
+        return Error::numerical_error;
     return publish(scratch, output);
 }
 

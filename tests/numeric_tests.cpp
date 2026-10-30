@@ -246,6 +246,36 @@ void normalization() {
     test::unchanged(y);
 }
 
+void normalization_tiles() {
+    test::Random rng;
+    for (std::size_t width : {3U, 4U, 7U, 8U, 9U, 63U, 64U, 65U}) {
+        std::vector<float> x(width), scale(width), shift(width), out(width), scratch(width);
+        for (std::size_t i = 0; i < width; ++i) {
+            x[i] = rng.next() / 1.7F;
+            scale[i] = rng.next() / 3.1F;
+            shift[i] = rng.next() / 7.3F;
+        }
+        double mean = 0.0, variance = 0.0;
+        for (float v : x)
+            mean += v;
+        mean /= static_cast<double>(width);
+        for (float v : x)
+            variance += (v - mean) * (v - mean);
+        variance /= static_cast<double>(width);
+        CHECK(layer_norm(x, scale, shift, 1e-5F, out, scratch) == Error::ok);
+        for (std::size_t i = 0; i < width; ++i)
+            test::near(out[i], (x[i] - mean) / std::sqrt(variance + 1e-5F) * scale[i] + shift[i]);
+        for (std::size_t bad = 0; bad < width; ++bad) {
+            std::fill(x.begin(), x.end(), 0.0F);
+            std::fill(scale.begin(), scale.end(), largest);
+            std::fill(shift.begin(), shift.end(), 0.0F);
+            std::fill(out.begin(), out.end(), 123.0F);
+            x[bad] = 4.0F;
+            CHECK(layer_norm(x, scale, shift, 1e-5F, out, scratch) == Error::numerical_error);
+            test::unchanged(out);
+        }
+    }
+}
 void activation() {
     std::array<float, 5> x{-3, -1, 0, 1, 3}, y{}, scratch{};
     const std::array<double, 5> expected{-0.0040496940948903, -0.15865525393145707, 0,
@@ -365,8 +395,10 @@ int main(int argc, char *argv[]) {
             softmax_cases();
         else if (group == "softmax_generated")
             softmax_generated();
-        else if (group == "normalization")
+        else if (group == "normalization") {
             normalization();
+            normalization_tiles();
+        }
         else if (group == "activation")
             activation();
         else if (group == "residual")
