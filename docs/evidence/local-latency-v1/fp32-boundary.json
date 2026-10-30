@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "code_commit": "48cedab5b7c91c7ce22c80f54095e1244b16c747",
+  "cause": "NumPy 2 weak scalar promotion rounds a Python float just above FP32 maximum before comparison to a NumPy float32 limit",
+  "fix": "Cache the FP32 endpoint as a Python float and compare before conversion",
+  "endpoint": "0x1.fffffe0000000p+127",
+  "regression": "New endpoint test fails before the fix under NumPy 2.2.6; passes after the fix",
+  "numpy_1_26_4_wrapper_tests": 34,
+  "numpy_2_2_6_wrapper_tests": 34,
+  "training_tests": {
+    "passed": 107,
+    "skipped_optional_linux": 3
+  },
+  "package": {
+    "schema_version": 1,
+    "status": "passed",
+    "built_wheel_from_sdist": true,
+    "runtime_install_network": false,
+    "runtime_dependencies": [
+      "numpy==2.2.6"
+    ],
+    "python": "3.10.6",
+    "wheel_members": [
+      "stealth_cpu/__init__.py",
+      "stealth_cpu/_core.cpython-310-darwin.so",
+      "stealth_cpu-0.1.0.dist-info/METADATA",
+      "stealth_cpu-0.1.0.dist-info/WHEEL",
+      "stealth_cpu-0.1.0.dist-info/RECORD"
+    ],
+    "artifacts": {
+      "stealth_cpu-0.1.0-cp310-cp310-macosx_14_0_x86_64.whl": "5cff866bb52a2c6b8ecb0efbbe4e60cd58adb9a4c90bd74468eddd1fcfd7c31e",
+      "stealth_cpu-0.1.0.tar.gz": "847061e56dabf96e7929508411ac40d6ab690528d4672d00a55c1369ec4a6070",
+      "numpy-2.2.6-cp310-cp310-macosx_14_0_x86_64.whl": "5a6429d4be8ca66d889b7cf70f536a397dc45ba6faeb5f8c5427935d9592e9cf"
+    }
+  },
+  "logs": {
+    "guard-red.log": "42861e0e2dfc067aea0b68384bb34d7128330d5e960d8e0616419c0924da0244",
+    "guard-numpy1-tests.log": "2e21bcfd7296919fdbc1ec9d0b775427adf2bc79b0ff7a647fb746ce39155629",
+    "guard-numpy2-tests.log": "905afbeb6495a97a54e9c6bbdb20f337b2d3fcfc5782e4d6c7db5e9a981c6182",
+    "guard-training-tests.log": "28980c025fdceff1fed864c6cbce13de0e2a052c1b35175556e065d135fc7415",
+    "guard-package/tests.log": "809780648d295fc37b06fb4d63cce47337a9dac2e3a24a4f7a20b360227c7c4f"
+  },
+  "scope": "Follow-up guard fix; no native source or earlier benchmark record changed; no additional speed claim"
+}

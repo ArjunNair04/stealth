@@ -208,3 +208,8 @@ is bitwise unchanged. New regression cases cover full/partial tile cancellation,
 invalid scan values at every position, transactional normalization overflow, and
 query-time provenance reconstruction. Timing gates are exercised with fixtures in
 CI; measured wall-clock thresholds remain outside noisy shared CI.
+
+The subsequent FP32 feature-boundary regression raises installed-wrapper coverage
+to 34 passing tests under both NumPy 1.26.4 and 2.2.6, including a new isolated
+source-distribution build. It rejects values immediately outside the FP32 endpoints
+before inference and preserves replay history; the native code is unchanged.
