@@ -6,7 +6,7 @@ index d5f45cb..00524b6 100644
  #pragma once
  #include "stealth/numeric.hpp"
 +#include <vector>
- 
+
  namespace stealth::numeric {
  inline constexpr std::size_t max_context = 1024;
 @@ -15,7 +16,7 @@ class AttentionWorkspace {
@@ -15,7 +15,7 @@ index d5f45cb..00524b6 100644
                         AttentionKernel kernel = AttentionKernel::tiled);
 -    [[nodiscard]] std::size_t bytes() const noexcept { return storage_.size() * sizeof(float); }
 +    [[nodiscard]] std::size_t bytes() const noexcept { return storage_.size() * sizeof(float) + exponentials_.size() * sizeof(double); }
- 
+
    private:
      friend Error causal_attention(std::span<const float>, std::span<const float>,
 @@ -24,6 +25,7 @@ class AttentionWorkspace {
@@ -24,7 +24,7 @@ index d5f45cb..00524b6 100644
      AlignedBuffer storage_;
 +    std::vector<double> exponentials_;
  };
- 
+
  // Q, K, V and output are row-major [tokens,width]. Contiguous channel groups are heads.
 diff --git a/src/attention.cpp b/src/attention.cpp
 index 5182492..55a9a7c 100644
@@ -36,7 +36,7 @@ index 5182492..55a9a7c 100644
      : capacity_(capacity), width_(width), heads_(heads), kernel_(kernel),
 -      storage_(workspace_elements(capacity, width, heads, kernel)) {}
 +      storage_(workspace_elements(capacity, width, heads, kernel)), exponentials_(capacity) {}
- 
+
  Error causal_attention(std::span<const float> query, std::span<const float> key,
                         std::span<const float> value, std::size_t tokens, std::span<float> output,
 @@ -58,10 +58,25 @@ Error causal_attention(std::span<const float> query, std::span<const float> key,

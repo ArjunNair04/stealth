@@ -3,7 +3,7 @@
     "assembly.json": "43bde1c46c798270253b3fc573d5b4fea8472e4b615308e8ccfafd8b0bead9bf",
     "capture_predictions.py": "82135fa19f880e6f6d0e47f1cbbb3bf7012a7abdeb739385be5f08283c4049eb",
     "development.json": "e82921aa876405c34adcab2684700dcf866c6b96eb2029db04e4dba2e1b1f5bf",
-    "exp-candidate.patch": "ba8ab3dbe677f3895393c6208ed1221b01fd8b98b34d781ff3a5fc7ee4584db7",
+    "exp-candidate.patch": "11f28a3a3e11045ea0632f52479d1f207af446ce88998e762d7e0e9907002d48",
     "native.json": "0ccc089909063b599782da747d2b9c1f3eb9cbe127224dcb95b1a38cb1ebf2a2",
     "parity.json": "4b92950d5d78f3cd20c29cb6d40f31c6a414314fcb9be829ea721533ae1c8869",
     "profile.json": "2c5ccdb29b2d916025b9331b7890b0b2152d41d672dde48f50c896e2905b6bf3",
@@ -25,6 +25,7 @@
     "AVX guard uses compiler runtime usable-feature detection; forced-off fallback tested locally; no physical non-AVX x86 machine tested"
   ],
   "machine": "Intel Core i5-10600, macOS 14.8.7, AppleClang 16.0.0.16000026",
+  "patch_encoding_note": "Blank context markers normalized for repository whitespace checks; source edit preserved and git apply --check passes.",
   "protocol_sha256": "38f3e0f8e9c97668c6a287e7c7ecf3c457a6eb85c1e5dcc453f97aa31bf33cc0",
   "schema_version": 1,
   "threads": 1
