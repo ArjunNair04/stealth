@@ -22,19 +22,32 @@ float checked_epsilon(float epsilon) {
     return epsilon;
 }
 std::size_t workspace_elements(std::size_t capacity, std::size_t width, std::size_t heads,
-                               std::size_t hidden) {
+                               std::size_t hidden, std::size_t batch) {
     sequence_detail::dimensions(capacity, width, heads);
     (void)checked_hidden(hidden);
-    // Five sequences, plus bounded row tiles (not whole-sequence hidden activations).
-    return (5 * capacity + 9 * std::min(std::size_t{4}, capacity)) * width;
+    if (batch == 0)
+        throw std::invalid_argument("Batch capacity must be positive");
+    if (batch > 1024)
+        throw std::length_error("Batch capacity exceeded");
+    // Keep legacy single-window layout exactly; batch work uses bounded 32-row tiles.
+    const auto rows = capacity * batch;
+    const auto tile = std::min(batch == 1 ? std::size_t{4} : std::size_t{32}, rows);
+    const auto count = (5 * rows + 9 * tile) * width;
+    if (count > max_elements)
+        throw std::length_error("Transformer batch workspace exceeded");
+    return count;
 }
 } // namespace
 TransformerWorkspace::TransformerWorkspace(std::size_t capacity, std::size_t width,
-                                           std::size_t heads, std::size_t hidden)
+                                           std::size_t heads, std::size_t hidden,
+                                           std::size_t batch_capacity)
     : capacity_(capacity), width_(width), heads_(heads), hidden_(hidden),
-      storage_(workspace_elements(capacity, width, heads, hidden)),
+      batch_capacity_(batch_capacity),
+      storage_(workspace_elements(capacity, width, heads, hidden, batch_capacity)),
       attention_(capacity, width, heads),
-      feed_forward_(width, hidden, std::min(std::size_t{4}, capacity)) {}
+      feed_forward_(width, hidden,
+                    std::min(batch_capacity == 1 ? std::size_t{4} : std::size_t{32},
+                             capacity * batch_capacity)) {}
 
 TransformerBlock::TransformerBlock(std::size_t width, std::size_t heads, std::size_t hidden,
                                    TransformerParameters p, float epsilon, DenseKernel kernel)
@@ -132,6 +145,96 @@ Error TransformerBlock::forward(std::span<const float> input, std::size_t tokens
     }
     std::copy(candidate.begin() + static_cast<std::ptrdiff_t>(first_row * width_), candidate.end(),
               output.begin());
+    return Error::ok;
+}
+Error TransformerBlock::forward_batch(std::span<const float> input, std::size_t batch,
+                                      std::size_t tokens, std::span<float> output,
+                                      TransformerWorkspace &ws,
+                                      SequenceOutput mode) const noexcept {
+    if (scale_.size() != width_ || shift_.size() != width_ || ws.storage_.size() == 0)
+        return Error::invalid_state;
+    if ((mode != SequenceOutput::all && mode != SequenceOutput::last) || batch == 0 ||
+        batch > ws.batch_capacity_ || tokens == 0 || tokens > ws.capacity_ || ws.width_ != width_ ||
+        ws.heads_ != heads_ || ws.hidden_ != hidden_)
+        return Error::shape_mismatch;
+    if (batch == 1)
+        return forward(input, tokens, output, ws, mode);
+    const auto out_tokens = mode == SequenceOutput::last ? std::size_t{1} : tokens;
+    const auto count = batch * tokens * width_, output_count = batch * out_tokens * width_;
+    if (input.size() != count || output.size() != output_count)
+        return Error::shape_mismatch;
+    if (sequence_detail::overlaps(input, output))
+        return Error::aliasing;
+    if (!sequence_detail::finite(input))
+        return Error::non_finite;
+    const auto capacity = ws.capacity_ * ws.batch_capacity_ * width_;
+    const auto tile = std::min(std::size_t{32}, ws.capacity_ * ws.batch_capacity_);
+    const auto tile_width = tile * width_;
+    auto storage = ws.storage_.span();
+    auto query = storage.subspan(0, count);
+    auto key = storage.subspan(capacity, count);
+    auto value = storage.subspan(2 * capacity, count);
+    auto context = storage.subspan(3 * capacity, output_count);
+    auto candidate = storage.subspan(4 * capacity, output_count);
+    auto normalized = storage.subspan(5 * capacity, tile_width);
+    auto qkv = storage.subspan(5 * capacity + tile_width, 3 * tile_width);
+    auto projected = storage.subspan(5 * capacity + 4 * tile_width, tile_width);
+    auto residual = storage.subspan(5 * capacity + 5 * tile_width, tile_width);
+    auto scratch = storage.subspan(5 * capacity + 6 * tile_width, 3 * tile_width);
+    for (std::size_t t = 0; t < batch * tokens; t += tile) {
+        const auto rows = std::min(tile, batch * tokens - t);
+        const auto norm_status =
+            layer_norm_rows(input.subspan(t * width_, rows * width_), rows, scale_.span(),
+                            shift_.span(), epsilon_, normalized.first(rows * width_), scratch);
+        if (norm_status != Error::ok)
+            return norm_status;
+        const auto status = qkv_.forward_rows(normalized.first(rows * width_), rows,
+                                              qkv.first(rows * 3 * width_), scratch);
+        if (status != Error::ok)
+            return status;
+        for (std::size_t r = 0; r < rows; ++r) {
+            const auto source = qkv.subspan(r * 3 * width_, 3 * width_);
+            const auto destination = static_cast<std::ptrdiff_t>((t + r) * width_);
+            std::copy_n(source.begin(), width_, query.begin() + destination);
+            std::copy_n(source.begin() + static_cast<std::ptrdiff_t>(width_), width_,
+                        key.begin() + destination);
+            std::copy_n(source.begin() + static_cast<std::ptrdiff_t>(2 * width_), width_,
+                        value.begin() + destination);
+        }
+    }
+    // Reuse bounded attention scratch one sequence at a time. No cross-window keys.
+    const auto sequence = tokens * width_;
+    for (std::size_t b = 0; b < batch; ++b) {
+        const auto status = causal_attention(
+            query.subspan(b * sequence, sequence), key.subspan(b * sequence, sequence),
+            value.subspan(b * sequence, sequence), tokens,
+            context.subspan(b * out_tokens * width_, out_tokens * width_), ws.attention_, mode);
+        if (status != Error::ok)
+            return status;
+    }
+    for (std::size_t t = 0; t < batch * out_tokens; t += tile) {
+        const auto rows = std::min(tile, batch * out_tokens - t), elements = rows * width_;
+        auto status = projection_.forward_rows(context.subspan(t * width_, elements), rows,
+                                               projected.first(elements), scratch);
+        if (status != Error::ok)
+            return status;
+        // Gather only retained input rows; latest mode selects one row per window.
+        for (std::size_t r = 0; r < rows; ++r) {
+            const auto origin = mode == SequenceOutput::last ? (t + r + 1) * tokens - 1 : t + r;
+            std::copy_n(input.begin() + static_cast<std::ptrdiff_t>(origin * width_), width_,
+                        normalized.begin() + static_cast<std::ptrdiff_t>(r * width_));
+        }
+        status = residual_add(normalized.first(elements), projected.first(elements),
+                              residual.first(elements), scratch);
+        if (status != Error::ok)
+            return status;
+        status =
+            feed_forward_.forward_rows(residual.first(elements), rows,
+                                       candidate.subspan(t * width_, elements), ws.feed_forward_);
+        if (status != Error::ok)
+            return status;
+    }
+    std::copy(candidate.begin(), candidate.end(), output.begin());
     return Error::ok;
 }
 } // namespace stealth::numeric

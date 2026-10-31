@@ -1,6 +1,6 @@
 #include "stealth/feed_forward.hpp"
-#include "stealth/runtime.hpp"
 #include "stealth/model_file.hpp"
+#include "stealth/runtime.hpp"
 #include "stealth/window_stream.hpp"
 #include <algorithm>
 #include <atomic>
@@ -68,6 +68,7 @@ struct Model {
 struct Session {
     std::shared_ptr<const ForecastModel> model;
     ForecastWorkspace workspace;
+    std::unique_ptr<ForecastBatchWorkspace> batch_workspace;
     AlignedBuffer input;
     std::atomic<bool> busy{false};
     explicit Session(const Model &m)
@@ -137,15 +138,25 @@ struct Session {
                                         ? py::array_t<float>(a.shape(0))
                                         : py::array_t<float>({a.shape(0), a.shape(1)});
         auto out = values(output);
+        const auto capacity = std::min(batch, std::size_t{1024});
+        if (batch > 1 && (!batch_workspace || batch_workspace->capacity() < capacity))
+            batch_workspace = std::make_unique<ForecastBatchWorkspace>(c, capacity);
         Error status = Error::ok;
         {
             py::gil_scoped_release release;
-            for (std::size_t i = 0; i < batch; ++i) {
-                status = model->forward(
-                    snapshot.span().subspan(i * tokens * c.features, tokens * c.features), tokens,
-                    out.subspan(i * output_tokens, output_tokens), workspace, mode);
-                if (status != Error::ok)
-                    break;
+            if (batch == 1) {
+                status = model->forward(snapshot.span(), tokens, out, workspace, mode);
+            } else {
+                for (std::size_t b = 0; b < batch; b += capacity) {
+                    const auto windows = std::min(capacity, batch - b);
+                    status = model->forward_batch(
+                        snapshot.span().subspan(b * tokens * c.features,
+                                                windows * tokens * c.features),
+                        windows, tokens, out.subspan(b * output_tokens, windows * output_tokens),
+                        *batch_workspace, mode);
+                    if (status != Error::ok)
+                        break;
+                }
             }
         }
         check(status);
@@ -357,7 +368,8 @@ PYBIND11_MODULE(_core, m) {
         .def_property_readonly(
             "busy", [](const Session &s) { return s.busy.load(std::memory_order_acquire); })
         .def_property_readonly("workspace_bytes", [](const Session &s) {
-            return s.workspace.bytes() + s.input.size() * sizeof(float);
+            return s.workspace.bytes() + s.input.size() * sizeof(float) +
+                   (s.batch_workspace ? s.batch_workspace->bytes() : 0);
         });
     py::class_<Stream>(m, "WindowStream")
         .def(py::init<const Model &>())

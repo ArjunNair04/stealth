@@ -23,6 +23,21 @@ class ForecastWorkspace {
     AlignedBuffer storage_;
     TransformerWorkspace block_;
 };
+// Preallocated, move-only batch scratch. Activations are tiled over at most four
+// windows; staged outputs cover batch_capacity so failures publish nothing.
+class ForecastBatchWorkspace {
+  public:
+    ForecastBatchWorkspace(ForecastConfig config, std::size_t batch_capacity);
+    [[nodiscard]] std::size_t bytes() const noexcept;
+    [[nodiscard]] std::size_t capacity() const noexcept { return capacity_; }
+
+  private:
+    friend class ForecastModel;
+    ForecastConfig config_;
+    std::size_t capacity_, tile_;
+    AlignedBuffer storage_;
+    TransformerWorkspace block_;
+};
 class ForecastModel {
   public:
     // Canonical flat order is specified in docs/forecast-contract.md.
@@ -38,6 +53,13 @@ class ForecastModel {
     [[nodiscard]] Error forward(std::span<const float> input, std::size_t tokens,
                                 std::span<float> output, ForecastWorkspace &workspace,
                                 SequenceOutput mode = SequenceOutput::all) const noexcept;
+
+    // Input [batch,tokens,features], output [batch,tokens] or [batch] in last mode.
+    // No allocation; all windows are independent; output is unchanged on error.
+    [[nodiscard]] Error forward_batch(std::span<const float> input, std::size_t batch,
+                                      std::size_t tokens, std::span<float> output,
+                                      ForecastBatchWorkspace &workspace,
+                                      SequenceOutput mode = SequenceOutput::all) const noexcept;
 
   private:
     ForecastConfig config_;

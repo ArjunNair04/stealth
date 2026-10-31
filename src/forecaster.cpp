@@ -150,4 +150,114 @@ Error ForecastModel::forward(std::span<const float> input, std::size_t tokens,
               output.begin());
     return Error::ok;
 }
+namespace {
+std::size_t checked_batch(std::size_t batch) {
+    if (batch == 0)
+        throw std::invalid_argument("Batch capacity must be positive");
+    if (batch > 1024)
+        throw std::length_error("Batch capacity exceeded");
+    return batch;
+}
+constexpr std::size_t forecast_batch_rows = 32;
+} // namespace
+ForecastBatchWorkspace::ForecastBatchWorkspace(ForecastConfig c, std::size_t batch_capacity)
+    : config_(checked(c)), capacity_(checked_batch(batch_capacity)),
+      tile_(std::min(std::size_t{4}, capacity_)),
+      storage_(2 * tile_ * c.context * c.width + capacity_ * c.context +
+               forecast_batch_rows * (c.features + 2 * c.width + 1)),
+      block_(c.context, c.width, c.heads, c.hidden, tile_) {}
+std::size_t ForecastBatchWorkspace::bytes() const noexcept {
+    return storage_.size() * sizeof(float) + block_.bytes();
+}
+Error ForecastModel::forward_batch(std::span<const float> input, std::size_t batch,
+                                   std::size_t tokens, std::span<float> output,
+                                   ForecastBatchWorkspace &ws, SequenceOutput mode) const noexcept {
+    const auto c = config_;
+    if (scaler_.size() != 2 * c.features || final_norm_.size() != 2 * c.width ||
+        positions_.size() != c.context * c.width || ws.storage_.size() == 0)
+        return Error::invalid_state;
+    if ((mode != SequenceOutput::all && mode != SequenceOutput::last) || batch == 0 ||
+        batch > ws.capacity_ || tokens == 0 || tokens > c.context || ws.config_ != c ||
+        input.size() > max_elements || input.size() != batch * tokens * c.features)
+        return Error::shape_mismatch;
+    const auto out_tokens = mode == SequenceOutput::last ? std::size_t{1} : tokens;
+    if (output.size() != batch * out_tokens)
+        return Error::shape_mismatch;
+    if (sequence_detail::overlaps(input, output))
+        return Error::aliasing;
+    if (!sequence_detail::finite(input))
+        return Error::non_finite;
+    const auto capacity = ws.tile_ * c.context * c.width;
+    auto storage = ws.storage_.span();
+    auto embedded = storage.first(capacity);
+    auto transformed = storage.subspan(capacity, capacity);
+    auto candidate = storage.subspan(2 * capacity, batch * out_tokens);
+    const auto offset = 2 * capacity + ws.capacity_ * c.context;
+    auto features = storage.subspan(offset, forecast_batch_rows * c.features);
+    auto normalized =
+        storage.subspan(offset + forecast_batch_rows * c.features, forecast_batch_rows * c.width);
+    auto scratch = storage.subspan(offset + forecast_batch_rows * (c.features + c.width),
+                                   forecast_batch_rows * c.width);
+    auto readout = storage.subspan(offset + forecast_batch_rows * (c.features + 2 * c.width),
+                                   forecast_batch_rows);
+    const auto means = scaler_.span().first(c.features),
+               scales = scaler_.span().subspan(c.features);
+    for (std::size_t b = 0; b < batch; b += ws.tile_) {
+        const auto windows = std::min(ws.tile_, batch - b);
+        for (std::size_t t = 0; t < windows * tokens; t += forecast_batch_rows) {
+            const auto rows = std::min(forecast_batch_rows, windows * tokens - t);
+            for (std::size_t r = 0; r < rows; ++r)
+                for (std::size_t j = 0; j < c.features; ++j)
+                    if (!sequence_detail::checked_float(
+                            (static_cast<double>(input[(b * tokens + t + r) * c.features + j]) -
+                             means[j]) /
+                                scales[j],
+                            features[r * c.features + j]))
+                        return Error::numerical_error;
+            auto embedding = embedded.subspan(t * c.width, rows * c.width);
+            const auto status =
+                input_.forward_rows(features.first(rows * c.features), rows, embedding, scratch);
+            if (status != Error::ok)
+                return status;
+            for (std::size_t r = 0; r < rows; ++r)
+                for (std::size_t j = 0; j < c.width; ++j)
+                    if (!sequence_detail::checked_float(
+                            static_cast<double>(embedding[r * c.width + j]) +
+                                positions_.span()[((t + r) % tokens) * c.width + j],
+                            embedding[r * c.width + j]))
+                        return Error::numerical_error;
+        }
+        auto status = block_.forward_batch(
+            embedded.first(windows * tokens * c.width), windows, tokens,
+            transformed.first(windows * out_tokens * c.width), ws.block_, mode);
+        if (status != Error::ok)
+            return status;
+        for (std::size_t t = 0; t < windows * out_tokens; t += forecast_batch_rows) {
+            const auto rows = std::min(forecast_batch_rows, windows * out_tokens - t);
+            status = layer_norm_rows(transformed.subspan(t * c.width, rows * c.width), rows,
+                                     final_norm_.span().first(c.width),
+                                     final_norm_.span().subspan(c.width), c.epsilon,
+                                     normalized.first(rows * c.width), scratch);
+            if (status != Error::ok)
+                return status;
+            status = head_.forward_rows(normalized.first(rows * c.width), rows, readout.first(rows),
+                                        scratch);
+            if (status != Error::ok)
+                return status;
+            for (std::size_t r = 0; r < rows; ++r) {
+                const auto origin =
+                    b * tokens + (mode == SequenceOutput::last ? (t + r + 1) * tokens - 1 : t + r);
+                const auto anchor = c.output == ForecastOutput::correction
+                                        ? input[origin * c.features + c.target]
+                                        : means[c.target];
+                if (!sequence_detail::checked_float(
+                        static_cast<double>(readout[r]) * scales[c.target] + anchor,
+                        candidate[b * out_tokens + t + r]))
+                    return Error::numerical_error;
+            }
+        }
+    }
+    std::copy(candidate.begin(), candidate.end(), output.begin());
+    return Error::ok;
+}
 } // namespace stealth::numeric

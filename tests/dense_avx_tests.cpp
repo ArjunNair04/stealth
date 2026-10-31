@@ -24,7 +24,8 @@ int main() {
                         packed[(o / 8) * inputs * 8 + i * 8 + o % 8] = weights[o * inputs + i];
                 Dense reference(inputs, outputs, weights, bias, DenseKernel::reference);
                 Dense automatic(inputs, outputs, weights, bias);
-                for (std::size_t rows : {1U, 2U, 3U, 4U, 5U, 7U, 8U, 9U}) {
+                for (std::size_t rows :
+                     {1U, 2U, 3U, 4U, 5U, 7U, 8U, 9U, 12U, 15U, 16U, 17U, 32U, 33U}) {
                     // Offset all caller buffers by one float: no alignment requirement.
                     std::vector<float> x(1 + rows * inputs), y(2 + rows * outputs, 123.0F),
                         expected(rows * outputs), scratch(rows * outputs), actual(rows * outputs);
@@ -52,7 +53,7 @@ int main() {
             }
         // A fused multiply/add would produce -2^-46 rather than exact zero.
         // This hand case guards the arithmetic contract without a second kernel.
-        for (std::size_t rows : {1U, 4U, 5U}) {
+        for (std::size_t rows : {1U, 4U, 5U, 8U, 9U, 32U}) {
             constexpr std::size_t inputs = 64, outputs = 17;
             std::vector<float> w(inputs * outputs, 0.0F), bias(outputs, -1.0F),
                 x(rows * inputs, 0.0F), y(rows * outputs, 123.0F), scratch(y.size());

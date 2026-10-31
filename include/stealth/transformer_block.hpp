@@ -12,14 +12,14 @@ struct TransformerParameters {
 class TransformerWorkspace {
   public:
     TransformerWorkspace(std::size_t capacity, std::size_t width, std::size_t heads,
-                         std::size_t hidden);
+                         std::size_t hidden, std::size_t batch_capacity = 1);
     [[nodiscard]] std::size_t bytes() const noexcept {
         return storage_.size() * sizeof(float) + attention_.bytes() + feed_forward_.bytes();
     }
 
   private:
     friend class TransformerBlock;
-    std::size_t capacity_, width_, heads_, hidden_;
+    std::size_t capacity_, width_, heads_, hidden_, batch_capacity_;
     AlignedBuffer storage_;
     AttentionWorkspace attention_;
     FeedForwardWorkspace feed_forward_;
@@ -33,6 +33,12 @@ class TransformerBlock {
     [[nodiscard]] Error forward(std::span<const float> input, std::size_t tokens,
                                 std::span<float> output, TransformerWorkspace &workspace,
                                 SequenceOutput mode = SequenceOutput::all) const noexcept;
+    // Independent contiguous [batch,tokens,width] sequences. Attention never
+    // crosses a sequence boundary; publication waits for the complete batch.
+    [[nodiscard]] Error forward_batch(std::span<const float> input, std::size_t batch,
+                                      std::size_t tokens, std::span<float> output,
+                                      TransformerWorkspace &workspace,
+                                      SequenceOutput mode = SequenceOutput::all) const noexcept;
     [[nodiscard]] std::size_t parameter_bytes() const noexcept;
 
   private:

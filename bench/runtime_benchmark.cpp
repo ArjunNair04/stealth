@@ -96,9 +96,11 @@ int main(int argc, char **argv) {
             if (i + 1 >= argc || !args.emplace(argv[i], argv[i + 1]).second)
                 throw std::runtime_error("Expected unique option/value pairs");
         }
-        if (args.size() != (args.contains("--output") ? 7U : 6U) || !args.contains("--model") ||
-            !args.contains("--input") || !args.contains("--expected") ||
-            !args.contains("--batch") || !args.contains("--samples") || !args.contains("--warmup"))
+        if (args.size() != 6U + (args.contains("--output") ? 1U : 0U) +
+                               (args.contains("--batch-execution") ? 1U : 0U) ||
+            !args.contains("--model") || !args.contains("--input") ||
+            !args.contains("--expected") || !args.contains("--batch") ||
+            !args.contains("--samples") || !args.contains("--warmup"))
             throw std::runtime_error(
                 "Required: --model --input --expected --batch --samples --warmup");
         const auto batch = number(args.at("--batch"), 1024),
@@ -108,10 +110,19 @@ int main(int argc, char **argv) {
         if (output_mode != "all" && output_mode != "last")
             throw std::runtime_error("Output must be all or last");
         const auto mode = output_mode == "last" ? SequenceOutput::last : SequenceOutput::all;
+        const auto batch_execution =
+            args.contains("--batch-execution") ? args.at("--batch-execution") : "tiled";
+        if (batch_execution != "tiled" && batch_execution != "serial")
+            throw std::runtime_error("Batch execution must be tiled or serial");
         const auto setup_begin = Clock::now();
         const auto model = load_forecaster_file(args.at("--model"));
         const auto c = model->config();
-        ForecastWorkspace workspace(c);
+        std::unique_ptr<ForecastWorkspace> workspace;
+        std::unique_ptr<ForecastBatchWorkspace> batch_workspace;
+        if (batch == 1 || batch_execution == "serial")
+            workspace = std::make_unique<ForecastWorkspace>(c);
+        else
+            batch_workspace = std::make_unique<ForecastBatchWorkspace>(c, batch);
         const auto bytes = read(args.at("--input"));
         const std::string magic("STLBN01\0", 8);
         if (bytes.size() < 20 || !std::equal(magic.begin(), magic.end(), bytes.begin()))
@@ -132,10 +143,16 @@ int main(int argc, char **argv) {
         const std::span<float> outputs(output);
         const auto groups = windows / batch;
         const auto forward = [&](std::size_t group) {
+            if (batch_workspace) {
+                check(model->forward_batch(
+                    inputs.subspan(group * batch * tokens * features, batch * tokens * features),
+                    batch, tokens, outputs, *batch_workspace, mode));
+                return;
+            }
             for (std::size_t j = 0; j < batch; ++j)
                 check(model->forward(
                     inputs.subspan((group * batch + j) * tokens * features, tokens * features),
-                    tokens, outputs.subspan(j * output_tokens, output_tokens), workspace, mode));
+                    tokens, outputs.subspan(j * output_tokens, output_tokens), *workspace, mode));
         };
         const auto first_begin = Clock::now();
         forward(0);
@@ -176,8 +193,10 @@ int main(int argc, char **argv) {
                   << ",\"first_call_ns\":" << first_call_ns
                   << ",\"max_abs_difference\":" << max_difference << ",\"checksum\":" << checksum
                   << ",\"parameter_bytes\":" << model->parameter_bytes()
-                  << ",\"position_bytes\":" << model->position_bytes()
-                  << ",\"workspace_bytes\":" << workspace.bytes()
+                  << ",\"position_bytes\":" << model->position_bytes() << ",\"batch_execution\":\""
+                  << batch_execution << "\""
+                  << ",\"workspace_bytes\":"
+                  << (workspace ? workspace->bytes() : batch_workspace->bytes())
                   << ",\"peak_rss_bytes\":{\"baseline\":";
         emit_rss(baseline_rss);
         std::cout << ",\"setup\":";

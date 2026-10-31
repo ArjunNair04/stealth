@@ -1,6 +1,8 @@
 """Installed extension tests; expected answers use independent equations."""
 import concurrent.futures
 import gc
+import json
+import subprocess
 import math
 from pathlib import Path
 import sys
@@ -149,6 +151,46 @@ class Models(unittest.TestCase):
         with self.assertRaises(ValueError):session.predict_last(broken)
         self.assertEqual(session.predict_last(self.x),float(full[-1]))
         np.testing.assert_array_equal(session.predict(self.x),full)
+
+    def test_batched_tiles_reuse_independence_and_failure_recovery(self):
+        session = self.m.session()
+        original_bytes = session.workspace_bytes
+        for count in (1, 3, 4, 5, 8, 17, 1025, 2):
+            batch = np.stack([self.x + np.float32(i % 11) / 8 for i in range(count)])
+            expected = np.stack([session.predict(x) for x in batch])
+            np.testing.assert_array_equal(session.predict_batch(batch), expected)
+            np.testing.assert_array_equal(session.predict_last_batch(batch), expected[:, -1])
+            if count > 1:
+                self.assertGreater(session.workspace_bytes, original_bytes)
+            before = session.workspace_bytes
+            broken = batch.copy(); broken[-1, -1, -1] = np.nan
+            with self.assertRaises(ValueError): session.predict_last_batch(broken)
+            self.assertFalse(session.busy)
+            self.assertEqual(session.workspace_bytes, before)
+            np.testing.assert_array_equal(session.predict_last_batch(batch), expected[:, -1])
+        # Single-window path remains usable after a large batch/failure.
+        np.testing.assert_allclose(session.predict(self.x), self.y, atol=5e-5, rtol=2e-4)
+
+    def test_runtime_worker_reports_materialized_batch_workspace(self):
+        import runtime_common
+        root=Path(__file__).resolve().parents[2]
+        batch=np.stack([self.x,self.x])
+        session=self.m.session();before=session.workspace_bytes
+        session.predict_last_batch(batch);after=session.workspace_bytes
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder)
+            (path/'model').write_bytes(self.artifact)
+            (path/'input').write_bytes(runtime_common.input_bytes(batch.reshape(-1).tolist(),2,5,7))
+            (path/'expected').write_bytes(np.tile(self.y,2).astype('<f4').tobytes())
+            proc=subprocess.run([sys.executable,str(root/'tools/runtime_worker.py'),
+                '--engine','native_python','--model',str(path/'model'),'--input',str(path/'input'),
+                '--expected',str(path/'expected'),'--batch','2','--samples','2','--warmup','1','--output','last'],
+                capture_output=True,text=True)
+            self.assertEqual(proc.returncode,0,proc.stderr)
+            result=json.loads(proc.stdout)
+            self.assertEqual(result['workspace_bytes_before_first_call'],before)
+            self.assertEqual(result['workspace_bytes'],after)
+            self.assertGreater(after,before)
 
     def test_readonly_configuration(self):
         with self.assertRaises(AttributeError): self.c.width = 16
