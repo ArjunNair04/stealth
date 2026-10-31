@@ -38,7 +38,7 @@ is not promised during the initial 0.x research phase.
 
 The optional pybind11/scikit-build-core package `stealth_cpu` is implemented.
 Its native-only CMake default remains OFF. It exposes components, owned forecast
-sessions, bounded sequential batching and raw-window streams. Strict float32
+sessions, bounded native batching and raw-window streams. Strict float32
 buffer validation, explicit copies and result ownership keep Python lifetimes
 separate from native workspaces. Separate sessions share immutable models and
 release the GIL during inference; concurrent reuse of one session is rejected.

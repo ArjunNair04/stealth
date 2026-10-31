@@ -1,0 +1,53 @@
+{
+  "baseline_commit": "e062846",
+  "purpose": "Group independent windows without changing model arithmetic or attention boundaries",
+  "primary": "latest forecast batch 8",
+  "acceptance": {
+    "bitwise_native_parity": true,
+    "torch_tolerances_unchanged": true,
+    "no_native_hot_allocations": true,
+    "batch8_p50_reduction_min": 0.05,
+    "batch1_p50_regression_max": 0.05,
+    "paired_median_p99_regression_max": 0.1
+  },
+  "models": [
+    7,
+    19,
+    43
+  ],
+  "validation_windows": 32,
+  "batches": [
+    1,
+    2,
+    4,
+    8,
+    16
+  ],
+  "trials": 3,
+  "samples": {
+    "1": 1000,
+    "2": 500,
+    "4": 300,
+    "8": 200,
+    "16": 100
+  },
+  "warmup": 64,
+  "notes": [
+    "Timing runs serially after validation, with alternating or rotating order.",
+    "Local development timings select implementation; fresh same-host Beaker comparisons provide Linux evidence.",
+    "Native before/after plus eager Torch 2.6; no claim about current compiled runtime frontier.",
+    "Full output and irregular shapes are correctness gates; full-output performance is secondary."
+  ],
+  "candidate_commit": "67e6399e9a8a041044969a39062ebd8d092de5b1",
+  "baseline_binary_sha256": "66bcbc26c5112e4780fb1e82a3cc6e049523fb639fba9d620e7807862b8e6723",
+  "baseline_native_source_commit": "a65ba9f229e360cfea92b70438c98c89e19a5416",
+  "engines": [
+    "baseline",
+    "candidate",
+    "native_python",
+    "torch_standard"
+  ],
+  "threads": 1,
+  "output": "last",
+  "scope": "Saved ETTm1 validation inputs; shared CPU node; no new training, alpha, current compiler/runtime frontier or production claim."
+}

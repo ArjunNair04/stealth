@@ -1,0 +1,44 @@
+{
+  "baseline": {
+    "samples": 3328,
+    "counts": {
+      "dense": 1648,
+      "attention_including_softmax": 430,
+      "softmax_subset": 160,
+      "gelu": 139,
+      "layer_norm": 674,
+      "residual_add": 6,
+      "other": 431
+    },
+    "percent": {
+      "dense": 49.51923076923077,
+      "attention_including_softmax": 12.920673076923077,
+      "softmax_subset": 4.8076923076923075,
+      "gelu": 4.1766826923076925,
+      "layer_norm": 20.252403846153847,
+      "residual_add": 0.18028846153846154,
+      "other": 12.950721153846153
+    }
+  },
+  "candidate": {
+    "samples": 3327,
+    "counts": {
+      "dense": 1709,
+      "attention_including_softmax": 501,
+      "softmax_subset": 171,
+      "gelu": 121,
+      "layer_norm": 426,
+      "residual_add": 9,
+      "other": 561
+    },
+    "percent": {
+      "dense": 51.36759843703036,
+      "attention_including_softmax": 15.058611361587015,
+      "softmax_subset": 5.139765554553652,
+      "gelu": 3.6369101292455666,
+      "layer_norm": 12.804328223624887,
+      "residual_add": 0.27051397655545534,
+      "other": 16.86203787195672
+    }
+  }
+}

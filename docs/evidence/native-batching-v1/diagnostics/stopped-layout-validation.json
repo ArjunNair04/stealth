@@ -1,0 +1,36 @@
+{
+  "status": "stopped_before_timing",
+  "source_commit": "c5f4374ff1c1d17d13e3f02a9b108edb2caffd0e",
+  "failure": "Sizing integration expects build/release/stealth_runtime_bench; the continuation reused the native binary from another path.",
+  "training": {
+    "ran": 117,
+    "failed": 1,
+    "skipped": 3
+  },
+  "readiness_repair_passed": true,
+  "repair": "Place a hash-verified copy of the same binary at the conventional path; no source or binary changes.",
+  "preserved_log_sha256": {
+    "training-tests.log": "28115f75a1caf759c2ac260d5299b6cea7afaecf00abd6c3969105e704ff6a3b",
+    "portable-test.log": "053b52a8a3d1a032cfea1793731fce9fc24c84aec9bb67af6c9db94dd249111f",
+    "offline-tests.log": "6548ee31e5e48b9ad56860a34103abbc2d009a3ce16591dbfa42cdda39b459cd",
+    "inherited-native-validation.json": "794c01273cedc5921a8985ffc661057613fbba9eb515faf9dabd83c7da5789c5",
+    "release-configure.log": "797dd374a6116f432b2e4a3bc83a6ae196a267df1a1884b25d8358b5e93e4962",
+    "portable-configure.log": "29dfc4d2069825d4d5e32031a9137566e8286a1ba5025b43e85cf50b6fd6e43d",
+    "sanitize-test.log": "ca957c458f77a0a50d506fd3b9b32b959ce446603e41926fe6a393212a4afe0e",
+    "identity.log": "1303b54eae6994325189c3256a46ff67d487e5fc951a669af3d3dc4b60806b59",
+    "dev-configure.log": "4cb021b67acc068ea42b8a5606745dc1621e24622072ccf6fd0c55cbc3632c2a",
+    "steps.json": "a91ddd827a5433588d4199114e55d6295c210d95ea44776306e9da6da4d191b2",
+    "release-build.log": "e35fee287beadef30e75e78872610890da2556bdb025619f90fac6857cb746fb",
+    "portable-build.log": "318f9698cd8573c5fe791e6ac5d62a46d3424d5ab44224325c6a578c88557179",
+    "sanitize-configure.log": "efdec057994cdbfe29bc7a6bfa41b7b9bd43c7e6db73e5aa9836cf000ee3455a",
+    "dev-test.log": "deb40c9e39b7952ebd294822732fc1d74f755a9a5e49b269c3efab4372bf3bdd",
+    "failed.json": "48ee71fa7fac8669c9e4c5ad2b5482d60dfa763bf4724d2bfdc1438904049d68",
+    "release-test.log": "0a423dc0a4f195b52c94d4bfd3bcdc69dbb29d73d2027b5cfd076f4a6d0b7eb4",
+    "python-environment.log": "bdbf255ee497e70466971829c10d3e95f5eec404d7ec1f868bb290b3173e522f",
+    "dev-build.log": "4cd00f945f760dc57b179be4e85d2d586c15692d404b993792a672002dd9e4eb",
+    "environment.json": "7968f0094057e8a1c6ba02af7dcbb6a9a6efa6f63bdb2a7378e75a95f734b2c2",
+    "sanitize-build.log": "4cd00f945f760dc57b179be4e85d2d586c15692d404b993792a672002dd9e4eb",
+    "toolchain.log": "9ba854b2c12331f625ac10c4871837b51e34fa66181ca5d49fe04140160b01fe",
+    "wrapper-tests.log": "39dd054aac222df626fd9e3bbbbead7c38be1b4d94049168d259e776f06ab5fa"
+  }
+}

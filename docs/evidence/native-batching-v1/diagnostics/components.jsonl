@@ -1,0 +1,7 @@
+{"stage":"embed 1 to 32","before_ns":14133,"after_ns":8004}
+{"stage":"qkv 4 to 32","before_ns":71987,"after_ns":71732}
+{"stage":"qkv 4 to 8","before_ns":72085,"after_ns":71739}
+{"stage":"project 1 to 4","before_ns":2397,"after_ns":1416}
+{"stage":"head 1 to 4","before_ns":2119,"after_ns":1687}
+{"stage":"norm 1 to 32","before_ns":42596,"after_ns":26969}
+{"stage":"MLP 1 to 4","before_ns":65316,"after_ns":61363}

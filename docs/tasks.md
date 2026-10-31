@@ -1,10 +1,14 @@
 # Active work queue
 
 [Direction and exit gates](direction.md) define the shortest path to a trustworthy
-mixed-frequency prediction pipeline. The [Beaker Linux validation](beaker-linux-v1.md)
-now passes native, sanitizer, Python and training/reference gates. A scheduled,
-CPU-pinned comparison beats eager Torch 2.6 at batch one and loses at batch eight.
-The current compiled/ONNX comparison remains open; Linux access itself is resolved.
+mixed-frequency prediction pipeline. The [native batching study](native-batching-v1.md)
+passes the matched Linux performance gate with 11.84% lower batch-eight
+p50, unchanged arithmetic and bounded transactional workspace. Its report preserves
+the rejected candidate, assembly diagnosis, startup-test repair and all raw timings.
+The [Beaker compatibility checks](beaker-linux-v1.md) and current native/Python tests
+pass. Current compiled/ONNX timing, sustained serving and broader shapes remain open.
+Linux access itself is resolved. The next performance comparison should complete
+the existing current-runtime admission/timing harness before another kernel change.
 The user expects minute bars alongside daily, weekly and potentially monthly
 factors. Exact sources, freshness thresholds and prediction targets remain open.
 
