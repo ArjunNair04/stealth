@@ -128,7 +128,7 @@ void shapes() {
             ForecastWorkspace serial(c);
             ForecastBatchWorkspace ws(c, 8);
             for (std::size_t batch : {2U, 5U, 8U})
-                for (std::size_t tokens : {1U, 7U, 33U})
+                for (std::size_t tokens : {1U, 7U, 31U, 33U})
                     for (auto mode : {SequenceOutput::all, SequenceOutput::last}) {
                         std::vector<float> input(batch * tokens * c.features);
                         for (std::size_t i = 0; i < input.size(); ++i)

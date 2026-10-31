@@ -219,13 +219,19 @@ Error ForecastModel::forward_batch(std::span<const float> input, std::size_t bat
                 input_.forward_rows(features.first(rows * c.features), rows, embedding, scratch);
             if (status != Error::ok)
                 return status;
-            for (std::size_t r = 0; r < rows; ++r)
+            // Position depends on the row, never the channel. GCC 11 otherwise
+            // emitted a 64-bit divide per channel in the nested expression.
+            auto position = t % tokens;
+            for (std::size_t r = 0; r < rows; ++r) {
+                auto row = embedding.subspan(r * c.width, c.width);
+                const auto positional = positions_.span().subspan(position * c.width, c.width);
                 for (std::size_t j = 0; j < c.width; ++j)
-                    if (!sequence_detail::checked_float(
-                            static_cast<double>(embedding[r * c.width + j]) +
-                                positions_.span()[((t + r) % tokens) * c.width + j],
-                            embedding[r * c.width + j]))
+                    if (!sequence_detail::checked_float(static_cast<double>(row[j]) + positional[j],
+                                                        row[j]))
                         return Error::numerical_error;
+                if (++position == tokens)
+                    position = 0;
+            }
         }
         auto status = block_.forward_batch(
             embedded.first(windows * tokens * c.width), windows, tokens,
