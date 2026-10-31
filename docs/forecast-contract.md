@@ -126,3 +126,31 @@ include all seeds, baseline comparisons, trained parity and restart evidence.
 The optional correction output has a distinct version-2 file contract; see
 [the correction model](correction-model-v1.md). Version-1 equations and exports
 remain unchanged.
+
+
+## Independent window batches
+
+`ForecastModel::forward_batch` accepts contiguous `[batch,tokens,features]`
+input and returns `[batch,tokens]` or `[batch]` for latest-only output. Each window
+restarts position zero and attends only within itself. A `ForecastBatchWorkspace`
+is constructed with the exact model configuration and a positive capacity up to
+1024 windows. Calls may use any smaller positive batch; normal feature/context
+limits and the 16,777,216-element input limit still apply.
+
+The workspace stages all output before publication. Invalid shapes, overlapping
+input/output, nonfinite input, arithmetic overflow and moved-from workspace
+errors leave caller output unchanged, including a failure in the last tile.
+Successful and failing native calls allocate no heap memory. One caller owns a
+workspace at a time; immutable model weights may be shared across workspaces.
+
+Activation storage covers at most four windows and matrix/normalization row
+scratch covers at most 32 rows. Output staging grows with declared batch capacity
+and context. `bytes()` reports all owned native workspace buffers, excluding
+inputs, outputs, object/allocator overhead and executable code.
+
+The Python session uses the same native API, caches scratch lazily and grows it
+only when required. Existing batches larger than 1024 are split into bounded
+calls; an exception discards the unpublished Python output. `workspace_bytes`
+includes cached batch scratch. Python continues to allocate owned output and
+snapshot mutable NumPy inputs before releasing the GIL. Its single-window calls
+retain the original execution path.

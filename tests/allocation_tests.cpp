@@ -3,9 +3,9 @@
 #include "fixtures/forecast.hpp"
 #include "stealth/feed_forward.hpp"
 #include "stealth/model_file.hpp"
+#include "stealth/signal_index.hpp"
 #include "stealth/transformer_block.hpp"
 #include "stealth/window_stream.hpp"
-#include "stealth/signal_index.hpp"
 #include "test_support.hpp"
 
 #include <array>
@@ -212,6 +212,56 @@ int main() {
             test::near(point[0], ff::expected.back(), 5e-5, 2e-4);
         }
 
+        {
+            auto model = load_forecaster(std::as_bytes(std::span(ff::artifact)));
+            ForecastBatchWorkspace ws(model->config(), 5);
+            std::array<float, 5 * ff::input.size()> inputs{};
+            std::array<float, 5 * ff::tokens> outputs{};
+            for (std::size_t b = 0; b < 5; ++b)
+                std::copy(ff::input.begin(), ff::input.end(),
+                          inputs.begin() + static_cast<std::ptrdiff_t>(b * ff::input.size()));
+            allocations = 0;
+            tracking = true;
+            bool failed = false;
+            for (int i = 0; i < 100; ++i) {
+                if (model->forward_batch(inputs, 5, ff::tokens, outputs, ws) != Error::ok ||
+                    model->forward_batch(inputs, 5, ff::tokens, std::span(outputs).first(5), ws,
+                                         SequenceOutput::last) != Error::ok ||
+                    model->forward_batch(inputs, 0, ff::tokens, outputs, ws) !=
+                        Error::shape_mismatch)
+                    failed = true;
+                const auto saved = inputs.back();
+                inputs.back() = std::numeric_limits<float>::infinity();
+                if (model->forward_batch(inputs, 5, ff::tokens, outputs, ws) != Error::non_finite)
+                    failed = true;
+                inputs.back() = saved;
+            }
+            tracking = false;
+            CHECK(!failed);
+            CHECK(allocations == 0);
+            allocations = 0;
+            tracking = true;
+            auto candidate = std::make_unique<ForecastBatchWorkspace>(model->config(), 5);
+            tracking = false;
+            const auto cold = allocations;
+            candidate.reset();
+            CHECK(cold > 1);
+            for (std::size_t i = 0; i < cold; ++i) {
+                fail_index = i;
+                attempt = 0;
+                inject_failure = true;
+                bool caught = false;
+                try {
+                    candidate = std::make_unique<ForecastBatchWorkspace>(model->config(), 5);
+                } catch (const std::bad_alloc &) {
+                    caught = true;
+                }
+                inject_failure = false;
+                CHECK(caught);
+                CHECK(!candidate);
+                CHECK(model->forward_batch(inputs, 5, ff::tokens, outputs, ws) == Error::ok);
+            }
+        }
         for (auto kernel : {DenseKernel::reference, DenseKernel::packed}) {
             auto model = load_forecaster(std::as_bytes(std::span(ff::artifact)), kernel);
             ForecastWorkspace workspace(model->config());
@@ -317,9 +367,9 @@ int main() {
         {
             using namespace stealth::temporal;
             const std::array<SignalLimits, 2> limits{{{100, 100}, {200, 200}}};
-            const std::array<SignalRecord, 3> records{{
-                {0, 1, 0, 0, 0, 1, 2.0}, {0, 1, 1, 0, 10, 20, std::nullopt},
-                {1, 1, 0, 0, 0, 2, 3.0}}};
+            const std::array<SignalRecord, 3> records{{{0, 1, 0, 0, 0, 1, 2.0},
+                                                       {0, 1, 1, 0, 10, 20, std::nullopt},
+                                                       {1, 1, 0, 0, 0, 2, 3.0}}};
             const SignalIndex index(limits, records);
             std::array<SignalFeature, 2> out;
             allocations = 0;

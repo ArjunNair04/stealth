@@ -1,0 +1,20 @@
+[
+  {
+    "mutation": "cross_window_query",
+    "compile_returncode": 0,
+    "test_returncode": 8,
+    "caught": true
+  },
+  {
+    "mutation": "partial_batch_publication",
+    "compile_returncode": 0,
+    "test_returncode": 8,
+    "caught": true
+  },
+  {
+    "mutation": "wrong_norm_mean",
+    "compile_returncode": 0,
+    "test_returncode": 8,
+    "caught": true
+  }
+]

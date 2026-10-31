@@ -55,7 +55,7 @@ rows = np.asarray(your_observations, dtype=np.float32, order="C")
 trace = session.predict(rows)
 forecast = trace[-1]
 
-# Each member is an independent sequence; this API evaluates members sequentially.
+# Each member is independent; current versions group native work across members.
 batch_trace = session.predict_batch(np.stack([rows, rows]))
 
 stream = model.window_stream()

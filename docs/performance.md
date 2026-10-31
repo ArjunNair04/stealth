@@ -1,5 +1,12 @@
 # How the first latency improvements work
 
+The [native batching study](native-batching-v1.md) is the current execution update:
+11.84% lower paired batch-eight p50 on its matched Linux comparison.
+Grouping row operations and removing repeated position division preserve arithmetic
+and failure behavior. Native batch-eight median p50 is 7.2% faster than eager Torch
+2.6 in that run. Scratch increases; the report retains failed candidates, raw
+observations and assembly. The earlier measurements below remain historical.
+
 The [Beaker Linux run](beaker-linux-v1.md) validates the unchanged core and records
 206.972 µs native versus 502.962 µs eager Torch 2.6 for single ETTm1 forecasts.
 Torch wins for eight-item batches. The forced portable build takes 504.698 µs

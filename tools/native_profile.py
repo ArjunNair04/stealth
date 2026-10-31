@@ -20,7 +20,7 @@ def summarize_profile(text):
     needles=dict(dense=('Dense::forward(', 'Dense::forward_rows('),
                  attention_including_softmax=('::causal_attention(',),
                  softmax_subset=('::softmax(',),gelu=('::gelu(',),
-                 layer_norm=('::layer_norm(',),residual_add=('::residual_add(',))
+                 layer_norm=('::layer_norm(', '::layer_norm_rows('),residual_add=('::residual_add(',))
     counts={k:0 for k in needles};ancestors=[]
     for line in graph.splitlines():
         match=re.match(r'^([ +!:|]*)(\d+) (.+?)  \(in ',line)

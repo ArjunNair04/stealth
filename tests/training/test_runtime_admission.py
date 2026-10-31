@@ -1,11 +1,14 @@
 """Immutable input capture, all-window parity and preserved admission failures."""
 import os
+import select
+import signal
+import subprocess
 from pathlib import Path
 import struct
 import sys
 import tempfile
-import time
 import unittest
+from unittest.mock import patch
 import numpy as np
 import torch
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'tools'))
@@ -59,16 +62,44 @@ class Admission(unittest.TestCase):
     def test_process_group_timeout(self):
         with tempfile.TemporaryDirectory() as tmp:
             p=Path(tmp)
-            marker=p/'orphan-finished'
-            grandchild=f"import time; from pathlib import Path; time.sleep(.5); Path({str(marker)!r}).write_text('alive')"
-            child=f"import subprocess,sys,time; subprocess.Popen([sys.executable,'-c',{grandchild!r}]); print('started',flush=True); time.sleep(5)"
-            result=supervise([sys.executable,'-c',child],
-                              p,timeout=.2,env=os.environ.copy())
-            self.assertTrue(result['timed_out'])
-            self.assertNotEqual(result['returncode'],0)
-            self.assertIn('started',(p/'stdout.log').read_text())
-            time.sleep(.5)
-            self.assertFalse(marker.exists(),'compiler descendant survived its process-group timeout')
+            read_fd,write_fd=os.pipe()
+            original_popen=subprocess.Popen
+            process=None
+            write_open=True
+            # The descendant signals readiness and keeps the pipe open. EOF after
+            # expiry proves that it died; there is no guessed startup/sleep window.
+            grandchild=f"import os,time; os.write({write_fd},b'R'); time.sleep(60)"
+            child=(f"import os,subprocess,sys,time; print('started',flush=True); "
+                   f"subprocess.Popen([sys.executable,'-c',{grandchild!r}],pass_fds=({write_fd},)); "
+                   f"os.close({write_fd}); time.sleep(60)")
+            def ready_popen(*args,**kwargs):
+                nonlocal process,write_open
+                process=original_popen(*args,**kwargs,pass_fds=(write_fd,))
+                os.close(write_fd)
+                write_open=False
+                self.assertTrue(select.select([read_fd],[],[],10)[0],
+                                'descendant did not become ready')
+                self.assertEqual(os.read(read_fd,1),b'R')
+                return process
+            try:
+                # Isolate process-group cleanup from Python startup on slow NFS.
+                # The separate .001-second test still covers startup timeout.
+                with patch('admit_runtime.subprocess.Popen',side_effect=ready_popen):
+                    result=supervise([sys.executable,'-c',child],p,timeout=.2,
+                                     env=os.environ.copy())
+                self.assertTrue(result['timed_out'])
+                self.assertNotEqual(result['returncode'],0)
+                self.assertIn('started',(p/'stdout.log').read_text())
+                self.assertTrue(select.select([read_fd],[],[],2)[0],
+                                'compiler descendant survived its process-group timeout')
+                self.assertEqual(os.read(read_fd,1),b'')
+            finally:
+                if process is not None:
+                    try:os.killpg(process.pid,signal.SIGKILL)
+                    except ProcessLookupError:pass
+                    process.wait()
+                os.close(read_fd)
+                if write_open:os.close(write_fd)
 
     def test_invalid_arguments_do_not_create_outputs(self):
         with tempfile.TemporaryDirectory() as tmp:

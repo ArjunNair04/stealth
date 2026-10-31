@@ -1,0 +1,204 @@
+{
+  "source_commit": "c5f4374ff1c1d17d13e3f02a9b108edb2caffd0e",
+  "transfer_manifest_sha256": "48df2d4fd2473abae0e156c09e6a13b8b9edf07269ccc01032eaecf0ceaaa515",
+  "transfer_files": {
+    "artifacts/expected-19.bin": "0fc9501064f7ee77d5bae723756f2af88b74619371ab752c0753606a77ae6143",
+    "artifacts/expected-43.bin": "f4c91957e0d3db550ef510d8720b3affcc995f19842d1d5054132a7e4bd64005",
+    "artifacts/expected-7.bin": "89cec65b26ed7b3aa03816daa02a899c6d6823a79a3d106a82ae431b79fdd87f",
+    "artifacts/input.bin": "3ed32af0b79ef537e2f2d9a0fa9afda122335689be2aeabf4add7013e85e3595",
+    "artifacts/model-19.stlf": "237910f530e7c337227f2150da2f78da2518e996ee817c4f40e4ef4a78a1a080",
+    "artifacts/model-43.stlf": "6400f2cb9a94237e8cd0e5a8083fd501c75fb9bfe60a7871675e12ccacdbca6a",
+    "artifacts/model-7.stlf": "48d3433c9be2e2c411a06fdf981a78332d6f34af0767608d6d11ef9ca978e87d",
+    "inherited-native-validation.json": "a322ad238440c0127c99aa9df7ffc84aaad366a5742c8fef33fbdd0d1ae527d5",
+    "profile_torch.py": "631a55030e4ba5e5a69908719d61d957cb085111a350e88fd066ab4a76572954",
+    "protocol.json": "7d8f930d15df9d5f5bf5e440ec29953851033e5517b99fb9cec6a1c490d9718f",
+    "run.sh": "1762f5bbecbf72e536652d63661bfc4f53214e813f65afb15d993463670c6b6f",
+    "run_validation.py": "b6071d93b0ccd9c28e9890eeb1ae50697f2160efdfe711797079e36b00135455",
+    "sanitizer-packages.json": "f2892bba67616b217e40e9f1bfb9671ff53adef22fe7e2c977b052c99d474073",
+    "source.tar.gz": "562fd15ddece5907c3d7b1c72e59d8c35c38f4b0a3f7014783956938eca61968",
+    "toolchain-files.sha256": "ff726eb26ffda4cd5391c736fb1571eb23d0a9f15c5116ebcce350688607348b"
+  },
+  "completion_sha256": "f433c32b3f93d4307959b2075ab59d6cd35893b680673601844bad23b7384bb3",
+  "binaries": {
+    "baseline": "66bcbc26c5112e4780fb1e82a3cc6e049523fb639fba9d620e7807862b8e6723",
+    "candidate": "9fce42125a6459bd007ff7ea61abe25c451e36a6347d577832f276cc2cb03e1c",
+    "portable": "8ee27ebf2f7962db940dcc327a53c2537c61a7d9823ab8ef3c711e8035565641"
+  },
+  "host": {
+    "cpu": "Intel(R) Xeon(R) CPU E3-1240 V2 @ 3.40GHz",
+    "architecture": "x86_64",
+    "os": "CentOS Linux 7",
+    "compiler": "GCC 11.2.1",
+    "cmake": "3.26.4",
+    "ninja": "1.10.0",
+    "python": "3.11.0",
+    "affinity": [
+      0
+    ],
+    "pinned_cpu": 0,
+    "scheduler_slots": 1,
+    "isolation": "shared node; frequency not fixed"
+  },
+  "native_source_commit": "2b19980f0f556d81bb6c4c015830a202a2846450",
+  "native_python": {
+    "numpy": "2.2.6",
+    "build_info": {
+      "version": "0.1.0",
+      "compiler": "GNU 11.2.1",
+      "operating_system": "Linux",
+      "architecture": "x86_64",
+      "configuration": "Release",
+      "source_fingerprint": "2d1acd19ec68fc27873c5d2e17b9356a32b39535b4c0fd078f92e959c0226f87"
+    },
+    "extension_sha256": "304d703f5d0f1b4578a48fcc6ba5681d2f9e4437584453b0b686d8ef32d337be"
+  },
+  "torch": {
+    "numpy": "2.2.6",
+    "torch": "2.6.0+cu124",
+    "torch_build_sha256": "5888bd36c6f53c1d4b1b86d940e121dfa787fb930b1731bde8a0165cdf5b494b",
+    "threads": 1,
+    "interop_threads": 1,
+    "deterministic": true,
+    "inference_mode": true
+  },
+  "validation": {
+    "status": "passed",
+    "counts": {
+      "dev-test": {
+        "passed": 73
+      },
+      "release-test": {
+        "passed": 73
+      },
+      "portable-test": {
+        "passed": 73
+      },
+      "sanitize-test": {
+        "passed": 72
+      },
+      "offline-tests": {
+        "ran": 86,
+        "skipped": 0
+      },
+      "wrapper-tests": {
+        "ran": 36,
+        "skipped": 0
+      },
+      "training-tests": {
+        "ran": 117,
+        "skipped": 3
+      }
+    },
+    "steps": [
+      {
+        "name": "toolchain",
+        "returncode": 0,
+        "wall_seconds": 0.016323533840477467,
+        "log_sha256": "929a13b7870d5113c52bd481a16530d377e5f07b8e51a6089886ebe1148f167a"
+      },
+      {
+        "name": "python-environment",
+        "returncode": 0,
+        "wall_seconds": 1.4177843751385808,
+        "log_sha256": "bdbf255ee497e70466971829c10d3e95f5eec404d7ec1f868bb290b3173e522f"
+      },
+      {
+        "name": "dev-configure",
+        "returncode": 0,
+        "wall_seconds": 2.035780410282314,
+        "log_sha256": "4cb021b67acc068ea42b8a5606745dc1621e24622072ccf6fd0c55cbc3632c2a"
+      },
+      {
+        "name": "dev-build",
+        "returncode": 0,
+        "wall_seconds": 44.64405458047986,
+        "log_sha256": "4cd00f945f760dc57b179be4e85d2d586c15692d404b993792a672002dd9e4eb"
+      },
+      {
+        "name": "dev-test",
+        "returncode": 0,
+        "wall_seconds": 34.55380591657013,
+        "log_sha256": "deb40c9e39b7952ebd294822732fc1d74f755a9a5e49b269c3efab4372bf3bdd"
+      },
+      {
+        "name": "release-configure",
+        "returncode": 0,
+        "wall_seconds": 25.11314747389406,
+        "log_sha256": "797dd374a6116f432b2e4a3bc83a6ae196a267df1a1884b25d8358b5e93e4962"
+      },
+      {
+        "name": "release-build",
+        "returncode": 0,
+        "wall_seconds": 69.58698831219226,
+        "log_sha256": "e35fee287beadef30e75e78872610890da2556bdb025619f90fac6857cb746fb"
+      },
+      {
+        "name": "release-test",
+        "returncode": 0,
+        "wall_seconds": 8.777511759661138,
+        "log_sha256": "0a423dc0a4f195b52c94d4bfd3bcdc69dbb29d73d2027b5cfd076f4a6d0b7eb4"
+      },
+      {
+        "name": "portable-configure",
+        "returncode": 0,
+        "wall_seconds": 1.2673555631190538,
+        "log_sha256": "29dfc4d2069825d4d5e32031a9137566e8286a1ba5025b43e85cf50b6fd6e43d"
+      },
+      {
+        "name": "portable-build",
+        "returncode": 0,
+        "wall_seconds": 50.00461269821972,
+        "log_sha256": "318f9698cd8573c5fe791e6ac5d62a46d3424d5ab44224325c6a578c88557179"
+      },
+      {
+        "name": "portable-test",
+        "returncode": 0,
+        "wall_seconds": 10.180216254666448,
+        "log_sha256": "053b52a8a3d1a032cfea1793731fce9fc24c84aec9bb67af6c9db94dd249111f"
+      },
+      {
+        "name": "sanitize-configure",
+        "returncode": 0,
+        "wall_seconds": 1.719085032120347,
+        "log_sha256": "efdec057994cdbfe29bc7a6bfa41b7b9bd43c7e6db73e5aa9836cf000ee3455a"
+      },
+      {
+        "name": "sanitize-build",
+        "returncode": 0,
+        "wall_seconds": 50.55691651906818,
+        "log_sha256": "4cd00f945f760dc57b179be4e85d2d586c15692d404b993792a672002dd9e4eb"
+      },
+      {
+        "name": "sanitize-test",
+        "returncode": 0,
+        "wall_seconds": 68.8960025375709,
+        "log_sha256": "ca957c458f77a0a50d506fd3b9b32b959ce446603e41926fe6a393212a4afe0e"
+      },
+      {
+        "name": "identity",
+        "returncode": 0,
+        "wall_seconds": 0.11525992304086685,
+        "log_sha256": "1303b54eae6994325189c3256a46ff67d487e5fc951a669af3d3dc4b60806b59"
+      },
+      {
+        "name": "offline-tests",
+        "returncode": 0,
+        "wall_seconds": 1.016848855651915,
+        "log_sha256": "6810004dd7c49f5167277a8a6bb5a7df48b75788e2824b1c8c5a12f7bb1326e4"
+      },
+      {
+        "name": "wrapper-tests",
+        "returncode": 0,
+        "wall_seconds": 1.4892986379563808,
+        "log_sha256": "3a066709b75e80a9cbe5476a1ccfbc349ea45499cfd69bad151a0a6779142c17"
+      },
+      {
+        "name": "training-tests",
+        "returncode": 0,
+        "wall_seconds": 42.43347121682018,
+        "log_sha256": "ead48b1fdb2bc0b998624a05b5786c3e7be3b2179b38499e1cd86a34bc0210be"
+      }
+    ]
+  },
+  "scope": "Exact raw worker payloads are public; full environment and command logs remain local. Complete seal binds their original hashes. No private hostnames, account paths or scheduler identifiers are published."
+}

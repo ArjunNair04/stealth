@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "built_wheel_from_sdist": true,
+  "runtime_install_network": false,
+  "runtime_dependencies": [
+    "numpy==2.2.6"
+  ],
+  "python": "3.10.6",
+  "wheel_members": [
+    "stealth_cpu/__init__.py",
+    "stealth_cpu/_core.cpython-310-darwin.so",
+    "stealth_cpu-0.1.0.dist-info/METADATA",
+    "stealth_cpu-0.1.0.dist-info/WHEEL",
+    "stealth_cpu-0.1.0.dist-info/RECORD"
+  ],
+  "artifacts": {
+    "stealth_cpu-0.1.0-cp310-cp310-macosx_14_0_x86_64.whl": "d35327fa9ecd32a08c35dd9c706d40fe1cbc6afaafba2cec2ac0daa3ba64e413",
+    "stealth_cpu-0.1.0.tar.gz": "9e939be73e22805102f1ff298c99b335da44ecb377406e4274dfd053f2fe4842",
+    "numpy-2.2.6-cp310-cp310-macosx_14_0_x86_64.whl": "5a6429d4be8ca66d889b7cf70f536a397dc45ba6faeb5f8c5427935d9592e9cf"
+  }
+}

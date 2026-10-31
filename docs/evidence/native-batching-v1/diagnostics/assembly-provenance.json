@@ -1,0 +1,25 @@
+{
+  "before": {
+    "original_objdump_sha256": "cf2f2cdb43b12acb0be746faa7a2e202d6bfabcd217cad76c2fecc23af2020f9",
+    "excerpt_addresses": [
+      "0x1af8",
+      "0x1b75"
+    ]
+  },
+  "after": {
+    "original_objdump_sha256": "b0e436a3c7e30081437f806f0fa5fdc1dbe743a8c107b148fd12db01a8b4b0c0",
+    "excerpt_addresses": [
+      "0x1ad0",
+      "0x1bb5"
+    ],
+    "additional_excerpt_addresses": [
+      "0x1faf",
+      "0x1fc0"
+    ]
+  },
+  "excerpt_transformations": [
+    "Shorten repeated demangled function labels to forward_batch",
+    "Strip trailing whitespace",
+    "Add row-loop continuation label"
+  ]
+}

@@ -60,6 +60,9 @@ def main():
         return y.numpy()
     start=time.perf_counter_ns();first=call(0);first_call_ns=time.perf_counter_ns()-start
     del first
+    if args.engine=='native_python':
+        owned['workspace_bytes_before_first_call']=owned['workspace_bytes']
+        owned['workspace_bytes']=session.workspace_bytes
     if args.prepare:
         if args.engine!='torch_reference': raise ValueError('Expected outputs must use reference')
         expected=np.concatenate([array(call(i)).reshape(-1) for i in range(len(groups))]).astype('<f4')

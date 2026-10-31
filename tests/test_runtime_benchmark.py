@@ -55,8 +55,9 @@ class NativeRunner(unittest.TestCase):
         self.x=[float(i)/10 for i in range(24)]
         (self.root/'input').write_bytes(common.input_bytes(self.x,4,3,2))
         (self.root/'expected').write_bytes(struct.pack('<12f',*self.x[1::2]))
-    def run_native(self,batch='1',samples='3',warmup='2',output=None):
+    def run_native(self,batch='1',samples='3',warmup='2',output=None,execution=None):
         extra=[] if output is None else ['--output',output]
+        if execution is not None: extra+=['--batch-execution',execution]
         return subprocess.run([str(self.binary),'--model',str(self.root/'model'),'--input',str(self.root/'input'),'--expected',str(self.root/'expected'),'--batch',batch,'--samples',samples,'--warmup',warmup]+extra,capture_output=True,text=True)
     def test_valid_batch_and_consumed_outputs(self):
         for batch in ('1','2','4'):
@@ -64,6 +65,19 @@ class NativeRunner(unittest.TestCase):
             r=json.loads(p.stdout);self.assertEqual(len(r['times_ns']),3)
             self.assertEqual(r['max_abs_difference'],0)
             self.assertGreater(r['checksum'],0);self.assertGreater(r['workspace_bytes'],0)
+    def test_batch_execution_paths_and_invalid_selection(self):
+        for mode in ('all','last'):
+            results=[]
+            for execution in ('serial','tiled'):
+                p=self.run_native('4',output=mode,execution=execution)
+                self.assertEqual(p.returncode,0,p.stderr)
+                r=json.loads(p.stdout);results.append(r)
+                self.assertEqual(r['batch_execution'],execution)
+                self.assertEqual(r['max_abs_difference'],0)
+            self.assertEqual(results[0]['checksum'],results[1]['checksum'])
+        p=self.run_native(execution='unknown')
+        self.assertNotEqual(p.returncode,0);self.assertEqual(p.stdout,'')
+
     def test_inspection_reports_serialized_version_and_output_mode(self):
         cli=self.binary.parent/('stealth.exe' if os.name=='nt' else 'stealth')
         for version,mode in ((2,'correction'),(1,'level')):

@@ -1,0 +1,210 @@
+{
+  "source_commit": "67e6399e9a8a041044969a39062ebd8d092de5b1",
+  "transfer_manifest_sha256": "e1fd56a74eafca8247568835e0cbbdf06c7c60cc39d82bf52e6ef8ff7e4ac844",
+  "transfer_files": {
+    "toolchain-files.sha256": "ff726eb26ffda4cd5391c736fb1571eb23d0a9f15c5116ebcce350688607348b",
+    "source.tar.gz": "f7e045521c55c51b4d9b44862935f288f3ebcb7b57c087bf8c94b2f8a4b5f935",
+    "run.sh": "6773b442f6e950b0995059c379b8230b05403c3479ff5b3411baf5cc3517b48c",
+    "run_validation.py": "75bc214d028902c1b5fa1a71d757f82c71b3c0fff518d24930a38a8a61d5f4e0",
+    "protocol.json": "17073f6a30ae3d8ef514d1288f37b0686f362d1ca747287024c5308d6034e45a",
+    "sanitizer-packages.json": "f2892bba67616b217e40e9f1bfb9671ff53adef22fe7e2c977b052c99d474073",
+    "profile_torch.py": "631a55030e4ba5e5a69908719d61d957cb085111a350e88fd066ab4a76572954",
+    "artifacts/expected-7.bin": "89cec65b26ed7b3aa03816daa02a899c6d6823a79a3d106a82ae431b79fdd87f",
+    "artifacts/input.bin": "3ed32af0b79ef537e2f2d9a0fa9afda122335689be2aeabf4add7013e85e3595",
+    "artifacts/model-19.stlf": "237910f530e7c337227f2150da2f78da2518e996ee817c4f40e4ef4a78a1a080",
+    "artifacts/expected-19.bin": "0fc9501064f7ee77d5bae723756f2af88b74619371ab752c0753606a77ae6143",
+    "artifacts/model-43.stlf": "6400f2cb9a94237e8cd0e5a8083fd501c75fb9bfe60a7871675e12ccacdbca6a",
+    "artifacts/expected-43.bin": "f4c91957e0d3db550ef510d8720b3affcc995f19842d1d5054132a7e4bd64005",
+    "artifacts/model-7.stlf": "48d3433c9be2e2c411a06fdf981a78332d6f34af0767608d6d11ef9ca978e87d"
+  },
+  "completion_sha256": "d0f144f8245f33b139d92b43e7ed8e78c99e3de084a1d07beda56c817fd8473e",
+  "binaries": {
+    "baseline": "66bcbc26c5112e4780fb1e82a3cc6e049523fb639fba9d620e7807862b8e6723",
+    "candidate": "3df01225197fb8333b27d4dc2477180e95a9df8846e10da1ac0f6920b92b1c2b",
+    "portable": "906d548eb27532ac91091cbd1019c142ff39ed0af5b8c397d19a8f1b31cb3681"
+  },
+  "host": {
+    "cpu": "Intel(R) Xeon(R) CPU E3-1240 v3 @ 3.40GHz",
+    "architecture": "x86_64",
+    "os": "CentOS Linux 7",
+    "compiler": "GCC 11.2.1",
+    "cmake": "3.26.4",
+    "ninja": "1.10.0",
+    "python": "3.11.0",
+    "affinity": [
+      0,
+      4
+    ],
+    "pinned_cpu": 0,
+    "scheduler_slots": 1,
+    "isolation": "shared node; frequency not fixed"
+  },
+  "native_source_commit": "67e6399e9a8a041044969a39062ebd8d092de5b1",
+  "native_python": {
+    "numpy": "2.2.6",
+    "build_info": {
+      "version": "0.1.0",
+      "compiler": "GNU 11.2.1",
+      "operating_system": "Linux",
+      "architecture": "x86_64",
+      "configuration": "Release",
+      "source_fingerprint": "b27c89498d2038168584dfca00fa6407da247b75e521e1af25a25c9c968a7c30"
+    },
+    "extension_sha256": "91b5fb64b608da52d2bc5e371d4926c608672f8535b6f620a09abbeefed99653"
+  },
+  "torch": {
+    "numpy": "2.2.6",
+    "torch": "2.6.0+cu124",
+    "torch_build_sha256": "51bcbe59eb176362dc969b0341d85ca88416e37bd0f10de4b19350d07898e330",
+    "threads": 1,
+    "interop_threads": 1,
+    "deterministic": true,
+    "inference_mode": true
+  },
+  "validation": {
+    "status": "passed",
+    "counts": {
+      "dev-test": {
+        "passed": 73
+      },
+      "release-test": {
+        "passed": 73
+      },
+      "portable-test": {
+        "passed": 73
+      },
+      "sanitize-test": {
+        "passed": 72
+      },
+      "offline-tests": {
+        "ran": 85,
+        "skipped": 0
+      },
+      "wrapper-tests": {
+        "ran": 36,
+        "skipped": 0
+      },
+      "training-tests": {
+        "ran": 117,
+        "skipped": 3
+      }
+    },
+    "steps": [
+      {
+        "name": "toolchain",
+        "returncode": 0,
+        "wall_seconds": 0.966866509988904,
+        "log_sha256": "e32fcefb99562038045228539e288c97ee16ce4efb9cbe6164d6ebacfdbfed91"
+      },
+      {
+        "name": "python-environment",
+        "returncode": 0,
+        "wall_seconds": 11.489012036472559,
+        "log_sha256": "bdbf255ee497e70466971829c10d3e95f5eec404d7ec1f868bb290b3173e522f"
+      },
+      {
+        "name": "dev-configure",
+        "returncode": 0,
+        "wall_seconds": 3.323229206725955,
+        "log_sha256": "f552dad3af1a4633450d12e77ee8a61f6b125f43da1f19e8cece9a448721cf64"
+      },
+      {
+        "name": "dev-build",
+        "returncode": 0,
+        "wall_seconds": 49.13141137547791,
+        "log_sha256": "4cd00f945f760dc57b179be4e85d2d586c15692d404b993792a672002dd9e4eb"
+      },
+      {
+        "name": "dev-test",
+        "returncode": 0,
+        "wall_seconds": 32.4983803704381,
+        "log_sha256": "182445fa5664f7c0f352d3c19d6e566fa939370d9a0e9efb5b11de4098bd2f57"
+      },
+      {
+        "name": "release-configure",
+        "returncode": 0,
+        "wall_seconds": 7.340891661122441,
+        "log_sha256": "74f10e0b7de9ebf5c56c26f80a46d42ea738931e8db4d2840daf2c2edd9c3640"
+      },
+      {
+        "name": "release-build",
+        "returncode": 0,
+        "wall_seconds": 84.35535092279315,
+        "log_sha256": "e35fee287beadef30e75e78872610890da2556bdb025619f90fac6857cb746fb"
+      },
+      {
+        "name": "release-test",
+        "returncode": 0,
+        "wall_seconds": 7.332424180582166,
+        "log_sha256": "acd0ab44596cb5cf98f3ea10b98787c211eba5b6bcbfa6b2b3826c3438189729"
+      },
+      {
+        "name": "portable-configure",
+        "returncode": 0,
+        "wall_seconds": 1.016912780702114,
+        "log_sha256": "5b3d0a529200f869e9f50561cd42982e0b443bcc3fac8b48cc1f648d46c89ed9"
+      },
+      {
+        "name": "portable-build",
+        "returncode": 0,
+        "wall_seconds": 53.0315215587616,
+        "log_sha256": "318f9698cd8573c5fe791e6ac5d62a46d3424d5ab44224325c6a578c88557179"
+      },
+      {
+        "name": "portable-test",
+        "returncode": 0,
+        "wall_seconds": 8.833584936335683,
+        "log_sha256": "b1390a64de7f7a440a3c3a9b5f4a56dcdb5b39d3d6c96851e850682e22e97a1c"
+      },
+      {
+        "name": "sanitize-configure",
+        "returncode": 0,
+        "wall_seconds": 1.1170622948557138,
+        "log_sha256": "c9d7c72f925d138e12eadce305a8e854bd51891f26b583060945020d55d1299d"
+      },
+      {
+        "name": "sanitize-build",
+        "returncode": 0,
+        "wall_seconds": 54.90302393771708,
+        "log_sha256": "4cd00f945f760dc57b179be4e85d2d586c15692d404b993792a672002dd9e4eb"
+      },
+      {
+        "name": "sanitize-test",
+        "returncode": 0,
+        "wall_seconds": 61.2839283850044,
+        "log_sha256": "85f77fb86ffff8522e542774a59f811a9fc4d6d60341547c09a34e6df6358420"
+      },
+      {
+        "name": "wrapper-install",
+        "returncode": 0,
+        "wall_seconds": 0.03368431329727173,
+        "log_sha256": "170a8d9915172222c7f2e10a29a5a1703894049b985dd700020317655b7c8a77"
+      },
+      {
+        "name": "identity",
+        "returncode": 0,
+        "wall_seconds": 0.16602512821555138,
+        "log_sha256": "f652f54128c7ef0db66d9e673fda57283266eb201733610c3cac44fefaaa4611"
+      },
+      {
+        "name": "offline-tests",
+        "returncode": 0,
+        "wall_seconds": 1.6178523898124695,
+        "log_sha256": "7c3095d766d29b984582497f17480e880a0f94e6d3bf1dc031e6cbeddb434d38"
+      },
+      {
+        "name": "wrapper-tests",
+        "returncode": 0,
+        "wall_seconds": 4.976040692999959,
+        "log_sha256": "fa6d821243a0eab26d8f23c6ac9f30ef38e4b492e7db57c0c06b86c6ae93f870"
+      },
+      {
+        "name": "training-tests",
+        "returncode": 0,
+        "wall_seconds": 111.84014187566936,
+        "log_sha256": "1eb744d52e9e43dd67720e4dc51063c79289222f70b016c82c7b9b8abcb187fa"
+      }
+    ]
+  },
+  "scope": "Exact raw worker payloads are public; full environment and command logs remain local. Complete seal binds their original hashes. No private hostnames, account paths or scheduler identifiers are published."
+}

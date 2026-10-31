@@ -17,13 +17,15 @@ observations to one trustworthy prediction pipeline.
 | Portable native builds, installation and Python packaging | Rebuild binaries for each device; the 0.x ABI is provisional |
 | Dense/MLP, multihead attention, layer norm, exact GELU and one-block forecasts | This is a specific inference architecture; dropout and new depth are not implemented |
 | Torch training, checkpoints, native export and checked loading | Saved ETTm1 models still lose to the last-value baseline on primary old-test error |
-| Full traces, latest-only sessions, sequential batches and bounded raw streams | Streams recompute the full window; market-clock integration remains open |
+| Full traces, latest-only sessions, native batches and bounded raw streams | Streams recompute the full window; market-clock integration remains open |
 | Receipt-aware native feature index and checked replay | Finite tapes only; live ingestion and crash recovery remain open |
-| Measured native optimizations | Beaker p50: 0.207 ms C++ versus 0.503 ms eager Torch 2.6 for one forecast; Torch wins at batch eight |
+| Measured native optimizations | Native batching cuts matched Linux batch-eight p50 by 11.84%; [comparison and limits](docs/native-batching-v1.md) |
 
-The [Beaker Linux validation](docs/beaker-linux-v1.md) passes native, sanitizer,
-Python and training/reference checks on a scheduled CPU node. Its timing result
-covers one Xeon host and the saved ETTm1 one-block workload.
+The [native batching study](docs/native-batching-v1.md) adds grouped execution,
+assembly evidence and a same-host before/after/PyTorch comparison. The
+[earlier Beaker validation](docs/beaker-linux-v1.md) established native, sanitizer,
+Python and training/reference compatibility. Results cover specific Xeon CPUs
+and the saved ETTm1 one-block workload.
 Current compiled and independent runtime comparisons, sustained-load testing,
 research novelty and financial usefulness remain unestablished. See
 [the earlier Intel Mac measurements](docs/latest-results-v1.md) and
@@ -101,6 +103,7 @@ The repository is public for review. No redistribution licence has been selected
 
 ## Run and evaluate
 
+- [Native batching, assembly diagnosis and verified comparison](docs/native-batching-v1.md)
 - [Beaker Linux correctness and balanced CPU comparison](docs/beaker-linux-v1.md)
 - [Native mixed-speed feature index and adversarial replay demo](docs/native-signal-index-v1.md)
 
