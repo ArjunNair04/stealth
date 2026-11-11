@@ -117,8 +117,8 @@ on [PR #21](https://github.com/ArjunNair04/stealth/pull/21).
 
 The adapter milestone does not complete the 90-cell frontier comparison. The
 quiet Linux/Beaker CPU allocation, host and wheel lock, fixed saved-model admission,
-full multi-engine timed orchestration, aggregate gate calculation and one frozen
-acceptance run remain open. The old local speed result still compares with Torch
+and one frozen acceptance run remain open. The [multi-engine timing runner and
+aggregate gate](runtime-comparison.md) are now implemented. The old local speed result still compares with Torch
 2.2.2 only. No kernel tuning, retraining or predictive-quality claim follows from
 compiler/export correctness alone.
 

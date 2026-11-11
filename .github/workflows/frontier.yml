@@ -29,8 +29,13 @@ jobs:
           python -m pip install --no-build-isolation --no-deps .
           python -m pip check
           python -m pip freeze --all
+      - name: Build native timing worker for integration checks
+        run: |
+          cmake --preset release -DSTEALTH_BUILD_BENCHMARKS=ON
+          cmake --build --preset release --target stealth_cli stealth_runtime_bench
       - name: Actual compiled and ONNX parity at fixture and deployed shapes
         run: |
           python -m unittest discover -s tests/training -p test_runtime_adapters.py -v
           python -m unittest discover -s tests/training -p test_runtime_admission.py -v
           python -m unittest discover -s tests/training -p test_temporal_conformance.py -v
+          python -m unittest discover -s tests/training -p test_frontier_worker.py -v

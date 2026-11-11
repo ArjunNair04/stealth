@@ -1,4 +1,4 @@
-# How the first latency improvements work
+# Performance: results and implementation notes
 
 The [native batching study](native-batching-v1.md) is the current execution update:
 11.84% lower paired batch-eight p50 on its matched Linux comparison.
@@ -9,9 +9,11 @@ observations and assembly. The earlier measurements below remain historical.
 
 The [Beaker Linux run](beaker-linux-v1.md) validates the unchanged core and records
 206.972 µs native versus 502.962 µs eager Torch 2.6 for single ETTm1 forecasts.
-Torch wins for eight-item batches. The forced portable build takes 504.698 µs
+Torch won for eight-item batches in that earlier build; the batching study above
+measures the subsequent change. The forced portable build takes 504.698 µs
 for one forecast, showing the existing AVX specialization matters on this host.
-Current compiled/ONNX comparisons remain open.
+The [compiled/ONNX comparison runner](runtime-comparison.md) is implemented; its
+controlled measurements remain open.
 
 The [model-size study](bike-size-results-v1.md) adds measurements for 50.6k,
 199.4k and 792.1k trainable parameters on the fixed 48-hour bike task. Native p50
