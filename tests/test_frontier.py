@@ -150,6 +150,7 @@ class Artifacts(unittest.TestCase):
                 read_fd, write_fd = os.pipe()
                 original_popen = subprocess.Popen
                 process = None
+                descendant_dead = False
                 write_open = True
                 grandchild = f"import os,time; os.write({write_fd},b'R'); time.sleep(60)"
                 child = (f"import subprocess,sys; subprocess.Popen([sys.executable,'-c',{grandchild!r}],"
@@ -170,9 +171,10 @@ class Artifacts(unittest.TestCase):
                     self.assertFalse(result['timed_out'])
                     self.assertTrue(select.select([read_fd], [], [], 2)[0],
                                     'An exited worker left its compiler child running')
-                    self.assertEqual(os.read(read_fd, 1), b'')
+                    descendant_dead = os.read(read_fd, 1) == b''
+                    self.assertTrue(descendant_dead)
                 finally:
-                    if process is not None:
+                    if process is not None and not descendant_dead:
                         try: os.killpg(process.pid, signal.SIGKILL)
                         except ProcessLookupError: pass
                     os.close(read_fd)
