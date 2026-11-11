@@ -89,6 +89,13 @@ void operator delete[](void *address, std::size_t, std::align_val_t) noexcept {
 
 int main() {
     using namespace stealth::numeric;
+    std::set_terminate([] {
+        // A noexcept constructor failure must fail CI, never wait on a CRT dialog.
+        std::fprintf(stderr, "FAIL: unexpected termination; injection=%d attempt=%zu target=%zu\n",
+                     static_cast<int>(inject_failure), attempt, fail_index);
+        std::fflush(stderr);
+        std::_Exit(EXIT_FAILURE);
+    });
     try {
         phase("interception controls");
         // Positive control proves the interception is live for both allocation families.
@@ -406,32 +413,44 @@ int main() {
             tracking = false;
             CHECK(!failed);
             CHECK(allocations == 0);
-            allocations = 0;
-            tracking = true;
-            auto candidate = std::make_unique<SignalIndex>(limits, records);
-            tracking = false;
-            const auto cold = allocations;
-            candidate.reset();
-            CHECK(cold > 1);
-            for (std::size_t i = 0; i < cold; ++i) {
-                failure_case("constructor", i, cold);
-                fail_index = i;
-                attempt = 0;
-                inject_failure = true;
-                bool caught = false;
-                try {
-                    candidate = std::make_unique<SignalIndex>(limits, records);
-                } catch (const std::bad_alloc &) {
-                    caught = true;
+            // Empty tapes still construct nested containers. Exercise every cold
+            // allocation in both cases, including MSVC's debug iterator proxies.
+            for (auto deliveries : {std::span<const SignalRecord>{},
+                                    std::span<const SignalRecord>{records}}) {
+                allocations = 0;
+                tracking = true;
+                auto candidate = std::make_unique<SignalIndex>(limits, deliveries);
+                tracking = false;
+                const auto cold = allocations;
+                candidate.reset();
+                CHECK(cold > 1);
+                for (std::size_t i = 0; i < cold; ++i) {
+                    failure_case(deliveries.empty() ? "empty index" : "populated index", i, cold);
+                    fail_index = i;
+                    attempt = 0;
+                    inject_failure = true;
+                    bool caught = false;
+                    try {
+                        candidate = std::make_unique<SignalIndex>(limits, deliveries);
+                    } catch (const std::bad_alloc &) {
+                        caught = true;
+                    }
+                    inject_failure = false;
+                    CHECK(caught);
+                    CHECK(!candidate);
+                    CHECK(index.snapshot(3, out) == SnapshotError::ok);
+                    CHECK(out[0].value == 2.0);
+                    // Failure must also leave a fresh construction usable.
+                    candidate = std::make_unique<SignalIndex>(limits, deliveries);
+                    CHECK(candidate->record_count() == deliveries.size());
+                    CHECK(candidate->snapshot(3, out) == SnapshotError::ok);
+                    CHECK(out[0].state == (deliveries.empty() ? SignalState::missing
+                                                            : SignalState::valid));
+                    candidate.reset();
                 }
-                inject_failure = false;
-                CHECK(caught);
-                CHECK(!candidate);
-                CHECK(index.snapshot(3, out) == SnapshotError::ok);
-                CHECK(out[0].value == 2.0);
+                std::cout << cold << " index construction allocation failures preserved the old "
+                                       "index and allowed a fresh construction\n";
             }
-            std::cout << "Zero allocations in 10,000 snapshot/error cycles; " << cold
-                      << " index construction allocation failures preserved the old index\n";
         }
         std::cout << "No intercepted C++ heap allocations in 4,000 forecaster/error-path cycles\n";
         std::cout << "No intercepted C++ heap allocations in 4,000 "

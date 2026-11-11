@@ -19,7 +19,10 @@ bool newer(const SignalRecord &a, const SignalRecord &b) noexcept {
 }
 }
 SignalIndex::SignalIndex(std::span<const SignalLimits> limits,
-                         std::span<const SignalRecord> deliveries) {
+                         std::span<const SignalRecord> deliveries)
+    // MSVC debug vectors allocate iterator proxies even when empty. The count
+    // constructor can propagate bad_alloc; the default constructor is noexcept.
+    : limits_(std::size_t{0}), changes_(std::size_t{0}) {
     if (limits.empty() || limits.size() > max_signal_features ||
         deliveries.size() > max_signal_deliveries)
         throw std::invalid_argument("Signal index capacity exceeded or empty schema");
@@ -69,7 +72,11 @@ SignalIndex::SignalIndex(std::span<const SignalLimits> limits,
             throw std::invalid_argument("Ambiguous signal event identity");
 
     limits_.assign(limits.begin(), limits.end());
-    changes_.resize(limits.size());
+    // Reserve first so insertion never moves a debug vector (also noexcept).
+    // Explicit zero counts keep failures in nested proxy construction catchable.
+    changes_.reserve(limits.size());
+    for (std::size_t c = 0; c < limits.size(); ++c)
+        changes_.emplace_back(std::size_t{0});
     // Reserve at most one slot per unique record; queries never grow these vectors.
     std::vector<std::size_t> counts(limits.size(), 0);
     for (const auto &r : records)
