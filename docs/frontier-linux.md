@@ -1,15 +1,16 @@
 # Prepare the next CPU comparison
 
 [Beaker native/Python validation and a Torch 2.6 compatibility comparison](beaker-linux-v1.md)
-are now complete on a scheduled CPU node. Single forecasts favor Stealth; eight-item
-batches favor Torch. Its CentOS 7/glibc 2.17 environment has not been admitted for
+are now complete on a scheduled CPU node. That earlier study favored Stealth for single forecasts and Torch for batches of eight.
+The subsequent [batching change](native-batching-v1.md) reversed the batch-eight result
+on its matched workload; batch sixteen still favored Torch. Its CentOS 7/glibc 2.17 environment has not been admitted for
 the current runtime pins below. Singularity 3.8.5 is installed, but container
 bootstrap, compatibility and the complete modern-runtime comparison remain open.
 
-Status: environment and experiment specification, with [implemented adapters and
-bounded correctness admission](runtime-adapters-v1.md). Real Inductor/ONNX fixture
+Status: environment specification, [implemented adapters](runtime-adapters-v1.md)
+and a [complete comparison runner](runtime-comparison.md). Real Inductor/ONNX fixture
 and deployed-shape parity has passed Linux CI. No current-runtime acceptance
-timings are claimed. A quiet machine, full host lock and timed orchestration
+timings are claimed. A quiet machine, full host lock and the controlled measurement run
 are still required. The current Intel Mac benchmark
 remains a separate Torch 2.2.2 compatibility result.
 
@@ -104,8 +105,8 @@ shows it is insufficient.
 
 The consolidated baseline provides existing native/eager execution and source
 identity checks. The compiled/ONNX adapters and bounded per-cell correctness runner are now
-implemented. The host lock, fixed saved-model admission and timed comparison remain
-the next implementation milestone. Do not describe the existing compatibility
+implemented. The [timed runner](runtime-comparison.md) is implemented. The host lock,
+fixed saved-model admission and controlled comparison remain the next execution milestone. Do not describe the existing compatibility
 runner as supporting these engines. If current runtimes remove the local advantage,
 use that evidence to decide whether integration, memory or specialized workloads
 justify further custom code before another kernel optimization.

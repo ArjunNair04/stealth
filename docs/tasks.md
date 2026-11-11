@@ -9,32 +9,29 @@ The [Beaker compatibility checks](beaker-linux-v1.md) pass. The
 [Windows allocation repair](windows-allocation-v1.md) addresses a separate Debug
 construction failure; the repaired Windows Debug/Release/package job passes.
 Current compiled/ONNX timing, sustained serving and broader shapes remain open.
-Linux access itself is resolved. The next performance comparison should complete
-the existing current-runtime admission/timing harness before another kernel change.
+The Beaker route is established; its interactive login needs reopening for the next run. The next performance comparison should use
+the current-runtime runner before another kernel change.
 The user expects minute bars alongside daily, weekly and potentially monthly
 factors. Exact sources, freshness thresholds and prediction targets remain open.
 
-## Immediate order after the Windows repair
+## Next steps
 
-1. Finish review of PR #31 with its parent changes. The internal review covers
-   batch/window separation, bounded workspace, moved state, Python ownership and
-   failure publication; it is not independent approval. Keep the full CI matrix
-   and the recorded failures visible.
-2. Complete the existing 90-cell current-runtime timed orchestrator and its
-   failure/aggregation tests. Admit the saved models in a locked modern Linux
-   environment before collecting one acceptance run. The earlier CentOS 7/Torch
-   2.6 comparison is useful compatibility evidence, not that runtime frontier.
-3. Diagnose larger-batch scaling separately after the fixed batch-one/eight
-   comparison. The existing batch-sixteen loss remains public. Use profiling to
-   decide whether matrix work, feature conversion or another stage warrants a
-   change; keep scratch/memory cost alongside latency.
-4. Choose the implementation from those results. A standard runtime that gives
-   the same behavior at lower cost remains a valid outcome. Retain the availability
-   and replay contracts regardless of the inference backend. Do not relax the
-   existing parity tolerance to manufacture a speed win.
+1. Review [PR #32](https://github.com/ArjunNair04/stealth/pull/32). Local runner checks
+   and real compiler/export Linux CI pass. The 90-cell scheduler, bounded workers, host/wheel lock, failure records and
+   aggregate gate are implemented; see [how to run them](runtime-comparison.md).
+2. Reconnect Beaker when available, admit a modern Linux environment, commit its
+   host lock and collect one controlled run. The user has asked to finish local
+   work first. The earlier CentOS 7/Torch 2.6 comparison remains a separate result.
+3. Use that result to choose the next optimization or runtime integration.
+   Batch-sixteen scaling is still a known weakness. Measure the bottleneck and
+   memory cost before changing kernels or adding threads.
+4. Keep the feature-availability and replay interfaces whichever inference engine
+   wins. Choose the next financial signal family with the user before starting
+   another prediction study.
 
-The milestone sections below retain earlier findings and proposals. This ordered
-list is the active queue; historical Linux deferrals are no longer access blockers.
+PR #31 and its parent changes still need independent review. The internal review
+and CI checks do not replace that approval. The sections below preserve earlier
+milestones; this list is the current order of work.
 
 ## Completed foundation
 
@@ -80,8 +77,7 @@ by the integration demo or by data admission.
 ## Parallel gate: current-runtime comparison
 
 The [compiled Torch and ONNX CPU adapters](runtime-adapters-v1.md) now have real
-Linux CI parity checks and a bounded per-cell admission runner. The complete
-90-cell timed orchestrator and aggregate gate are still pending. Beaker CPU
+Linux CI parity checks and a bounded per-cell admission runner. The [90-cell runner and aggregate gate](runtime-comparison.md) are now implemented. The controlled acceptance run remains pending. Beaker CPU
 allocation and the native toolchain are now tested. Its CentOS 7 environment has
 only been admitted for the separate Torch 2.6 compatibility run. Inspect a modern
 container/runtime environment, lock it, then execute the [fixed comparison](frontier-linux.md).

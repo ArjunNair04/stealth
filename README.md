@@ -1,132 +1,117 @@
 # Stealth
 
-Portable C++20 CPU forecasting research project, with optional Python inference
-and Torch training. The permanent checkout contains the complete one-block model,
-export/load workflow and tested numerical components. Training runs in Torch;
-inference can run through the C++ library or its NumPy interface without Torch.
+Stealth is a small C++20 engine for running time-series forecasts on a CPU.
+Train a model in PyTorch, export its weights, then run it through C++ or a thin
+NumPy interface. Inference does not need PyTorch or a GPU.
 
-Start with [the consolidated baseline and review guide](docs/review-baseline.md).
-[PR #18](https://github.com/ArjunNair04/stealth/pull/18) preserves and brings together
-the twelve implementation PRs. The [active work queue](docs/tasks.md) separates
-completed engineering from the remaining performance and forecasting decisions.
-[Direction and exit gates](docs/direction.md) set the path from mixed-frequency
-observations to one trustworthy prediction pipeline.
+The longer-term aim is to combine observations that arrive at different speeds:
+for example, minute bars alongside daily and monthly factors. The project already
+has an offline feature index that keeps track of when each observation became
+available and how it was revised. Live feeds and trading deployment are future work.
 
-| What works | Current limit |
+## What works today
+
+- A one-block transformer with multihead attention, layer normalization, exact
+  GELU, an MLP and a forecast head.
+- PyTorch training, checkpoints and export to a checked native model format.
+- Single forecasts, batches and bounded streams, through C++ or Python.
+- Reusable native workspaces, packed weights and an AVX path selected at runtime.
+- Tests for arithmetic, invalid inputs, memory allocation, ownership, replay and
+  package installation on Linux, Windows and Intel/ARM macOS.
+
+This is a deliberately small inference engine. It does not yet offer arbitrary
+model architectures, quantized weights or automatic multicore scheduling. Streams
+reuse storage but recompute the current window. See [the architecture](docs/architecture.md)
+for the supported interfaces and [the tests](docs/testing.md) for their guarantees.
+
+## What we have measured
+
+The latest completed Linux study used three saved ETTm1 models on one Xeon CPU,
+with one inference thread. Lower times are better.
+
+| Measurement | Result |
 | --- | --- |
-| Portable native builds, installation and Python packaging | Rebuild binaries for each device; the 0.x ABI is provisional |
-| Dense/MLP, multihead attention, layer norm, exact GELU and one-block forecasts | This is a specific inference architecture; dropout and new depth are not implemented |
-| Torch training, checkpoints, native export and checked loading | Saved ETTm1 models still lose to the last-value baseline on primary old-test error |
-| Full traces, latest-only sessions, native batches and bounded raw streams | Streams recompute the full window; market-clock integration remains open |
-| Receipt-aware native feature index and checked replay | Finite tapes only; live ingestion and crash recovery remain open |
-| Measured native optimizations | Native batching cuts matched Linux batch-eight p50 by 11.84%; [comparison and limits](docs/native-batching-v1.md) |
+| Eight forecasts: previous native code → updated code | 1.797 ms → 1.584 ms; **11.84% lower median latency** |
+| Eight forecasts: slow-call latency (p99) | **12.20% lower** in the paired comparison |
+| Eight forecasts: updated native vs eager PyTorch 2.6 | 1.584 ms vs 1.708 ms |
+| Sixteen forecasts: native vs eager PyTorch 2.6 | 3.170 ms vs 2.788 ms; PyTorch is faster |
 
-The [native batching study](docs/native-batching-v1.md) adds grouped execution,
-assembly evidence and a same-host before/after/PyTorch comparison. The
-[earlier Beaker validation](docs/beaker-linux-v1.md) established native, sanitizer,
-Python and training/reference compatibility. Results cover specific Xeon CPUs
-and the saved ETTm1 one-block workload.
-Cross-platform failure testing includes the verified
-[Windows allocation-recovery repair](docs/windows-allocation-v1.md).
-Current compiled and independent runtime comparisons, sustained-load testing,
-research novelty and financial usefulness remain unestablished. See
-[the earlier Intel Mac measurements](docs/latest-results-v1.md) and
-[all correction-model outcomes](docs/correction-results-v1.md).
+These results describe that workload and machine. The change uses more scratch
+memory; single-forecast latency is essentially unchanged. The
+[full report](docs/native-batching-v1.md) includes all trials, failed candidates,
+assembly findings and a script to verify the published evidence.
 
-## Start locally
+The next comparison adds compiled PyTorch and ONNX Runtime. Its
+[runner and fixed experiment](docs/runtime-comparison.md) are implemented; the
+controlled Linux measurement is still pending. We do not yet claim an advantage
+over those engines.
 
-Install a C++20 compiler, CMake 3.25+ and Ninja 1.11+ using [the setup guide](docs/development.md).
-Then, from this repository:
+A faster forecast is not necessarily a better forecast. On the
+[bike-rental example](docs/bike-demand-results-v1.md), the model's mean absolute
+error was 43.82 rentals, compared with 87.15 for the last observed count and 47.90
+for ridge regression. Ridge did better on squared error. The ETTm1 and
+[BTC return](docs/btc-return-results-v1.md) studies failed their prediction gates.
+No validated trading alpha is claimed.
+
+## Try the native build
+
+You need a C++20 compiler, CMake 3.25+ and Ninja 1.11+.
+The [setup guide](docs/development.md) covers each platform.
 
 ```sh
 cmake --preset dev
 cmake --build --preset dev
 ctest --preset dev
-./build/dev/stealth --build-info
-./build/dev/stealth_attention_demo
 ./build/dev/stealth_forecast_demo
 ```
 
-On Windows, use a Visual Studio developer shell and append `.exe` to executable names.
-Open the repository folder in VS Code to use the checked-in CMake tasks and debugger.
+On Windows, use a Visual Studio developer shell and add `.exe` to the executable
+name. The demo uses fixed example weights to show the calculation; it is not a
+trained forecasting service.
 
-## Build modes
+Use the `release` preset for measurements and `sanitize` for memory and undefined
+behavior checks on GCC/Clang. Build outputs stay in `build/`. Native configuration
+does not download dependencies.
 
-- `dev`: debugging, warnings and tests.
-- `release`: optimised build for measurement, with tests.
-- `sanitize`: address/undefined-behavior checks on GCC or Clang, macOS/Linux.
+## Use it from Python
 
-For any mode, configure, build and test with its preset name. Compilation outputs
-stay under `build/` in this checkout. There are no automatic dependency downloads,
-Python imports, GPU dependencies or machine-specific CPU instruction flags.
+Follow the [Python setup](docs/python-stream-v1.md) to build the local package.
+After [training and exporting a model](docs/training-v1.md):
 
-## Install for another native project
+```python
+import numpy as np
+from stealth_cpu import ForecastModel
 
-```sh
-cmake --preset release
-cmake --build --preset release
-ctest --preset release
-cmake --install build/release --prefix "$PWD/install/release"
+model = ForecastModel.load("model.stlf")
+session = model.session()
+rows = np.asarray(your_observations, dtype=np.float32, order="C")
+forecast = session.predict_last(rows)
 ```
 
-PowerShell equivalent for the last step:
+Each row contains the model's features in their recorded order. A session owns
+reusable working memory; separate sessions can share one immutable model. Python
+calls still pay for input checks, copying and result allocation.
 
-```powershell
-cmake --install build/release --prefix "$PWD/install/release"
-```
+For a native consumer, install a release build with
+`cmake --install build/release --prefix "$PWD/install/release"`, then use
+`find_package(stealth CONFIG REQUIRED)` and link `stealth::core`.
+Rebuild binaries for each operating system and CPU architecture; the 0.x ABI may change.
 
-A consumer uses `find_package(stealth CONFIG REQUIRED)` and links `stealth::core`.
-Set `CMAKE_PREFIX_PATH` to the installed prefix. The test suite installs and moves
-this package before building a separate consumer, including a path containing spaces.
+## Find your way around
 
-Source and build instructions are portable; compiled binaries must match the
-operating system, architecture and C++ runtime. Rebuild on each device. The CI
-matrix checks Linux GCC/Clang, Windows MSVC, and Intel/ARM macOS.
+| I want to… | Start here |
+| --- | --- |
+| Understand the project without reading every research note | [Project guide](docs/index.md) |
+| Build, test or contribute | [Development](docs/development.md) · [Testing](docs/testing.md) |
+| Understand the model and its inputs | [Model walkthrough](docs/forecast-v1.md) · [Feature timing](docs/signal-timeline-v1.md) |
+| Inspect the speed work | [Batching results](docs/native-batching-v1.md) · [How the optimizations work](docs/performance.md) |
+| Run the next comparison | [Runtime comparison](docs/runtime-comparison.md) |
+| See what comes next | [Direction](docs/direction.md) · [Work queue](docs/tasks.md) |
+| Review the implementation history | [Baseline review](docs/review-baseline.md) |
 
-## Project layout
+The main code lives in `include/stealth/` and `src/`; Python bindings are in
+`bindings/` and `python/`. `examples/` contains runnable demos, `tests/` contains
+component and integration checks, and `tools/` contains training and experiment
+scripts. Local datasets and generated reports stay under ignored `local/`.
 
-```text
-include/stealth/  Public C++ API
-src/             Native implementation
-app/             Command-line program
-examples/        Runnable attention and forecast diagnostics
-cmake/           Version and package configuration
-tests/           Component, integration, allocation and installation tests
-bench/           Optional native latency benchmark
-tools/           Optional fixture, benchmark and diagnostic tools
-docs/            Contracts, measured evidence, setup and work queue
-```
-
-[Numeric contract](docs/numeric-contract.md) · [Performance](docs/performance.md)
-· [Development guide](docs/development.md) · [Architecture and Python interface](docs/architecture.md)
-· [Tasks](docs/tasks.md) · [Test-first plan](docs/testing.md)
-
-The repository is public for review. No redistribution licence has been selected.
-
-## Run and evaluate
-
-- [Native batching, assembly diagnosis and verified comparison](docs/native-batching-v1.md)
-- [Beaker Linux correctness and balanced CPU comparison](docs/beaker-linux-v1.md)
-- [Native mixed-speed feature index and adversarial replay demo](docs/native-signal-index-v1.md)
-
-- [Bike-rental learning demonstration and forecast chart](docs/bike-demand-results-v1.md)
-- [Model capacity: accuracy, latency, memory and a numerical boundary finding](docs/bike-size-results-v1.md)
-
-- [Compiled Torch and ONNX CPU admission](docs/runtime-adapters-v1.md)
-
-- [Feature/model bundles and CPU training demo](docs/model-bundle-v1.md)
-- [Mixed-frequency signal timing reference](docs/signal-timeline-v1.md)
-
-- [Model walkthrough and native example](docs/forecast-v1.md)
-- [Python installation and component example](docs/python-stream-v1.md)
-- [Latest-only session API](docs/latest-forecast-v1.md)
-- [Pinned public-data preparation](docs/public-benchmark.md)
-- [Training, restart and native export](docs/training-v1.md)
-- [Current-runtime comparison requirements](docs/runtime-frontier.md)
-- [Linux comparison preparation](docs/frontier-linux.md)
-
-Use `stealth --inspect-model path/to/model.stlf` to inspect the validated format
-version, output mode and dimensions. Before benchmarking an installed Python
-wheel, run `python tools/build_identity.py --check-extension`: stale or non-Release
-builds are rejected. Rebuild native consumers and wheels after updating this
-baseline because build metadata adds a public field; model files are unchanged.
+The repository is public for review. A redistribution licence has not yet been selected.

@@ -42,14 +42,14 @@ def supervise(command,output,*,timeout,env):
             process.wait(timeout=timeout)
         except subprocess.TimeoutExpired:
             timed_out=True
-            try:os.killpg(process.pid,signal.SIGKILL)
-            except ProcessLookupError:pass
-            process.wait()
-        except BaseException:
-            try:os.killpg(process.pid,signal.SIGKILL)
-            except ProcessLookupError:pass
-            process.wait()
-            raise
+        finally:
+            # Stop compiler helpers after every outcome, including an exited
+            # worker. One cleanup path also handles exceptions and timeouts.
+            try:
+                try:os.killpg(process.pid,signal.SIGKILL)
+                except ProcessLookupError:pass
+            finally:
+                process.wait()
     return dict(returncode=process.returncode,timed_out=timed_out,wall_seconds=time.perf_counter()-started)
 
 

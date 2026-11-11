@@ -43,7 +43,8 @@ copies of the model, input bundle and full reference trace, and launches one
 worker in a new POSIX process group. The complete worker gets at most 180 seconds,
 including imports, export/compile and parity. This is stricter than the future
 measurement protocol's compile-only allowance. A timeout kills the group,
-including compiler descendants. Logs and failure records remain; no success seal
+including compiler descendants. The supervisor also stops any surviving descendants
+after a worker exits normally or with an error. Logs and failure records remain; no success seal
 is written. A successful cell checks every window, with the existing tolerance
 `5e-5 + 2e-4 * abs(reference)`, and seals its artifacts by hash.
 
@@ -117,8 +118,8 @@ on [PR #21](https://github.com/ArjunNair04/stealth/pull/21).
 
 The adapter milestone does not complete the 90-cell frontier comparison. The
 quiet Linux/Beaker CPU allocation, host and wheel lock, fixed saved-model admission,
-full multi-engine timed orchestration, aggregate gate calculation and one frozen
-acceptance run remain open. The old local speed result still compares with Torch
+and one frozen acceptance run remain open. The [multi-engine timing runner and
+aggregate gate](runtime-comparison.md) are now implemented. The old local speed result still compares with Torch
 2.2.2 only. No kernel tuning, retraining or predictive-quality claim follows from
 compiler/export correctness alone.
 
