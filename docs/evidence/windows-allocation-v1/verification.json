@@ -1,0 +1,181 @@
+{
+  "ci": [
+    {
+      "conclusion": "success",
+      "id": 130601081162,
+      "name": "Windows MSVC",
+      "status": "completed",
+      "url": "https://github.com/ArjunNair04/stealth/actions/runs/43043457801/job/130601081162"
+    },
+    {
+      "conclusion": "success",
+      "id": 130601081081,
+      "name": "Torch 2.2.2+cpu CPU reference",
+      "status": "completed",
+      "url": "https://github.com/ArjunNair04/stealth/actions/runs/43043458017/job/130601081081"
+    },
+    {
+      "conclusion": "success",
+      "id": 130601081064,
+      "name": "Linux Clang",
+      "status": "completed",
+      "url": "https://github.com/ArjunNair04/stealth/actions/runs/43043457801/job/130601081064"
+    },
+    {
+      "conclusion": "success",
+      "id": 130601081045,
+      "name": "Linux GCC",
+      "status": "completed",
+      "url": "https://github.com/ArjunNair04/stealth/actions/runs/43043457801/job/130601081045"
+    },
+    {
+      "conclusion": "success",
+      "id": 130601080934,
+      "name": "macOS ARM",
+      "status": "completed",
+      "url": "https://github.com/ArjunNair04/stealth/actions/runs/43043457801/job/130601080934"
+    },
+    {
+      "conclusion": "success",
+      "id": 130601080704,
+      "name": "Torch 2.13.0+cpu CPU reference",
+      "status": "completed",
+      "url": "https://github.com/ArjunNair04/stealth/actions/runs/43043458017/job/130601080704"
+    },
+    {
+      "conclusion": "success",
+      "id": 130601080456,
+      "name": "macOS Intel",
+      "status": "completed",
+      "url": "https://github.com/ArjunNair04/stealth/actions/runs/43043457801/job/130601080456"
+    },
+    {
+      "conclusion": "success",
+      "id": 130601079694,
+      "name": "Linux Torch Inductor and ONNX CPU correctness",
+      "status": "completed",
+      "url": "https://github.com/ArjunNair04/stealth/actions/runs/43043457799/job/130601079694"
+    },
+    {
+      "conclusion": "success",
+      "id": 130601043612,
+      "name": "Linux Torch Inductor and ONNX CPU correctness",
+      "status": "completed",
+      "url": "https://github.com/ArjunNair04/stealth/actions/runs/43043447550/job/130601043612"
+    },
+    {
+      "conclusion": "success",
+      "id": 130601043509,
+      "name": "macOS Intel",
+      "status": "completed",
+      "url": "https://github.com/ArjunNair04/stealth/actions/runs/43043447197/job/130601043509"
+    },
+    {
+      "conclusion": "success",
+      "id": 130601043236,
+      "name": "Windows MSVC",
+      "status": "completed",
+      "url": "https://github.com/ArjunNair04/stealth/actions/runs/43043447197/job/130601043236"
+    },
+    {
+      "conclusion": "success",
+      "id": 130601043199,
+      "name": "Linux Clang",
+      "status": "completed",
+      "url": "https://github.com/ArjunNair04/stealth/actions/runs/43043447197/job/130601043199"
+    },
+    {
+      "conclusion": "success",
+      "id": 130601043152,
+      "name": "Torch 2.13.0+cpu CPU reference",
+      "status": "completed",
+      "url": "https://github.com/ArjunNair04/stealth/actions/runs/43043447281/job/130601043152"
+    },
+    {
+      "conclusion": "success",
+      "id": 130601043101,
+      "name": "Linux GCC",
+      "status": "completed",
+      "url": "https://github.com/ArjunNair04/stealth/actions/runs/43043447197/job/130601043101"
+    },
+    {
+      "conclusion": "success",
+      "id": 130601042831,
+      "name": "Torch 2.2.2+cpu CPU reference",
+      "status": "completed",
+      "url": "https://github.com/ArjunNair04/stealth/actions/runs/43043447281/job/130601042831"
+    },
+    {
+      "conclusion": "success",
+      "id": 130601042690,
+      "name": "macOS ARM",
+      "status": "completed",
+      "url": "https://github.com/ArjunNair04/stealth/actions/runs/43043447197/job/130601042690"
+    }
+  ],
+  "code_sha256": {
+    "CMakeLists.txt": "28983723ed734bb88f66c176e5e7ebd8a3bb8677e62a5205e5986fb692241253",
+    "src/signal_index.cpp": "9ce73e734c5ffdc8d94fc976cba42aab92f90ea68f381826d6a4fd4b303c284d",
+    "tests/allocation_tests.cpp": "8ca4a1baf6435881e9bfeb78f1544385543b8e962ff4a26fab3fcc95f50545aa"
+  },
+  "local": {
+    "debug_groups": 73,
+    "extension": {
+      "build_info": {
+        "architecture": "x86_64",
+        "compiler": "AppleClang 16.0.0.16000026",
+        "configuration": "Release",
+        "operating_system": "Darwin",
+        "source_fingerprint": "df4afac88fdeed97d70f28ee827330e8ce1a36a4867b84b9b7803540bf84d916",
+        "version": "0.1.0"
+      },
+      "extension_sha256": "739eb55cf80a06911cd648fe414eee94cd804822ba3a710bc9db6e66af189905"
+    },
+    "log_sha256": {
+      "windows-fix-dev-test.log": "4b3b77416be241c0521bfa56487a89bfdbd38a2fdbe5fa16897553e23d89b202",
+      "windows-fix-evidence-verifier.log": "bccd730188b20c290e1768bb41e20298dc07233e4456b7e969fa53af450a21df",
+      "windows-fix-extension-identity.log": "286cb5de130bf563cfeb6046a66624d7a6a7cd8e811d418c3886eaf862a3c204",
+      "windows-fix-offline-python310.log": "318c09ff22247dd9a68e5062fa3aa5c5ff665ca78b66c63b2a47a7ff633dd48e",
+      "windows-fix-release-test.log": "2f57ce57f9684bcc694329a354f4cb8881232eea07a416aeedf824d0e921c180",
+      "windows-fix-sanitize-test.log": "73900665c02e3f640926cd33829042eb316334b9fb9db1bc299b4a724efe41e7"
+    },
+    "offline_tests": 86,
+    "package": {
+      "artifacts": {
+        "numpy-2.2.6-cp310-cp310-macosx_14_0_x86_64.whl": "5a6429d4be8ca66d889b7cf70f536a397dc45ba6faeb5f8c5427935d9592e9cf",
+        "stealth_cpu-0.1.0-cp310-cp310-macosx_14_0_x86_64.whl": "c60b1578a997a796e6c31c5444d1ad6865f8ad319b56c3b8d88b7dfa09633b98",
+        "stealth_cpu-0.1.0.tar.gz": "011e34b10d2104251964b6d47b2d5900498cbd6af0d76ffb9ae94f35fec841f5"
+      },
+      "built_wheel_from_sdist": true,
+      "python": "3.10.6",
+      "runtime_dependencies": [
+        "numpy==2.2.6"
+      ],
+      "runtime_install_network": false,
+      "schema_version": 1,
+      "status": "passed",
+      "wheel_members": [
+        "stealth_cpu/__init__.py",
+        "stealth_cpu/_core.cpython-310-darwin.so",
+        "stealth_cpu-0.1.0.dist-info/METADATA",
+        "stealth_cpu-0.1.0.dist-info/WHEEL",
+        "stealth_cpu-0.1.0.dist-info/RECORD"
+      ]
+    },
+    "release_groups": 73,
+    "sanitizer_groups": 72,
+    "wrapper_tests": 36
+  },
+  "preserved_local_environment_failures": [
+    "Default CMake compiler selection used a Homebrew LLVM/linker combination that could not link the installed SDK; rebuilt in a new output directory with the existing AppleClang compiler.",
+    "The unqualified python3 resolved to unsupported Python 3.9; offline suite reran with the declared Python 3.10 environment."
+  ],
+  "published_excerpt_sha256": {
+    "after-ci-excerpt.txt": "05e9ce74541e1c8210a31205769d39810cb94a0517d77458324cb37171d9888f",
+    "before-ci-excerpt.txt": "d5a1c2bc117cdd0eb881b11986952e500744cd8d9261572cd4b4654e35bc6465"
+  },
+  "schema_version": 1,
+  "scope": "Cold SignalIndex construction failure recovery; no new inference timing claim",
+  "source_commit": "46995d51d456a07f8f8fa6325b2903238c83eb18",
+  "status": "passed"
+}

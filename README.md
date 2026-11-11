@@ -26,6 +26,8 @@ assembly evidence and a same-host before/after/PyTorch comparison. The
 [earlier Beaker validation](docs/beaker-linux-v1.md) established native, sanitizer,
 Python and training/reference compatibility. Results cover specific Xeon CPUs
 and the saved ETTm1 one-block workload.
+Cross-platform failure testing includes the verified
+[Windows allocation-recovery repair](docs/windows-allocation-v1.md).
 Current compiled and independent runtime comparisons, sustained-load testing,
 research novelty and financial usefulness remain unestablished. See
 [the earlier Intel Mac measurements](docs/latest-results-v1.md) and

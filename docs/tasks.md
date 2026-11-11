@@ -5,12 +5,36 @@ mixed-frequency prediction pipeline. The [native batching study](native-batching
 passes the matched Linux performance gate with 11.84% lower batch-eight
 p50, unchanged arithmetic and bounded transactional workspace. Its report preserves
 the rejected candidate, assembly diagnosis, startup-test repair and all raw timings.
-The [Beaker compatibility checks](beaker-linux-v1.md) and current native/Python tests
-pass. Current compiled/ONNX timing, sustained serving and broader shapes remain open.
+The [Beaker compatibility checks](beaker-linux-v1.md) pass. The
+[Windows allocation repair](windows-allocation-v1.md) addresses a separate Debug
+construction failure; the repaired Windows Debug/Release/package job passes.
+Current compiled/ONNX timing, sustained serving and broader shapes remain open.
 Linux access itself is resolved. The next performance comparison should complete
 the existing current-runtime admission/timing harness before another kernel change.
 The user expects minute bars alongside daily, weekly and potentially monthly
 factors. Exact sources, freshness thresholds and prediction targets remain open.
+
+## Immediate order after the Windows repair
+
+1. Finish review of PR #31 with its parent changes. The internal review covers
+   batch/window separation, bounded workspace, moved state, Python ownership and
+   failure publication; it is not independent approval. Keep the full CI matrix
+   and the recorded failures visible.
+2. Complete the existing 90-cell current-runtime timed orchestrator and its
+   failure/aggregation tests. Admit the saved models in a locked modern Linux
+   environment before collecting one acceptance run. The earlier CentOS 7/Torch
+   2.6 comparison is useful compatibility evidence, not that runtime frontier.
+3. Diagnose larger-batch scaling separately after the fixed batch-one/eight
+   comparison. The existing batch-sixteen loss remains public. Use profiling to
+   decide whether matrix work, feature conversion or another stage warrants a
+   change; keep scratch/memory cost alongside latency.
+4. Choose the implementation from those results. A standard runtime that gives
+   the same behavior at lower cost remains a valid outcome. Retain the availability
+   and replay contracts regardless of the inference backend. Do not relax the
+   existing parity tolerance to manufacture a speed win.
+
+The milestone sections below retain earlier findings and proposals. This ordered
+list is the active queue; historical Linux deferrals are no longer access blockers.
 
 ## Completed foundation
 

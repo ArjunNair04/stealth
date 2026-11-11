@@ -240,3 +240,13 @@ workspaces, allocation failures, aliasing, nonfinite inputs and late overflow.
 Native success/error paths allocate no heap storage after workspace construction.
 Source-to-wheel installation and package relocation pass. Linux validation and
 raw performance acceptance are recorded separately in the report.
+
+
+## Windows construction-failure regression
+
+The [November repair](windows-allocation-v1.md) keeps MSVC iterator debugging
+and every-allocation fault injection enabled. Empty and populated signal indexes
+must throw `bad_alloc` on each intercepted construction failure, preserve the old
+index, and permit a new construction afterward. Flushed phase markers and a
+120-second bound distinguish a stopped test from a successful run. An unexpected
+termination exits with failure; it cannot wait indefinitely for a debug dialog.
