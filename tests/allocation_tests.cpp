@@ -9,6 +9,7 @@
 #include "test_support.hpp"
 
 #include <array>
+#include <cstdio>
 #include <cstdlib>
 #include <limits>
 #include <new>
@@ -21,6 +22,15 @@ thread_local bool tracking = false;
 thread_local std::size_t allocations = 0;
 thread_local bool inject_failure = false;
 thread_local std::size_t fail_index = 0, attempt = 0;
+void phase(const char *name) {
+    // Keep diagnostics outside tracked/injected regions; flush before a possible stall.
+    std::fprintf(stderr, "[allocation] %s\n", name);
+    std::fflush(stderr);
+}
+void failure_case(const char *name, std::size_t index, std::size_t count) {
+    std::fprintf(stderr, "[allocation] %s failure %zu/%zu\n", name, index + 1, count);
+    std::fflush(stderr);
+}
 void maybe_fail() {
     if (inject_failure && attempt++ == fail_index)
         throw std::bad_alloc();
@@ -80,6 +90,7 @@ void operator delete[](void *address, std::size_t, std::align_val_t) noexcept {
 int main() {
     using namespace stealth::numeric;
     try {
+        phase("interception controls");
         // Positive control proves the interception is live for both allocation families.
         tracking = true;
         void *plain = ::operator new(17);
@@ -88,6 +99,7 @@ int main() {
         ::operator delete[](aligned, std::align_val_t{64});
         tracking = false;
         CHECK(allocations == 2);
+        phase("feed-forward hot path");
         for (auto kernel : {DenseKernel::reference, DenseKernel::packed}) {
             FeedForward model(fixture::width, fixture::hidden,
                               {fixture::scale, fixture::shift, fixture::up_weights,
@@ -117,6 +129,7 @@ int main() {
             for (std::size_t i = 0; i < output.size(); ++i)
                 test::near(output[i], fixture::expected[i], 2e-5, 5e-5);
         }
+        phase("feed-forward rows");
         // Four-row packed tiles and a fifth-row tail, including the complete MLP.
         for (auto kernel : {DenseKernel::reference, DenseKernel::packed}) {
             FeedForward model(fixture::width, fixture::hidden,
@@ -140,6 +153,7 @@ int main() {
             for (std::size_t i = 0; i < output.size(); ++i)
                 test::near(output[i], fixture::expected[i % fixture::width], 2e-5, 5e-5);
         }
+        phase("transformer hot path");
         namespace f = attention_fixture;
         for (auto kernel : {DenseKernel::reference, DenseKernel::packed}) {
             TransformerBlock model(f::width, f::heads, f::hidden,
@@ -176,6 +190,7 @@ int main() {
             for (std::size_t i = 0; i < output.size(); ++i)
                 test::near(output[i], f::expected[i], 3e-5, 1e-4);
         }
+        phase("attention tiles");
         for (auto kernel : {AttentionKernel::reference, AttentionKernel::tiled}) {
             // Exercise complete eight-channel tiles AND a per-head scalar tail.
             constexpr std::size_t tokens = 17, width = 36, heads = 4;
@@ -194,6 +209,7 @@ int main() {
             for (auto value : out)
                 test::near(value, 1.0);
         }
+        phase("latest forecast");
         namespace ff = forecast_fixture;
         {
             auto model = load_forecaster(std::as_bytes(std::span(ff::artifact)));
@@ -214,6 +230,7 @@ int main() {
 
         {
             auto model = load_forecaster(std::as_bytes(std::span(ff::artifact)));
+            phase("batch hot path");
             ForecastBatchWorkspace ws(model->config(), 5);
             std::array<float, 5 * ff::input.size()> inputs{};
             std::array<float, 5 * ff::tokens> outputs{};
@@ -247,6 +264,7 @@ int main() {
             candidate.reset();
             CHECK(cold > 1);
             for (std::size_t i = 0; i < cold; ++i) {
+                failure_case("constructor", i, cold);
                 fail_index = i;
                 attempt = 0;
                 inject_failure = true;
@@ -263,6 +281,7 @@ int main() {
             }
         }
         for (auto kernel : {DenseKernel::reference, DenseKernel::packed}) {
+            phase("model hot path and load failures");
             auto model = load_forecaster(std::as_bytes(std::span(ff::artifact)), kernel);
             ForecastWorkspace workspace(model->config());
             std::array<float, ff::tokens> output{};
@@ -294,6 +313,7 @@ int main() {
             candidate.reset();
             const auto *before = model.get();
             for (std::size_t failure = 0; failure < cold_allocations; ++failure) {
+                failure_case("load", failure, cold_allocations);
                 fail_index = failure;
                 attempt = 0;
                 inject_failure = true;
@@ -313,6 +333,7 @@ int main() {
             std::cout << "Preserved active model across " << cold_allocations
                       << " injected load allocation failures\n";
         }
+        phase("window stream");
         for (auto mode : {ForecastOutput::level, ForecastOutput::correction}) {
             ForecastConfig config{ff::features, ff::width,  ff::heads, ff::hidden, ff::tokens,
                                   ff::horizon,  ff::target, 1e-5F,     mode};
@@ -346,6 +367,7 @@ int main() {
             candidate.reset();
             CHECK(cold > 1);
             for (std::size_t i = 0; i < cold; ++i) {
+                failure_case("constructor", i, cold);
                 fail_index = i;
                 attempt = 0;
                 inject_failure = true;
@@ -365,6 +387,7 @@ int main() {
         }
 
         {
+            phase("signal index");
             using namespace stealth::temporal;
             const std::array<SignalLimits, 2> limits{{{100, 100}, {200, 200}}};
             const std::array<SignalRecord, 3> records{{{0, 1, 0, 0, 0, 1, 2.0},
@@ -391,6 +414,7 @@ int main() {
             candidate.reset();
             CHECK(cold > 1);
             for (std::size_t i = 0; i < cold; ++i) {
+                failure_case("constructor", i, cold);
                 fail_index = i;
                 attempt = 0;
                 inject_failure = true;
