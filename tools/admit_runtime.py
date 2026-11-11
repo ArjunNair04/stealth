@@ -50,6 +50,11 @@ def supervise(command,output,*,timeout,env):
             except ProcessLookupError:pass
             process.wait()
             raise
+        finally:
+            # Compiler helpers can outlive a worker that succeeds or fails.
+            # A fresh next cell must not inherit their CPU work or open logs.
+            try:os.killpg(process.pid,signal.SIGKILL)
+            except ProcessLookupError:pass
     return dict(returncode=process.returncode,timed_out=timed_out,wall_seconds=time.perf_counter()-started)
 
 

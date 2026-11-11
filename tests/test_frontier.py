@@ -138,6 +138,46 @@ class Artifacts(unittest.TestCase):
             self.assertTrue((root / frontier.cell_id(cells[2]) / 'record.json').exists())
             with self.assertRaises(FileExistsError): frontier.execute_cells(cells, root, runner, budget=10)
 
+    @unittest.skipUnless(os.name == 'posix', 'POSIX process supervision')
+    def test_exited_worker_cannot_leave_compiler_children_running(self):
+        import select
+        import signal
+        import subprocess
+        from admit_runtime import supervise
+        for exit_code in (0, 7):
+            with self.subTest(exit_code=exit_code), tempfile.TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                read_fd, write_fd = os.pipe()
+                original_popen = subprocess.Popen
+                process = None
+                write_open = True
+                grandchild = f"import os,time; os.write({write_fd},b'R'); time.sleep(60)"
+                child = (f"import subprocess,sys; subprocess.Popen([sys.executable,'-c',{grandchild!r}],"
+                         f"pass_fds=({write_fd},)); sys.exit({exit_code})")
+                def ready_popen(*args, **kwargs):
+                    nonlocal process, write_open
+                    process = original_popen(*args, **kwargs, pass_fds=(write_fd,))
+                    os.close(write_fd)
+                    write_open = False
+                    self.assertTrue(select.select([read_fd], [], [], 10)[0])
+                    self.assertEqual(os.read(read_fd, 1), b'R')
+                    return process
+                try:
+                    with patch('admit_runtime.subprocess.Popen', side_effect=ready_popen):
+                        result = supervise([sys.executable, '-c', child], root,
+                                           timeout=5, env=os.environ.copy())
+                    self.assertEqual(result['returncode'], exit_code)
+                    self.assertFalse(result['timed_out'])
+                    self.assertTrue(select.select([read_fd], [], [], 2)[0],
+                                    'An exited worker left its compiler child running')
+                    self.assertEqual(os.read(read_fd, 1), b'')
+                finally:
+                    if process is not None:
+                        try: os.killpg(process.pid, signal.SIGKILL)
+                        except ProcessLookupError: pass
+                    os.close(read_fd)
+                    if write_open: os.close(write_fd)
+
     def test_global_deadline_prevents_later_launches(self):
         with tempfile.TemporaryDirectory() as tmp:
             cells = frontier.matrix(json.loads(frontier.PROTOCOL.read_text()))[:2]
@@ -187,6 +227,17 @@ class HostLock(unittest.TestCase):
             (root / 'admission.json').write_bytes(canonical(dict(status='admitted', records=records)))
             frontier.seal(root, 'admitted')
             with self.assertRaises(ValueError): frontier.admitted_records(root, protocol)
+
+    def test_committed_lock_cannot_omit_or_change_wheel_bindings(self):
+        value = dict(schema_version=1, protocol_sha256=frontier.PROTOCOL_SHA,
+                     allocation='reserved CPU', host={'packages': {'example': '1.0'}},
+                     wheels={'example': dict(version='1.0', file='example-1.0.whl', sha256='a' * 64)})
+        frontier.validate_lock(value)
+        for replacement in ({}, {'example': {}},
+                            {'example': dict(version='2.0', file='example.whl', sha256='a' * 64)}):
+            changed = copy.deepcopy(value)
+            changed['wheels'] = replacement
+            with self.assertRaises(ValueError): frontier.validate_lock(changed)
 
     def test_legacy_host_cannot_be_called_a_frontier_run(self):
         from frontier_host import observe

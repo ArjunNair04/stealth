@@ -301,10 +301,28 @@ def lock(args, protocol):
                  admission_seal_sha256=digest(bounded(args.admission / 'seal.json')),
                  wheels=wheel_lock(args.wheels, host['packages']), graph_sha256=graphs,
                  allocation=args.allocation, cache_policy=CACHE_POLICY)
+    validate_lock(value)
     # Public host locks are committed separately, after inspection for private paths.
     write(args.output, value)
     print('Host lock written. Inspect it and commit it before the acceptance run.')
     return 0
+
+
+def validate_lock(value):
+    packages = value['host']['packages']
+    wheels = value.get('wheels', {})
+    if (value.get('schema_version') != 1 or value.get('protocol_sha256') != PROTOCOL_SHA or
+            not isinstance(value.get('allocation'), str) or not value['allocation'].strip() or
+            not packages or set(wheels) != set(packages)):
+        raise ValueError('Incomplete host/wheel lock')
+    for name, version in packages.items():
+        wheel = wheels[name]
+        sha = wheel.get('sha256', '')
+        filename = wheel.get('file', '')
+        if (wheel.get('version') != version or not isinstance(sha, str) or len(sha) != 64 or
+                any(c not in '0123456789abcdef' for c in sha) or not isinstance(filename, str) or
+                Path(filename).name != filename or not filename.endswith('.whl')):
+            raise ValueError('Invalid wheel binding: ' + name)
 
 
 def measure(args, protocol):
@@ -313,6 +331,7 @@ def measure(args, protocol):
     if not lock_path.is_relative_to(ROOT) or not git('ls-files', '--', str(lock_path.relative_to(ROOT))):
         raise ValueError('The host lock must be committed in this checkout')
     locked = json.loads(bounded(lock_path))
+    validate_lock(locked)
     records = admitted_records(args.admission, protocol)
     graphs = {f'{r["cell"]["seed"]}-{r["cell"]["batch"]}': r['result']['adapter']['graph_sha256']
               for r in records if r['cell']['engine'] == 'onnxruntime_cpu'}
@@ -321,6 +340,8 @@ def measure(args, protocol):
             locked['host'] != observed(args.native) or locked['cache_policy'] != CACHE_POLICY):
         raise ValueError('Host lock or admission no longer matches')
     output = local_path(args.output)
+    if output.is_relative_to(args.admission):
+        raise ValueError('Measurement output must not modify the admitted directory')
     if output.exists():
         raise FileExistsError(output)
     # One attempt for this admitted experiment, even if a different output is requested.

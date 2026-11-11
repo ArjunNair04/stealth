@@ -43,7 +43,8 @@ comparison incomplete and produce no pass/fail speed verdict.
 | `stealth_runtime_bench` | Existing native benchmark executable |
 
 A failed worker leaves its stdout, stderr, process status and record on disk; other
-competitors can still finish. Each worker has a 180-second wall limit, including
+competitors can still finish. Compiler child processes are stopped after success,
+failure or timeout, so they cannot keep working during the next cell. Each worker has a 180-second wall limit, including
 imports, compilation, accuracy checks and timing. This is stricter than the
 protocol's 180-second compilation allowance. The measurement matrix has a
 45-minute limit. Remaining cells are recorded as not run if it expires.
