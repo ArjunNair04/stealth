@@ -83,13 +83,10 @@ Error FeedForward::forward_rows(std::span<const float> input, std::size_t rows,
     auto activated = storage.subspan(w + h, h);
     auto projected = storage.subspan(w + 2 * h, w);
     auto scratch = storage.subspan(2 * w + 2 * h);
-    for (std::size_t row = 0; row < rows; ++row) {
-        const auto status =
-            layer_norm(input.subspan(row * width_, width_), scale_.span(), shift_.span(), epsilon_,
-                       normalized.subspan(row * width_, width_), scratch);
-        if (status != Error::ok)
-            return status;
-    }
+    const auto norm_status =
+        layer_norm_rows(input, rows, scale_.span(), shift_.span(), epsilon_, normalized, scratch);
+    if (norm_status != Error::ok)
+        return norm_status;
     auto status = up_.forward_rows(normalized, rows, expanded, scratch);
     if (status != Error::ok)
         return status;

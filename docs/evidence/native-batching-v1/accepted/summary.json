@@ -1,0 +1,126 @@
+{
+  "status": "complete",
+  "summary": [
+    {
+      "batch": 1,
+      "engine": "baseline",
+      "p50_us": 226.826,
+      "p99_us": 314.509
+    },
+    {
+      "batch": 1,
+      "engine": "candidate",
+      "p50_us": 226.471,
+      "p99_us": 243.529
+    },
+    {
+      "batch": 1,
+      "engine": "native_python",
+      "p50_us": 229.861,
+      "p99_us": 265.551
+    },
+    {
+      "batch": 1,
+      "engine": "torch_standard",
+      "p50_us": 721.241,
+      "p99_us": 760.727
+    },
+    {
+      "batch": 2,
+      "engine": "baseline",
+      "p50_us": 450.632,
+      "p99_us": 553.369
+    },
+    {
+      "batch": 2,
+      "engine": "candidate",
+      "p50_us": 405.219,
+      "p99_us": 533.592
+    },
+    {
+      "batch": 2,
+      "engine": "native_python",
+      "p50_us": 411.577,
+      "p99_us": 476.18
+    },
+    {
+      "batch": 2,
+      "engine": "torch_standard",
+      "p50_us": 879.506,
+      "p99_us": 928.98
+    },
+    {
+      "batch": 4,
+      "engine": "baseline",
+      "p50_us": 900.063,
+      "p99_us": 1068.768
+    },
+    {
+      "batch": 4,
+      "engine": "candidate",
+      "p50_us": 792.862,
+      "p99_us": 822.724
+    },
+    {
+      "batch": 4,
+      "engine": "native_python",
+      "p50_us": 798.865,
+      "p99_us": 839.6
+    },
+    {
+      "batch": 4,
+      "engine": "torch_standard",
+      "p50_us": 1154.223,
+      "p99_us": 1215.028
+    },
+    {
+      "batch": 8,
+      "engine": "baseline",
+      "p50_us": 1797.205,
+      "p99_us": 1851.018
+    },
+    {
+      "batch": 8,
+      "engine": "candidate",
+      "p50_us": 1584.472,
+      "p99_us": 1641.289
+    },
+    {
+      "batch": 8,
+      "engine": "native_python",
+      "p50_us": 1595.22,
+      "p99_us": 1645.6
+    },
+    {
+      "batch": 8,
+      "engine": "torch_standard",
+      "p50_us": 1708.192,
+      "p99_us": 1780.468
+    },
+    {
+      "batch": 16,
+      "engine": "baseline",
+      "p50_us": 3594.202,
+      "p99_us": 3675.637
+    },
+    {
+      "batch": 16,
+      "engine": "candidate",
+      "p50_us": 3169.851,
+      "p99_us": 3217.512
+    },
+    {
+      "batch": 16,
+      "engine": "native_python",
+      "p50_us": 3182.844,
+      "p99_us": 3260.87
+    },
+    {
+      "batch": 16,
+      "engine": "torch_standard",
+      "p50_us": 2787.511,
+      "p99_us": 2913.034
+    }
+  ],
+  "load_after": "0.97 0.69 0.62 1/328 32729\n"
+}

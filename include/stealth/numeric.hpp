@@ -73,6 +73,12 @@ class Dense {
 [[nodiscard]] Error layer_norm(std::span<const float> input, std::span<const float> scale,
                                std::span<const float> shift, float epsilon, std::span<float> output,
                                std::span<float> scratch) noexcept;
+// Row-wise normalization with shared scale/shift. Each row retains scalar FP64
+// reduction order. Scratch stages every row before publishing any output.
+[[nodiscard]] Error layer_norm_rows(std::span<const float> input, std::size_t rows,
+                                    std::span<const float> scale, std::span<const float> shift,
+                                    float epsilon, std::span<float> output,
+                                    std::span<float> scratch) noexcept;
 [[nodiscard]] Error gelu(std::span<const float> input, std::span<float> output,
                          std::span<float> scratch) noexcept;
 [[nodiscard]] Error residual_add(std::span<const float> input, std::span<const float> residual,

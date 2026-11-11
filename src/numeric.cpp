@@ -1,7 +1,7 @@
 #include "stealth/numeric.hpp"
-#include "fp_policy.hpp"
-#include "finite.hpp"
 #include "dense_avx.hpp"
+#include "finite.hpp"
+#include "fp_policy.hpp"
 
 #include <algorithm>
 #include <array>
@@ -23,9 +23,8 @@ constexpr std::size_t lanes = 8;
 // a runtime bound. Keep four named vectors so SLP can vectorize across columns
 // without changing the ordered FP32 accumulation along each dot product.
 template <std::size_t Rows, bool Full>
-void packed_tile(const float *input, const float *weights, const float *bias,
-                 float *output, std::size_t inputs, std::size_t outputs,
-                 std::size_t count = lanes) noexcept {
+void packed_tile(const float *input, const float *weights, const float *bias, float *output,
+                 std::size_t inputs, std::size_t outputs, std::size_t count = lanes) noexcept {
     static_assert(Rows == 1 || Rows == 4);
     const auto active = Full ? lanes : count;
     std::array<float, lanes> a{}, b{}, c{}, d{};
@@ -220,8 +219,8 @@ Error Dense::forward_rows(std::span<const float> input, std::size_t rows, std::s
                 scratch[row * outputs_ + o] = accumulator;
             }
     } else if (outputs_ >= lanes && (outputs_ >= 2 * lanes || rows >= 4) &&
-               numeric_detail::try_dense_avx(
-                   input.data(), weights.data(), bias.data(), scratch.data(), inputs_, outputs_, rows)) {
+               numeric_detail::try_dense_avx(input.data(), weights.data(), bias.data(),
+                                             scratch.data(), inputs_, outputs_, rows)) {
         // Keep narrow single-row products on the portable path: one AVX
         // accumulator offers little instruction parallelism for the dispatch cost.
         // The specialization writes only disposable scratch. Validation and
@@ -232,24 +231,26 @@ Error Dense::forward_rows(std::span<const float> input, std::size_t rows, std::s
         for (; row + 4 <= rows; row += 4) {
             std::size_t start = 0;
             for (; start < full_outputs; start += lanes)
-                packed_tile<4, true>(input.data() + row * inputs_,
-                    weights.data() + start * inputs_, bias.data() + start,
-                    scratch.data() + row * outputs_ + start, inputs_, outputs_);
+                packed_tile<4, true>(input.data() + row * inputs_, weights.data() + start * inputs_,
+                                     bias.data() + start, scratch.data() + row * outputs_ + start,
+                                     inputs_, outputs_);
             if (start < outputs_)
                 packed_tile<4, false>(input.data() + row * inputs_,
-                    weights.data() + start * inputs_, bias.data() + start,
-                    scratch.data() + row * outputs_ + start, inputs_, outputs_, outputs_ - start);
+                                      weights.data() + start * inputs_, bias.data() + start,
+                                      scratch.data() + row * outputs_ + start, inputs_, outputs_,
+                                      outputs_ - start);
         }
         for (; row < rows; ++row) {
             std::size_t start = 0;
             for (; start < full_outputs; start += lanes)
-                packed_tile<1, true>(input.data() + row * inputs_,
-                    weights.data() + start * inputs_, bias.data() + start,
-                    scratch.data() + row * outputs_ + start, inputs_, outputs_);
+                packed_tile<1, true>(input.data() + row * inputs_, weights.data() + start * inputs_,
+                                     bias.data() + start, scratch.data() + row * outputs_ + start,
+                                     inputs_, outputs_);
             if (start < outputs_)
                 packed_tile<1, false>(input.data() + row * inputs_,
-                    weights.data() + start * inputs_, bias.data() + start,
-                    scratch.data() + row * outputs_ + start, inputs_, outputs_, outputs_ - start);
+                                      weights.data() + start * inputs_, bias.data() + start,
+                                      scratch.data() + row * outputs_ + start, inputs_, outputs_,
+                                      outputs_ - start);
         }
     }
     return publish(scratch, output);
@@ -307,6 +308,59 @@ Error layer_norm(std::span<const float> input, std::span<const float> scale,
     }
     if (!representable)
         return Error::numerical_error;
+    return publish(scratch, output);
+}
+
+Error layer_norm_rows(std::span<const float> input, std::size_t rows, std::span<const float> scale,
+                      std::span<const float> shift, float epsilon, std::span<float> output,
+                      std::span<float> scratch) noexcept {
+    if (rows == 1)
+        return layer_norm(input, scale, shift, epsilon, output, scratch);
+    const auto width = scale.size();
+    if (rows == 0 || width == 0 || width > max_elements || rows > max_elements / width ||
+        shift.size() != width || input.size() != rows * width || output.size() != input.size() ||
+        !std::isfinite(epsilon) || epsilon <= 0)
+        return Error::shape_mismatch;
+    const auto status = validate({input, scale, shift}, output, scratch);
+    if (status != Error::ok)
+        return status;
+    // Interleave independent reductions so the compiler can vectorize across
+    // rows. Never reassociate the sum or variance within a row.
+    const auto tile = [&]<std::size_t Rows>(std::size_t first) {
+        std::array<double, Rows> means{}, variances{}, inverses{};
+        for (std::size_t i = 0; i < width; ++i)
+            for (std::size_t r = 0; r < Rows; ++r)
+                means[r] += input[(first + r) * width + i];
+        for (auto &mean : means)
+            mean /= static_cast<double>(width);
+        for (std::size_t i = 0; i < width; ++i)
+            for (std::size_t r = 0; r < Rows; ++r) {
+                const double difference = input[(first + r) * width + i] - means[r];
+                variances[r] += difference * difference;
+            }
+        for (std::size_t r = 0; r < Rows; ++r) {
+            variances[r] /= static_cast<double>(width);
+            inverses[r] = 1.0 / std::sqrt(variances[r] + epsilon);
+        }
+        bool representable = true;
+        for (std::size_t r = 0; r < Rows; ++r)
+            for (std::size_t i = 0; i < width; ++i) {
+                const auto index = (first + r) * width + i;
+                const double value =
+                    ((input[index] - means[r]) * inverses[r]) * scale[i] + shift[i];
+                const bool valid = std::abs(value) <= std::numeric_limits<float>::max();
+                scratch[index] = static_cast<float>(valid ? value : 0.0);
+                representable &= valid;
+            }
+        return representable;
+    };
+    std::size_t row = 0;
+    for (; row + 4 <= rows; row += 4)
+        if (!tile.template operator()<4>(row))
+            return Error::numerical_error;
+    for (; row < rows; ++row)
+        if (!tile.template operator()<1>(row))
+            return Error::numerical_error;
     return publish(scratch, output);
 }
 

@@ -37,12 +37,21 @@ same mutable session. Separate sessions can run concurrently on a shared model.
 Python prediction allocates an output array and explicitly copies input/output;
 the native allocation guarantee does not apply to the Python wrapper.
 
-Session predict takes [T,F], 1<=T<=context, and returns the T historical-origin
-point forecasts. predict_batch takes [B,T,F] and returns [B,T], sequentially through
-one workspace. This first batch interface is a convenience API, not a fused tensor
-kernel. Bound total batch input/output elements by max_elements before allocating;
-reject empty batches. A failed batch returns no partial result. Streams return
-None until full, then a Python float. No automatic differentiation is exposed.
+Session `predict` takes `[T,F]`, `1<=T<=context`, and returns the T historical-origin
+point forecasts. `predict_batch` takes `[B,T,F]` and returns `[B,T]`;
+`predict_last_batch` returns `[B]`. Independent windows share native matrix and
+normalization calls, while attention stays inside each window. The session
+lazily caches `ForecastBatchWorkspace`, growing it to the largest requested batch
+up to 1024. Larger Python batches are split into bounded native calls; single
+windows retain the original execution path. `workspace_bytes` includes this cache
+once allocated, as well as the single-window workspace and input buffer.
+
+Bound total batch input/output elements by `max_elements` before allocating;
+reject empty batches. A failed batch returns no partial result. Each call takes
+an owned input snapshot before releasing the GIL, and returns an owned result.
+See [native batching](native-batching-v1.md) for memory and measured timing trade-offs.
+Streams return `None` until full, then a Python float. No automatic differentiation
+is exposed.
 
 Tests precede native behavior. Require independent fixture agreement, invalid
 buffers and errors, caller-input preservation, lifetime and repeated-call checks,

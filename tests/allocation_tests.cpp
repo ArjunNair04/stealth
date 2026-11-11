@@ -3,12 +3,13 @@
 #include "fixtures/forecast.hpp"
 #include "stealth/feed_forward.hpp"
 #include "stealth/model_file.hpp"
+#include "stealth/signal_index.hpp"
 #include "stealth/transformer_block.hpp"
 #include "stealth/window_stream.hpp"
-#include "stealth/signal_index.hpp"
 #include "test_support.hpp"
 
 #include <array>
+#include <cstdio>
 #include <cstdlib>
 #include <limits>
 #include <new>
@@ -21,6 +22,15 @@ thread_local bool tracking = false;
 thread_local std::size_t allocations = 0;
 thread_local bool inject_failure = false;
 thread_local std::size_t fail_index = 0, attempt = 0;
+void phase(const char *name) {
+    // Keep diagnostics outside tracked/injected regions; flush before a possible stall.
+    std::fprintf(stderr, "[allocation] %s\n", name);
+    std::fflush(stderr);
+}
+void failure_case(const char *name, std::size_t index, std::size_t count) {
+    std::fprintf(stderr, "[allocation] %s failure %zu/%zu\n", name, index + 1, count);
+    std::fflush(stderr);
+}
 void maybe_fail() {
     if (inject_failure && attempt++ == fail_index)
         throw std::bad_alloc();
@@ -79,7 +89,15 @@ void operator delete[](void *address, std::size_t, std::align_val_t) noexcept {
 
 int main() {
     using namespace stealth::numeric;
+    std::set_terminate([] {
+        // A noexcept constructor failure must fail CI, never wait on a CRT dialog.
+        std::fprintf(stderr, "FAIL: unexpected termination; injection=%d attempt=%zu target=%zu\n",
+                     static_cast<int>(inject_failure), attempt, fail_index);
+        std::fflush(stderr);
+        std::_Exit(EXIT_FAILURE);
+    });
     try {
+        phase("interception controls");
         // Positive control proves the interception is live for both allocation families.
         tracking = true;
         void *plain = ::operator new(17);
@@ -88,6 +106,7 @@ int main() {
         ::operator delete[](aligned, std::align_val_t{64});
         tracking = false;
         CHECK(allocations == 2);
+        phase("feed-forward hot path");
         for (auto kernel : {DenseKernel::reference, DenseKernel::packed}) {
             FeedForward model(fixture::width, fixture::hidden,
                               {fixture::scale, fixture::shift, fixture::up_weights,
@@ -117,6 +136,7 @@ int main() {
             for (std::size_t i = 0; i < output.size(); ++i)
                 test::near(output[i], fixture::expected[i], 2e-5, 5e-5);
         }
+        phase("feed-forward rows");
         // Four-row packed tiles and a fifth-row tail, including the complete MLP.
         for (auto kernel : {DenseKernel::reference, DenseKernel::packed}) {
             FeedForward model(fixture::width, fixture::hidden,
@@ -140,6 +160,7 @@ int main() {
             for (std::size_t i = 0; i < output.size(); ++i)
                 test::near(output[i], fixture::expected[i % fixture::width], 2e-5, 5e-5);
         }
+        phase("transformer hot path");
         namespace f = attention_fixture;
         for (auto kernel : {DenseKernel::reference, DenseKernel::packed}) {
             TransformerBlock model(f::width, f::heads, f::hidden,
@@ -176,6 +197,7 @@ int main() {
             for (std::size_t i = 0; i < output.size(); ++i)
                 test::near(output[i], f::expected[i], 3e-5, 1e-4);
         }
+        phase("attention tiles");
         for (auto kernel : {AttentionKernel::reference, AttentionKernel::tiled}) {
             // Exercise complete eight-channel tiles AND a per-head scalar tail.
             constexpr std::size_t tokens = 17, width = 36, heads = 4;
@@ -194,6 +216,7 @@ int main() {
             for (auto value : out)
                 test::near(value, 1.0);
         }
+        phase("latest forecast");
         namespace ff = forecast_fixture;
         {
             auto model = load_forecaster(std::as_bytes(std::span(ff::artifact)));
@@ -212,7 +235,60 @@ int main() {
             test::near(point[0], ff::expected.back(), 5e-5, 2e-4);
         }
 
+        {
+            auto model = load_forecaster(std::as_bytes(std::span(ff::artifact)));
+            phase("batch hot path");
+            ForecastBatchWorkspace ws(model->config(), 5);
+            std::array<float, 5 * ff::input.size()> inputs{};
+            std::array<float, 5 * ff::tokens> outputs{};
+            for (std::size_t b = 0; b < 5; ++b)
+                std::copy(ff::input.begin(), ff::input.end(),
+                          inputs.begin() + static_cast<std::ptrdiff_t>(b * ff::input.size()));
+            allocations = 0;
+            tracking = true;
+            bool failed = false;
+            for (int i = 0; i < 100; ++i) {
+                if (model->forward_batch(inputs, 5, ff::tokens, outputs, ws) != Error::ok ||
+                    model->forward_batch(inputs, 5, ff::tokens, std::span(outputs).first(5), ws,
+                                         SequenceOutput::last) != Error::ok ||
+                    model->forward_batch(inputs, 0, ff::tokens, outputs, ws) !=
+                        Error::shape_mismatch)
+                    failed = true;
+                const auto saved = inputs.back();
+                inputs.back() = std::numeric_limits<float>::infinity();
+                if (model->forward_batch(inputs, 5, ff::tokens, outputs, ws) != Error::non_finite)
+                    failed = true;
+                inputs.back() = saved;
+            }
+            tracking = false;
+            CHECK(!failed);
+            CHECK(allocations == 0);
+            allocations = 0;
+            tracking = true;
+            auto candidate = std::make_unique<ForecastBatchWorkspace>(model->config(), 5);
+            tracking = false;
+            const auto cold = allocations;
+            candidate.reset();
+            CHECK(cold > 1);
+            for (std::size_t i = 0; i < cold; ++i) {
+                failure_case("constructor", i, cold);
+                fail_index = i;
+                attempt = 0;
+                inject_failure = true;
+                bool caught = false;
+                try {
+                    candidate = std::make_unique<ForecastBatchWorkspace>(model->config(), 5);
+                } catch (const std::bad_alloc &) {
+                    caught = true;
+                }
+                inject_failure = false;
+                CHECK(caught);
+                CHECK(!candidate);
+                CHECK(model->forward_batch(inputs, 5, ff::tokens, outputs, ws) == Error::ok);
+            }
+        }
         for (auto kernel : {DenseKernel::reference, DenseKernel::packed}) {
+            phase("model hot path and load failures");
             auto model = load_forecaster(std::as_bytes(std::span(ff::artifact)), kernel);
             ForecastWorkspace workspace(model->config());
             std::array<float, ff::tokens> output{};
@@ -244,6 +320,7 @@ int main() {
             candidate.reset();
             const auto *before = model.get();
             for (std::size_t failure = 0; failure < cold_allocations; ++failure) {
+                failure_case("load", failure, cold_allocations);
                 fail_index = failure;
                 attempt = 0;
                 inject_failure = true;
@@ -263,6 +340,7 @@ int main() {
             std::cout << "Preserved active model across " << cold_allocations
                       << " injected load allocation failures\n";
         }
+        phase("window stream");
         for (auto mode : {ForecastOutput::level, ForecastOutput::correction}) {
             ForecastConfig config{ff::features, ff::width,  ff::heads, ff::hidden, ff::tokens,
                                   ff::horizon,  ff::target, 1e-5F,     mode};
@@ -296,6 +374,7 @@ int main() {
             candidate.reset();
             CHECK(cold > 1);
             for (std::size_t i = 0; i < cold; ++i) {
+                failure_case("constructor", i, cold);
                 fail_index = i;
                 attempt = 0;
                 inject_failure = true;
@@ -315,11 +394,12 @@ int main() {
         }
 
         {
+            phase("signal index");
             using namespace stealth::temporal;
             const std::array<SignalLimits, 2> limits{{{100, 100}, {200, 200}}};
-            const std::array<SignalRecord, 3> records{{
-                {0, 1, 0, 0, 0, 1, 2.0}, {0, 1, 1, 0, 10, 20, std::nullopt},
-                {1, 1, 0, 0, 0, 2, 3.0}}};
+            const std::array<SignalRecord, 3> records{{{0, 1, 0, 0, 0, 1, 2.0},
+                                                       {0, 1, 1, 0, 10, 20, std::nullopt},
+                                                       {1, 1, 0, 0, 0, 2, 3.0}}};
             const SignalIndex index(limits, records);
             std::array<SignalFeature, 2> out;
             allocations = 0;
@@ -333,31 +413,44 @@ int main() {
             tracking = false;
             CHECK(!failed);
             CHECK(allocations == 0);
-            allocations = 0;
-            tracking = true;
-            auto candidate = std::make_unique<SignalIndex>(limits, records);
-            tracking = false;
-            const auto cold = allocations;
-            candidate.reset();
-            CHECK(cold > 1);
-            for (std::size_t i = 0; i < cold; ++i) {
-                fail_index = i;
-                attempt = 0;
-                inject_failure = true;
-                bool caught = false;
-                try {
-                    candidate = std::make_unique<SignalIndex>(limits, records);
-                } catch (const std::bad_alloc &) {
-                    caught = true;
+            // Empty tapes still construct nested containers. Exercise every cold
+            // allocation in both cases, including MSVC's debug iterator proxies.
+            for (auto deliveries : {std::span<const SignalRecord>{},
+                                    std::span<const SignalRecord>{records}}) {
+                allocations = 0;
+                tracking = true;
+                auto candidate = std::make_unique<SignalIndex>(limits, deliveries);
+                tracking = false;
+                const auto cold = allocations;
+                candidate.reset();
+                CHECK(cold > 1);
+                for (std::size_t i = 0; i < cold; ++i) {
+                    failure_case(deliveries.empty() ? "empty index" : "populated index", i, cold);
+                    fail_index = i;
+                    attempt = 0;
+                    inject_failure = true;
+                    bool caught = false;
+                    try {
+                        candidate = std::make_unique<SignalIndex>(limits, deliveries);
+                    } catch (const std::bad_alloc &) {
+                        caught = true;
+                    }
+                    inject_failure = false;
+                    CHECK(caught);
+                    CHECK(!candidate);
+                    CHECK(index.snapshot(3, out) == SnapshotError::ok);
+                    CHECK(out[0].value == 2.0);
+                    // Failure must also leave a fresh construction usable.
+                    candidate = std::make_unique<SignalIndex>(limits, deliveries);
+                    CHECK(candidate->record_count() == deliveries.size());
+                    CHECK(candidate->snapshot(3, out) == SnapshotError::ok);
+                    CHECK(out[0].state == (deliveries.empty() ? SignalState::missing
+                                                            : SignalState::valid));
+                    candidate.reset();
                 }
-                inject_failure = false;
-                CHECK(caught);
-                CHECK(!candidate);
-                CHECK(index.snapshot(3, out) == SnapshotError::ok);
-                CHECK(out[0].value == 2.0);
+                std::cout << cold << " index construction allocation failures preserved the old "
+                                       "index and allowed a fresh construction\n";
             }
-            std::cout << "Zero allocations in 10,000 snapshot/error cycles; " << cold
-                      << " index construction allocation failures preserved the old index\n";
         }
         std::cout << "No intercepted C++ heap allocations in 4,000 forecaster/error-path cycles\n";
         std::cout << "No intercepted C++ heap allocations in 4,000 "

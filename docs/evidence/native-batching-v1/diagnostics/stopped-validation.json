@@ -1,0 +1,44 @@
+{
+  "status": "stopped_before_timing",
+  "source_commit": "2b19980f0f556d81bb6c4c015830a202a2846450",
+  "failure": "test_process_group_timeout expected child startup within 0.2 seconds; stdout was still empty",
+  "passing_gates": [
+    "Debug 73",
+    "Release 73",
+    "portable 73",
+    "sanitizer 72",
+    "offline 86",
+    "wrapper 36"
+  ],
+  "training": {
+    "ran": 117,
+    "failed": 1,
+    "skipped": 3
+  },
+  "repair_commit": "c5f4374ff1c1d17d13e3f02a9b108edb2caffd0e",
+  "repair": "Readiness pipe before the process-group timeout; require EOF after kill. Production supervisor and native code unchanged.",
+  "preserved_log_sha256": {
+    "training-tests.log": "5bd00a8af777f7408ef7b780c4b28c7121b625accb191fab2c0061490ad20209",
+    "portable-test.log": "053b52a8a3d1a032cfea1793731fce9fc24c84aec9bb67af6c9db94dd249111f",
+    "offline-tests.log": "63fe46cf27978a9729cf61bc569c5f39b52e66173188bfec57eee5c81e3812b2",
+    "release-configure.log": "797dd374a6116f432b2e4a3bc83a6ae196a267df1a1884b25d8358b5e93e4962",
+    "portable-configure.log": "29dfc4d2069825d4d5e32031a9137566e8286a1ba5025b43e85cf50b6fd6e43d",
+    "sanitize-test.log": "ca957c458f77a0a50d506fd3b9b32b959ce446603e41926fe6a393212a4afe0e",
+    "identity.log": "1303b54eae6994325189c3256a46ff67d487e5fc951a669af3d3dc4b60806b59",
+    "dev-configure.log": "4cb021b67acc068ea42b8a5606745dc1621e24622072ccf6fd0c55cbc3632c2a",
+    "steps.json": "e8f33e08cdab5eb6397e2864e20ee9474e66687a9f8658378835a3122d292c9c",
+    "wrapper-install.log": "ebd62f466a8aaf9b1f5f7d312a8c146428770562e93718a8b918977c49013044",
+    "release-build.log": "e35fee287beadef30e75e78872610890da2556bdb025619f90fac6857cb746fb",
+    "portable-build.log": "318f9698cd8573c5fe791e6ac5d62a46d3424d5ab44224325c6a578c88557179",
+    "sanitize-configure.log": "efdec057994cdbfe29bc7a6bfa41b7b9bd43c7e6db73e5aa9836cf000ee3455a",
+    "dev-test.log": "deb40c9e39b7952ebd294822732fc1d74f755a9a5e49b269c3efab4372bf3bdd",
+    "failed.json": "3fe241bc9ffef48821545f940049f73ef62fe3460ece1321c30cf3ac4e0504c3",
+    "release-test.log": "0a423dc0a4f195b52c94d4bfd3bcdc69dbb29d73d2027b5cfd076f4a6d0b7eb4",
+    "python-environment.log": "bdbf255ee497e70466971829c10d3e95f5eec404d7ec1f868bb290b3173e522f",
+    "dev-build.log": "4cd00f945f760dc57b179be4e85d2d586c15692d404b993792a672002dd9e4eb",
+    "environment.json": "728815cc9abcd9d500eb14ba8b48b52dd338aad0efa17a1b4c62e0e102183a8b",
+    "sanitize-build.log": "4cd00f945f760dc57b179be4e85d2d586c15692d404b993792a672002dd9e4eb",
+    "toolchain.log": "5969e7bdd29284b1bfb70064e97f658459e151652703459dbc5d00aa9101d082",
+    "wrapper-tests.log": "55f0a71b3a40324f5f39bbaa3d419b99ad0141e2f347feaacc3dacbe4e30ab19"
+  }
+}

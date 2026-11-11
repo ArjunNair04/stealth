@@ -26,6 +26,12 @@ Total number in stack
         self.assertEqual(result['counts']['dense'], 60)
         self.assertEqual(result['counts']['other'], 40)
 
+    def test_batched_norm_includes_nested_scalar_call_once(self):
+        text = "Call graph:\n    100 Thread_1\n      40 stealth::numeric::layer_norm_rows(x)  (in app)\n        30 stealth::numeric::layer_norm(x)  (in app)\n      20 stealth::numeric::layer_norm(x)  (in app)\nTotal number in stack"
+        result=summarize_profile(text)
+        self.assertEqual(result['counts']['layer_norm'],60)
+        self.assertEqual(result['counts']['other'],40)
+
     def test_unrecognised_or_inconsistent_profile_fails(self):
         for text in ('', 'Call graph:\n  10 Thread_1\n  20 stealth::numeric::gelu(x)  (in app)\nTotal number in stack'):
             with self.assertRaises(ValueError): summarize_profile(text)

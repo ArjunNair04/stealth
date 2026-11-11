@@ -1,0 +1,290 @@
+[
+  {
+    "trial": 1,
+    "batch": 1,
+    "engine": "scalar_reductions",
+    "p50_us": 203.66,
+    "p99_us": 212.282,
+    "checksum": 6163.107675552368
+  },
+  {
+    "trial": 1,
+    "batch": 1,
+    "engine": "reuse8",
+    "p50_us": 204.418,
+    "p99_us": 218.51,
+    "checksum": 6163.107675552368
+  },
+  {
+    "trial": 1,
+    "batch": 1,
+    "engine": "reuse8_scalar",
+    "p50_us": 203.961,
+    "p99_us": 213.372,
+    "checksum": 6163.107675552368
+  },
+  {
+    "trial": 1,
+    "batch": 1,
+    "engine": "baseline",
+    "p50_us": 207.36,
+    "p99_us": 253.591,
+    "checksum": 6163.107675552368
+  },
+  {
+    "trial": 1,
+    "batch": 1,
+    "engine": "candidate_v1",
+    "p50_us": 204.675,
+    "p99_us": 216.222,
+    "checksum": 6163.107675552368
+  },
+  {
+    "trial": 1,
+    "batch": 1,
+    "engine": "tile8",
+    "p50_us": 204.427,
+    "p99_us": 213.102,
+    "checksum": 6163.107675552368
+  },
+  {
+    "trial": 1,
+    "batch": 8,
+    "engine": "reuse8",
+    "p50_us": 1820.796,
+    "p99_us": 1850.532,
+    "checksum": 5991.899299621582
+  },
+  {
+    "trial": 1,
+    "batch": 8,
+    "engine": "reuse8_scalar",
+    "p50_us": 1887.967,
+    "p99_us": 1984.452,
+    "checksum": 5991.899299621582
+  },
+  {
+    "trial": 1,
+    "batch": 8,
+    "engine": "baseline",
+    "p50_us": 1662.627,
+    "p99_us": 1688.807,
+    "checksum": 5991.899299621582
+  },
+  {
+    "trial": 1,
+    "batch": 8,
+    "engine": "candidate_v1",
+    "p50_us": 1810.937,
+    "p99_us": 1862.407,
+    "checksum": 5991.899299621582
+  },
+  {
+    "trial": 1,
+    "batch": 8,
+    "engine": "tile8",
+    "p50_us": 1822.707,
+    "p99_us": 1869.449,
+    "checksum": 5991.899299621582
+  },
+  {
+    "trial": 1,
+    "batch": 8,
+    "engine": "scalar_reductions",
+    "p50_us": 1880.689,
+    "p99_us": 1920.957,
+    "checksum": 5991.899299621582
+  },
+  {
+    "trial": 2,
+    "batch": 1,
+    "engine": "reuse8",
+    "p50_us": 204.564,
+    "p99_us": 212.392,
+    "checksum": 6163.107675552368
+  },
+  {
+    "trial": 2,
+    "batch": 1,
+    "engine": "reuse8_scalar",
+    "p50_us": 203.878,
+    "p99_us": 210.863,
+    "checksum": 6163.107675552368
+  },
+  {
+    "trial": 2,
+    "batch": 1,
+    "engine": "baseline",
+    "p50_us": 207.538,
+    "p99_us": 227.406,
+    "checksum": 6163.107675552368
+  },
+  {
+    "trial": 2,
+    "batch": 1,
+    "engine": "candidate_v1",
+    "p50_us": 204.423,
+    "p99_us": 214.517,
+    "checksum": 6163.107675552368
+  },
+  {
+    "trial": 2,
+    "batch": 1,
+    "engine": "tile8",
+    "p50_us": 204.529,
+    "p99_us": 217.411,
+    "checksum": 6163.107675552368
+  },
+  {
+    "trial": 2,
+    "batch": 1,
+    "engine": "scalar_reductions",
+    "p50_us": 210.107,
+    "p99_us": 402.185,
+    "checksum": 6163.107675552368
+  },
+  {
+    "trial": 2,
+    "batch": 8,
+    "engine": "reuse8_scalar",
+    "p50_us": 1887.174,
+    "p99_us": 1931.807,
+    "checksum": 5991.899299621582
+  },
+  {
+    "trial": 2,
+    "batch": 8,
+    "engine": "baseline",
+    "p50_us": 1662.268,
+    "p99_us": 1706.861,
+    "checksum": 5991.899299621582
+  },
+  {
+    "trial": 2,
+    "batch": 8,
+    "engine": "candidate_v1",
+    "p50_us": 1812.65,
+    "p99_us": 1859.186,
+    "checksum": 5991.899299621582
+  },
+  {
+    "trial": 2,
+    "batch": 8,
+    "engine": "tile8",
+    "p50_us": 1824.707,
+    "p99_us": 1867.613,
+    "checksum": 5991.899299621582
+  },
+  {
+    "trial": 2,
+    "batch": 8,
+    "engine": "scalar_reductions",
+    "p50_us": 1880.885,
+    "p99_us": 1953.481,
+    "checksum": 5991.899299621582
+  },
+  {
+    "trial": 2,
+    "batch": 8,
+    "engine": "reuse8",
+    "p50_us": 1820.905,
+    "p99_us": 1895.184,
+    "checksum": 5991.899299621582
+  },
+  {
+    "trial": 3,
+    "batch": 1,
+    "engine": "reuse8_scalar",
+    "p50_us": 203.674,
+    "p99_us": 213.642,
+    "checksum": 6163.107675552368
+  },
+  {
+    "trial": 3,
+    "batch": 1,
+    "engine": "baseline",
+    "p50_us": 207.618,
+    "p99_us": 294.286,
+    "checksum": 6163.107675552368
+  },
+  {
+    "trial": 3,
+    "batch": 1,
+    "engine": "candidate_v1",
+    "p50_us": 204.507,
+    "p99_us": 212.872,
+    "checksum": 6163.107675552368
+  },
+  {
+    "trial": 3,
+    "batch": 1,
+    "engine": "tile8",
+    "p50_us": 209.527,
+    "p99_us": 218.733,
+    "checksum": 6163.107675552368
+  },
+  {
+    "trial": 3,
+    "batch": 1,
+    "engine": "scalar_reductions",
+    "p50_us": 203.902,
+    "p99_us": 211.794,
+    "checksum": 6163.107675552368
+  },
+  {
+    "trial": 3,
+    "batch": 1,
+    "engine": "reuse8",
+    "p50_us": 204.998,
+    "p99_us": 215.26,
+    "checksum": 6163.107675552368
+  },
+  {
+    "trial": 3,
+    "batch": 8,
+    "engine": "baseline",
+    "p50_us": 1661.778,
+    "p99_us": 1736.416,
+    "checksum": 5991.899299621582
+  },
+  {
+    "trial": 3,
+    "batch": 8,
+    "engine": "candidate_v1",
+    "p50_us": 1813.032,
+    "p99_us": 2008.377,
+    "checksum": 5991.899299621582
+  },
+  {
+    "trial": 3,
+    "batch": 8,
+    "engine": "tile8",
+    "p50_us": 1822.477,
+    "p99_us": 2771.985,
+    "checksum": 5991.899299621582
+  },
+  {
+    "trial": 3,
+    "batch": 8,
+    "engine": "scalar_reductions",
+    "p50_us": 1881.671,
+    "p99_us": 1927.736,
+    "checksum": 5991.899299621582
+  },
+  {
+    "trial": 3,
+    "batch": 8,
+    "engine": "reuse8",
+    "p50_us": 1821.65,
+    "p99_us": 1860.787,
+    "checksum": 5991.899299621582
+  },
+  {
+    "trial": 3,
+    "batch": 8,
+    "engine": "reuse8_scalar",
+    "p50_us": 1887.618,
+    "p99_us": 1967.502,
+    "checksum": 5991.899299621582
+  }
+]

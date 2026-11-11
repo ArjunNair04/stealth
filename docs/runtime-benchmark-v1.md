@@ -21,7 +21,9 @@ Four engines participate:
 - `native_core`: Release C++ packed kernels, caller-owned input/output, reusable workspace.
 - `native_python`: the installed NumPy wrapper, including input snapshot, Python
   boundary, GIL release/reacquisition and output allocation. Batch eight evaluates
-  eight windows sequentially, using the current public API.
+  eight windows sequentially at the original study revision. Current builds use
+  [native batching](native-batching-v1.md). The C++ `stealth_runtime_bench` executable
+  retains its serial diagnostic path via `--batch-execution serial`.
 - `torch_reference`: the training reference with explicit double reductions.
 - `torch_standard`: the same weights and architecture using ordinary FP32
   `layer_norm`, exact `gelu` and causal `scaled_dot_product_attention` kernels.

@@ -1,0 +1,6 @@
+{
+  "slow_start_seconds": 0.4,
+  "slow_start_passed": true,
+  "parent_only_kill_mutation_caught": true,
+  "cleanup_verified": true
+}

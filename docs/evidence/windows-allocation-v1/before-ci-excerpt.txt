@@ -1,0 +1,81 @@
+Source: 449736907e77ec23801f9fba587c5cd3b59acefd
+Job: https://github.com/ArjunNair04/stealth/actions/runs/43042080329/job/130596238459
+
+2026-11-11T14:52:08.4807360Z 39/72 Test #39: memory.no_hot_allocations ........***Timeout 120.02 sec
+2026-11-11T14:52:08.4808390Z [allocation] interception controls
+2026-11-11T14:52:08.4809911Z [allocation] feed-forward hot path
+2026-11-11T14:52:08.4810668Z [allocation] feed-forward rows
+2026-11-11T14:52:08.4811869Z [allocation] transformer hot path
+2026-11-11T14:52:08.4812267Z [allocation] attention tiles
+2026-11-11T14:52:08.4812840Z [allocation] latest forecast
+2026-11-11T14:52:08.4813258Z [allocation] batch hot path
+2026-11-11T14:52:08.4813455Z [allocation] constructor failure 1/5
+2026-11-11T14:52:08.4813721Z [allocation] constructor failure 2/5
+2026-11-11T14:52:08.4814645Z [allocation] constructor failure 3/5
+2026-11-11T14:52:08.4815308Z [allocation] constructor failure 4/5
+2026-11-11T14:52:08.4815819Z [allocation] constructor failure 5/5
+2026-11-11T14:52:08.4817021Z [allocation] model hot path and load failures
+2026-11-11T14:52:08.4817867Z [allocation] load failure 1/22
+2026-11-11T14:52:08.4818441Z [allocation] load failure 2/22
+2026-11-11T14:52:08.4819421Z [allocation] load failure 3/22
+2026-11-11T14:52:08.4820027Z [allocation] load failure 4/22
+2026-11-11T14:52:08.4820221Z [allocation] load failure 5/22
+2026-11-11T14:52:08.4820405Z [allocation] load failure 6/22
+2026-11-11T14:52:08.4820587Z [allocation] load failure 7/22
+2026-11-11T14:52:08.4820770Z [allocation] load failure 8/22
+2026-11-11T14:52:08.4820953Z [allocation] load failure 9/22
+2026-11-11T14:52:08.4821138Z [allocation] load failure 10/22
+2026-11-11T14:52:08.4821341Z [allocation] load failure 11/22
+2026-11-11T14:52:08.4822243Z [allocation] load failure 12/22
+2026-11-11T14:52:08.4822862Z [allocation] load failure 13/22
+2026-11-11T14:52:08.4823057Z [allocation] load failure 14/22
+2026-11-11T14:52:08.4823239Z [allocation] load failure 15/22
+2026-11-11T14:52:08.4823594Z [allocation] load failure 16/22
+2026-11-11T14:52:08.4823945Z [allocation] load failure 17/22
+2026-11-11T14:52:08.4826090Z [allocation] load failure 18/22
+2026-11-11T14:52:08.4826850Z [allocation] load failure 19/22
+2026-11-11T14:52:08.4827286Z [allocation] load failure 20/22
+2026-11-11T14:52:08.4827791Z [allocation] load failure 21/22
+2026-11-11T14:52:08.4828427Z [allocation] load failure 22/22
+2026-11-11T14:52:08.4828886Z [allocation] model hot path and load failures
+2026-11-11T14:52:08.4829354Z [allocation] load failure 1/22
+2026-11-11T14:52:08.4829561Z [allocation] load failure 2/22
+2026-11-11T14:52:08.4829748Z [allocation] load failure 3/22
+2026-11-11T14:52:08.4830025Z [allocation] load failure 4/22
+2026-11-11T14:52:08.4830445Z [allocation] load failure 5/22
+2026-11-11T14:52:08.4830724Z [allocation] load failure 6/22
+2026-11-11T14:52:08.4831154Z [allocation] load failure 7/22
+2026-11-11T14:52:08.4831353Z [allocation] load failure 8/22
+2026-11-11T14:52:08.4831701Z [allocation] load failure 9/22
+2026-11-11T14:52:08.4832208Z [allocation] load failure 10/22
+2026-11-11T14:52:08.4832428Z [allocation] load failure 11/22
+2026-11-11T14:52:08.4832615Z [allocation] load failure 12/22
+2026-11-11T14:52:08.4832805Z [allocation] load failure 13/22
+2026-11-11T14:52:08.4832982Z [allocation] load failure 14/22
+2026-11-11T14:52:08.4833171Z [allocation] load failure 15/22
+2026-11-11T14:52:08.4833347Z [allocation] load failure 16/22
+2026-11-11T14:52:08.4833520Z [allocation] load failure 17/22
+2026-11-11T14:52:08.4833700Z [allocation] load failure 18/22
+2026-11-11T14:52:08.4833887Z [allocation] load failure 19/22
+2026-11-11T14:52:08.4834073Z [allocation] load failure 20/22
+2026-11-11T14:52:08.4834259Z [allocation] load failure 21/22
+2026-11-11T14:52:08.4834644Z [allocation] load failure 22/22
+2026-11-11T14:52:08.4834837Z [allocation] window stream
+2026-11-11T14:52:08.4835023Z [allocation] constructor failure 1/6
+2026-11-11T14:52:08.4835228Z [allocation] constructor failure 2/6
+2026-11-11T14:52:08.4835430Z [allocation] constructor failure 3/6
+2026-11-11T14:52:08.4835795Z [allocation] constructor failure 4/6
+2026-11-11T14:52:08.4835970Z [allocation] constructor failure 5/6
+2026-11-11T14:52:08.4836102Z [allocation] constructor failure 6/6
+2026-11-11T14:52:08.4836232Z [allocation] constructor failure 1/6
+2026-11-11T14:52:08.4836372Z [allocation] constructor failure 2/6
+2026-11-11T14:52:08.4836508Z [allocation] constructor failure 3/6
+2026-11-11T14:52:08.4836691Z [allocation] constructor failure 4/6
+2026-11-11T14:52:08.4836896Z [allocation] constructor failure 5/6
+2026-11-11T14:52:08.4837096Z [allocation] constructor failure 6/6
+2026-11-11T14:52:08.4837296Z [allocation] signal index
+2026-11-11T14:52:08.4837495Z [allocation] constructor failure 1/13
+2026-11-11T14:52:08.4837714Z [allocation] constructor failure 2/13
+2026-11-11T14:52:14.2655748Z 99% tests passed, 1 tests failed out of 72
+2026-11-11T14:52:14.2658469Z The following tests FAILED:
+2026-11-11T14:52:14.2658671Z 	 39 - memory.no_hot_allocations (Timeout)               integration memory

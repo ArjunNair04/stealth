@@ -1,0 +1,32 @@
+{
+  "status": "stopped_before_timing",
+  "source_commit": "c5f4374ff1c1d17d13e3f02a9b108edb2caffd0e",
+  "failure": "Offline model-inspection test also requires the stealth CLI beside the benchmark executable.",
+  "offline": {
+    "ran": 86,
+    "errors": 1
+  },
+  "repair": "Inventoried all Python test executable references and supplied both exact hash-bound executables; no source, binary or protocol changes.",
+  "preserved_log_sha256": {
+    "portable-test.log": "053b52a8a3d1a032cfea1793731fce9fc24c84aec9bb67af6c9db94dd249111f",
+    "offline-tests.log": "9ba4e8df2be55e56a9ee9788b1a4d37234f4d28f2fa12ed4a3eb910aa0195f43",
+    "inherited-native-validation.json": "794c01273cedc5921a8985ffc661057613fbba9eb515faf9dabd83c7da5789c5",
+    "release-configure.log": "797dd374a6116f432b2e4a3bc83a6ae196a267df1a1884b25d8358b5e93e4962",
+    "portable-configure.log": "29dfc4d2069825d4d5e32031a9137566e8286a1ba5025b43e85cf50b6fd6e43d",
+    "sanitize-test.log": "ca957c458f77a0a50d506fd3b9b32b959ce446603e41926fe6a393212a4afe0e",
+    "identity.log": "1303b54eae6994325189c3256a46ff67d487e5fc951a669af3d3dc4b60806b59",
+    "dev-configure.log": "4cb021b67acc068ea42b8a5606745dc1621e24622072ccf6fd0c55cbc3632c2a",
+    "steps.json": "28816f996394d72c4b8ad4dd7f3ef1640adeb2541e22c9a13f784572e1665d51",
+    "release-build.log": "e35fee287beadef30e75e78872610890da2556bdb025619f90fac6857cb746fb",
+    "portable-build.log": "318f9698cd8573c5fe791e6ac5d62a46d3424d5ab44224325c6a578c88557179",
+    "sanitize-configure.log": "efdec057994cdbfe29bc7a6bfa41b7b9bd43c7e6db73e5aa9836cf000ee3455a",
+    "dev-test.log": "deb40c9e39b7952ebd294822732fc1d74f755a9a5e49b269c3efab4372bf3bdd",
+    "failed.json": "698fb593749e03e39072d3eacb679cbbd9ec2c76cabdc8ca0b414d781f9f08d7",
+    "release-test.log": "0a423dc0a4f195b52c94d4bfd3bcdc69dbb29d73d2027b5cfd076f4a6d0b7eb4",
+    "python-environment.log": "bdbf255ee497e70466971829c10d3e95f5eec404d7ec1f868bb290b3173e522f",
+    "dev-build.log": "4cd00f945f760dc57b179be4e85d2d586c15692d404b993792a672002dd9e4eb",
+    "environment.json": "cc3eb3b09f942f66e3435f89297fae890d0108c1c99f8662b3263d480fb969c8",
+    "sanitize-build.log": "4cd00f945f760dc57b179be4e85d2d586c15692d404b993792a672002dd9e4eb",
+    "toolchain.log": "122e90821bd54d46fef92232e3d3d8e4204c926b5c49334ac9e5e66a976dcc18"
+  }
+}

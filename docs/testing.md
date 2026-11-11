@@ -223,3 +223,30 @@ exercise the same common publication checks. Build with `STEALTH_ENABLE_AVX=OFF`
 to exercise the portable path even on an AVX machine; the Linux GCC and Intel Mac
 CI entries also run that configuration. Other architectures/unsupported compilers
 compile the portable implementation. Shared CI asserts correctness, not latency.
+
+## Native batch verification
+
+The [native batching change](native-batching-v1.md) passes 73 local Debug, Release
+and forced-portable tests, 72 sanitizer tests, 86 offline Python tests, 36 installed
+wrapper tests, and 114 training/reference tests with three optional checks skipped.
+Batch API and row-normalization tests failed before their implementations existed.
+Three deliberate faults are caught: cross-window attention, partial output
+publication and an incorrect normalization mean. They were restored before the
+full validation runs.
+
+Independent fixtures and serial parity cover both full/latest outputs, irregular
+widths, one-token windows, 31/33-token tile boundaries, batch tails, invalid and moved
+workspaces, allocation failures, aliasing, nonfinite inputs and late overflow.
+Native success/error paths allocate no heap storage after workspace construction.
+Source-to-wheel installation and package relocation pass. Linux validation and
+raw performance acceptance are recorded separately in the report.
+
+
+## Windows construction-failure regression
+
+The [November repair](windows-allocation-v1.md) keeps MSVC iterator debugging
+and every-allocation fault injection enabled. Empty and populated signal indexes
+must throw `bad_alloc` on each intercepted construction failure, preserve the old
+index, and permit a new construction afterward. Flushed phase markers and a
+120-second bound distinguish a stopped test from a successful run. An unexpected
+termination exits with failure; it cannot wait indefinitely for a debug dialog.

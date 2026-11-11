@@ -1,0 +1,62 @@
+[
+  {
+    "config": "dev",
+    "step": "configure",
+    "returncode": 0
+  },
+  {
+    "config": "dev",
+    "step": "build",
+    "returncode": 0
+  },
+  {
+    "config": "dev",
+    "step": "test",
+    "returncode": 0
+  },
+  {
+    "config": "release",
+    "step": "configure",
+    "returncode": 0
+  },
+  {
+    "config": "release",
+    "step": "build",
+    "returncode": 0
+  },
+  {
+    "config": "release",
+    "step": "test",
+    "returncode": 0
+  },
+  {
+    "config": "sanitize",
+    "step": "configure",
+    "returncode": 0
+  },
+  {
+    "config": "sanitize",
+    "step": "build",
+    "returncode": 0
+  },
+  {
+    "config": "sanitize",
+    "step": "test",
+    "returncode": 0
+  },
+  {
+    "config": "portable-release",
+    "step": "configure",
+    "returncode": 0
+  },
+  {
+    "config": "portable-release",
+    "step": "build",
+    "returncode": 0
+  },
+  {
+    "config": "portable-release",
+    "step": "test",
+    "returncode": 0
+  }
+]
