@@ -124,3 +124,19 @@ Report every trial, setup/first-call cost, memory high-water mark, wrapper cost 
 worst call alongside the median/p99 comparison. Percentiles are observations, not
 hard latency deadlines. If a standard runtime wins, the next decision is whether
 to use it behind the existing feature and replay interfaces.
+
+## Verification record
+
+The [validation record](evidence/frontier-runner-v1/verification.json) binds the
+implementation revision, local test logs and 18 saved-model checks. All 100 offline
+tests and 36 installed-wrapper tests pass; the reference/training suite passes
+118 of 123 tests, with five optional Linux checks skipped locally. Real Inductor,
+ONNX, graph binding and host-probe tests pass in the linked Linux CI jobs.
+The saved-model checks use native C++, its Python wrapper and local eager Torch
+2.2.2. Their maximum absolute reference difference is `1.9073486328125e-6`.
+
+A regression test reproduced compiler children surviving both successful and
+failed worker exits. The supervisor now stops the whole process group on every
+outcome. The record retains that failure, the temporary duplicate-cleanup test
+error on macOS, and the stale-wheel rejection. None of these correctness runs
+is the controlled latency comparison.

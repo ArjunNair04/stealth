@@ -9,15 +9,15 @@ The [Beaker compatibility checks](beaker-linux-v1.md) pass. The
 [Windows allocation repair](windows-allocation-v1.md) addresses a separate Debug
 construction failure; the repaired Windows Debug/Release/package job passes.
 Current compiled/ONNX timing, sustained serving and broader shapes remain open.
-The Beaker route is established; its interactive login needs reopening for the next run. The next performance comparison should complete
-the existing current-runtime admission/timing harness before another kernel change.
+The Beaker route is established; its interactive login needs reopening for the next run. The next performance comparison should use
+the current-runtime runner before another kernel change.
 The user expects minute bars alongside daily, weekly and potentially monthly
 factors. Exact sources, freshness thresholds and prediction targets remain open.
 
 ## Next steps
 
-1. Complete the local comparison-runner checks and review the public changes.
-   The 90-cell scheduler, bounded workers, host/wheel lock, failure records and
+1. Review [PR #32](https://github.com/ArjunNair04/stealth/pull/32). Local runner checks
+   and real compiler/export Linux CI pass. The 90-cell scheduler, bounded workers, host/wheel lock, failure records and
    aggregate gate are implemented; see [how to run them](runtime-comparison.md).
 2. Reconnect Beaker when available, admit a modern Linux environment, commit its
    host lock and collect one controlled run. The user has asked to finish local

@@ -1,0 +1,310 @@
+{
+  "acceptance_measurement": false,
+  "code_commit": "ca59caed9937dfcf81d764f711eb65d878cc78ba",
+  "linux_ci": {
+    "checks": [
+      {
+        "conclusion": null,
+        "name": "macOS Intel",
+        "status": "in_progress",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/43049546398/job/130622583263"
+      },
+      {
+        "conclusion": "success",
+        "name": "macOS ARM",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/43049546398/job/130622583100"
+      },
+      {
+        "conclusion": "success",
+        "name": "Windows MSVC",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/43049546398/job/130622583099"
+      },
+      {
+        "conclusion": "success",
+        "name": "Linux Clang",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/43049546398/job/130622583004"
+      },
+      {
+        "conclusion": "success",
+        "name": "Linux GCC",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/43049546398/job/130622582559"
+      },
+      {
+        "conclusion": "success",
+        "name": "Torch 2.2.2+cpu CPU reference",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/43049546275/job/130622577649"
+      },
+      {
+        "conclusion": "success",
+        "name": "Torch 2.13.0+cpu CPU reference",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/43049546275/job/130622577179"
+      },
+      {
+        "conclusion": "success",
+        "name": "Linux Torch Inductor and ONNX CPU correctness",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/43049546343/job/130622576815"
+      },
+      {
+        "conclusion": null,
+        "name": "macOS Intel",
+        "status": "in_progress",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/43049537831/job/130622546895"
+      },
+      {
+        "conclusion": "success",
+        "name": "Linux Clang",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/43049537831/job/130622546827"
+      },
+      {
+        "conclusion": "success",
+        "name": "Windows MSVC",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/43049537831/job/130622546825"
+      },
+      {
+        "conclusion": "success",
+        "name": "macOS ARM",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/43049537831/job/130622546789"
+      },
+      {
+        "conclusion": "success",
+        "name": "Linux GCC",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/43049537831/job/130622546296"
+      },
+      {
+        "conclusion": "success",
+        "name": "Linux Torch Inductor and ONNX CPU correctness",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/43049537730/job/130622545856"
+      },
+      {
+        "conclusion": "success",
+        "name": "Torch 2.13.0+cpu CPU reference",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/43049537758/job/130622545827"
+      },
+      {
+        "conclusion": "success",
+        "name": "Torch 2.2.2+cpu CPU reference",
+        "status": "completed",
+        "url": "https://github.com/ArjunNair04/stealth/actions/runs/43049537758/job/130622545423"
+      }
+    ],
+    "head": "ca59caed9937dfcf81d764f711eb65d878cc78ba",
+    "purpose": "Correctness and portability only; CI is not the latency acceptance host"
+  },
+  "local_log_sha256": {
+    "admission-final": "70ef9bc4a5fa2a4013a3f33f75b3fb8e7e206431d8149cd2e297d06cd2e226a7",
+    "descendant-after": "69e6b7e061fb151be3ac4a2ee396a45fd9fcb6868a75e88063da1d3831c99672",
+    "descendant-before": "942cf4438cf4a3e5d9c3d3f28941d1035c886cdd1f1811373ebe2c7df93204ad",
+    "offline-final": "cfbd8b435ebfa2b19e46ab52582cb5094e31a1b2cca1cbbead1e0a49907ee95c",
+    "python": "9222995a2cc96b2ed1c6c76efed9d0541bd4cca784382429b512ffa0edbb7cfd",
+    "saved-smoke-final": "65567bd07ce45d843e0c0d64c2455e04ad45fb9159b35d652ee64290c131faaa",
+    "training-final": "e08829fce2591bd148076823ab6fff33c5403114558215b5b98cd875b7289ae6",
+    "workers-final": "320251857a27e5c2f193f0d89bcaa1118da01fa39637ea386238b51a1a6e709d"
+  },
+  "local_tests": {
+    "offline": {
+      "passed": 100,
+      "total": 100
+    },
+    "python_wrapper": {
+      "passed": 36,
+      "total": 36
+    },
+    "reference": {
+      "passed": 118,
+      "skipped": 5,
+      "total": 123
+    }
+  },
+  "maximum_absolute_error": 1.9073486328125e-06,
+  "protocol_sha256": "606a25000f3b7b853023e46e0a01a433f62e009b44f5e185fafd6716d011f649",
+  "remaining": [
+    "modern Linux saved-model admission",
+    "committed measurement host/wheel lock",
+    "one controlled acceptance run"
+  ],
+  "reproduced_failures": [
+    "A stale installed native wheel failed source identity; replaced with the previously tested local wheel without dependency changes.",
+    "Successful and failed worker exits left compiler descendants running; the new pipe-based regression failed before process-group cleanup.",
+    "The first cleanup test signalled an already stopped process group twice on macOS; corrected to one cleanup path and reran all affected suites."
+  ],
+  "saved_model_checks": [
+    {
+      "batch": 1,
+      "checksum": 60.23396682739258,
+      "engine": "native_core",
+      "maximum_absolute_error": 4.76837158203125e-07,
+      "seed": 7,
+      "windows": 32
+    },
+    {
+      "batch": 1,
+      "checksum": 60.23396682739258,
+      "engine": "native_python",
+      "maximum_absolute_error": 4.76837158203125e-07,
+      "seed": 7,
+      "windows": 32
+    },
+    {
+      "batch": 1,
+      "checksum": 60.23396682739258,
+      "engine": "torch_eager",
+      "maximum_absolute_error": 4.76837158203125e-07,
+      "seed": 7,
+      "windows": 32
+    },
+    {
+      "batch": 8,
+      "checksum": 45.242188453674316,
+      "engine": "native_python",
+      "maximum_absolute_error": 4.76837158203125e-07,
+      "seed": 7,
+      "windows": 32
+    },
+    {
+      "batch": 8,
+      "checksum": 45.242188453674316,
+      "engine": "torch_eager",
+      "maximum_absolute_error": 4.76837158203125e-07,
+      "seed": 7,
+      "windows": 32
+    },
+    {
+      "batch": 8,
+      "checksum": 45.242188453674316,
+      "engine": "native_core",
+      "maximum_absolute_error": 4.76837158203125e-07,
+      "seed": 7,
+      "windows": 32
+    },
+    {
+      "batch": 1,
+      "checksum": 59.825599670410156,
+      "engine": "native_python",
+      "maximum_absolute_error": 0.0,
+      "seed": 19,
+      "windows": 32
+    },
+    {
+      "batch": 1,
+      "checksum": 59.82560157775879,
+      "engine": "torch_eager",
+      "maximum_absolute_error": 1.9073486328125e-06,
+      "seed": 19,
+      "windows": 32
+    },
+    {
+      "batch": 1,
+      "checksum": 59.825599670410156,
+      "engine": "native_core",
+      "maximum_absolute_error": 0,
+      "seed": 19,
+      "windows": 32
+    },
+    {
+      "batch": 8,
+      "checksum": 45.06494903564453,
+      "engine": "torch_eager",
+      "maximum_absolute_error": 1.9073486328125e-06,
+      "seed": 19,
+      "windows": 32
+    },
+    {
+      "batch": 8,
+      "checksum": 45.06494903564453,
+      "engine": "native_core",
+      "maximum_absolute_error": 0,
+      "seed": 19,
+      "windows": 32
+    },
+    {
+      "batch": 8,
+      "checksum": 45.06494903564453,
+      "engine": "native_python",
+      "maximum_absolute_error": 0.0,
+      "seed": 19,
+      "windows": 32
+    },
+    {
+      "batch": 1,
+      "checksum": 60.11915588378906,
+      "engine": "torch_eager",
+      "maximum_absolute_error": 9.5367431640625e-07,
+      "seed": 43,
+      "windows": 32
+    },
+    {
+      "batch": 1,
+      "checksum": 60.11915588378906,
+      "engine": "native_core",
+      "maximum_absolute_error": 1.9073486328125e-06,
+      "seed": 43,
+      "windows": 32
+    },
+    {
+      "batch": 1,
+      "checksum": 60.11915588378906,
+      "engine": "native_python",
+      "maximum_absolute_error": 1.9073486328125e-06,
+      "seed": 43,
+      "windows": 32
+    },
+    {
+      "batch": 8,
+      "checksum": 45.51099872589111,
+      "engine": "native_core",
+      "maximum_absolute_error": 1.9073486328125e-06,
+      "seed": 43,
+      "windows": 32
+    },
+    {
+      "batch": 8,
+      "checksum": 45.51099872589111,
+      "engine": "native_python",
+      "maximum_absolute_error": 1.9073486328125e-06,
+      "seed": 43,
+      "windows": 32
+    },
+    {
+      "batch": 8,
+      "checksum": 45.51099872589111,
+      "engine": "torch_eager",
+      "maximum_absolute_error": 1.9073486328125e-06,
+      "seed": 43,
+      "windows": 32
+    }
+  ],
+  "saved_model_smoke_revision": "ca59caed9937dfcf81d764f711eb65d878cc78ba",
+  "saved_model_smoke_seal_sha256": "5d890dd6ffe829f796afb922786abf1dde9eedfc709cd72e961c3a960a82c75c",
+  "schema_version": 1,
+  "scope": "Local correctness and comparison machinery; controlled Linux measurements pending",
+  "smoke_input_sha256": {
+    "expected-19.bin": "0fc9501064f7ee77d5bae723756f2af88b74619371ab752c0753606a77ae6143",
+    "expected-43.bin": "f4c91957e0d3db550ef510d8720b3affcc995f19842d1d5054132a7e4bd64005",
+    "expected-7.bin": "89cec65b26ed7b3aa03816daa02a899c6d6823a79a3d106a82ae431b79fdd87f",
+    "input.bin": "3ed32af0b79ef537e2f2d9a0fa9afda122335689be2aeabf4add7013e85e3595",
+    "model-19.stlf": "237910f530e7c337227f2150da2f78da2518e996ee817c4f40e4ef4a78a1a080",
+    "model-43.stlf": "6400f2cb9a94237e8cd0e5a8083fd501c75fb9bfe60a7871675e12ccacdbca6a",
+    "model-7.stlf": "48d3433c9be2e2c411a06fdf981a78332d6f34af0767608d6d11ef9ca978e87d"
+  },
+  "source_sha256": {
+    "tests/test_frontier.py": "bcdbcc1117ce1de2bcbe7ebd6f6ff3aeb115a5bc516f448f4196f31ef06974ae",
+    "tests/training/test_frontier_worker.py": "c9ad871044730cf275971e2f96e98d446bd60f175949a312872394cb5587da12",
+    "tools/admit_runtime.py": "93c1d191d7077f709f715ad92fc35658978337fd7c7317e0592682f3a4012177",
+    "tools/benchmark_frontier.py": "6278c3d081a05b9c2585be59414b61be0a39c0a5335b8afba7b05b384902b117",
+    "tools/frontier_host.py": "0ccc0eae8564f190700f71f9a0680f41c726bd7e3a5624cba786681dce824507",
+    "tools/frontier_worker.py": "31db4bf70348dea40fc5041df291763813f0beb2c9bf178459e2a16a1ecbadd1"
+  }
+}
